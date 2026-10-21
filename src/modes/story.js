@@ -342,7 +342,13 @@ function play(root, ctx, ch, start) {
     gate(sc) {
       root.querySelector('.story').classList.add('gating');
       setImage(null);
-      $('.prop').innerHTML = '<div class="gate"></div>';
+      // Portal em vídeo (loop); se o vídeo falhar, fica o círculo animado em CSS.
+      $('.prop').innerHTML = sc.video
+        ? `<video class="gatevid" src="assets/${sc.video}" autoplay muted loop playsinline></video>`
+        : '<div class="gate"></div>';
+      const gv = $('.prop .gatevid');
+      gv?.play?.().catch(() => {});
+      gv?.addEventListener('error', () => { $('.prop').innerHTML = '<div class="gate"></div>'; });
       sfx.achievement();
       if (sc.ach) unlock(state, content, sc.ach);
       const done = state.get('storyDone', []);

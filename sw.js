@@ -1,6 +1,6 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v14';
+const CACHE = 'relogio-v15';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
   'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js', 'src/colony-logic.js', 'src/modes/colony.js',
@@ -11,7 +11,7 @@ const FILES = [
   'data/characters.json', 'data/expressions.json', 'data/quizzes.json', 'data/story.json', 'data/story/cap1.json', 'data/story/cap2.json', 'data/story/cap3.json', 'data/story/cap4.json', 'data/story/cap5.json', 'data/story/cap6.json', 'data/achievements.json', 'data/items.json', 'data/quests.json', 'data/colony.json',
   'assets/img/scenes/aldeia.webp', 'assets/img/scenes/chafariz.webp', 'assets/img/scenes/feitoria.webp', 'assets/img/scenes/frota.webp', 'assets/img/scenes/mirante.webp', 'assets/img/scenes/pau_brasil.webp', 'assets/img/scenes/porto_seguro.webp',
   'assets/img/scenes/conspiracao.webp', 'assets/img/scenes/salvador.webp', 'assets/img/scenes/estatua.webp', 'assets/img/scenes/mapa_tiradentes.webp', 'assets/img/scenes/estrada_real.webp', 'assets/img/scenes/arraial.webp', 'assets/img/scenes/sinos.webp', 'assets/img/scenes/engenho.webp',
-  'assets/img/cards/roca.webp', 'assets/video/abertura_portal.mp4',
+  'assets/img/cards/roca.webp', 'assets/video/abertura_portal.mp4', 'assets/video/time_gate.mp4',
   'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
 ];
 

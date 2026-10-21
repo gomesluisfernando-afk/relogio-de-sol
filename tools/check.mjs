@@ -13,7 +13,7 @@ for (const w of warnings) console.log('aviso:', w);
 for (const q of conferir) console.log('conferir:', q.id, '-', q.text);
 // O cache offline (sw.js) precisa listar todo JSON de dados e todo arquivo precisa existir.
 const sw = await readFile(new URL('../sw.js', import.meta.url), 'utf8');
-const cached = [...sw.matchAll(/'([^']+\.[a-z]+)'/g)].map((m) => m[1]);
+const cached = [...sw.matchAll(/'([^']+\.[a-z0-9]+)'/g)].map((m) => m[1]);
 const index = await get('index.json');
 const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards, ...p.tours]), ...Object.values(index.shared), ...c.chapters.filter((ch) => ch.file).map((ch) => ch.file)];
 for (const f of dataFiles) if (!cached.includes('data/' + f)) errors.push(`sw.js não guarda data/${f} para offline`);
@@ -27,6 +27,11 @@ for (const img of new Set(images)) {
 for (const img of [...c.cards.map((k) => k.image), ...c.eras.map((e) => e.iconImg)].filter(Boolean))
   await readFile(new URL('../assets/img/' + img, import.meta.url)).catch(() => errors.push(`imagem ${img} não existe`));
 for (const k of c.cards) if (!k.image) warnings.push(`${k.id}: sem imagem`);
+// Vídeos citados nas cenas: precisam existir e estar no cache offline.
+for (const v of new Set(c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.video, s.video])).filter(Boolean))) {
+  await readFile(new URL('../assets/' + v, import.meta.url)).catch(() => errors.push(`vídeo ${v} não existe`));
+  if (!cached.includes('assets/' + v)) errors.push(`sw.js não guarda assets/${v} para offline`);
+}
 const { readdir } = await import('node:fs/promises');
 for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true }))
   if (f.endsWith('.js') && !cached.includes('src/' + f.replaceAll('\\', '/'))) errors.push(`sw.js não guarda src/${f} para offline`);

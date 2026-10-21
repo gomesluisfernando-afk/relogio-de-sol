@@ -560,7 +560,8 @@
       "title": "AGE UP",
       "ach": "age1",
       "text": "Próxima era: Age II · Açúcar & Sangue.",
-      "next": "cap2"
+      "next": "cap2",
+      "video": "video/time_gate.mp4"
     }
   ]
 }

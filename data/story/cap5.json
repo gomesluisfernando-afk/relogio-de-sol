@@ -3,103 +3,402 @@
   "title": "Capítulo 5 · Apogeu & Segregação",
   "scenes": [
     {
-      "type": "dialog", "title": "AGE V · Apogeu & Segregação", "bg": { "color": "#3a2a4a", "image": "cards/c47.webp" }, "cards": ["C47"],
+      "type": "dialog",
+      "title": "AGE V · Apogeu & Segregação",
+      "bg": {
+        "color": "#3a2a4a",
+        "image": "cards/c47.webp"
+      },
+      "cards": [
+        "C47"
+      ],
       "lines": [
-        { "who": "mula", "text": "1710 a 1752: a Matriz de Santo Antônio. 42 anos de obra." },
-        { "who": "buck", "text": "42 years to build, 482 kilos of gold on the walls?" },
-        { "who": "mula", "text": "Segundo os registros locais. Os guias de Ouro Preto dizem que a deles é a segunda mais rica… mas contam a prata. A gente não." },
-        { "who": "buck", "text": "A guide rivalry older than college football. Alabama vs. Auburn!" }
+        {
+          "who": "mula",
+          "text": "1710 a 1752: a Matriz de Santo Antônio. 42 anos de obra."
+        },
+        {
+          "who": "buck",
+          "text": "42 years to build, 482 kilos of gold on the walls?"
+        },
+        {
+          "who": "mula",
+          "text": "Segundo os registros locais. Os guias de Ouro Preto dizem que a deles é a segunda mais rica… mas contam a prata. A gente não."
+        },
+        {
+          "who": "buck",
+          "text": "A guide rivalry older than college football. Alabama vs. Auburn!"
+        }
       ]
     },
     {
-      "type": "name", "title": "Uma igreja para cada grupo", "bg": { "color": "#3a2a4a", "image": "cards/c48.webp" }, "cards": ["C48"],
+      "type": "name",
+      "title": "Uma igreja para cada grupo",
+      "bg": {
+        "color": "#3a2a4a",
+        "image": "cards/c48.webp"
+      },
+      "cards": [
+        "C48"
+      ],
       "rounds": [
-        { "date": "Matriz · Carmo · São Francisco", "place": "Quem rezava aqui?", "options": ["“Homens bons”: brancos ricos", "Africanos", "Mulatos e pardos"], "answer": 0 },
-        { "date": "Rosário", "place": "E no Rosário?", "options": ["Africanos", "Brancos ricos", "Crioulos"], "answer": 0 },
-        { "date": "Mercês", "place": "E nas Mercês?", "options": ["Crioulos: filhos de africanos nascidos aqui", "Mulatos", "Brancos pobres"], "answer": 0 },
-        { "date": "São João Evangelista", "place": "E em São João Evangelista?", "options": ["Mulatos e pardos", "Africanos", "“Homens bons”"], "answer": 0,
-          "after": "Why so many churches in Minas? Because every social group had to pray separately." }
+        {
+          "date": "Matriz · Carmo · São Francisco",
+          "place": "Quem rezava aqui?",
+          "options": [
+            "“Homens bons”: brancos ricos",
+            "Africanos",
+            "Mulatos e pardos"
+          ],
+          "answer": 0
+        },
+        {
+          "date": "Rosário",
+          "place": "E no Rosário?",
+          "options": [
+            "Africanos",
+            "Brancos ricos",
+            "Crioulos"
+          ],
+          "answer": 0
+        },
+        {
+          "date": "Mercês",
+          "place": "E nas Mercês?",
+          "options": [
+            "Crioulos: filhos de africanos nascidos aqui",
+            "Mulatos",
+            "Brancos pobres"
+          ],
+          "answer": 0
+        },
+        {
+          "date": "São João Evangelista",
+          "place": "E em São João Evangelista?",
+          "options": [
+            "Mulatos e pardos",
+            "Africanos",
+            "“Homens bons”"
+          ],
+          "answer": 0,
+          "after": "Why so many churches in Minas? Because every social group had to pray separately."
+        }
       ]
     },
     {
-      "type": "map", "title": "Duas cidades em uma", "bg": { "color": "#2a2a2a" }, "cards": ["C49"],
-      "map": "scenes/mapa_tiradentes.webp", "need": 5,
+      "type": "map",
+      "title": "Duas cidades em uma",
+      "bg": {
+        "color": "#2a2a2a"
+      },
+      "cards": [
+        "C49"
+      ],
+      "map": "scenes/mapa_tiradentes.webp",
+      "need": 5,
       "intro": "Mapa ilustrativo. Alterne entre rua e beco e visite os pontos.",
-      "layers": { "rua": "Rua · eixo do poder", "beco": "Beco · eixo da servidão" },
+      "layers": {
+        "rua": "Rua · eixo do poder",
+        "beco": "Beco · eixo da servidão"
+      },
       "spots": [
-        { "layer": "rua", "x": 32, "y": 12, "icon": "⛪", "label": "A Matriz, no alto", "lines": [{ "who": "mula", "text": "A igreja dos “homens bons”, no ponto mais alto da vila." }] },
-        { "layer": "rua", "x": 52, "y": 42, "icon": "🏠", "label": "A rua principal", "lines": [{ "who": "mula", "text": "Sobrado: comércio embaixo, família em cima. A rua era o eixo do poder." }] },
-        { "layer": "rua", "x": 37, "y": 86, "icon": "⛲", "label": "O chafariz", "lines": [{ "who": "mula", "text": "O chafariz de 1749: água, cocho de cavalo e lavanderia." }] },
-        { "layer": "beco", "x": 25, "y": 24, "icon": "●", "label": "Beco ao lado da Matriz", "lines": [{ "who": "mula", "tone": "serio", "text": "Os becos serviam para os cativos evitarem as ruas principais, para o acesso às áreas de serviço e para escoar dejetos." }] },
-        { "layer": "beco", "x": 57, "y": 62, "icon": "●", "label": "Escadinha entre as casas", "lines": [{ "who": "narr", "tone": "serio", "text": "Segundo o tour, 70% da população era cativa." }] },
-        { "layer": "beco", "x": 14, "y": 50, "icon": "●", "label": "Beco dos fundos", "lines": [{ "who": "buck", "tone": "serio", "text": "Like the service entrances and the 'colored entrances' of Jim Crow." }, { "who": "mula", "tone": "serio", "text": "Ainda hoje dá para atravessar a cidade inteira sem pisar numa rua principal." }] }
+        {
+          "layer": "rua",
+          "x": 32,
+          "y": 12,
+          "icon": "⛪",
+          "label": "A Matriz, no alto",
+          "lines": [
+            {
+              "who": "mula",
+              "text": "A igreja dos “homens bons”, no ponto mais alto da vila."
+            }
+          ]
+        },
+        {
+          "layer": "rua",
+          "x": 52,
+          "y": 42,
+          "icon": "🏠",
+          "label": "A rua principal",
+          "lines": [
+            {
+              "who": "mula",
+              "text": "Sobrado: comércio embaixo, família em cima. A rua era o eixo do poder."
+            }
+          ]
+        },
+        {
+          "layer": "rua",
+          "x": 37,
+          "y": 86,
+          "icon": "⛲",
+          "label": "O chafariz",
+          "lines": [
+            {
+              "who": "mula",
+              "text": "O chafariz de 1749: água, cocho de cavalo e lavanderia."
+            }
+          ]
+        },
+        {
+          "layer": "beco",
+          "x": 25,
+          "y": 24,
+          "icon": "●",
+          "label": "Beco ao lado da Matriz",
+          "lines": [
+            {
+              "who": "mula",
+              "tone": "serio",
+              "text": "Os becos serviam para os cativos evitarem as ruas principais, para o acesso às áreas de serviço e para escoar dejetos."
+            }
+          ]
+        },
+        {
+          "layer": "beco",
+          "x": 57,
+          "y": 62,
+          "icon": "●",
+          "label": "Escadinha entre as casas",
+          "lines": [
+            {
+              "who": "narr",
+              "tone": "serio",
+              "text": "Segundo o tour, 70% da população era cativa."
+            }
+          ]
+        },
+        {
+          "layer": "beco",
+          "x": 14,
+          "y": 50,
+          "icon": "●",
+          "label": "Beco dos fundos",
+          "lines": [
+            {
+              "who": "buck",
+              "tone": "serio",
+              "text": "Like the service entrances and the 'colored entrances' of Jim Crow."
+            },
+            {
+              "who": "mula",
+              "tone": "serio",
+              "text": "Ainda hoje dá para atravessar a cidade inteira sem pisar numa rua principal."
+            }
+          ]
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1729", "bg": { "color": "#2a3a4a", "image": "cards/c50.webp" }, "cards": ["C50"],
+      "type": "dialog",
+      "title": "1729",
+      "bg": {
+        "color": "#2a3a4a",
+        "image": "cards/c50.webp"
+      },
+      "cards": [
+        "C50"
+      ],
       "lines": [
-        { "who": "mula", "text": "Diamantes! O Tejuco, hoje Diamantina, vira o Distrito Diamantino, trancado pela Coroa." },
-        { "who": "buck", "text": "Then they found diamonds. And the Crown locked an entire district." },
-        { "who": "mula", "text": "A personagem famosa de lá é Chica da Silva. Fica para outra fase." }
+        {
+          "who": "mula",
+          "text": "Diamantes! O Tejuco, hoje Diamantina, vira o Distrito Diamantino, trancado pela Coroa."
+        },
+        {
+          "who": "buck",
+          "text": "Then they found diamonds. And the Crown locked an entire district."
+        },
+        {
+          "who": "mula",
+          "text": "A personagem famosa de lá é Chica da Silva. Fica para outra fase."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1735–1750", "bg": { "color": "#3a2a1a", "image": "cards/c51.webp" }, "cards": ["C51"],
+      "type": "dialog",
+      "title": "1735–1750",
+      "bg": {
+        "color": "#3a2a1a",
+        "image": "cards/c51.webp"
+      },
+      "cards": [
+        "C51"
+      ],
       "lines": [
-        { "who": "cobrador", "text": "Imposto novo: por cabeça. Cada pessoa paga, inclusive cada escravizado. Duas vezes por ano." },
-        { "who": "buck", "text": "Portugal's tax policy: if it breathes, tax it." },
-        { "who": "mula", "text": "Era tão pesado que foi abandonado em 1750." }
+        {
+          "who": "cobrador",
+          "text": "Imposto novo: por cabeça. Cada pessoa paga, inclusive cada escravizado. Duas vezes por ano."
+        },
+        {
+          "who": "buck",
+          "text": "Portugal's tax policy: if it breathes, tax it."
+        },
+        {
+          "who": "mula",
+          "text": "Era tão pesado que foi abandonado em 1750."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1749 · O chafariz", "bg": { "color": "#2b3a2e", "image": "scenes/chafariz.webp" }, "cards": ["C52"],
+      "type": "dialog",
+      "title": "1749 · O chafariz",
+      "bg": {
+        "color": "#2b3a2e",
+        "image": "scenes/chafariz.webp"
+      },
+      "cards": [
+        "C52"
+      ],
       "lines": [
-        { "who": "mula", "text": "O maior chafariz colonial de Minas, com São José de Botas no oratório, padroeiro dos bandeirantes." },
-        { "who": "mula", "text": "Levemente inclinado de propósito, apoiado no aqueduto de pedra até a nascente." },
-        { "who": "buck", "text": "It's a heritage-listed building that's literally leaning." },
-        { "who": "buck", "text": "Wait… this is the fountain I drank from!" }
+        {
+          "who": "mula",
+          "text": "O maior chafariz colonial de Minas, com São José de Botas no oratório, padroeiro dos bandeirantes."
+        },
+        {
+          "who": "mula",
+          "text": "Levemente inclinado de propósito, apoiado no aqueduto de pedra até a nascente."
+        },
+        {
+          "who": "buck",
+          "text": "It's a heritage-listed building that's literally leaning."
+        },
+        {
+          "who": "buck",
+          "text": "Wait… this is the fountain I drank from!"
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1750 · As 100 arrobas", "bg": { "color": "#3a2a1a", "image": "cards/c53.webp" }, "cards": ["C53"],
+      "type": "dialog",
+      "title": "1750 · As 100 arrobas",
+      "bg": {
+        "color": "#3a2a1a",
+        "image": "cards/c53.webp"
+      },
+      "cards": [
+        "C53"
+      ],
       "lines": [
-        { "who": "cobrador", "text": "A meta: 100 arrobas de ouro por ano. Uns 1.500 quilos." },
-        { "who": "cobrador", "text": "Faltou? A diferença será cobrada à força. Chama-se derrama." },
-        { "who": "buck", "text": "Imagine the IRS saying: if y'all don't reach it, we'll knock on doors." }
+        {
+          "who": "cobrador",
+          "text": "A meta: 100 arrobas de ouro por ano. Uns 1.500 quilos."
+        },
+        {
+          "who": "cobrador",
+          "text": "Faltou? A diferença será cobrada à força. Chama-se derrama."
+        },
+        {
+          "who": "buck",
+          "text": "Imagine the IRS saying: if y'all don't reach it, we'll knock on doors."
+        }
       ]
     },
     {
-      "type": "trail", "title": "1763 · A Estrada Real", "bg": { "color": "#2a3a2a", "image": "scenes/estrada_real.webp" }, "cards": ["C54"],
+      "type": "trail",
+      "title": "1763 · A Estrada Real",
+      "bg": {
+        "color": "#2a3a2a",
+        "image": "scenes/estrada_real.webp"
+      },
+      "cards": [
+        "C54"
+      ],
       "intro": "O ouro desce a serra para o Rio, e a capital vai atrás. Leve a tropa de Vila Rica até o Rio.",
-      "start": { "mules": 4, "food": 4, "gold": 30 },
+      "start": {
+        "mules": 4,
+        "food": 4,
+        "gold": 30
+      },
       "legs": [
-        { "place": "Vila Rica", "text": "Dois caminhos oficiais: o Caminho Velho, por São João até Paraty, e o Caminho Novo, mais curto, até o Rio.",
+        {
+          "place": "Vila Rica",
+          "text": "Dois caminhos oficiais: o Caminho Velho, por São João até Paraty, e o Caminho Novo, mais curto, até o Rio.",
           "options": [
-            { "label": "Caminho Novo", "reply": "Mais curto. Hoje é mais ou menos a BR-040." },
-            { "label": "Abrir um atalho pela mata", "mules": -1, "reply": "Abrir outro caminho era crime de lesa-majestade! Você perdeu uma mula voltando." }
-          ] },
-        { "place": "Registro da Coroa", "text": "Um posto fiscal. O fiscal olha a carga.",
+            {
+              "label": "Caminho Novo",
+              "reply": "Mais curto. Hoje é mais ou menos a BR-040."
+            },
+            {
+              "label": "Abrir um atalho pela mata",
+              "mules": -1,
+              "reply": "Abrir outro caminho era crime de lesa-majestade! Você perdeu uma mula voltando."
+            }
+          ]
+        },
+        {
+          "place": "Registro da Coroa",
+          "text": "Um posto fiscal. O fiscal olha a carga.",
           "options": [
-            { "label": "Pagar o Quinto", "quinto": true, "reply": "O registro cobrou o Quinto." },
-            { "label": "Esconder ouro num santo de madeira", "quinto": true, "reply": "O fiscal bateu no santo: oco. Pagou o Quinto do mesmo jeito." }
-          ] },
-        { "place": "Na serra", "text": "Chuva forte. A ponte caiu.",
+            {
+              "label": "Pagar o Quinto",
+              "quinto": true,
+              "reply": "O registro cobrou o Quinto."
+            },
+            {
+              "label": "Esconder ouro num santo de madeira",
+              "quinto": true,
+              "reply": "O fiscal bateu no santo: oco. Pagou o Quinto do mesmo jeito."
+            }
+          ]
+        },
+        {
+          "place": "Na serra",
+          "text": "Chuva forte. A ponte caiu.",
           "options": [
-            { "label": "Esperar a chuva passar", "food": -1, "reply": "Um dia parado, comendo." },
-            { "label": "Atravessar o rio com as mulas", "mules": -1, "reply": "Deu com os burros n'água. Dizem que a expressão vem daí… é causo." }
-          ] }
+            {
+              "label": "Esperar a chuva passar",
+              "food": -1,
+              "reply": "Um dia parado, comendo."
+            },
+            {
+              "label": "Atravessar o rio com as mulas",
+              "mules": -1,
+              "reply": "Deu com os burros n'água. Dizem que a expressão vem daí… é causo."
+            }
+          ]
+        }
       ],
       "end": [
-        { "who": "tropeiro", "text": "Os tropeiros eram os cowboys de mula do Brasil." },
-        { "who": "buck", "text": "The Estrada Real is our Santa Fe Trail!" },
-        { "who": "mula", "text": "E em 1763 a capital passa de Salvador para o Rio de Janeiro. Follow the money, literally." }
+        {
+          "who": "tropeiro",
+          "text": "Os tropeiros eram os cowboys de mula do Brasil."
+        },
+        {
+          "who": "buck",
+          "text": "The Estrada Real is our Santa Fe Trail!"
+        },
+        {
+          "who": "mula",
+          "text": "E em 1763 a capital passa de Salvador para o Rio de Janeiro. Follow the money, literally."
+        }
       ]
     },
     {
-      "type": "quiz", "title": "O sino toca", "bg": { "color": "#3a3320", "image": "scenes/mirante.webp" },
+      "type": "quiz",
+      "title": "O sino toca",
+      "bg": {
+        "color": "#3a3320",
+        "image": "scenes/mirante.webp"
+      },
       "intro": "Para avançar de era, acerte 2 de 3.",
-      "quizIds": ["Q47", "Q48a", "Q48b", "Q52", "Q53", "Q54"], "ask": 3, "pass": 2
+      "quizIds": [
+        "Q47",
+        "Q48a",
+        "Q48b",
+        "Q52",
+        "Q53",
+        "Q54"
+      ],
+      "ask": 3,
+      "pass": 2
     },
-    { "type": "gate", "title": "AGE UP", "next": "cap6", "text": "Próxima era: Age VI · Inconfidência." }
+    {
+      "type": "gate",
+      "title": "AGE UP",
+      "next": "cap6",
+      "text": "Próxima era: Age VI · Inconfidência.",
+      "video": "video/time_gate.mp4"
+    }
   ]
 }

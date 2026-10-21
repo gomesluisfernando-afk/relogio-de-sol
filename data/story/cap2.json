@@ -3,99 +3,346 @@
   "title": "Capítulo 2 · Açúcar & Sangue",
   "scenes": [
     {
-      "type": "dialog", "title": "AGE II · Açúcar & Sangue", "bg": { "color": "#4a2f16", "image": "cards/c10.webp" }, "cards": ["C10"],
+      "type": "dialog",
+      "title": "AGE II · Açúcar & Sangue",
+      "bg": {
+        "color": "#4a2f16",
+        "image": "cards/c10.webp"
+      },
+      "cards": [
+        "C10"
+      ],
       "lines": [
-        { "who": "mula", "text": "1532. Depois de 32 anos de “depois a gente vê”, Portugal funda a primeira vila: São Vicente." },
-        { "who": "buck", "text": "After 32 years of 'we'll get to it', Portugal finally built a town." },
-        { "who": "mula", "text": "Quem fundou foi Martim Afonso de Sousa. Ali perto ficou um dos primeiros engenhos." },
-        { "who": "buck", "text": "75 years older than Jamestown? Brazilian procrastination is a 500-year-old tradition." }
+        {
+          "who": "mula",
+          "text": "1532. Depois de 32 anos de “depois a gente vê”, Portugal funda a primeira vila: São Vicente."
+        },
+        {
+          "who": "buck",
+          "text": "After 32 years of 'we'll get to it', Portugal finally built a town."
+        },
+        {
+          "who": "mula",
+          "text": "Quem fundou foi Martim Afonso de Sousa. Ali perto ficou um dos primeiros engenhos."
+        },
+        {
+          "who": "buck",
+          "text": "75 years older than Jamestown? Brazilian procrastination is a 500-year-old tradition."
+        }
       ]
     },
     {
-      "type": "name", "bg": { "color": "#4a2f16", "image": "cards/c10.webp" }, "cards": ["C10"],
+      "type": "name",
+      "bg": {
+        "color": "#4a2f16",
+        "image": "cards/c10.webp"
+      },
+      "cards": [
+        "C10"
+      ],
       "rounds": [
-        { "date": "São Vicente · 1532", "place": "Uma vila oficial precisa de um governo local. Qual?", "options": ["Câmara", "Feitoria", "Chafariz"], "answer": 0 },
-        { "date": "São Vicente · 1532", "place": "E do símbolo da justiça do rei, a coluna de pedra no largo. Qual?", "options": ["Pelourinho", "Cruzeiro", "Aqueduto"], "answer": 0,
-          "after": "Câmara e pelourinho: São Vicente foi a primeira vila oficial do Brasil." }
+        {
+          "date": "São Vicente · 1532",
+          "place": "Uma vila oficial precisa de um governo local. Qual?",
+          "options": [
+            "Câmara",
+            "Feitoria",
+            "Chafariz"
+          ],
+          "answer": 0
+        },
+        {
+          "date": "São Vicente · 1532",
+          "place": "E do símbolo da justiça do rei, a coluna de pedra no largo. Qual?",
+          "options": [
+            "Pelourinho",
+            "Cruzeiro",
+            "Aqueduto"
+          ],
+          "answer": 0,
+          "after": "Câmara e pelourinho: São Vicente foi a primeira vila oficial do Brasil."
+        }
       ]
     },
     {
-      "type": "choice", "bg": { "color": "#4a2f16", "image": "cards/c11.webp" }, "cards": ["C11"],
-      "who": "mula", "text": "1534. Colônia gigante, cofre vazio. Portugal divide o litoral em faixas para donatários. Escolha a sua capitania:",
+      "type": "choice",
+      "bg": {
+        "color": "#4a2f16",
+        "image": "cards/c11.webp"
+      },
+      "cards": [
+        "C11"
+      ],
+      "who": "mula",
+      "text": "1534. Colônia gigante, cofre vazio. Portugal divide o litoral em faixas para donatários. Escolha a sua capitania:",
       "options": [
-        { "label": "Pernambuco, de Duarte Coelho", "ok": true, "reply": [{ "who": "mula", "text": "Deu certo, graças ao açúcar. Uma das pouquíssimas." }] },
-        { "label": "Uma faixa qualquer do litoral", "ok": false, "reply": [{ "who": "mula", "text": "Faliu. Quase todas faliram." }, { "who": "buck", "text": "Brazil was the first franchise model. Most franchises went bankrupt." }] },
-        { "label": "São Vicente", "ok": true, "reply": [{ "who": "mula", "text": "Deu certo também, com açúcar." }] }
+        {
+          "label": "Pernambuco, de Duarte Coelho",
+          "ok": true,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "Deu certo, graças ao açúcar. Uma das pouquíssimas."
+            }
+          ]
+        },
+        {
+          "label": "Uma faixa qualquer do litoral",
+          "ok": false,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "Faliu. Quase todas faliram."
+            },
+            {
+              "who": "buck",
+              "text": "Brazil was the first franchise model. Most franchises went bankrupt."
+            }
+          ]
+        },
+        {
+          "label": "São Vicente",
+          "ok": true,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "Deu certo também, com açúcar."
+            }
+          ]
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1549 · Salvador", "bg": { "color": "#2f4a5e", "image": "scenes/salvador.webp" }, "cards": ["C12"],
+      "type": "dialog",
+      "title": "1549 · Salvador",
+      "bg": {
+        "color": "#2f4a5e",
+        "image": "scenes/salvador.webp"
+      },
+      "cards": [
+        "C12"
+      ],
       "lines": [
-        { "who": "buck", "text": "When the franchises failed, the king sent a manager." },
-        { "who": "mula", "text": "Tomé de Sousa. Ele funda Salvador, a primeira capital, e chegam os primeiros jesuítas, com Manuel da Nóbrega." },
-        { "who": "buck", "text": "Capital for 214 years? Washington D.C. hasn't made it that far yet." }
+        {
+          "who": "buck",
+          "text": "When the franchises failed, the king sent a manager."
+        },
+        {
+          "who": "mula",
+          "text": "Tomé de Sousa. Ele funda Salvador, a primeira capital, e chegam os primeiros jesuítas, com Manuel da Nóbrega."
+        },
+        {
+          "who": "buck",
+          "text": "Capital for 214 years? Washington D.C. hasn't made it that far yet."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "O engenho", "tone": "serio", "bg": { "color": "#222", "image": "scenes/engenho.webp" }, "cards": ["C13"],
+      "type": "dialog",
+      "title": "O engenho",
+      "tone": "serio",
+      "bg": {
+        "color": "#222",
+        "image": "scenes/engenho.webp"
+      },
+      "cards": [
+        "C13"
+      ],
       "lines": [
-        { "who": "mula", "text": "Aqui eu paro de brincar." },
-        { "who": "narr", "text": "O açúcar precisava de mãos. Primeiro escravizaram os indígenas, os chamados “negros da terra”." },
-        { "who": "narr", "text": "Com epidemias, resistência, pressão jesuíta e o lucro do tráfico atlântico, cresceu a escravidão africana." },
-        { "who": "narr", "text": "O Brasil recebeu cerca de 4,8 milhões de africanos escravizados: perto de 40% de todo o tráfico atlântico." },
-        { "who": "buck", "text": "For every enslaved African brought to the US, Brazil received about twelve." }
+        {
+          "who": "mula",
+          "text": "Aqui eu paro de brincar."
+        },
+        {
+          "who": "narr",
+          "text": "O açúcar precisava de mãos. Primeiro escravizaram os indígenas, os chamados “negros da terra”."
+        },
+        {
+          "who": "narr",
+          "text": "Com epidemias, resistência, pressão jesuíta e o lucro do tráfico atlântico, cresceu a escravidão africana."
+        },
+        {
+          "who": "narr",
+          "text": "O Brasil recebeu cerca de 4,8 milhões de africanos escravizados: perto de 40% de todo o tráfico atlântico."
+        },
+        {
+          "who": "buck",
+          "text": "For every enslaved African brought to the US, Brazil received about twelve."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1554–1557", "bg": { "color": "#3a2f20", "image": "cards/c14.webp" }, "cards": ["C14"],
+      "type": "dialog",
+      "title": "1554–1557",
+      "bg": {
+        "color": "#3a2f20",
+        "image": "cards/c14.webp"
+      },
+      "cards": [
+        "C14"
+      ],
       "lines": [
-        { "who": "mula", "text": "Um alemão, Hans Staden, é capturado pelos Tupinambás perto de Bertioga. Passa meses esperando a execução ritual. E foge." },
-        { "who": "buck", "text": "The first Brazilian bestseller in Europe was written by a German who almost got eaten." },
-        { "who": "mula", "text": "O livro saiu em 1557." },
-        { "who": "buck", "text": "Worst Airbnb review of the 16th century." }
+        {
+          "who": "mula",
+          "text": "Um alemão, Hans Staden, é capturado pelos Tupinambás perto de Bertioga. Passa meses esperando a execução ritual. E foge."
+        },
+        {
+          "who": "buck",
+          "text": "The first Brazilian bestseller in Europe was written by a German who almost got eaten."
+        },
+        {
+          "who": "mula",
+          "text": "O livro saiu em 1557."
+        },
+        {
+          "who": "buck",
+          "text": "Worst Airbnb review of the 16th century."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1556", "bg": { "color": "#3a2f20", "image": "cards/c15.webp" }, "cards": ["C15"],
+      "type": "dialog",
+      "title": "1556",
+      "bg": {
+        "color": "#3a2f20",
+        "image": "cards/c15.webp"
+      },
+      "cards": [
+        "C15"
+      ],
       "lines": [
-        { "who": "buck", "text": "Brazil's first bishop survived a shipwreck. That was the easy part." },
-        { "who": "mula", "text": "Pero Fernandes Sardinha. Naufragou em Alagoas e foi morto pelos Caetés. O nome dele era Sardinha: só estou informando." },
-        { "who": "mula", "tone": "serio", "text": "A resposta da Coroa não teve graça nenhuma: autorizou a escravização dos Caetés." }
+        {
+          "who": "buck",
+          "text": "Brazil's first bishop survived a shipwreck. That was the easy part."
+        },
+        {
+          "who": "mula",
+          "text": "Pero Fernandes Sardinha. Naufragou em Alagoas e foi morto pelos Caetés. O nome dele era Sardinha: só estou informando."
+        },
+        {
+          "who": "mula",
+          "tone": "serio",
+          "text": "A resposta da Coroa não teve graça nenhuma: autorizou a escravização dos Caetés."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1555 · Guanabara", "bg": { "color": "#1f3a4a", "image": "cards/c16.webp" }, "cards": ["C16"],
+      "type": "dialog",
+      "title": "1555 · Guanabara",
+      "bg": {
+        "color": "#1f3a4a",
+        "image": "cards/c16.webp"
+      },
+      "cards": [
+        "C16"
+      ],
       "lines": [
-        { "who": "mula", "text": "Os franceses de Villegaignon fundam a França Antártica na Baía de Guanabara." },
-        { "who": "mula", "text": "Os Tupinambás da Confederação dos Tamoios, com Cunhambebe e Aimberê, se aliam aos franceses." },
-        { "who": "buck", "text": "So how does Portugal get the bay back?" }
+        {
+          "who": "mula",
+          "text": "Os franceses de Villegaignon fundam a França Antártica na Baía de Guanabara."
+        },
+        {
+          "who": "mula",
+          "text": "Os Tupinambás da Confederação dos Tamoios, com Cunhambebe e Aimberê, se aliam aos franceses."
+        },
+        {
+          "who": "buck",
+          "text": "So how does Portugal get the bay back?"
+        }
       ]
     },
     {
-      "type": "choice", "bg": { "color": "#1f3a4a", "image": "cards/c05.webp" }, "cards": ["C16"],
-      "who": "mula", "text": "Como Portugal tira os franceses da Guanabara?",
+      "type": "choice",
+      "bg": {
+        "color": "#1f3a4a",
+        "image": "cards/c05.webp"
+      },
+      "cards": [
+        "C16"
+      ],
+      "who": "mula",
+      "text": "Como Portugal tira os franceses da Guanabara?",
       "options": [
-        { "label": "Fundando uma cidade bem ali", "ok": true, "reply": [
-          { "who": "mula", "text": "Isso. Estácio de Sá funda o Rio em 1º de março de 1565. Os franceses saem de vez em 1567." },
-          { "who": "buck", "text": "Rio de Janeiro was founded to kick out the French. Born out of an eviction notice." },
-          { "who": "mula", "text": "E o temiminó Arariboia, aliado dos portugueses, funda Niterói." }
-        ] },
-        { "label": "Pedindo com educação", "ok": false, "retry": true, "reply": [{ "who": "mula", "text": "Com francês? Em 1555? Tenta de novo." }] }
+        {
+          "label": "Fundando uma cidade bem ali",
+          "ok": true,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "Isso. Estácio de Sá funda o Rio em 1º de março de 1565. Os franceses saem de vez em 1567."
+            },
+            {
+              "who": "buck",
+              "text": "Rio de Janeiro was founded to kick out the French. Born out of an eviction notice."
+            },
+            {
+              "who": "mula",
+              "text": "E o temiminó Arariboia, aliado dos portugueses, funda Niterói."
+            }
+          ]
+        },
+        {
+          "label": "Pedindo com educação",
+          "ok": false,
+          "retry": true,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "Com francês? Em 1555? Tenta de novo."
+            }
+          ]
+        }
       ]
     },
     {
-      "type": "dialog", "title": "1563 · Iperoig", "bg": { "color": "#2f3a2a", "image": "cards/c17.webp" }, "cards": ["C17"],
+      "type": "dialog",
+      "title": "1563 · Iperoig",
+      "bg": {
+        "color": "#2f3a2a",
+        "image": "cards/c17.webp"
+      },
+      "cards": [
+        "C17"
+      ],
       "lines": [
-        { "who": "mula", "text": "O jesuíta José de Anchieta fica refém dos Tamoios em Iperoig, hoje Ubatuba, durante negociações de paz." },
-        { "who": "buck", "text": "A Jesuit hostage wrote a 5,000-line poem in the sand and memorized it." },
-        { "who": "mula", "text": "Causo! O poema existe; escrever na areia é tradição. No tour: “dizem que…”." }
+        {
+          "who": "mula",
+          "text": "O jesuíta José de Anchieta fica refém dos Tamoios em Iperoig, hoje Ubatuba, durante negociações de paz."
+        },
+        {
+          "who": "buck",
+          "text": "A Jesuit hostage wrote a 5,000-line poem in the sand and memorized it."
+        },
+        {
+          "who": "mula",
+          "text": "Causo! O poema existe; escrever na areia é tradição. No tour: “dizem que…”."
+        }
       ]
     },
     {
-      "type": "quiz", "title": "O sino toca", "bg": { "color": "#3a3320", "image": "scenes/mirante.webp" },
+      "type": "quiz",
+      "title": "O sino toca",
+      "bg": {
+        "color": "#3a3320",
+        "image": "scenes/mirante.webp"
+      },
       "intro": "Para avançar de era, acerte 2 de 3.",
-      "quizIds": ["Q10", "Q12", "Q13", "Q16", "F04"], "ask": 3, "pass": 2
+      "quizIds": [
+        "Q10",
+        "Q12",
+        "Q13",
+        "Q16",
+        "F04"
+      ],
+      "ask": 3,
+      "pass": 2
     },
-    { "type": "gate", "title": "AGE UP", "next": "cap3", "text": "Próxima era: Age III · Todo Mundo Quer um Pedaço." }
+    {
+      "type": "gate",
+      "title": "AGE UP",
+      "next": "cap3",
+      "text": "Próxima era: Age III · Todo Mundo Quer um Pedaço.",
+      "video": "video/time_gate.mp4"
+    }
   ]
 }
