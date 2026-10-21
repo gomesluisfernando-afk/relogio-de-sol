@@ -98,5 +98,19 @@
     "train.done":  "Sessão concluída",
     "train.more":  "Mais 3 minutos",
     "train.backCard":  "Voltar ao card",
-    "train.day":  "dia seguido"
+    "train.day":  "dia seguido",
+    "codex.tab.ach":  "🏆",
+    "story.done":  "concluído",
+    "story.scene":  "cena",
+    "story.new":  "começar",
+    "story.restart":  "Recomeçar capítulo",
+    "story.tap":  "toque para seguir",
+    "story.strike":  "Dona Mula entrou em greve. Ela é sindicalizada.",
+    "story.eggHint":  "Tem alguma coisa estranha no mapa…",
+    "story.land":  "Desembarcar",
+    "story.named":  "Batizado!",
+    "story.retry":  "Tentar de novo",
+    "story.go":  "Seguir",
+    "story.quiet":  "O sino ficou quieto.",
+    "story.ready":  "Estou pronto"
 }

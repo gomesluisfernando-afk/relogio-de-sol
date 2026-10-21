@@ -2,14 +2,14 @@
 import { state } from '../state.js';
 import { esc, tag, worldToggle } from '../ui.js';
 
-const TABS = ['chars', 'dict', 'usa'];
+const TABS = ['chars', 'dict', 'usa', 'ach'];
 
 export function codex(root, ctx, [tab, id]) {
   const { t } = ctx;
   if (!TABS.includes(tab)) tab = state.get('codexTab', 'usa');
   state.set('codexTab', tab);
   document.body.className = 'page';
-  const body = id ? (tab === 'chars' ? charPage : exprPage)(ctx, id) : { chars: charList, dict: exprList, usa: usaGrid }[tab](ctx);
+  const body = id ? (tab === 'chars' ? charPage : exprPage)(ctx, id) : { chars: charList, dict: exprList, usa: usaGrid, ach: achList }[tab](ctx);
   root.innerHTML = `
     <div class="codex">
       <nav class="tabs"><a class="back" href="${id ? '#/codex/' + tab : '#/'}">←</a>
@@ -97,4 +97,11 @@ function usaGrid({ content, t }) {
     <div class="medals">${main.map(medal).join('')}</div>
     <h2 class="memh">${esc(t['codex.memory'])}</h2><p class="count"><small>${esc(t['codex.memoryNote'])}</small></p>
     <div class="medals">${mem.map(medal).join('')}</div>`;
+}
+
+function achList({ content }) {
+  const got = state.get('achievements', []);
+  return `<div class="exprs">${content.achievements.map((a) => `
+    <div class="rowcard ach ${got.includes(a.id) ? 'got' : ''}"><span class="yr">${got.includes(a.id) ? a.icon : '🔒'}</span>
+      <span class="ttl"><b>${esc(a.title)}</b><br><small>${esc(a.desc)}</small></span></div>`).join('')}</div>`;
 }

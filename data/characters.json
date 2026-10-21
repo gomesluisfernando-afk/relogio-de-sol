@@ -2,7 +2,7 @@
   { "id": "buck", "name": "Buck Calhoun", "kind": "ficcional", "role": "Protagonista · “The Highlander of the Royal Road”", "eras": ["all"],
     "visual": "Stetson marrom com a aba dobrada para cima na frente; camisa xadrez vermelha com mangas enroladas; colete de couro; bandana azul; botas com espora de estrela; cantil de lata amassado no lado esquerdo do cinto.",
     "function": "Vaqueiro de Nashville (1876) preso no tempo depois de beber do chafariz. Compara tudo com os EUA e erra com confiança.",
-    "catchphrase": "Like Columbus, I never ask for directions.", "image": "chars/ficha_buck.webp" },
+    "catchphrase": "Like Columbus, I never ask for directions.", "image": "chars/ficha_buck.webp", "face": "background-size:560% auto;background-position:8.5% 9%" },
   { "id": "mula", "name": "Dona Mula", "kind": "ficcional", "role": "Companheira · a Mula Sem Cabeça", "eras": ["all"],
     "visual": "Mula marrom-acinzentada com cangalha de couro e dois baús; no lugar da cabeça, uma chama azul; um brinco de ouro flutuando onde seria a orelha.",
     "function": "A voz brasileira e o botão de dica. Para de fazer piada nos cards sérios.",

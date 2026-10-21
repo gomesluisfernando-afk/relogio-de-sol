@@ -1,0 +1,10 @@
+{
+  "chapters": [
+    { "id": "cap1", "file": "story/cap1.json", "title": "Capítulo 1 · Pau-Brasil", "eras": ["mundo", "paubrasil"] },
+    { "id": "cap2", "file": null, "title": "Capítulo 2 · Açúcar & Sangue", "eras": ["acucar"] },
+    { "id": "cap3", "file": null, "title": "Capítulo 3 · Todo Mundo Quer um Pedaço", "eras": ["invasoes", "palmares"] },
+    { "id": "cap4", "file": null, "title": "Capítulo 4 · A Idade do Ouro", "eras": ["ouro"] },
+    { "id": "cap5", "file": null, "title": "Capítulo 5 · Apogeu & Segregação", "eras": ["apogeu"] },
+    { "id": "cap6", "file": null, "title": "Capítulo 6 · Inconfidência", "eras": ["inconfidencia"] }
+  ]
+}

@@ -1,6 +1,6 @@
 // Linha do Tempo (lista por era, busca, filtros) e a tela de um card.
 import { state } from '../state.js';
-import { esc, tag, norm, markSeen, worldToggle } from '../ui.js';
+import { esc, tag, norm, markSeen, worldToggle, unlock } from '../ui.js';
 
 export function timeline(root, { content, t }) {
   const f = { q: '', onlyDoc: false, usa: false, jokes: false, wrong: false, stop: '', ...state.get('tlFilters', {}) };
@@ -114,6 +114,7 @@ export function card(root, { content, t }, [id]) {
     world = world === 'doc' ? 'lenda' : 'doc';
     page.classList.replace(world === 'doc' ? 'w-lenda' : 'w-doc', 'w-' + world);
     btn.outerHTML = worldToggle(t, world);
+    if (k.id === 'C66') unlock(state, content, 'barba');
   });
   scrollTo(0, 0);
 }

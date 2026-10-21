@@ -11,6 +11,8 @@
   "shared": {
     "characters": "characters.json",
     "expressions": "expressions.json",
-    "quizzes": "quizzes.json"
+    "quizzes": "quizzes.json",
+    "story": "story.json",
+    "achievements": "achievements.json"
   }
 }

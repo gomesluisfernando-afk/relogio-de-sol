@@ -2,7 +2,7 @@
 // A repetição espaçada (Leitner) decide qual card volta. Acertou um card com
 // ponte EUA → a medalha vira ouro no Códex. Errou → entra em "os que errei".
 import { state } from '../state.js';
-import { esc, tag } from '../ui.js';
+import { esc, tag, unlock } from '../ui.js';
 import { grade, pick } from '../leitner.js';
 import { sfx } from '../audio.js';
 
@@ -85,6 +85,8 @@ function session(root, { content, t }, opt) {
       if (card?.tone === 'serio') quiet = true;
       if (!ok) { wrong.add(key); continue; }
       wrong.delete(key);
+      if (key === 'C61') unlock(state, content, 'dez-dias');
+      if (key === 'C59') unlock(state, content, 'jefferson');
       if (card?.usa && !collected.has(key)) { collected.add(key); if (card.tone !== 'serio') s.gold.push(card); }
     }
     state.set('leitner', boxes);

@@ -25,6 +25,9 @@ export async function assemble(index, get) {
   c.characters = await get(index.shared.characters);
   c.expressions = await get(index.shared.expressions);
   c.quizzes = await get(index.shared.quizzes);
+  c.achievements = await get(index.shared.achievements);
+  c.chapters = (await get(index.shared.story)).chapters;
+  for (const ch of c.chapters) if (ch.file) ch.scenes = (await get(ch.file)).scenes;
   c.cards.sort((a, b) => a.year - b.year || a.id.localeCompare(b.id));
   c.byId = Object.fromEntries(c.cards.map((x) => [x.id, x]));
   // Paradas de cada card vêm da rota (fonte única), não do card.
@@ -87,6 +90,20 @@ export function validate(c) {
     if (q.type === 'factOrLegend' && !['fato', 'lenda'].includes(q.answer)) errors.push(`${q.id}: resposta deve ser "fato" ou "lenda"`);
     if (!['multiple', 'factOrLegend'].includes(q.type)) errors.push(`${q.id}: tipo "${q.type}" não suportado`);
   }
+
+  const achIds = new Set(c.achievements.map((a) => a.id));
+  const who = new Set(['narr', ...charIds]);
+  const SCENES = ['dialog', 'choice', 'sail', 'name', 'barter', 'build', 'quiz', 'gate'];
+  for (const ch of c.chapters) (ch.scenes || []).forEach((sc, n) => {
+    const at = `${ch.id}#${n}`;
+    if (!SCENES.includes(sc.type)) errors.push(`${at}: tipo de cena "${sc.type}" não existe`);
+    for (const id of sc.cards || []) if (!c.byId[id]) errors.push(`${at}: card "${id}" não existe`);
+    for (const id of sc.quizIds || []) if (!quizIds.has(id)) errors.push(`${at}: quiz "${id}" não existe`);
+    for (const id of [sc.ach, sc.egg?.ach].filter(Boolean)) if (!achIds.has(id)) errors.push(`${at}: conquista "${id}" não existe`);
+    const lines = [sc.lines, sc.egg?.lines, sc.win, sc.lose, sc.after, ...(sc.options || []).map((o) => o.reply)].flat().filter((l) => l && typeof l === 'object');
+    for (const l of [...lines, ...(sc.who ? [{ who: sc.who }] : [])]) if (!who.has(l.who)) errors.push(`${at}: quem fala "${l.who}" não existe`);
+    if (sc.type === 'quiz' && sc.quizIds.length < sc.ask) errors.push(`${at}: poucas perguntas para "ask"`);
+  });
 
   return { errors, warnings, conferir };
 }

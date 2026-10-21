@@ -15,7 +15,7 @@ for (const q of conferir) console.log('conferir:', q.id, '-', q.text);
 const sw = await readFile(new URL('../sw.js', import.meta.url), 'utf8');
 const cached = [...sw.matchAll(/'([^']+\.[a-z]+)'/g)].map((m) => m[1]);
 const index = await get('index.json');
-const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards, ...p.tours]), ...Object.values(index.shared)];
+const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards, ...p.tours]), ...Object.values(index.shared), ...c.chapters.filter((ch) => ch.file).map((ch) => ch.file)];
 for (const f of dataFiles) if (!cached.includes('data/' + f)) errors.push(`sw.js não guarda data/${f} para offline`);
 const { readdir } = await import('node:fs/promises');
 for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true }))
