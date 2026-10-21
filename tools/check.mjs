@@ -19,9 +19,10 @@ const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards
 for (const f of dataFiles) if (!cached.includes('data/' + f)) errors.push(`sw.js não guarda data/${f} para offline`);
 // Toda imagem citada nos dados precisa existir e estar no cache offline.
 // (imagens de card e ícones de era o sw.js lê dos JSON; aqui basta existirem)
-const images = [...c.characters.map((x) => x.image), ...c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.image, s.bg?.before]))].filter(Boolean);
+const images = [...c.characters.map((x) => x.image), ...c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.image, s.bg?.before, s.map]))].filter(Boolean);
+const dynamic = new Set([...c.cards.map((k) => k.image), ...c.eras.map((e) => e.iconImg)]);
 for (const img of new Set(images)) {
-  if (!cached.includes('assets/img/' + img)) errors.push(`sw.js não guarda assets/img/${img} para offline`);
+  if (!dynamic.has(img) && !cached.includes('assets/img/' + img)) errors.push(`sw.js não guarda assets/img/${img} para offline`);
 }
 for (const img of [...c.cards.map((k) => k.image), ...c.eras.map((e) => e.iconImg)].filter(Boolean))
   await readFile(new URL('../assets/img/' + img, import.meta.url)).catch(() => errors.push(`imagem ${img} não existe`));

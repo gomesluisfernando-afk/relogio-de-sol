@@ -1,6 +1,7 @@
 // Modo História: capítulos = eras. Cada capítulo é uma lista de cenas em data/story/*.json.
 // Tipos de cena: dialog, choice, sail (navegação), name (batizar lugares), barter (escambo),
-// build (construir), quiz (Age Up) e gate (Time Gate).
+// build (construir), pan (bateia), trail (tropa na Estrada Real), map (rua × beco),
+// quiz (Age Up) e gate (Time Gate). Qualquer cena pode ter um easter egg (sc.egg).
 import { state } from '../state.js';
 import { esc, markSeen, collect, unlock, pay, hud } from '../ui.js';
 import { sfx } from '../audio.js';
@@ -22,8 +23,11 @@ function menu(root, { content, t }) {
   root.innerHTML = `
     <div class="storymenu">
       <nav class="tabs"><a class="back" href="#/">←</a><b>${esc(t['mode.story'])}</b></nav>
-      <div class="pad">${hud(state, t)}${content.chapters.map((c) => {
+      <div class="pad">${hud(state, t)}${content.chapters.map((c, n) => {
         if (!c.scenes) return `<span class="btn off">${esc(c.title)}<small>${esc(t['hub.soon'])}</small></span>`;
+        // Age Up: o capítulo só abre depois do quiz do anterior.
+        const prev = content.chapters[n - 1];
+        if (prev && !done.includes(prev.id)) return `<span class="btn off">🔒 ${esc(c.title)}<small>${esc(t['story.locked'])}</small></span>`;
         const at = progress[c.id] || 0;
         const status = done.includes(c.id) ? '✔ ' + t['story.done'] : at ? `${t['story.scene']} ${at + 1}/${c.scenes.length}` : t['story.new'];
         return `<a class="btn primary" href="#/story/${c.id}">${esc(c.title)}<small>${esc(status)}</small></a>
@@ -100,14 +104,96 @@ function play(root, ctx, ch, start) {
   const SCENES = {
     dialog: (sc) => say(sc.lines, next),
 
+    // Bateia: toque para girar e lavar o cascalho até aparecer o ouro.
+    pan(sc) {
+      let n = 0;
+      $('.prop').innerHTML = `<div class="pan" style="background-image:url('assets/img/${sc.pan}')"></div>`;
+      const draw = () => {
+        panel.innerHTML = `<p class="reply">${esc(sc.intro)}</p>
+          <div class="meters"><span>🥘 ${'●'.repeat(n)}${'○'.repeat(sc.taps - n)}</span></div>
+          <p class="hint">${esc(t['story.panHint'])}</p>`;
+      };
+      draw();
+      panel.onclick = null;
+      $('.stage').onclick = () => {
+        if (n >= sc.taps) return;
+        n++;
+        const pan = $('.pan');
+        pan.classList.remove('swirl'); void pan.offsetWidth; pan.classList.add('swirl');
+        draw();
+        if (n < sc.taps) return;
+        $('.stage').onclick = null;
+        pan.classList.add('gold');
+        sfx.hit();
+        pay(state, sc.reward);
+        say(sc.lines, next);
+      };
+    },
+
+    // Tropa na Estrada Real (estilo Oregon Trail): cada trecho gasta comida;
+    // registros cobram o Quinto sobre o ouro carregado; sem comida, morre uma mula.
+    trail(sc) {
+      const r = { ...sc.start };
+      let leg = 0;
+      const meters = () => `<div class="meters"><span>🐴 ${r.mules}</span><span>🍖 ${r.food}</span><span>🪙 ${r.gold}</span></div>`;
+      const ask = (msg) => {
+        if (leg >= sc.legs.length) return say([...sc.end, { who: 'narr', text: `${t['story.arrived']}: 🐴 ${r.mules} · 🍖 ${r.food} · 🪙 ${r.gold}` }], next);
+        const L = sc.legs[leg];
+        panel.innerHTML = `${meters()}${msg ? `<p class="reply">${esc(msg)}</p>` : ''}<p class="date">📍 ${esc(L.place)}</p><p class="prompt">${esc(L.text)}</p>`;
+        buttons(L.options.map((o) => o.label), (k) => {
+          const o = L.options[k];
+          r.food += (o.food || 0) - 1;
+          r.mules += o.mules || 0;
+          r.gold += o.gold || 0;
+          let extra = '';
+          if (o.quinto) { const q = Math.round(r.gold * 0.2); r.gold -= q; extra = ` 👑 −${q}`; sfx.stamp(); }
+          if (r.food < 0) { r.food = 0; r.mules = Math.max(1, r.mules - 1); extra += ` ${t['story.hunger']}`; }
+          leg++;
+          ask(`${o.reply}${extra}`);
+        });
+      };
+      ask(sc.intro);
+    },
+
+    // Mapa com duas camadas: rua (eixo do poder) e beco (eixo da servidão).
+    map(sc) {
+      const seen = new Set();
+      let layer = 'rua';
+      $('.stage').style.backgroundImage = '';
+      const drawMap = () => {
+        $('.prop').innerHTML = `<div class="mapwrap ${layer}"><img src="assets/img/${sc.map}" alt="">
+          ${sc.spots.map((p, k) => p.layer === layer ? `<button class="spot ${seen.has(k) ? 'done' : ''}" data-k="${k}" style="left:${p.x}%;top:${p.y}%">${seen.has(k) ? '✔' : p.icon || '●'}</button>` : '').join('')}</div>`;
+        $('.prop').querySelectorAll('.spot').forEach((b) => b.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const p = sc.spots[+b.dataset.k];
+          seen.add(+b.dataset.k);
+          $('.mapwrap').classList.add('busy'); // sem trocar de ponto no meio da fala
+          say([{ who: 'narr', text: `📍 ${p.label}` }, ...p.lines], drawAll);
+        }));
+      };
+      const drawAll = () => {
+        drawMap();
+        const left = sc.need - seen.size;
+        panel.onclick = null;
+        panel.innerHTML = `<p class="reply">${esc(sc.intro)}</p>
+          <div class="layers">${Object.entries(sc.layers).map(([id, label]) => `<button class="chip ${layer === id ? 'on' : ''}" data-l="${id}">${esc(label)}</button>`).join('')}</div>
+          <p class="hint">${left > 0 ? `${esc(t['story.mapLeft'])}: ${left}` : esc(t['story.mapDone'])}</p>`;
+        panel.querySelectorAll('[data-l]').forEach((b) => b.addEventListener('click', () => { layer = b.dataset.l; drawAll(); }));
+        if (left <= 0) buttons([t['story.go'] + ' →'], next);
+      };
+      drawAll();
+    },
+
     choice(sc) {
       const ask = () => {
         panel.innerHTML = `<div class="line">${portrait(sc.who)}<div><b>${esc(nameOf(sc.who))}</b><p>${esc(sc.text)}</p></div></div>`;
-        buttons(sc.options.map((o) => o.label), (k) => {
+        buttons(sc.options.map((o) => (o.locked ? '🔒 ' : '') + o.label), (k) => {
           const o = sc.options[k];
+          if (o.locked) return say(o.reply, ask);
           if (o.ok) sfx.hit();
           say(o.reply, o.retry ? ask : next);
         });
+        sc.options.forEach((o, k) => o.locked && panel.querySelector(`[data-k="${k}"]`)?.classList.add('locked'));
       };
       ask();
     },
@@ -244,12 +330,14 @@ function play(root, ctx, ch, start) {
       setImage(null);
       $('.prop').innerHTML = '<div class="gate"></div>';
       sfx.achievement();
-      unlock(state, content, sc.ach);
+      if (sc.ach) unlock(state, content, sc.ach);
       const done = state.get('storyDone', []);
       if (!done.includes(ch.id)) { state.set('storyDone', [...done, ch.id]); setTimeout(() => pay(state, 100), 1200); }
       panel.onclick = null;
+      const nextCh = sc.next && content.chapters.find((c) => c.id === sc.next && c.scenes);
       panel.innerHTML = `<h2 class="ageup">${esc(sc.title)}</h2><p class="reply">${esc(sc.text)}</p>
-        <a class="btn primary" href="#/train/mix/3">⚡ ${esc(t['train.mix3'])}</a>
+        ${nextCh ? `<a class="btn primary" href="#/story/${nextCh.id}">▶ ${esc(nextCh.title)}</a>` : ''}
+        <a class="btn ${nextCh ? '' : 'primary'}" href="#/train/mix/3">⚡ ${esc(t['train.mix3'])}</a>
         <a class="btn" href="#/story/${ch.id}/new">↺ ${esc(t['story.restart'])}</a>
         <a class="btn" href="#/">${esc(t['hub.title'])}</a>`;
     },
@@ -279,6 +367,18 @@ function play(root, ctx, ch, start) {
     banner.textContent = sc.title || '';
     banner.classList.toggle('on', !!sc.title);
     $('.dots').innerHTML = ch.scenes.map((_, k) => `<i class="${k < i ? 'past' : k === i ? 'now' : ''}"></i>`).join('');
+    $('.stage').onclick = null;
+    $('.stage').querySelector('.eggbtn')?.remove();
+    if (sc.egg && sc.type !== 'sail' && !state.get('achievements', []).includes(sc.egg.ach)) {
+      $('.stage').insertAdjacentHTML('beforeend', `<button class="eggbtn">${esc(sc.egg.label)}</button>`);
+      $('.stage .eggbtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.currentTarget.remove();
+        if (sc.egg.card) markSeen(state, sc.egg.card);
+        unlock(state, content, sc.egg.ach);
+        say(sc.egg.lines, () => SCENES[sc.type](sc));
+      });
+    }
     SCENES[sc.type](sc);
   }
 

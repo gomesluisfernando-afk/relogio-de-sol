@@ -558,7 +558,8 @@
       "type": "gate",
       "title": "AGE UP",
       "ach": "age1",
-      "text": "Próxima era: Age II · Açúcar & Sangue. Em breve."
+      "text": "Próxima era: Age II · Açúcar & Sangue.",
+      "next": "cap2"
     }
   ]
 }

@@ -1,0 +1,123 @@
+{
+  "id": "cap6",
+  "title": "Capítulo 6 · Inconfidência",
+  "scenes": [
+    {
+      "type": "dialog", "title": "AGE VI · Inconfidência", "bg": { "color": "#3a1a22", "image": "cards/c55.webp" }, "cards": ["C55"],
+      "lines": [
+        { "who": "cobrador", "text": "Todo ano a meta não batia. Todo ano a dívida rolava para o ano seguinte." },
+        { "who": "buck", "text": "Brazilian credit card debt, 18th-century edition." },
+        { "who": "mula", "text": "Aí chega o novo governador, o Visconde de Barbacena, com ordens de cobrar." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1785", "bg": { "color": "#3a1a22", "image": "cards/c56.webp" }, "cards": ["C56"],
+      "lines": [
+        { "who": "mula", "text": "A rainha D. Maria I proíbe manufaturas têxteis no Brasil. Só escapavam os panos grossos para os escravizados." },
+        { "who": "buck", "text": "You want clothes? Buy Portuguese. Or English. Just like the Navigation Acts!" }
+      ]
+    },
+    {
+      "type": "choice", "title": "10 de outubro de 1788", "bg": { "color": "#2a1a22", "image": "scenes/conspiracao.webp" }, "cards": ["C57"],
+      "who": "mula", "text": "Padre Toledo batizou os filhos de Alvarenga Peixoto e Bárbara Heliodora. À noite, festa na casa dele. Que roda você escuta?",
+      "options": [
+        { "label": "A roda perto da janela", "retry": true, "reply": [{ "who": "narr", "text": "“…esperar a derrama… quando o povo estiver revoltado, a gente sai às ruas…”" }, { "who": "mula", "text": "Escuta outra roda." }] },
+        { "label": "A roda perto do cravo", "retry": true, "reply": [{ "who": "narr", "text": "“…uma república… universidade em Vila Rica… e a capital em São João del-Rei…”" }, { "who": "mula", "text": "Mais uma?" }] },
+        { "label": "Já ouvi o suficiente", "ok": true, "reply": [
+          { "who": "mula", "text": "A tradição diz que essa foi a primeira reunião dos inconfidentes. Hoje a casa é o Museu Padre Toledo." },
+          { "who": "buck", "text": "Most revolutions start in taverns. Yours started at a christening." }
+        ] }
+      ]
+    },
+    {
+      "type": "choice", "title": "O plano", "bg": { "color": "#2a1a22", "image": "cards/c58.webp" }, "cards": ["C58"],
+      "who": "mula", "text": "República em Minas e parte do Rio, universidade, bandeira com “Libertas quae sera tamen”. Vote na assembleia:",
+      "options": [
+        { "label": "Abolir a escravidão", "locked": true, "reply": [
+          { "who": "mula", "tone": "serio", "text": "Opção travada. Os inconfidentes não iam abolir a escravidão. Padre Toledo, por exemplo, tinha escravizados, segundo o tour." }
+        ] },
+        { "label": "Aprovar o plano como ele era", "ok": true, "reply": [
+          { "who": "mula", "text": "“Libertas quae sera tamen”: hoje é a bandeira de Minas." },
+          { "who": "buck", "text": "Like ours, they read Enlightenment books, wrote poetry, owned slaves and talked about liberty. Unlike ours, they got caught." }
+        ] }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1787 · França", "bg": { "color": "#2a2a3a", "image": "cards/c59.webp" }, "cards": ["C59"],
+      "lines": [
+        { "who": "mula", "text": "Dois anos antes, o estudante José Joaquim da Maia foi falar com Thomas Jefferson, ministro dos EUA na França." },
+        { "who": "buck", "text": "Jefferson! What'd he say?" },
+        { "who": "mula", "text": "Foi cordial. E não prometeu nada." },
+        { "who": "buck", "text": "Jefferson ghosted Brazil." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "Março de 1789", "bg": { "color": "#1a1a22", "image": "cards/c60.webp" }, "cards": ["C60"],
+      "lines": [
+        { "who": "silverio", "text": "Eu devia uma fortuna à Coroa. Troquei os amigos pela dívida." },
+        { "who": "narr", "text": "Joaquim Silvério dos Reis denuncia o grupo. Barbacena suspende a derrama: sem gatilho, sem revolta. E prende todos." },
+        { "who": "mula", "text": "Você perdeu a missão. De propósito: eles também perderam. E o Silvério ganhou o perdão das dívidas." },
+        { "who": "buck", "text": "Plea bargain, 1789. Brazil invented it before it was cool." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "10 de maio de 1789", "bg": { "color": "#2a1a22", "image": "cards/c61.webp" }, "cards": ["C61", "C62"],
+      "lines": [
+        { "who": "mula", "text": "30 de abril de 1789: George Washington toma posse." },
+        { "who": "buck", "text": "Ten days later, Tiradentes was arrested in Rio?!" },
+        { "who": "tiradentes", "text": "Joaquim José da Silva Xavier. Dentista prático, tropeiro, alferes dos Dragões. Eu patrulhava o Caminho Novo." },
+        { "who": "mula", "text": "Era o propagandista do grupo. E o único que assumiu tudo." },
+        { "who": "buck", "text": "He was a dentist, a soldier, a muleteer, a miner. And the only one who didn't deny it." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1789–1792", "bg": { "color": "#2a1a1a", "image": "cards/c64.webp" }, "cards": ["C63", "C64"],
+      "lines": [
+        { "who": "mula", "text": "O poeta Cláudio Manuel da Costa aparece morto na cela, na Casa dos Contos. Suicídio ou assassinato? Ainda se discute." },
+        { "who": "mula", "text": "1792: onze condenados à morte. Aí leem a carta de clemência da rainha… que já estava pronta antes da sentença." },
+        { "who": "buck", "text": "Portuguese justice: one scapegoat, eleven exiles, zero surprises." },
+        { "who": "mula", "text": "Gonzaga prosperou em Moçambique. Alvarenga morreu em Angola. Os padres foram para conventos." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "21 de abril de 1792", "tone": "serio", "bg": { "color": "#111", "image": "cards/c65.webp" }, "cards": ["C65"],
+      "lines": [
+        { "who": "narr", "text": "Largo da Lampadosa, Rio de Janeiro. Hoje, Praça Tiradentes." },
+        { "who": "narr", "text": "Tiradentes é enforcado e esquartejado. Partes do corpo ficam expostas no Caminho Novo; a cabeça, em Vila Rica. A casa é destruída e o chão, salgado." },
+        { "who": "narr", "text": "Declarado infame por gerações. Hoje, 21 de abril é feriado nacional." },
+        { "who": "sineiro", "text": "Um sino só." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1889 · A barba", "bg": { "color": "#2a2a2a", "image": "scenes/estatua.webp" }, "cards": ["C66", "C72"],
+      "lines": [
+        { "who": "buck", "text": "Hold on. The famous bearded Tiradentes, looking like Jesus?" },
+        { "who": "mula", "text": "Inventado pela República, cem anos depois. Alferes não usava barba, e preso tinha a cabeça raspada." },
+        { "who": "buck", "text": "Brazil's first marketing rebrand. Great beard, though." },
+        { "who": "mula", "text": "Em 1889 a Vila de São José vira Tiradentes. Ironia: D. Maria I, que manteve a sentença, era filha do príncipe D. José, do nome antigo." }
+      ]
+    },
+    {
+      "type": "quiz", "title": "O sino toca", "bg": { "color": "#3a3320", "image": "scenes/mirante.webp" },
+      "intro": "Último quiz da Fase 1. Acerte 2 de 3.",
+      "quizIds": ["Q58b", "Q60", "Q61a", "Q65", "Q66", "F05"], "ask": 3, "pass": 2
+    },
+    {
+      "type": "dialog", "title": "De volta ao Mirante", "bg": { "color": "#3a2a1a", "image": "cards/c76.webp" }, "cards": ["C76"],
+      "egg": {
+        "label": "⛲ Beber do chafariz com o cantil vazio", "ach": "fase2",
+        "lines": [
+          { "who": "narr", "text": "Buck volta ao chafariz, enche o cantil e bebe. O céu gira outra vez…" },
+          { "who": "mula", "text": "Next stop: the Emperor's summer house. Petrópolis. Bring a jacket." }
+        ]
+      },
+      "lines": [
+        { "who": "buck", "text": "So: a town born from gold, saved by poverty, and rediscovered by an Englishman." },
+        { "who": "mula", "text": "Very Brazilian." },
+        { "who": "sineiro", "text": "Aqui o sino fala. Agora você sabe escutar." },
+        { "who": "buck", "text": "My canteen's empty…" }
+      ]
+    },
+    { "type": "gate", "title": "FIM DA FASE 1", "ach": "fase1", "text": "Você atravessou 300 anos, do pau-brasil à forca. Próxima parada: Fase 2 · Rio, Petrópolis e o Império." }
+  ]
+}

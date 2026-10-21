@@ -1,9 +1,74 @@
 [
-  { "id": "age1", "icon": "⏳", "title": "Primeira Era", "desc": "Terminar o Capítulo 1 e atravessar o primeiro Time Gate." },
-  { "id": "pinzon", "icon": "🏴", "title": "Chegou Primeiro, Não Levou", "desc": "Descobrir o espanhol que chegou antes de Cabral.", "card": "C03" },
-  { "id": "pica-mula", "icon": "🐴", "title": "Pica a Mula", "desc": "Tentar picar a Dona Mula 10 vezes. Ela é sindicalizada." },
-  { "id": "barba", "icon": "🧔", "title": "Barba de Marketing", "desc": "Alternar os dois mundos no card do Tiradentes barbudo.", "card": "C66" },
-  { "id": "dez-dias", "icon": "📅", "title": "Dez Dias", "desc": "Acertar no Treino o card Washington × Tiradentes.", "card": "C61" },
-  { "id": "primeira-devassa", "icon": "📜", "title": "Devassa Emitida", "desc": "Fechar o primeiro caso de Devassa na Investigação." },
-  { "id": "jefferson", "icon": "✉️", "title": "Jefferson Ghosted Us", "desc": "Colecionar a medalha de ouro do estudante que foi falar com Jefferson.", "card": "C59" }
+  {
+    "id": "age1",
+    "icon": "⏳",
+    "title": "Primeira Era",
+    "desc": "Terminar o Capítulo 1 e atravessar o primeiro Time Gate."
+  },
+  {
+    "id": "pinzon",
+    "icon": "🏴",
+    "title": "Chegou Primeiro, Não Levou",
+    "desc": "Descobrir o espanhol que chegou antes de Cabral.",
+    "card": "C03"
+  },
+  {
+    "id": "pica-mula",
+    "icon": "🐴",
+    "title": "Pica a Mula",
+    "desc": "Tentar picar a Dona Mula 10 vezes. Ela é sindicalizada."
+  },
+  {
+    "id": "barba",
+    "icon": "🧔",
+    "title": "Barba de Marketing",
+    "desc": "Alternar os dois mundos no card do Tiradentes barbudo.",
+    "card": "C66"
+  },
+  {
+    "id": "dez-dias",
+    "icon": "📅",
+    "title": "Dez Dias",
+    "desc": "Acertar no Treino o card Washington × Tiradentes.",
+    "card": "C61"
+  },
+  {
+    "id": "primeira-devassa",
+    "icon": "📜",
+    "title": "Devassa Emitida",
+    "desc": "Fechar o primeiro caso de Devassa na Investigação."
+  },
+  {
+    "id": "jefferson",
+    "icon": "✉️",
+    "title": "Jefferson Ghosted Us",
+    "desc": "Colecionar a medalha de ouro do estudante que foi falar com Jefferson.",
+    "card": "C59"
+  },
+  {
+    "id": "ny",
+    "icon": "🗽",
+    "title": "Nova York Começou em Recife",
+    "desc": "Achar o Time Gate secreto para Nova Amsterdã no Capítulo 3.",
+    "card": "C23"
+  },
+  {
+    "id": "cheers",
+    "icon": "🍷",
+    "title": "Cheers, England",
+    "desc": "Ver o vazamento de ouro para o navio inglês no Capítulo 4.",
+    "card": "C33"
+  },
+  {
+    "id": "fase1",
+    "icon": "🏁",
+    "title": "Fim da Fase 1",
+    "desc": "Atravessar os 6 capítulos, do pau-brasil à forca."
+  },
+  {
+    "id": "fase2",
+    "icon": "🚂",
+    "title": "Next Stop: Petrópolis",
+    "desc": "Beber do chafariz com o cantil vazio no fim da Fase 1."
+  }
 ]

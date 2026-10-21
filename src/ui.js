@@ -24,6 +24,7 @@ export function collect(state, id) {
 
 // Conquistas: guarda e mostra um aviso rápido no rodapé.
 export function unlock(state, content, id) {
+  if (!id) return;
   const got = state.get('achievements', []);
   if (got.includes(id)) return;
   state.set('achievements', [...got, id]);

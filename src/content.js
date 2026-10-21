@@ -95,16 +95,18 @@ export function validate(c) {
 
   const achIds = new Set(c.achievements.map((a) => a.id));
   const who = new Set(['narr', ...charIds]);
-  const SCENES = ['dialog', 'choice', 'sail', 'name', 'barter', 'build', 'quiz', 'gate'];
+  const SCENES = ['dialog', 'choice', 'sail', 'name', 'barter', 'build', 'pan', 'trail', 'map', 'quiz', 'gate'];
   for (const ch of c.chapters) (ch.scenes || []).forEach((sc, n) => {
     const at = `${ch.id}#${n}`;
     if (!SCENES.includes(sc.type)) errors.push(`${at}: tipo de cena "${sc.type}" não existe`);
     for (const id of sc.cards || []) if (!c.byId[id]) errors.push(`${at}: card "${id}" não existe`);
     for (const id of sc.quizIds || []) if (!quizIds.has(id)) errors.push(`${at}: quiz "${id}" não existe`);
     for (const id of [sc.ach, sc.egg?.ach].filter(Boolean)) if (!achIds.has(id)) errors.push(`${at}: conquista "${id}" não existe`);
-    const lines = [sc.lines, sc.egg?.lines, sc.win, sc.lose, sc.after, ...(sc.options || []).map((o) => o.reply)].flat().filter((l) => l && typeof l === 'object');
+    const lines = [sc.lines, sc.egg?.lines, sc.win, sc.lose, sc.after, sc.end, ...(sc.spots || []).map((p) => p.lines), ...(sc.options || []).map((o) => o.reply)].flat().filter((l) => l && typeof l === 'object');
     for (const l of [...lines, ...(sc.who ? [{ who: sc.who }] : [])]) if (!who.has(l.who)) errors.push(`${at}: quem fala "${l.who}" não existe`);
     if (sc.type === 'quiz' && sc.quizIds.length < sc.ask) errors.push(`${at}: poucas perguntas para "ask"`);
+    if (sc.type === 'map' && sc.spots.length < sc.need) errors.push(`${at}: "need" maior que o número de pontos`);
+    if (sc.type === 'gate' && sc.next && !c.chapters.some((x) => x.id === sc.next)) errors.push(`${at}: capítulo "${sc.next}" não existe`);
   });
 
   const itemIds = new Set(c.items.map((x) => x.id));

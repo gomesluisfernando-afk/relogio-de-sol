@@ -111,3 +111,13 @@ Prefixo comum: "SQUARE 1:1, painted 1990s JRPG style, soft outlines, warm light,
 - chars/ficha_antonil.webp — Italian Jesuit c.1711: black cassock, quill and thick book held to the chest, sly look
 - chars/ficha_tiradentes.webp — clean-shaven alferes of 1789: blue dragoon uniform with red trim, tricorn, no beard, dentist pliers at the belt
 - chars/ficha_silverio.webp — wealthy 18th-century Portuguese landowner: brown coat and wig, shifty eyes, debt paper in hand, sealed letter behind his back
+
+## Cenas dos Capítulos 2–6 (9:16) — Bloco 8
+- scenes/engenho.webp — (sério) 16th-century sugar mill interior at night, crushing wheel, glowing copper cauldrons, steam, no people
+- scenes/salvador.webp — upper city of Salvador in 1549 on a cliff above the Bay of All Saints, small fort, caravels
+- scenes/arraial.webp — gold rush mining camp on a steep mountainside c.1700, huts, panning in a stream
+- scenes/mapa_tiradentes.webp — illustrated bird's-eye map of a colonial hill town: two-tower church at the top, fountain at the bottom, light main streets and dark narrow alleys, gray ridge
+- scenes/estrada_real.webp — paved colonial road through green mountains, mule train, wooden tax checkpoint with royal flag
+- scenes/estatua.webp — colonial square at dusk with a statue of a clean-shaven 18th-century soldier
+- scenes/sinos.webp — colonial town full of baroque bell towers at sunset, bells swinging
+- scenes/conspiracao.webp — 1780s colonial living room at night, candles, harpsichord, men whispering by the windows

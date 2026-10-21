@@ -1,0 +1,114 @@
+{
+  "id": "cap3",
+  "title": "Capítulo 3 · Todo Mundo Quer um Pedaço",
+  "scenes": [
+    {
+      "type": "dialog", "title": "AGE III · Todo Mundo Quer um Pedaço", "bg": { "color": "#2a3a4a", "image": "cards/c18.webp" }, "cards": ["C18"],
+      "lines": [
+        { "who": "mula", "text": "1580. O rei de Portugal morre no Marrocos sem herdeiro. A Espanha herda Portugal…" },
+        { "who": "buck", "text": "…and all of Spain's enemies. Like inheriting your in-laws' drama." },
+        { "who": "mula", "text": "União Ibérica, de 1580 a 1640. Holanda, Inglaterra e França passam a atacar o Brasil." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1591", "bg": { "color": "#2a3a4a", "image": "cards/c19.webp" }, "cards": ["C19"],
+      "lines": [
+        { "who": "mula", "text": "O pirata inglês Thomas Cavendish saqueia Santos. Em 1595, James Lancaster ataca Recife." },
+        { "who": "buck", "text": "Before the English bought our gold, they just stole it. Pirates of the Caribbean, Brazilian edition." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1624–1625", "bg": { "color": "#2a3a4a", "image": "cards/c20.webp" }, "cards": ["C20"],
+      "lines": [
+        { "who": "mula", "text": "A Companhia das Índias Ocidentais, a WIC holandesa, toma Salvador, a capital." },
+        { "who": "mula", "text": "Em 1625, uma frota enorme de Portugal e Espanha retoma a cidade." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1630–1654 · Recife holandês", "bg": { "color": "#2a3a4a", "image": "cards/c21.webp" }, "cards": ["C21"],
+      "lines": [
+        { "who": "mula", "text": "1630: os holandeses voltam e tomam Pernambuco, o coração do açúcar." },
+        { "who": "mula", "text": "Maurício de Nassau governa de 1637 a 1644: pintores como Frans Post e Eckhout, cientistas, pontes. E a primeira sinagoga das Américas." },
+        { "who": "buck", "text": "For 24 years, Recife was a Dutch city. With canals, bridges, an observatory and a zoo." },
+        { "who": "mula", "text": "Na mesma época, os holandeses tinham Nova Amsterdã, a futura Nova York. Guarda essa." }
+      ]
+    },
+    {
+      "type": "choice", "title": "1648 · Guararapes", "bg": { "color": "#2a3a2a", "image": "cards/c22.webp" }, "cards": ["C22"],
+      "who": "mula", "text": "Quem derrota os holandeses nos Guararapes?",
+      "options": [
+        { "label": "Portugueses, indígenas e negros, lado a lado", "ok": true, "reply": [
+          { "who": "mula", "text": "Isso. Líderes: Henrique Dias, negro, e Felipe Camarão, o Poti, potiguar. Batalhas de 19 de abril de 1648 e 19 de fevereiro de 1649." },
+          { "who": "buck", "text": "Brazil's army was diverse 300 years before HR departments existed." },
+          { "who": "mula", "text": "O 19 de abril virou o Dia do Exército." }
+        ] },
+        { "label": "Só a frota espanhola", "ok": false, "retry": true, "reply": [{ "who": "mula", "text": "Essa foi em 1625, em Salvador. Aqui foi outra gente. Tenta de novo." }] }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1654", "bg": { "color": "#2a3a4a", "image": "cards/c23.webp" }, "cards": ["C23"],
+      "egg": {
+        "label": "🌀 Time Gate secreto", "ach": "ny", "card": "C23",
+        "lines": [
+          { "who": "narr", "text": "Setembro de 1654 · Nova Amsterdã. Moinhos, um forte de madeira, casas holandesas." },
+          { "who": "mula", "text": "23 refugiados judeus de Recife desembarcam aqui. Viram a primeira comunidade judaica de Nova York." },
+          { "who": "buck", "text": "New York's Jewish history starts in Brazil?!" },
+          { "who": "narr", "text": "Numa esquina, uma placa: Wall Street (under construction)." }
+        ]
+      },
+      "lines": [
+        { "who": "mula", "text": "1654: os holandeses se rendem. Os judeus sefarditas de Recife se espalham; parte vai para o Caribe." },
+        { "who": "mula", "text": "E 23 deles chegam a Nova Amsterdã em setembro de 1654." },
+        { "who": "buck", "text": "When the Dutch left Brazil, 23 Jewish refugees sailed to New Amsterdam. The first Jewish community in New York." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1661 · Paz de Haia", "bg": { "color": "#2a3a4a", "image": "cards/c24.webp" }, "cards": ["C24"],
+      "lines": [
+        { "who": "buck", "text": "Portugal won the war against the Dutch. Then paid the Dutch to go away?" },
+        { "who": "mula", "text": "Uns 4 milhões de cruzados de indenização para a Holanda reconhecer a perda do Brasil." },
+        { "who": "buck", "text": "Peak Portuguese diplomacy: win the fight, pay the bill." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1650–1690", "bg": { "color": "#4a3a20", "image": "cards/c25.webp" }, "cards": ["C25"],
+      "lines": [
+        { "who": "mula", "text": "Holandeses, ingleses e franceses passam a produzir açúcar mais barato nas Antilhas. O preço despenca." },
+        { "who": "buck", "text": "Globalization, 1650s edition. Sugar crash, literally." },
+        { "who": "mula", "text": "Portugal, endividado, precisa de outra riqueza. A seta do mapa aponta para o interior…" },
+        { "who": "buck", "text": "Go West… I mean, go inland!" }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1711", "bg": { "color": "#2a3a4a", "image": "cards/c26.webp" }, "cards": ["C26"],
+      "lines": [
+        { "who": "mula", "text": "O corsário francês Duguay-Trouin toma o Rio e só sai depois de receber resgate em ouro, açúcar e gado." },
+        { "who": "buck", "text": "Rio: the only city that paid its own ransom in gold from Minas." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "Palmares", "tone": "serio", "bg": { "color": "#1f2a1f", "image": "cards/c27.webp" }, "cards": ["C27"],
+      "lines": [
+        { "who": "mula", "text": "Aqui eu falo sério." },
+        { "who": "narr", "text": "Por quase 100 anos existiu um estado negro livre na Serra da Barriga, em Alagoas: Palmares, Angola Janga." },
+        { "who": "narr", "text": "Entre 6 mil e 20 mil pessoas, vários mocambos, a capital Macaco. Plantavam, comerciavam e resistiram a dezenas de expedições." },
+        { "who": "buck", "text": "Like the maroons of the Great Dismal Swamp. But much larger, and much longer-lasting." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1678–1695", "tone": "serio", "bg": { "color": "#1f1f1f", "image": "cards/c28.webp" }, "cards": ["C28"],
+      "lines": [
+        { "who": "narr", "text": "1678: Ganga Zumba aceita um acordo e morre envenenado. Zumbi assume." },
+        { "who": "narr", "text": "1694: Macaco cai diante da bandeira de Domingos Jorge Velho." },
+        { "who": "narr", "text": "20 de novembro de 1695: Zumbi é morto. Hoje, 20 de novembro é feriado nacional." },
+        { "who": "sineiro", "text": "Um toque de sino. Em silêncio." }
+      ]
+    },
+    {
+      "type": "quiz", "title": "O sino toca", "bg": { "color": "#3a3320", "image": "scenes/mirante.webp" },
+      "intro": "Para avançar de era, acerte 2 de 3.",
+      "quizIds": ["Q21", "Q23", "Q27", "Q28", "F09", "F16"], "ask": 3, "pass": 2
+    },
+    { "type": "gate", "title": "AGE UP", "next": "cap4", "text": "Próxima era: Age IV · A Idade do Ouro." }
+  ]
+}

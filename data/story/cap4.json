@@ -1,0 +1,158 @@
+{
+  "id": "cap4",
+  "title": "Capítulo 4 · A Idade do Ouro",
+  "scenes": [
+    {
+      "type": "dialog", "title": "AGE IV · A Idade do Ouro", "bg": { "color": "#4a3a12", "image": "cards/c29.webp" }, "cards": ["C29"],
+      "lines": [
+        { "who": "mula", "text": "1674. Fernão Dias Paes passa 7 anos no sertão caçando esmeraldas. Morre em 1681, feliz com umas pedras verdes." },
+        { "who": "buck", "text": "The man who opened the road to the gold died believing he'd found emeralds. They were tourmalines." },
+        { "who": "mula", "text": "O genro, Borba Gato, matou um funcionário da Coroa, se escondeu e depois revelou ouro no Rio das Velhas em troca de perdão." },
+        { "who": "buck", "text": "Brazilian plea bargain, 1690s: show us the gold and we'll forget the murder." }
+      ]
+    },
+    {
+      "type": "pan", "title": "1693–1698 · O ouro aparece", "bg": { "color": "#4a3a12", "image": "scenes/arraial.webp" }, "cards": ["C30"],
+      "pan": "cards/c30.webp", "taps": 8, "reward": 20,
+      "intro": "Toque na bateia para girar e lavar o cascalho do ribeirão.",
+      "lines": [
+        { "who": "mula", "text": "1693: Arzão leva as primeiras amostras oficiais. 1698: Antônio Dias acha ouro no Tripuí, coberto de óxido de ferro. Parece preto: nasce Ouro Preto." },
+        { "who": "buck", "text": "Brazil had its gold rush 150 years before California." },
+        { "who": "mula", "text": "Repara no carimbo: 20% já foi para o Cobrador." }
+      ]
+    },
+    {
+      "type": "trail", "title": "1697 · A corrida", "bg": { "color": "#3a2f1a", "image": "cards/c32.webp" }, "cards": ["C31", "C32"],
+      "intro": "Leve sua tropa até as minas. Cada trecho gasta comida.",
+      "start": { "mules": 3, "food": 2, "gold": 5 },
+      "legs": [
+        { "place": "Saindo de São Paulo", "text": "Leva comida para a viagem ou só ferramentas de mineração?",
+          "options": [
+            { "label": "Comida", "food": 3, "reply": "Boa escolha. Nas minas, ninguém planta." },
+            { "label": "Só ferramentas", "gold": 3, "reply": "Mais ouro… se você sobreviver." }
+          ] },
+        { "place": "Na trilha", "text": "A trilha está lotada: paulistas, baianos, portugueses e, em maior número, africanos escravizados.",
+          "options": [{ "label": "Seguir", "reply": "Dezenas de milhares fazem o mesmo caminho." }] },
+        { "place": "Nas minas · 1700", "text": "Fome terrível: ninguém plantou. A comida vale ouro.",
+          "options": [
+            { "label": "Trocar ouro por comida", "food": 2, "gold": -3, "reply": "Gente morreu de fome com ouro no bolso." },
+            { "label": "Garimpar mais", "gold": 4, "reply": "Ouro não se come." }
+          ] }
+      ],
+      "end": [
+        { "who": "mula", "text": "As fomes de 1697–98 e 1700–01 foram reais." },
+        { "who": "buck", "text": "The first all-you-can't-eat buffet. Inflation is a gold rush tradition." },
+        { "who": "mula", "text": "E foi tanta gente que, em 1720, Portugal restringiu a emigração." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1703 · Methuen", "bg": { "color": "#3a2a2a", "image": "cards/c33.webp" }, "cards": ["C33"],
+      "egg": {
+        "label": "🍷", "ach": "cheers",
+        "lines": [
+          { "who": "narr", "text": "Um cano invisível sai do seu cofre e vai pingando ouro até um navio de bandeira inglesa." },
+          { "who": "mula", "text": "Pois é. Cheers, England." }
+        ]
+      },
+      "lines": [
+        { "who": "mula", "text": "Tratado de Methuen: a Inglaterra compra vinho português; Portugal compra tecidos ingleses." },
+        { "who": "mula", "text": "A diferença? Paga em ouro brasileiro. Ajudou a financiar a Inglaterra." },
+        { "who": "buck", "text": "That's why the English drink Port wine. They paid for it with our gold. Cheers." },
+        { "who": "buck", "text": "Minas helped fund the British Empire we fought in 1776? You're welcome… sort of." }
+      ]
+    },
+    {
+      "type": "choice", "title": "1707 · Emboabas", "bg": { "color": "#3a3a20", "image": "cards/c34.webp" }, "cards": ["C34"],
+      "who": "mula", "text": "Primeira guerra civil do Brasil: os paulistas, que acharam o ouro, contra os emboabas, que chegaram depois. De que lado você fica?",
+      "options": [
+        { "label": "Paulistas", "ok": true, "reply": [
+          { "who": "mula", "text": "Os paulistas zombavam dos forasteiros de botas. Emboaba talvez seja um pássaro de pernas emplumadas." },
+          { "who": "buck", "text": "Brazil's first fashion war." }
+        ] },
+        { "label": "Emboabas", "ok": true, "reply": [
+          { "who": "mula", "text": "O líder emboaba, Manuel Nunes Viana, foi aclamado “governador” sem autorização do rei. Borba Gato tentou expulsá-lo e não conseguiu." },
+          { "who": "buck", "text": "Like a claim dispute in the Wild West." }
+        ] }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1709 · Capão da Traição", "tone": "serio", "bg": { "color": "#1f1f1f", "image": "cards/c35.webp" }, "cards": ["C35"],
+      "lines": [
+        { "who": "narr", "text": "Paulistas cercados num capão de mato se rendem com promessa de vida." },
+        { "who": "narr", "text": "São massacrados pelos emboabas de Bento do Amaral Coutinho, na região do Rio das Mortes. O tour diz: uns 10 km de Tiradentes." },
+        { "who": "buck", "text": "They promised to spare their lives if they surrendered. They surrendered." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "Rio das Mortes", "bg": { "color": "#2a3a3a", "image": "cards/c36.webp" }, "cards": ["C36"],
+      "lines": [
+        { "who": "buck", "text": "Locals say the bodies were thrown into the river, and that's how it got its name." },
+        { "who": "mula", "text": "Causo! O nome aparece antes da guerra: afogamentos nas travessias, lutas com indígenas. A guerra só reforçou a lenda." },
+        { "who": "buck", "text": "The river disagrees: the name is older." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1709–1711", "bg": { "color": "#3a3a20", "image": "cards/c38.webp" }, "cards": ["C37", "C38"],
+      "lines": [
+        { "who": "mula", "text": "Ninguém foi punido. Perdão geral e uma nova capitania: São Paulo e Minas do Ouro." },
+        { "who": "buck", "text": "Nobody was punished. Everybody got something. Very Brazilian." },
+        { "who": "mula", "text": "1711: nascem Mariana, Vila Rica e Sabará. O governador batizou “Vila Rica de Albuquerque” com o próprio nome… e o rei mandou trocar." },
+        { "who": "buck", "text": "Ego vs. Crown, round one." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1711 · O livro proibido", "bg": { "color": "#2a2420", "image": "cards/c39.webp" }, "cards": ["C39"],
+      "lines": [
+        { "who": "antonil", "text": "Escrevi Cultura e Opulência do Brasil: as minas, os caminhos, a riqueza toda." },
+        { "who": "mula", "text": "E a Coroa recolheu o livro. Falou demais. No Brasil nem tipografia podia: só a partir de 1808." },
+        { "who": "antonil", "text": "“O Brasil é inferno dos negros, purgatório dos brancos e paraíso dos mulatos.”" },
+        { "who": "mula", "text": "A frase é dele, de 1711. No tour, na igreja de São João Evangelista, a gente discute por que ela é complicada." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1713–1718", "bg": { "color": "#4a3a20", "image": "scenes/sinos.webp" }, "cards": ["C40", "C41"],
+      "lines": [
+        { "who": "sineiro", "text": "1713: o Arraial Novo vira São João del-Rei, homenagem a D. João V. Aqui os sinos falam." },
+        { "who": "sineiro", "text": "Quando o ouro acabou, a cidade sobreviveu vendendo, rezando e tocando música." },
+        { "who": "mula", "text": "E em 19 de janeiro de 1718, o Arraial Velho vira Vila de São José del-Rei, homenagem ao príncipe D. José." },
+        { "who": "buck", "text": "Father and son, neighbors and rivals. Typical family business." },
+        { "who": "mula", "text": "Hoje essa vila se chama Tiradentes." }
+      ]
+    },
+    {
+      "type": "pan", "title": "Ouro de superfície", "bg": { "color": "#3a3a1a", "image": "cards/c41.webp" }, "cards": ["C42"],
+      "pan": "cards/c42.webp", "taps": 6, "reward": 15,
+      "intro": "Aqui o ouro era de aluvião: córregos e barrancos. Gire a bateia!",
+      "lines": [
+        { "who": "mula", "text": "Bateia e mundéu, barragens forradas com couro de boi. Uns 80 anos de extração no pé da serra." },
+        { "who": "buck", "text": "Placer mining! Same gold pan as California." },
+        { "who": "mula", "text": "Fácil de achar, fácil de acabar." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "1720 · Vila Rica", "bg": { "color": "#3a1a12", "image": "cards/c43.webp" }, "cards": ["C43"],
+      "lines": [
+        { "who": "cobrador", "text": "Chega de ouro em pó. Tudo vai para a Casa de Fundição: fundido, carimbado, com o quinto cobrado na hora." },
+        { "who": "narr", "text": "Junho de 1720: revolta em Vila Rica, com Pascoal da Silva Guimarães, rico, e Filipe dos Santos, tropeiro." },
+        { "who": "narr", "text": "O Conde de Assumar finge negociar, prende os líderes e queima o morro de Pascoal: o Morro da Queimada." },
+        { "who": "buck", "text": "The rich guy got exile. The poor guy got the rope." },
+        { "who": "mula", "text": "Guarda esse padrão: volta em 1792. E a Boston Tea Party de vocês foi por chá; a nossa foi por ouro, 53 anos antes. A de vocês deu certo." }
+      ]
+    },
+    {
+      "type": "dialog", "title": "2 de dezembro de 1720", "bg": { "color": "#3a2a1a", "image": "cards/c44.webp" }, "cards": ["C44", "C45", "C46"],
+      "lines": [
+        { "who": "mula", "text": "Nasce a Capitania de Minas Gerais. Capital: Vila Rica." },
+        { "who": "buck", "text": "Minas Gerais was born from a tax, a revolt and a rope." },
+        { "who": "mula", "text": "E o povo apelidou o imposto de “quinto dos infernos”… dizem. E escondia ouro em santo de pau oco… dizem também." },
+        { "who": "buck", "text": "Smuggling with a halo!" }
+      ]
+    },
+    {
+      "type": "quiz", "title": "O sino toca", "bg": { "color": "#3a3320", "image": "scenes/mirante.webp" },
+      "intro": "Para avançar de era, acerte 2 de 3.",
+      "quizIds": ["Q29", "Q30", "Q33", "Q41", "Q43a", "F06"], "ask": 3, "pass": 2
+    },
+    { "type": "gate", "title": "AGE UP", "next": "cap5", "text": "Próxima era: Age V · Apogeu & Segregação." }
+  ]
+}

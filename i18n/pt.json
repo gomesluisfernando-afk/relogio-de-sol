@@ -147,5 +147,11 @@
     "quest.item":  "Item",
     "quest.replay":  "Caso já resolvido antes: sem ouro desta vez (o item volta se a Derrama levou).",
     "quest.next":  "Próximo caso",
-    "quest.all":  "Todos os casos"
+    "quest.all":  "Todos os casos",
+    "story.locked":  "termine o capítulo anterior (Age Up)",
+    "story.panHint":  "toque na bateia",
+    "story.arrived":  "Chegada",
+    "story.hunger":  "Fome! Uma mula morreu.",
+    "story.mapLeft":  "Pontos que faltam",
+    "story.mapDone":  "Você viu as duas cidades."
 }
