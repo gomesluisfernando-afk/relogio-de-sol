@@ -1,5 +1,5 @@
 // Boot e roteamento por hash: #/ (Mirante), #/tour/T5/2, #/card/C43, #/train/mix/5…
-import { loadContent } from './content.js';
+import { loadContent, applyOverlay } from './content.js';
 import { state } from './state.js';
 import { tour } from './modes/tour.js';
 import { timeline, card } from './modes/timeline.js';
@@ -42,7 +42,23 @@ function hub() {
       ? `<a class="btn" href="#/${m.id}">${m.icon} ${esc(t['mode.' + m.id])}</a>`
       : `<span class="btn off">${m.icon} ${esc(t['mode.' + m.id])}<small>${esc(t['hub.soon'])}</small></span>`).join('')}
     </nav>
-    <p class="foot"><a href="debug.html">debug</a></p>`;
+    <p class="foot"><button class="linkbtn" data-act="lang">${esc(t['lang.toggle'])}</button> ·
+      <button class="linkbtn" data-act="export">💾 ${esc(t['backup.export'])}</button>
+      <label class="linkbtn">📂 ${esc(t['backup.import'])}<input type="file" accept="application/json,.json" hidden></label>
+      · <a href="debug.html">debug</a></p>`;
+  app.querySelector('[data-act="lang"]').addEventListener('click', () => { state.set('lang', state.get('lang', 'pt') === 'en' ? 'pt' : 'en'); location.reload(); });
+  app.querySelector('[data-act="export"]').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([state.dump()], { type: 'application/json' }));
+    a.download = `relogio-de-sol-progresso-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+  });
+  app.querySelector('input[type=file]').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try { state.restore(await file.text()); alert(t['backup.done']); location.reload(); }
+    catch (err) { alert(t['backup.fail'] + ' ' + err.message); }
+  });
 }
 
 function route() {
@@ -53,7 +69,10 @@ function route() {
 
 async function boot() {
   try {
-    const [content, t] = await Promise.all([loadContent(), fetch('i18n/pt.json').then((r) => r.json())]);
+    const lang = state.get('lang', 'pt');
+    document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
+    const [content, t] = await Promise.all([loadContent(), fetch(`i18n/${lang}.json`).then((r) => r.json())]);
+    if (lang === 'en') applyOverlay(content, await fetch('data/en.json').then((r) => r.json()));
     ctx = { content, t, esc };
     addEventListener('hashchange', route);
     // Link para a própria página (ex.: "mais 3 min" no fim da sessão) não dispara hashchange.

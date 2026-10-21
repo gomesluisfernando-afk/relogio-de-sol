@@ -4,7 +4,7 @@
 import { state } from '../state.js';
 import { esc, tag, unlock, pay, missed, hit, hud } from '../ui.js';
 import { grade, pick } from '../leitner.js';
-import { sfx } from '../audio.js';
+import { sfx, speak } from '../audio.js';
 
 const TYPES = ['pic', 'multiple', 'fol', 'first', 'flash', 'hook', 'order'];
 const MIX_WEIGHT = { pic: 3, multiple: 3, fol: 2, first: 2, flash: 2, hook: 2, order: 1 };
@@ -168,6 +168,7 @@ function session(root, { content, t }, opt) {
         <p class="hookq">“${esc(words.slice(0, cut).join(' '))} …”</p>
         <p class="hint">${esc(t['train.sayIt'])}</p><button class="btn primary show">${esc(t['train.show'])}</button>`;
       ex.querySelector('.show').addEventListener('click', () => {
+        speak(k.hook);
         ex.innerHTML = `${head(k)}<p class="hookq">“${esc(k.hook)}”</p>
           <div class="two"><button class="btn no">✘ ${esc(t['train.didnt'])}</button><button class="btn yes">✔ ${esc(t['train.knew'])}</button></div>`;
         ex.querySelector('.no').addEventListener('click', () => { record([{ key, ok: false }]); next(); });

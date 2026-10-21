@@ -4,7 +4,7 @@
 // quiz (Age Up) e gate (Time Gate). Qualquer cena pode ter um easter egg (sc.egg).
 import { state } from '../state.js';
 import { esc, markSeen, collect, unlock, pay, hud } from '../ui.js';
-import { sfx } from '../audio.js';
+import { sfx, music, seriousDrone, stopMusic } from '../audio.js';
 
 const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
 
@@ -43,7 +43,7 @@ function play(root, ctx, ch, start) {
 
   root.innerHTML = `
     <div class="story">
-      <nav class="tabs"><a class="back" href="#/story">✕</a><div class="dots"></div></nav>
+      <nav class="tabs"><a class="back" href="#/story">✕</a><div class="dots"></div><button class="mute" data-act="mute">${state.get('muted', false) ? '🔇' : '🔔'}</button></nav>
       <div class="stage"><div class="banner"></div><div class="prop"></div></div>
       <div class="panel"></div>
     </div>`;
@@ -98,6 +98,20 @@ function play(root, ctx, ch, start) {
   }
 
   let sceneTone = 'normal';
+  // Trilha: tema da era do capítulo; cena séria troca por drone grave.
+  let playing = null;
+  function soundFor(sc) {
+    const want = sc.type === 'gate' ? null : sc.tone === 'serio' ? 'drone' : ch.eras[0];
+    if (want === playing) return;
+    playing = want;
+    if (!want) stopMusic(); else if (want === 'drone') seriousDrone(); else music(want);
+  }
+  $('[data-act="mute"]').addEventListener('click', (e) => {
+    state.set('muted', !state.get('muted', false));
+    e.currentTarget.textContent = state.get('muted') ? '🔇' : '🔔';
+    playing = null;
+    if (state.get('muted')) stopMusic(); else soundFor(ch.scenes[i]);
+  });
   function next() { i++; scene(); }
 
   // ---- cenas ----
@@ -347,6 +361,13 @@ function play(root, ctx, ch, start) {
   function setImage(src) {
     $('.stage').style.backgroundImage = src ? `url('assets/img/${src}')` : '';
   }
+  // Clipe de vídeo da cena (toca uma vez, mudo, por cima da imagem; a imagem fica como capa).
+  function setVideo(src) {
+    $('.stage .bgvid')?.remove();
+    if (!src) return;
+    $('.stage').insertAdjacentHTML('afterbegin', `<video class="bgvid" src="assets/${src}" autoplay muted playsinline preload="auto"></video>`);
+    $('.stage .bgvid').play?.().catch(() => {}); // iOS às vezes ignora o autoplay sem play()
+  }
 
   function scene() {
     const sc = ch.scenes[i];
@@ -355,11 +376,13 @@ function play(root, ctx, ch, start) {
     progress[ch.id] = sc.type === 'gate' ? 0 : i; // terminou: a próxima visita recomeça
     state.set('story', progress);
     sceneTone = sc.tone || 'normal';
+    soundFor(sc);
     for (const id of sc.cards || []) markSeen(state, id);
     const box = root.querySelector('.story');
     box.classList.remove('serio', 'gating');
     if (sc.bg) box.style.setProperty('--bg', sc.bg.color);
     setImage(sc.bg?.image);
+    setVideo(sc.bg?.video);
     const prop = $('.prop');
     prop.className = 'prop';
     prop.textContent = sc.bg?.image ? '' : sc.bg?.prop || '';
@@ -383,4 +406,5 @@ function play(root, ctx, ch, start) {
   }
 
   scene();
+  return () => stopMusic();
 }

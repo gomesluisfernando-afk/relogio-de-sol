@@ -31,6 +31,14 @@ const { readdir } = await import('node:fs/promises');
 for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true }))
   if (f.endsWith('.js') && !cached.includes('src/' + f.replaceAll('\\', '/'))) errors.push(`sw.js não guarda src/${f} para offline`);
 for (const f of cached) await readFile(new URL('../' + f, import.meta.url)).catch(() => errors.push(`sw.js lista ${f}, que não existe`));
+// Tradução para inglês: ids válidos, mesmas chaves de interface.
+const { validateOverlay } = await import('../src/content.js');
+errors.push(...validateOverlay(c, await get('en.json')));
+const ptUi = JSON.parse(await readFile(new URL('../i18n/pt.json', import.meta.url), 'utf8'));
+const enUi = JSON.parse(await readFile(new URL('../i18n/en.json', import.meta.url), 'utf8'));
+for (const k of Object.keys(ptUi)) if (!(k in enUi)) errors.push(`i18n/en.json sem a chave "${k}"`);
+if (!cached.includes('data/en.json') || !cached.includes('i18n/en.json')) errors.push('sw.js não guarda a tradução para offline');
+
 // Erro de sintaxe em qualquer arquivo do jogo trava tudo em "Carregando…".
 const { execFileSync } = await import('node:child_process');
 for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true })) {

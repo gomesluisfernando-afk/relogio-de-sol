@@ -1,6 +1,7 @@
 // Linha do Tempo (lista por era, busca, filtros) e a tela de um card.
 import { state } from '../state.js';
 import { esc, tag, norm, markSeen, worldToggle, unlock } from '../ui.js';
+import { speak } from '../audio.js';
 
 export function timeline(root, { content, t }) {
   const f = { q: '', onlyDoc: false, usa: false, jokes: false, wrong: false, stop: '', ...state.get('tlFilters', {}) };
@@ -93,6 +94,7 @@ export function card(root, { content, t }, [id]) {
       <div class="meta">${esc(k.yearLabel)} · ${esc(era.ageLabel)} ${tag(t, k.status)} <span class="id">${k.id}</span></div>
       <h1>${esc(k.title)}</h1>
       <a class="pill test" href="#/train/card/${k.id}">${esc(t['card.test'])}</a>
+      <button class="pill" data-act="speak">🔊 ${esc(t['card.listen'])}</button>
       ${twoWorlds ? worldToggle(t, world) : ''}
       ${twoWorlds ? `<p class="worldlabel" data-w="lenda">${esc(t['card.told'])}</p><p class="worldlabel" data-w="doc">${esc(t['card.known'])}</p>` : ''}
       <p class="hook" ${twoWorlds ? 'data-w="lenda"' : ''}>“${esc(k.hook)}”</p>
@@ -110,6 +112,7 @@ export function card(root, { content, t }, [id]) {
 
   const page = root.querySelector('.cardpage');
   page.addEventListener('click', (e) => {
+    if (e.target.closest('[data-act="speak"]')) return speak(k.hook);
     const btn = e.target.closest('[data-act="world"]');
     if (!btn) return;
     world = world === 'doc' ? 'lenda' : 'doc';

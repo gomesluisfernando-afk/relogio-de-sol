@@ -1,0 +1,1556 @@
+{
+ "cards": {
+  "C00": {
+   "title": "Modern history starts in 1500. Here, it starts 200 years later.",
+   "keyword": "Cross 1718",
+   "facts": [
+    "The Alto São Francisco lookout has a cross from 1718, the year the camp became the Town of São José.",
+    "From the same spot you see the Serra de São José, where the gold came from."
+   ]
+  },
+  "C01": {
+   "title": "Columbus misses the continent",
+   "keyword": "Columbus",
+   "facts": [
+    "3 ships (Santa María, Pinta, Niña) and about 90 men.",
+    "Left Palos on Aug 3, 1492; reached the Bahamas on Oct 12.",
+    "Thought he was in Asia and called the natives “Indians”."
+   ],
+   "notes": [
+    "The exact island of landfall is debated."
+   ]
+  },
+  "C02": {
+   "title": "The Treaty of Tordesillas",
+   "keyword": "Tordesillas",
+   "facts": [
+    "Signed on June 7, 1494.",
+    "An imaginary line 370 leagues west of Cape Verde: west for Spain, east for Portugal.",
+    "By the line, only a strip of Brazil's coast was Portuguese."
+   ]
+  },
+  "C03": {
+   "title": "The Spaniard who got there first",
+   "keyword": "Pinzón",
+   "facts": [
+    "Vicente Yáñez Pinzón, former captain of Columbus's Niña, touched the Northeast coast in January 1500.",
+    "By the treaty that land belonged to Portugal, so Spain made no claim."
+   ],
+   "notes": [
+    "The exact landing spot is debated."
+   ]
+  },
+  "C04": {
+   "title": "Cabral and the stop along the way",
+   "keyword": "Cabral",
+   "facts": [
+    "13 ships, about 1,500 men. Landed at Porto Seguro (Bahia).",
+    "Thought it was an island (“Island of Vera Cruz”).",
+    "Sent one ship back with Pero Vaz de Caminha's letter and sailed on to India.",
+    "Left 2 convicts behind; 2 cabin boys ran away and stayed."
+   ],
+   "notes": [
+    "Whether the landing was chance or intentional is debated."
+   ]
+  },
+  "C05": {
+   "title": "Rio de Janeiro in January",
+   "keyword": "Vespucci",
+   "facts": [
+    "A 1501–1502 reconnaissance expedition, with Amerigo Vespucci.",
+    "Named places after the saint of the day: All Saints' Bay (Nov 1), Rio de Janeiro (Jan 1502)."
+   ]
+  },
+  "C06": {
+   "title": "The first contract: brazilwood",
+   "keyword": "Brazilwood",
+   "facts": [
+    "The tree gave a red dye valued for cloth in Europe; the name comes from “brasa”, ember.",
+    "The Crown leased the trade to merchant Fernão de Noronha (the island bears his name).",
+    "Indigenous people did the work in exchange for tools, mirrors and cloth: barter."
+   ]
+  },
+  "C07": {
+   "title": "The Cabo Frio trading post",
+   "keyword": "Trading post",
+   "facts": [
+    "Feitoria = fortified warehouse to store brazilwood.",
+    "The oldest on record was near Cabo Frio (Rio), with about 24 men."
+   ]
+  },
+  "C08": {
+   "title": "The castaways who became chiefs",
+   "keyword": "Caramuru",
+   "facts": [
+    "Caramuru (Diogo Álvares) was shipwrecked in Bahia and married Paraguaçu, baptized in France in 1528 as Catarina.",
+    "João Ramalho lived among the Tupiniquim and married Bartira, daughter of chief Tibiriçá."
+   ],
+   "notes": [
+    "Several details of these stories are debated."
+   ]
+  },
+  "C09": {
+   "title": "The castaway who reached the Incas",
+   "keyword": "Peabiru",
+   "facts": [
+    "Aleixo Garcia, a shipwreck survivor in Santa Catarina, crossed the continent on the Indigenous Peabiru trail.",
+    "The Peabiru was a network of Guarani paths about 3,000 km long.",
+    "He reached the Inca frontier and died on the way back."
+   ],
+   "notes": [
+    "The exact route is debated."
+   ]
+  },
+  "C10": {
+   "title": "São Vicente, the first town",
+   "keyword": "São Vicente",
+   "facts": [
+    "Martim Afonso de Sousa founded São Vicente (São Paulo) on Jan 22, 1532: the first official town, with council and pillory.",
+    "One of the first sugar mills stood nearby (ruins of the Engenho dos Erasmos)."
+   ]
+  },
+  "C11": {
+   "title": "The hereditary captaincies",
+   "keyword": "Captaincies",
+   "facts": [
+    "The coast was split into strips given to grantees who had to colonize at their own expense.",
+    "Almost all failed; Pernambuco (Duarte Coelho) and São Vicente worked, thanks to sugar."
+   ]
+  },
+  "C12": {
+   "title": "Salvador and the general government",
+   "keyword": "Salvador",
+   "facts": [
+    "Tomé de Sousa founded Salvador, the first capital, in 1549.",
+    "He arrived with the first Jesuits (Manuel da Nóbrega)."
+   ]
+  },
+  "C13": {
+   "title": "From “negros da terra” to Africans",
+   "keyword": "4.8 million",
+   "facts": [
+    "The first slavery was Indigenous (the so-called “negros da terra”).",
+    "With epidemics, resistance, Jesuit pressure and the profits of the Atlantic trade, African slavery grew.",
+    "Brazil received about 4.8 million enslaved Africans, close to 40% of the whole Atlantic trade."
+   ],
+   "notes": [
+    "Figures are estimates from the SlaveVoyages database."
+   ]
+  },
+  "C14": {
+   "title": "Hans Staden almost becomes dinner",
+   "keyword": "Hans Staden",
+   "facts": [
+    "Captured by the Tupinambá near Bertioga, he spent months awaiting ritual execution and managed to escape.",
+    "His book came out in 1557."
+   ]
+  },
+  "C15": {
+   "title": "The bishop who was eaten",
+   "keyword": "Sardinha",
+   "facts": [
+    "Pero Fernandes Sardinha was shipwrecked in Alagoas and killed by the Caeté.",
+    "In response, the Crown authorized the enslavement of the Caeté."
+   ]
+  },
+  "C16": {
+   "title": "The French in Rio and the Tamoio war",
+   "keyword": "France Antarctique",
+   "facts": [
+    "Villegaignon founded France Antarctique in Guanabara Bay (1555).",
+    "The Tupinambá (Tamoio Confederation, with Cunhambebe and Aimberê) allied with the French.",
+    "Estácio de Sá founded Rio on March 1, 1565; the French left for good in 1567.",
+    "The Temiminó Arariboia, a Portuguese ally, founded Niterói."
+   ]
+  },
+  "C17": {
+   "title": "Anchieta and the poem in the sand",
+   "keyword": "Anchieta",
+   "facts": [
+    "José de Anchieta was held hostage by the Tamoio at Iperoig (Ubatuba) during peace talks."
+   ],
+   "notes": [
+    "The poem exists; writing it in the sand is tradition."
+   ]
+  },
+  "C18": {
+   "title": "Portugal becomes Spain (for 60 years)",
+   "keyword": "Iberian Union",
+   "facts": [
+    "Iberian Union (1580–1640).",
+    "Spain's enemies (Holland, England, France) start attacking Brazil."
+   ]
+  },
+  "C19": {
+   "title": "English pirates in Santos",
+   "keyword": "Cavendish",
+   "facts": [
+    "Thomas Cavendish sacked Santos (1591).",
+    "James Lancaster attacked Recife (1595)."
+   ]
+  },
+  "C20": {
+   "title": "The Dutch take Salvador",
+   "keyword": "WIC",
+   "facts": [
+    "The WIC (Dutch West India Company) took Salvador in 1624.",
+    "A Portuguese-Spanish fleet took it back in 1625."
+   ]
+  },
+  "C21": {
+   "title": "Dutch Brazil",
+   "keyword": "Nassau",
+   "facts": [
+    "The Dutch took Pernambuco (1630), the heart of sugar.",
+    "Maurice of Nassau governed from 1637 to 1644: brought painters (Frans Post, Albert Eckhout), scientists, built bridges.",
+    "Recife had the first synagogue in the Americas (Kahal Zur Israel)."
+   ]
+  },
+  "C22": {
+   "title": "Guararapes",
+   "keyword": "Guararapes",
+   "facts": [
+    "Battles of Guararapes: April 19, 1648 and February 19, 1649.",
+    "Leaders: Henrique Dias (Black) and Felipe Camarão/Poti (Potiguar).",
+    "April 19 became Brazilian Army Day."
+   ]
+  },
+  "C23": {
+   "title": "Recife's Jews found New York's Jewish community",
+   "keyword": "23 → NY",
+   "facts": [
+    "Dutch surrender in 1654.",
+    "The Sephardic Jews of Recife scattered: some went to the Caribbean.",
+    "23 reached New Amsterdam in September 1654."
+   ]
+  },
+  "C24": {
+   "title": "Won the war, paid the bill",
+   "keyword": "Peace of The Hague",
+   "facts": [
+    "Peace of The Hague (1661): Portugal paid a huge indemnity (about 4 million cruzados) for Holland to recognize the loss of Brazil."
+   ]
+  },
+  "C25": {
+   "title": "The sugar crisis",
+   "keyword": "Sugar crisis",
+   "facts": [
+    "In the Antilles, the Dutch, English and French start producing cheaper sugar.",
+    "The price collapses. Portugal, already in debt, needs another source of wealth."
+   ]
+  },
+  "C26": {
+   "title": "The privateer who held Rio hostage",
+   "keyword": "Duguay-Trouin",
+   "facts": [
+    "Duguay-Trouin took Rio and only left after receiving a ransom in gold, sugar and cattle."
+   ]
+  },
+  "C27": {
+   "title": "Angola Janga",
+   "keyword": "Palmares",
+   "facts": [
+    "Palmares, in the Serra da Barriga (Alagoas).",
+    "Between 6,000 and 20,000 people, several mocambos, capital Macaco.",
+    "They farmed and traded. It resisted dozens of expeditions."
+   ],
+   "notes": [
+    "Population figures are debated."
+   ]
+  },
+  "C28": {
+   "title": "Ganga Zumba, Zumbi and the betrayal",
+   "keyword": "Zumbi 11/20",
+   "facts": [
+    "Ganga Zumba accepted a treaty (1678) and died poisoned; Zumbi took over.",
+    "Macaco fell in 1694 to Domingos Jorge Velho's bandeira.",
+    "Zumbi was killed on November 20, 1695. Today November 20 is a national holiday (since 2023)."
+   ],
+   "notes": [
+    "Zumbi's childhood and Ganga Zumba's poisoning are debated."
+   ]
+  },
+  "C29": {
+   "title": "The emerald hunter",
+   "keyword": "Tourmalines",
+   "facts": [
+    "Fernão Dias Paes spent 7 years in the backlands, found tourmalines and died in 1681.",
+    "He left trails and farm plots that became the infrastructure of the gold rush.",
+    "His son-in-law, Borba Gato, killed a Crown official (1682), hid, and later revealed gold on the Rio das Velhas in exchange for a pardon."
+   ]
+  },
+  "C30": {
+   "title": "The gold appears",
+   "keyword": "1693 GOLD",
+   "facts": [
+    "1693: Antônio Rodrigues Arzão brings the first official samples.",
+    "1698: Antônio Dias de Oliveira finds gold in the Tripuí stream and Ouro Preto is born (the gold was coated in iron oxide and looked black).",
+    "Around 1702, João de Siqueira Afonso reaches the area of the future Arraial Velho (Tiradentes).",
+    "Around 1704, gold on the Rio das Mortes (São João)."
+   ]
+  },
+  "C31": {
+   "title": "Hunger amid the gold",
+   "keyword": "Hunger",
+   "facts": [
+    "Nobody farmed. Terrible famines in 1697–98 and 1700–01.",
+    "The tour text cites a chicken at 140 réis in São Paulo and 4,000 réis in the mines."
+   ]
+  },
+  "C32": {
+   "title": "The rush",
+   "keyword": "Rush",
+   "facts": [
+    "Tens of thousands arrive: Paulistas, Bahians, Portuguese and, in greatest numbers, enslaved Africans.",
+    "Those from the Mina Coast were valued for their mining experience.",
+    "In 1720, Portugal restricted emigration."
+   ]
+  },
+  "C33": {
+   "title": "The Methuen Treaty (“Cloth and Wine”)",
+   "keyword": "Methuen",
+   "facts": [
+    "Portugal buys English cloth and manufactures; England buys Portuguese wine.",
+    "The trade balance is negative for Portugal, which pays the difference in Brazilian gold.",
+    "Minas gold helps finance England (and indirectly its Industrial Revolution)."
+   ],
+   "notes": [
+    "How much the gold weighed in the Industrial Revolution is debated."
+   ]
+  },
+  "C34": {
+   "title": "The Emboaba War",
+   "keyword": "Emboabas",
+   "facts": [
+    "Paulistas × emboabas (Portuguese and “outsiders”).",
+    "Emboaba leader: Manuel Nunes Viana, acclaimed “governor” without the king's authorization.",
+    "Borba Gato tried to expel him and failed."
+   ],
+   "notes": [
+    "The origin of the word “emboaba” is debated."
+   ]
+  },
+  "C35": {
+   "title": "The Capão of Betrayal",
+   "keyword": "Capão da Traição",
+   "facts": [
+    "Paulistas surrounded in a patch of woods surrendered under a promise of life and were massacred by Bento do Amaral Coutinho's emboabas.",
+    "It happened in the Rio das Mortes region (the tour says about 10 km from Tiradentes).",
+    "The Paulistas came back with a revenge army (Amador Bueno da Veiga), attacked and withdrew."
+   ],
+   "notes": [
+    "The exact place and the death toll are debated."
+   ]
+  },
+  "C36": {
+   "title": "The name “River of the Dead”",
+   "keyword": "Older name",
+   "facts": [
+    "The name appears before the war.",
+    "Older explanations speak of drownings at crossings and fights with Indigenous peoples.",
+    "The war reinforced the legend."
+   ],
+   "notes": [
+    "Legend: the link between the name and the Capão. Documented: the name predates the war."
+   ]
+  },
+  "C37": {
+   "title": "The deal that erased the massacre",
+   "keyword": "General pardon",
+   "facts": [
+    "Creation of the Captaincy of São Paulo and the Gold Mines (1709).",
+    "São Paulo becomes a city (1711).",
+    "General pardon. Nunes Viana goes back to his farms."
+   ]
+  },
+  "C38": {
+   "title": "The gold towns",
+   "keyword": "Towns 1711",
+   "facts": [
+    "Mariana (Ribeirão do Carmo, April 8, the first), Vila Rica (July 8), Sabará (July 17).",
+    "The governor named it “Vila Rica de Albuquerque” after himself; the king ordered it changed."
+   ]
+  },
+  "C39": {
+   "title": "Antonil's forbidden book",
+   "keyword": "Antonil",
+   "facts": [
+    "Cultura e Opulência do Brasil (1711) described the mines and the roads. The Crown seized it.",
+    "The line is Antonil's: “Brazil is hell for Blacks, purgatory for whites and paradise for mulattos.”"
+   ]
+  },
+  "C40": {
+   "title": "São João del-Rei",
+   "keyword": "São João 1713",
+   "facts": [
+    "Arraial Novo became a town on Dec 8, 1713, honoring King João V.",
+    "In 1714, seat of the Rio das Mortes district.",
+    "After the gold, it became a trading hub that supplied Rio.",
+    "Orchestras from 1776 (Lira Sanjoanense) and the late 18th century (Ribeiro Bastos) still active. “The land where the bells talk.”"
+   ]
+  },
+  "C41": {
+   "title": "Town of São José (Tiradentes)",
+   "keyword": "São José 1718",
+   "facts": [
+    "Arraial Velho de Santo Antônio became the Town of São José del-Rei on Jan 19, 1718, by the Count of Assumar, honoring Prince José.",
+    "According to the tour, residents pushed for it because more surface gold came out here than in São João.",
+    "The Alto São Francisco cross dates from this elevation."
+   ]
+  },
+  "C42": {
+   "title": "Surface gold: easy to find, easy to run out",
+   "keyword": "Alluvial gold",
+   "facts": [
+    "In Tiradentes the gold was alluvial (streams and banks), not deep-mine gold.",
+    "Techniques: the gold pan (bateia) and the mundéu (dams lined with cowhide).",
+    "About 80 years of mining at the foot of the ridge (tour data)."
+   ]
+  },
+  "C43": {
+   "title": "Smelting houses and the Vila Rica revolt",
+   "keyword": "Filipe dos Santos",
+   "facts": [
+    "A 1719 law creates the Smelting Houses: the 20% fifth taken on the spot, gold in stamped bars.",
+    "Revolt in June 1720: Pascoal da Silva Guimarães (rich) and Filipe dos Santos (muleteer/commoner).",
+    "The Count of Assumar pretends to negotiate, arrests the leaders and burns Pascoal's hill (Morro da Queimada).",
+    "Pascoal: arrested and sent to Portugal. Filipe: hanged and quartered in July 1720."
+   ],
+   "notes": [
+    "Filipe being dragged by horses is legend."
+   ]
+  },
+  "C44": {
+   "title": "The Captaincy of Minas Gerais is born",
+   "keyword": "Captaincy MG",
+   "facts": [
+    "Minas is separated from São Paulo; capital: Vila Rica.",
+    "First governor: Dom Lourenço de Almeida (1721).",
+    "Smelting houses in operation by 1725."
+   ]
+  },
+  "C45": {
+   "title": "The hollow-wood saint",
+   "keyword": "Hollow saint",
+   "facts": [
+    "Hollow saint statues filled with gold dust to get past the checkpoints."
+   ],
+   "notes": [
+    "The expression exists; large-scale practice is debated."
+   ]
+  },
+  "C46": {
+   "title": "“The fifth from hell”",
+   "keyword": "The Fifth",
+   "facts": [],
+   "notes": [
+    "Linking the expression to the tax is a popular origin story."
+   ]
+  },
+  "C47": {
+   "title": "The Matriz of Santo Antônio",
+   "keyword": "Matriz 482 kg",
+   "facts": [
+    "Built from 1710 to 1752; high altar by Portuguese João Ferreira Sampaio.",
+    "Portuguese organ with 632 pipes, made in Porto, installed in 1788 according to the tour.",
+    "Sundial from 1785; facade design attributed to Aleijadinho (1810)."
+   ]
+  },
+  "C48": {
+   "title": "The brotherhoods: one church per group",
+   "keyword": "Brotherhoods",
+   "facts": [
+    "Matriz / São Francisco / Carmo → “good men” (rich whites, “pure blood”).",
+    "Rosário → Africans (with elements of African religions).",
+    "Mercês → crioulos (children of Africans born here); São João Evangelista → mulattos/pardos.",
+    "Bom Jesus da Pobreza (1782) → whites who became poor."
+   ],
+   "notes": [
+    "The general pattern is documented; details of each chapel are debated."
+   ]
+  },
+  "C49": {
+   "title": "Axis of power × axis of servitude",
+   "keyword": "Alleys",
+   "facts": [
+    "The alleys served for (1) the enslaved to avoid the main streets, (2) access to service areas, (3) draining waste.",
+    "70% of the population was enslaved (tour data)."
+   ],
+   "notes": [
+    "The term “axis of servitude” is the tour's interpretation."
+   ]
+  },
+  "C50": {
+   "title": "Diamonds",
+   "keyword": "Diamonds",
+   "facts": [
+    "Officially announced in 1729.",
+    "Tejuco (Diamantina) becomes the Diamond District, under strict control.",
+    "Famous figure: Chica da Silva."
+   ]
+  },
+  "C51": {
+   "title": "The capitation: a head tax",
+   "keyword": "Capitation",
+   "facts": [
+    "A tax per person (including the enslaved), collected twice a year.",
+    "So heavy that it was dropped in 1750."
+   ]
+  },
+  "C52": {
+   "title": "The São José fountain",
+   "keyword": "Fountain 1749",
+   "facts": [
+    "Opened in 1749; shrine with Saint Joseph in boots (patron of the bandeirantes).",
+    "Stone aqueduct up to the spring; slightly tilted on purpose, leaning on the aqueduct.",
+    "1828 town code with 3 rules: no sharpening machetes, no washing clothes in the front trough, no gatherings with “insolence” toward women."
+   ]
+  },
+  "C53": {
+   "title": "The 100 arrobas",
+   "keyword": "100 arrobas",
+   "facts": [
+    "If the fifth didn't reach 100 arrobas (about 1,500 kg), the difference would be collected by force: the derrama."
+   ]
+  },
+  "C54": {
+   "title": "The capital comes down the mountain",
+   "keyword": "Estrada Real",
+   "facts": [
+    "Brazil's capital moves from Salvador to Rio de Janeiro in 1763.",
+    "Estrada Real: Old Road (Ouro Preto → São João → Paraty) and New Road (Ouro Preto → Rio, shorter, roughly today's BR-040).",
+    "Opening another road was a crime of lèse-majesté."
+   ]
+  },
+  "C55": {
+   "title": "The derrama snowball",
+   "keyword": "Debt",
+   "facts": [
+    "The tour says there was a derrama in 1763 and that the debt passed 8,600 kg by 1788.",
+    "The new governor, Viscount of Barbacena, arrives with orders to collect."
+   ]
+  },
+  "C56": {
+   "title": "The decree that closed the factories",
+   "keyword": "Decree 1785",
+   "facts": [
+    "A decree by Queen Maria I banned textile manufacturing in the colony (only coarse cloth for the enslaved escaped)."
+   ]
+  },
+  "C57": {
+   "title": "The baptism party (the first meeting)",
+   "keyword": "Baptism",
+   "facts": [
+    "Father Toledo, the town's vicar, baptized the children of Alvarenga Peixoto and Bárbara Heliodora.",
+    "That night there was a party at his house, considered by the tour the first meeting of the conspirators (Oct 10, 1788).",
+    "Today the house is the Padre Toledo Museum."
+   ],
+   "notes": [
+    "The date and the “first meeting” label are local tradition."
+   ]
+  },
+  "C58": {
+   "title": "The plan",
+   "keyword": "Libertas",
+   "facts": [
+    "Wait for the derrama, take to the streets, proclaim a republic (Minas and part of Rio).",
+    "Capital in São João del-Rei, university in Vila Rica.",
+    "Flag with “Libertas quae sera tamen” (today the flag of Minas).",
+    "Slavery would not be abolished. Father Toledo owned enslaved people (tour data)."
+   ]
+  },
+  "C59": {
+   "title": "The student who went to see Jefferson",
+   "keyword": "Jefferson",
+   "facts": [
+    "José Joaquim da Maia met Jefferson, then US minister to France.",
+    "Jefferson was cordial and promised nothing."
+   ]
+  },
+  "C60": {
+   "title": "The plea bargain",
+   "keyword": "Silvério",
+   "facts": [
+    "Joaquim Silvério dos Reis denounced the group in March 1789.",
+    "Barbacena suspended the derrama (no trigger, no revolt) and arrested everyone.",
+    "Silvério got his debts forgiven and other benefits."
+   ]
+  },
+  "C61": {
+   "title": "Ten days after Washington",
+   "keyword": "10 days",
+   "facts": [
+    "Tiradentes, ensign of the Dragoons regiment, was arrested in Rio on May 10, 1789."
+   ]
+  },
+  "C62": {
+   "title": "Who was Tiradentes",
+   "keyword": "Silva Xavier",
+   "facts": [
+    "Joaquim José da Silva Xavier, born at Fazenda do Pombal (Ritápolis area, then part of São José).",
+    "Orphaned early, self-taught dentist, muleteer, ensign for about 14 years (tour data); patrolled the New Road.",
+    "He was the group's propagandist and the only one who admitted his part."
+   ]
+  },
+  "C63": {
+   "title": "The poet dead in his cell",
+   "keyword": "Cláudio",
+   "facts": [
+    "Cláudio Manuel da Costa, at the Casa dos Contos (Ouro Preto)."
+   ]
+  },
+  "C64": {
+   "title": "The theater of mercy",
+   "keyword": "Mercy",
+   "facts": [
+    "Queen Maria I's letter was ready before the sentence.",
+    "The others went into exile in Africa (Gonzaga prospered in Mozambique; Alvarenga died in Angola) or to convents (the priests)."
+   ]
+  },
+  "C65": {
+   "title": "The gallows",
+   "keyword": "04/21/1792",
+   "facts": [
+    "Largo da Lampadosa (today Praça Tiradentes, Rio).",
+    "Body parts displayed along the New Road. Declared infamous for generations.",
+    "April 21 is a national holiday."
+   ]
+  },
+  "C66": {
+   "title": "The Civic Christ (the invented beard)",
+   "keyword": "Beard",
+   "facts": [
+    "Ensigns didn't wear beards (at most a mustache, according to the tour); prisoners had shaved heads.",
+    "The Republic (1889) needed a national hero and built a “civic Christ”: a traitor (Judas), apostles, martyrdom."
+   ],
+   "notes": [
+    "Documented: the Republic built the image. Legend: the beard."
+   ]
+  },
+  "C67": {
+   "title": "Bom Jesus da Pobreza",
+   "keyword": "Pobreza 1782",
+   "facts": [
+    "Chapel of 1782 on Largo das Forras, a landmark of the decline.",
+    "From the late 18th century until the 1970s, the town practically stopped."
+   ],
+   "notes": [
+    "The dedication to “poor whites” is the tour's interpretation."
+   ]
+  },
+  "C68": {
+   "title": "The court flees to Brazil",
+   "keyword": "Court 1808",
+   "facts": [
+    "Opening of the ports (1808).",
+    "Royal Press: end of the printing ban.",
+    "The English reopen mines and bring railways and factories in the 19th century."
+   ]
+  },
+  "C69": {
+   "title": "Does “Uai” come from “why”?",
+   "keyword": "Uai",
+   "facts": [
+    "It's folk etymology; linguists link “uai” to Portuguese interjections like “ué”."
+   ]
+  },
+  "C70": {
+   "title": "“For the English to see” and the end of slavery",
+   "keyword": "Golden Law 1888",
+   "facts": [
+    "The 1831 law banning the slave trade was not enforced (the most accepted origin of “para inglês ver”).",
+    "The Eusébio de Queirós Law (1850) actually ended the trade.",
+    "Free Womb Law (1871); Sexagenarian Law (1885).",
+    "Golden Law (May 13, 1888), with no reparations at all."
+   ]
+  },
+  "C71": {
+   "title": "The Confederados",
+   "keyword": "Confederados",
+   "facts": [
+    "Encouraged by Pedro II, thousands (estimates vary widely; about 10,000 is a common figure) moved to the interior of São Paulo (Americana, Santa Bárbara d'Oeste).",
+    "Many came because Brazil still had slavery."
+   ],
+   "notes": [
+    "The numbers are debated."
+   ]
+  },
+  "C72": {
+   "title": "The Town of São José becomes Tiradentes",
+   "keyword": "Name 1889",
+   "facts": [
+    "With the Republic, the town is renamed Tiradentes.",
+    "Irony: Queen Maria I, who upheld the sentence, was the daughter of José, honored in the old name."
+   ]
+  },
+  "C73": {
+   "title": "Heritage listing",
+   "keyword": "IPHAN 1938",
+   "facts": [
+    "Tiradentes was listed by IPHAN (then SPHAN) in 1938.",
+    "Fig trees were planted on Largo das Forras to celebrate (tour data)."
+   ]
+  },
+  "C74": {
+   "title": "The Englishman who found Tiradentes",
+   "keyword": "Solar 1972",
+   "facts": [
+    "According to the tour: John Parsons opened the Solar da Ponte (1972).",
+    "In the 80s he helped families restore old mansions and fought for underground wiring; he died in 2016."
+   ],
+   "notes": [
+    "Local data (tour text)."
+   ]
+  },
+  "C75": {
+   "title": "Burle Marx, Globo and the boom",
+   "keyword": "Soap operas",
+   "facts": [
+    "According to the tour: Burle Marx gardens on Largo das Forras (1980s).",
+    "Yves Alves (Globo director) and the Roberto Marinho Foundation restored Rua Direita; the town became a soap-opera set in the 90s.",
+    "Today: almost 200 inns and the Film Festival (since 1998)."
+   ],
+   "notes": [
+    "Local data (tour text)."
+   ]
+  },
+  "C76": {
+   "title": "Back to the Lookout",
+   "keyword": "Gold, poverty, Englishman",
+   "facts": []
+  }
+ },
+ "eras": {
+  "prologo": {
+   "name": "The Lookout",
+   "ageLabel": "Prologue"
+  },
+  "mundo": {
+   "name": "The World Before Brazil"
+  },
+  "paubrasil": {
+   "name": "The Brazilwood Age"
+  },
+  "acucar": {
+   "name": "Sugar & Blood"
+  },
+  "invasoes": {
+   "name": "Everybody Wants a Piece"
+  },
+  "palmares": {
+   "name": "Palmares"
+  },
+  "ouro": {
+   "name": "The Gold Age"
+  },
+  "apogeu": {
+   "name": "Peak & Segregation"
+  },
+  "inconfidencia": {
+   "name": "The Conspiracy"
+  },
+  "depois": {
+   "name": "After the Gold"
+  },
+  "renascimento": {
+   "name": "The Revival"
+  }
+ },
+ "stops": {
+  "T0": {
+   "name": "Lookout / Alto São Francisco",
+   "lookAt": "the 1718 cross and the Serra de São José on the horizon"
+  },
+  "T1": {
+   "name": "Largo das Mercês / Estrada Real",
+   "lookAt": "the Mercês chapel and the Estrada Real paving"
+  },
+  "T2": {
+   "name": "Stone bridge",
+   "lookAt": "the bridge's cutwater and the Santo Antônio stream",
+   "extras": {
+    "T2-x1": {
+     "title": "The Minas breathalyzer"
+    },
+    "T2-x2": {
+     "title": "Cachaça"
+    }
+   }
+  },
+  "T3": {
+   "name": "Largo das Forras",
+   "lookAt": "the fig trees, the Burle Marx gardens and the Bom Jesus da Pobreza chapel",
+   "extras": {
+    "T3-x1": {
+     "title": "The little Passos chapels"
+    }
+   }
+  },
+  "T4": {
+   "name": "The “procession step” climb",
+   "lookAt": "the stone slope (walk slowly while you tell it)"
+  },
+  "T5": {
+   "name": "Beco da Pedreira",
+   "lookAt": "the clay bank with quartz veins",
+   "extras": {
+    "T5-x1": {
+     "title": "The guide's fifth"
+    }
+   }
+  },
+  "T6": {
+   "name": "Ridge view (near Gourmeco)",
+   "lookAt": "the whole Serra de São José"
+  },
+  "T7": {
+   "name": "Padre Toledo Museum",
+   "lookAt": "the mansion facade, second-floor windows"
+  },
+  "T8": {
+   "name": "Tiradentes statue",
+   "lookAt": "the statue's face"
+  },
+  "T9": {
+   "name": "São João Evangelista church",
+   "lookAt": "the facade of the pardos' church"
+  },
+  "T10": {
+   "name": "Beco da Matriz",
+   "lookAt": "the slave-quarter air vents in the wall",
+   "extras": {
+    "T10-x1": {
+     "title": "The “tigres”"
+    }
+   }
+  },
+  "T11": {
+   "name": "Matriz well",
+   "lookAt": "the 1710 well",
+   "extras": {
+    "T11-x1": {
+     "title": "The PIX well"
+    }
+   }
+  },
+  "T12": {
+   "name": "Matriz de Santo Antônio",
+   "lookAt": "the high altar, the organ and the sundial",
+   "extras": {
+    "T12-x1": {
+     "title": "Reading the church"
+    },
+    "T12-x2": {
+     "title": "Holy ground"
+    },
+    "T12-x3": {
+     "title": "Getting married at the Matriz"
+    }
+   }
+  },
+  "T13": {
+   "name": "Beco do Rosário / Largo do Rosário",
+   "lookAt": "the Rosário church and the old jail",
+   "extras": {
+    "T13-x1": {
+     "title": "The jail across the street"
+    }
+   }
+  },
+  "T14": {
+   "name": "Rua Direita / Quatro Cantos",
+   "lookAt": "the eaves and the townhouse windows",
+   "extras": {
+    "T14-x1": {
+     "title": "Sobrado × solar"
+    },
+    "T14-x2": {
+     "title": "Horse-tying stones"
+    }
+   }
+  },
+  "T15": {
+   "name": "São José fountain",
+   "lookAt": "the shrine with Saint Joseph in boots and the three stone faces",
+   "extras": {
+    "T15-x1": {
+     "title": "End of the tour"
+    }
+   }
+  }
+ },
+ "expressions": {
+  "EXP-pe-moleque-calcada": {
+   "meaning": "Paving of irregular stones",
+   "legend": "Enslaved boys trampled the mud between the stones to set the paving.",
+   "reality": "Probable legend; no documentation."
+  },
+  "EXP-pe-moleque-doce": {
+   "meaning": "A peanut candy",
+   "legend": "From “Pede, moleque!” (“Ask, boy!”).",
+   "reality": "Folk etymology, no documentation."
+  },
+  "EXP-quinto-infernos": {
+   "meaning": "A very bad or very remote place",
+   "legend": "Born from the hunt for the fifth tax.",
+   "reality": "Popular origin, no documentation."
+  },
+  "EXP-santo-pau-oco": {
+   "meaning": "Someone who looks good but isn't",
+   "legend": "Hollow wooden saints carried smuggled gold.",
+   "reality": "The expression exists; large-scale practice is debated."
+  },
+  "EXP-enfezado": {
+   "meaning": "Grumpy, in a bad mood",
+   "legend": "The enslaved man who carried waste got dirty with feces.",
+   "reality": "Folk etymology, no documentation."
+  },
+  "EXP-lavar-egua": {
+   "meaning": "I hit the jackpot",
+   "legend": "The enslaved hid gold in the mud on the mares' backs and then washed the animals.",
+   "reality": "Folk etymology, no documentation."
+  },
+  "EXP-caroco-angu": {
+   "meaning": "There's something hidden here",
+   "legend": "The cook hid meat in the enslaved people's corn mush.",
+   "reality": "Folk etymology, no documentation."
+  },
+  "EXP-ora-pro-nobis": {
+   "meaning": "An edible plant typical of Minas",
+   "legend": "The enslaved picked the plant in the priest's yard during the Latin litany.",
+   "reality": "The plant and the Latin name are real; the picking story is a tale."
+  },
+  "EXP-onde-cair-morto": {
+   "meaning": "To be very poor",
+   "legend": "Those who couldn't pay for a grave inside the church.",
+   "reality": "Plausible legend."
+  },
+  "EXP-eira-beira": {
+   "meaning": "With nothing, no possessions",
+   "legend": "No land (eira) and no house (beira).",
+   "reality": "Plausible legend."
+  },
+  "EXP-pe-rapado": {
+   "meaning": "A poor person",
+   "legend": "The poor used the boot scraper at the church door to clean off the mud.",
+   "reality": "Folk etymology, no documentation."
+  },
+  "EXP-subir-vida": {
+   "meaning": "To get ahead in life",
+   "legend": "The townhouse was built in stages: whoever got rich added a floor.",
+   "reality": "Folk etymology, no documentation."
+  },
+  "EXP-burros-agua": {
+   "meaning": "To fail",
+   "legend": "Bandeirantes and muleteers lost mules at river crossings.",
+   "reality": "Plausible legend."
+  },
+  "EXP-picar-mula": {
+   "meaning": "To leave, to get going",
+   "legend": "Spurring the stubborn mule to get it moving.",
+   "reality": "Plausible legend."
+  },
+  "EXP-ingles-ver": {
+   "meaning": "Just for show",
+   "legend": "Decoy ships to fool the English.",
+   "reality": "Most accepted origin: the law of Nov 7, 1831, which banned the slave trade and was not enforced."
+  },
+  "EXP-uai": {
+   "meaning": "Interjection of surprise",
+   "legend": "Locals imitated English miners saying “why / why, sir”.",
+   "reality": "Almost certainly false; linguists link it to Portuguese interjections like “ué”."
+  }
+ },
+ "characters": {
+  "buck": {
+   "role": "Protagonist · “The Highlander of the Royal Road”",
+   "visual": "Brown Stetson with the front brim bent up; red plaid shirt with rolled sleeves; leather vest; blue bandana; boots with star spurs; a dented tin canteen on the left side of his belt.",
+   "function": "A Nashville cowboy (1876) stuck in time after drinking from the fountain. Compares everything to the US and is confidently wrong."
+  },
+  "mula": {
+   "role": "Companion · the Headless Mule",
+   "visual": "A gray-brown mule with a leather pack saddle and two chests; a blue flame where the head should be; a gold earring floating where the ear would be.",
+   "function": "The Brazilian voice and the hint button. Stops joking on serious cards.",
+   "catchphrase": "Here even the tax has 300 years of tradition."
+  },
+  "cobrador": {
+   "role": "Antagonist",
+   "visual": "Tall, dark-blue frock coat with gold buttons, white wig with a queue, tricorn; ledger chained to his wrist and a gold scale; eyes like crown seals.",
+   "function": "Takes 20% of all the player's gold and triggers the Derrama. He isn't a person: he's a system."
+  },
+  "sineiro": {
+   "role": "Mentor",
+   "visual": "An elderly Black man, white cotton shirt, rolled-up trousers, barefoot, holding a thick bell rope that comes down from the sky.",
+   "function": "Gives the missions by ringing bells (mission, correct, danger, achievement). Lives in São João del-Rei.",
+   "catchphrase": "Here the bell talks. You just have to learn to listen."
+  },
+  "caramuru": {
+   "role": "NPC · Diogo Álvares",
+   "function": "The first “adopted Brazilian”; teaches barter."
+  },
+  "quitandeira": {
+   "name": "The freed food seller",
+   "role": "NPC",
+   "function": "Sells food at the camp entrance and trades clues for coins. Symbol of purchased freedom."
+  },
+  "tropeiro": {
+   "name": "The muleteer",
+   "role": "NPC",
+   "function": "The Brazilian cowboy; the protagonist's mirror."
+  },
+  "antonil": {
+   "role": "NPC · Jesuit",
+   "function": "Wrote too much and had his book seized."
+  },
+  "tiradentes": {
+   "role": "NPC · Joaquim José da Silva Xavier",
+   "visual": "Clean-shaven, in an ensign's uniform.",
+   "function": "The Conspiracy's propagandist; the beard was invented later."
+  },
+  "silverio": {
+   "role": "NPC · the traitor",
+   "visual": "Always holding a debt paper.",
+   "function": "The 1789 plea bargain."
+  }
+ },
+ "achievements": {
+  "age1": {
+   "title": "First Age",
+   "desc": "Finish Chapter 1 and cross the first Time Gate."
+  },
+  "pinzon": {
+   "title": "Got There First, Got Nothing",
+   "desc": "Discover the Spaniard who arrived before Cabral."
+  },
+  "pica-mula": {
+   "title": "Spur the Mule",
+   "desc": "Try to spur Dona Mula 10 times. She's unionized."
+  },
+  "barba": {
+   "title": "Marketing Beard",
+   "desc": "Switch worlds on the bearded Tiradentes card."
+  },
+  "dez-dias": {
+   "title": "Ten Days",
+   "desc": "Get the Washington × Tiradentes card right in Practice."
+  },
+  "primeira-devassa": {
+   "title": "Warrant Issued",
+   "desc": "Close your first Devassa case in the Investigation."
+  },
+  "jefferson": {
+   "title": "Jefferson Ghosted Us",
+   "desc": "Collect the gold medal of the student who went to see Jefferson."
+  },
+  "ny": {
+   "title": "New York Began in Recife",
+   "desc": "Find the secret Time Gate to New Amsterdam in Chapter 3."
+  },
+  "cheers": {
+   "title": "Cheers, England",
+   "desc": "See the gold leak to the English ship in Chapter 4."
+  },
+  "fase1": {
+   "title": "End of Phase 1",
+   "desc": "Cross all 6 chapters, from brazilwood to the gallows."
+  },
+  "fase2": {
+   "title": "Next Stop: Petrópolis",
+   "desc": "Drink from the fountain with the empty canteen at the end of Phase 1."
+  }
+ },
+ "items": {
+  "santo": {
+   "name": "Hollow-Wood Saint",
+   "desc": "Hides your gold from the Collector once: the next Fifth isn't charged. Legend turned mechanic."
+  },
+  "turmalina": {
+   "name": "Fernão Dias's “emerald”",
+   "desc": "Look closely: it's a tourmaline."
+  },
+  "livro-antonil": {
+   "name": "Cultura e Opulência do Brasil",
+   "desc": "Antonil's book the Crown seized in 1711. Read it in secret."
+  },
+  "carta-tj": {
+   "name": "Letter signed “T.J.”",
+   "desc": "Cordial, polite and with no promise at all. Jefferson ghosted Brazil."
+  }
+ },
+ "quizzes": {
+  "Q01": {
+   "prompt": "How many ships did Columbus take in 1492?",
+   "options": [
+    "3",
+    "13",
+    "5",
+    "1"
+   ],
+   "explain": "Santa María, Pinta and Niña, with about 90 men."
+  },
+  "Q02": {
+   "prompt": "The Treaty of Tordesillas (1494) split the world between…",
+   "options": [
+    "Spain and Portugal",
+    "England and France",
+    "Portugal and Holland",
+    "Spain and France"
+   ],
+   "explain": "A line 370 leagues west of Cape Verde: west for Spain, east for Portugal."
+  },
+  "Q03": {
+   "prompt": "Who touched the Northeast coast before Cabral, in January 1500?",
+   "options": [
+    "Vicente Yáñez Pinzón",
+    "Amerigo Vespucci",
+    "Fernão de Noronha",
+    "Christopher Columbus"
+   ],
+   "explain": "Former captain of the Niña. By the treaty, the land belonged to Portugal."
+  },
+  "Q04": {
+   "prompt": "Where did Cabral's fleet land on April 22, 1500?",
+   "options": [
+    "Porto Seguro (Bahia)",
+    "Rio de Janeiro",
+    "São Vicente (São Paulo)",
+    "Recife (Pernambuco)"
+   ],
+   "explain": "13 ships, about 1,500 men. He thought it was an island."
+  },
+  "Q05": {
+   "prompt": "Why is Rio de Janeiro called that?",
+   "options": [
+    "They found the bay in January and thought it was a river",
+    "In honor of a saint named January",
+    "It was the name of a ship",
+    "The river floods in January"
+   ],
+   "explain": "The 1501–1502 expedition, with Vespucci, named places by the calendar."
+  },
+  "Q06": {
+   "prompt": "Where does the name “pau-brasil” come from?",
+   "options": [
+    "From “brasa” (ember), for the red dye",
+    "From a chief named Brasil",
+    "From an Irish island",
+    "From a Tupi word for tree"
+   ],
+   "explain": "The red dye was valuable for cloth in Europe."
+  },
+  "Q10": {
+   "prompt": "What was Brazil's first official town (1532)?",
+   "options": [
+    "São Vicente",
+    "Salvador",
+    "Olinda",
+    "Porto Seguro"
+   ],
+   "explain": "Founded by Martim Afonso de Sousa, 75 years before Jamestown."
+  },
+  "Q12": {
+   "prompt": "What was Brazil's first capital, founded in 1549?",
+   "options": [
+    "Salvador",
+    "Rio de Janeiro",
+    "São Vicente",
+    "Recife"
+   ],
+   "explain": "Tomé de Sousa. It was the capital for 214 years."
+  },
+  "Q13": {
+   "prompt": "What share of the whole Atlantic slave trade came to Brazil?",
+   "options": [
+    "About 40%",
+    "About 10%",
+    "About 70%",
+    "About 25%"
+   ],
+   "explain": "About 4.8 million people (SlaveVoyages estimate)."
+  },
+  "Q16": {
+   "prompt": "Rio de Janeiro was founded in 1565 to drive out whom?",
+   "options": [
+    "The French",
+    "The Dutch",
+    "The English",
+    "The Spanish"
+   ],
+   "explain": "Villegaignon's France Antarctique, in Guanabara Bay."
+  },
+  "Q21": {
+   "prompt": "Who governed Dutch Recife from 1637 to 1644?",
+   "options": [
+    "Maurice of Nassau",
+    "Villegaignon",
+    "Duguay-Trouin",
+    "Thomas Cavendish"
+   ],
+   "explain": "He brought painters and scientists and built bridges."
+  },
+  "Q23": {
+   "prompt": "How many Jewish refugees from Recife reached New Amsterdam in 1654?",
+   "options": [
+    "23",
+    "230",
+    "3",
+    "2,300"
+   ],
+   "explain": "The first Jewish community in New York."
+  },
+  "Q27": {
+   "prompt": "Where was Palmares?",
+   "options": [
+    "Serra da Barriga (Alagoas)",
+    "Serra de São José (Minas)",
+    "Bahia's Recôncavo",
+    "The Pernambuco coast"
+   ],
+   "explain": "Between 6,000 and 20,000 people; capital Macaco."
+  },
+  "Q28": {
+   "prompt": "November 20 remembers…",
+   "options": [
+    "Zumbi's death (1695)",
+    "The Golden Law",
+    "Tiradentes' hanging",
+    "Cabral's arrival"
+   ],
+   "explain": "A national holiday since 2023."
+  },
+  "Q29": {
+   "prompt": "Fernão Dias died believing he had emeralds. They were…",
+   "options": [
+    "Tourmalines",
+    "Quartz",
+    "Gold",
+    "Diamonds"
+   ],
+   "explain": "But his trails became the infrastructure of the gold rush."
+  },
+  "Q30": {
+   "prompt": "Why “Ouro Preto” (Black Gold)?",
+   "options": [
+    "The gold was coated in iron oxide and looked black",
+    "It was mined at night",
+    "The gold was burned at the foundry",
+    "In honor of a bandeirante"
+   ],
+   "explain": "Antônio Dias de Oliveira, Tripuí stream, 1698."
+  },
+  "Q33": {
+   "prompt": "In the Methuen Treaty (1703), England bought wine. Portugal bought…",
+   "options": [
+    "English cloth and manufactures",
+    "Tea",
+    "Weapons",
+    "Sugar"
+   ],
+   "explain": "The difference was paid in Brazilian gold."
+  },
+  "Q34": {
+   "prompt": "In the Emboaba War, the Paulistas fought against…",
+   "options": [
+    "Portuguese and outsiders",
+    "The Dutch",
+    "The French",
+    "The Spanish"
+   ],
+   "explain": "Emboaba leader: Manuel Nunes Viana."
+  },
+  "Q41": {
+   "prompt": "When did the camp become the Town of São José (today Tiradentes)?",
+   "options": [
+    "Jan 19, 1718",
+    "Jul 8, 1711",
+    "1749",
+    "1792"
+   ],
+   "explain": "By the Count of Assumar, honoring Prince José."
+  },
+  "Q43a": {
+   "prompt": "After the Vila Rica revolt (1720), who was hanged?",
+   "options": [
+    "Filipe dos Santos",
+    "Pascoal da Silva Guimarães",
+    "The Count of Assumar",
+    "Tiradentes"
+   ],
+   "explain": "The rich man (Pascoal) was sent to Portugal. The poor man got the rope."
+  },
+  "Q43b": {
+   "prompt": "How many years before the Boston Tea Party (1773) was the gold revolt (1720)?",
+   "options": [
+    "53 years",
+    "10 years",
+    "100 years",
+    "3 years"
+   ],
+   "explain": "Yours was about tea. Ours was about gold."
+  },
+  "Q47": {
+   "prompt": "How long did it take to build the Matriz de Santo Antônio?",
+   "options": [
+    "42 years",
+    "12 years",
+    "100 years",
+    "5 years"
+   ],
+   "explain": "From 1710 to 1752."
+  },
+  "Q48a": {
+   "prompt": "Whose brotherhood was the Rosário church?",
+   "options": [
+    "Africans",
+    "Rich whites",
+    "Mulattos/pardos",
+    "Whites who became poor"
+   ],
+   "explain": "With elements of African religions."
+  },
+  "Q48b": {
+   "prompt": "Whose brotherhood was the São João Evangelista church?",
+   "options": [
+    "Mulattos/pardos",
+    "Africans",
+    "Crioulos",
+    "Rich whites"
+   ],
+   "explain": "Mercês = crioulos; Rosário = Africans; Matriz/Carmo = rich whites."
+  },
+  "Q52": {
+   "prompt": "When was the São José fountain opened?",
+   "options": [
+    "1749",
+    "1718",
+    "1788",
+    "1889"
+   ],
+   "explain": "Drinking water, horse trough and laundry."
+  },
+  "Q53": {
+   "prompt": "What yearly quota for the fifth was set in 1750?",
+   "options": [
+    "100 arrobas (~1,500 kg)",
+    "20 arrobas (~300 kg)",
+    "500 arrobas (~7,500 kg)",
+    "1,000 arrobas (~15,000 kg)"
+   ],
+   "explain": "If it wasn't met, the derrama came."
+  },
+  "Q54": {
+   "prompt": "In what year did Brazil's capital move to Rio de Janeiro?",
+   "options": [
+    "1763",
+    "1711",
+    "1808",
+    "1720"
+   ],
+   "explain": "The gold went down the mountain; the capital followed it."
+  },
+  "Q58a": {
+   "prompt": "What would be the capital of the conspirators' republic?",
+   "options": [
+    "São João del-Rei",
+    "Vila Rica",
+    "Rio de Janeiro",
+    "Town of São José"
+   ],
+   "explain": "And the university would be in Vila Rica."
+  },
+  "Q58b": {
+   "prompt": "Did the conspirators' plan abolish slavery?",
+   "options": [
+    "No",
+    "Yes, immediately",
+    "Yes, gradually",
+    "Only in Vila Rica"
+   ],
+   "explain": "Like the Founding Fathers: they talked about liberty and owned slaves."
+  },
+  "Q59": {
+   "prompt": "Who did José Joaquim da Maia meet in France in 1787?",
+   "options": [
+    "Thomas Jefferson",
+    "Benjamin Franklin",
+    "George Washington",
+    "John Adams"
+   ],
+   "explain": "Jefferson was cordial and promised nothing."
+  },
+  "Q60": {
+   "prompt": "Who denounced the conspirators in 1789?",
+   "options": [
+    "Joaquim Silvério dos Reis",
+    "Father Toledo",
+    "Cláudio Manuel da Costa",
+    "Viscount of Barbacena"
+   ],
+   "explain": "He traded his friends for having his debts forgiven."
+  },
+  "Q61a": {
+   "prompt": "How many days after George Washington's inauguration was Tiradentes arrested?",
+   "options": [
+    "Ten days",
+    "One year",
+    "One month",
+    "The same day"
+   ],
+   "explain": "Washington took office on April 30, 1789; Tiradentes was arrested on May 10, 1789."
+  },
+  "Q65": {
+   "prompt": "When was Tiradentes hanged?",
+   "options": [
+    "Apr 21, 1792",
+    "May 10, 1789",
+    "May 13, 1888",
+    "Nov 15, 1889"
+   ],
+   "explain": "Largo da Lampadosa, Rio. Today it's a national holiday."
+  },
+  "Q66": {
+   "prompt": "Who created the image of the bearded, Christ-like Tiradentes?",
+   "options": [
+    "The Republic, after 1889",
+    "Queen Maria I",
+    "The conspirators themselves",
+    "Aleijadinho"
+   ],
+   "explain": "Ensigns didn't wear beards, and prisoners had shaved heads."
+  },
+  "Q70a": {
+   "prompt": "What was the last country in the Americas to abolish slavery?",
+   "options": [
+    "Brazil (1888)",
+    "The United States",
+    "Mexico",
+    "Argentina"
+   ],
+   "explain": "Golden Law, May 13, 1888, with no reparations."
+  },
+  "Q70b": {
+   "prompt": "What is the most accepted origin of “para inglês ver” (for the English to see)?",
+   "options": [
+    "The 1831 anti-trade law that was never enforced",
+    "The Eusébio de Queirós Law (1850)",
+    "The Golden Law",
+    "English miners in the 19th century"
+   ],
+   "explain": "1831 = “for the English to see”. 1850 = the law that stuck."
+  },
+  "Q72": {
+   "prompt": "In what year was the Town of São José renamed Tiradentes?",
+   "options": [
+    "1889",
+    "1792",
+    "1938",
+    "1718"
+   ],
+   "explain": "With the Republic. Queen Maria I was the daughter of José."
+  },
+  "Q73": {
+   "prompt": "In what year was Tiradentes listed by IPHAN (then SPHAN)?",
+   "options": [
+    "1938",
+    "1972",
+    "1889",
+    "1998"
+   ],
+   "explain": "Poverty saved the town: nobody had money to tear anything down."
+  },
+  "Q74": {
+   "prompt": "Who opened the Solar da Ponte in 1972, according to the tour?",
+   "options": [
+    "John Parsons",
+    "Burle Marx",
+    "Yves Alves",
+    "Antonil"
+   ],
+   "explain": "An English engineer. Everyone thought he was crazy."
+  },
+  "F01": {
+   "prompt": "The Rio das Mortes got its name from the bodies of the Capão da Traição.",
+   "explain": "The name appears before the war. The war only reinforced the legend."
+  },
+  "F02": {
+   "prompt": "“Uai” comes from English miners asking “why”.",
+   "explain": "Folk etymology. Linguists link “uai” to interjections like “ué”."
+  },
+  "F03": {
+   "prompt": "Hollow wooden saints full of gold were used on a large scale to fool the tax man.",
+   "explain": "The expression exists; large-scale practice is debated."
+  },
+  "F04": {
+   "prompt": "Anchieta wrote a 5,000-line poem in the sand on the beach.",
+   "explain": "The poem exists; writing it in the sand is tradition."
+  },
+  "F05": {
+   "prompt": "Tiradentes had a long beard when he was arrested.",
+   "explain": "The beard was created by the Republic, a hundred years later."
+  },
+  "F06": {
+   "prompt": "Filipe dos Santos was dragged by horses.",
+   "explain": "Documented: hanged and quartered. Being dragged by horses is legend."
+  },
+  "F07": {
+   "prompt": "The expression “quinto dos infernos” (fifth from hell) was born from the fifth tax.",
+   "explain": "Popular origin, no documentation."
+  },
+  "F08": {
+   "prompt": "The most accepted explanation for “para inglês ver” is an 1831 law that was never enforced.",
+   "explain": "The law banned the slave trade and stayed on paper."
+  },
+  "F09": {
+   "prompt": "New York's first Jewish community came from Recife.",
+   "explain": "23 refugees reached New Amsterdam in September 1654."
+  },
+  "F10": {
+   "prompt": "A Brazilian student asked Thomas Jefferson for help in 1787.",
+   "explain": "José Joaquim da Maia. Jefferson promised nothing."
+  },
+  "F11": {
+   "prompt": "Tiradentes was arrested ten days after George Washington's inauguration.",
+   "explain": "April 30, 1789 × May 10, 1789."
+  },
+  "F12": {
+   "prompt": "The first Europeans to stay in Brazil were two convicts and two runaway cabin boys.",
+   "explain": "Cabral left the convicts; the cabin boys ran away."
+  },
+  "F13": {
+   "prompt": "Ouro Preto's gold looked black because it was coated in iron oxide.",
+   "explain": "Hence the name."
+  },
+  "F14": {
+   "prompt": "“Lavar a égua” (to wash the mare) comes from enslaved people hiding gold in the mud on mares' backs.",
+   "explain": "Folk etymology, no documentation."
+  },
+  "F15": {
+   "prompt": "“Pé-rapado” (scraped foot) comes from the boot scrapers at church doors.",
+   "explain": "Folk etymology, no documentation."
+  },
+  "F16": {
+   "prompt": "Dutch Recife had the first synagogue in the Americas.",
+   "explain": "Kahal Zur Israel."
+  },
+  "F17": {
+   "prompt": "The conspirators planned to abolish slavery.",
+   "explain": "False: slavery would not be abolished."
+  },
+  "F18": {
+   "prompt": "Minas gold helped pay for Portugal's purchases in England.",
+   "explain": "Methuen Treaty (1703): the trade gap was paid in gold."
+  },
+  "F19": {
+   "prompt": "The Matriz de Santo Antônio took 42 years to finish.",
+   "explain": "From 1710 to 1752."
+  },
+  "F20": {
+   "prompt": "“Subir na vida” (to climb in life) comes from townhouses built floor by floor.",
+   "explain": "Folk etymology, no documentation."
+  },
+  "F21": {
+   "prompt": "The São José fountain is slightly tilted on purpose.",
+   "explain": "It leans on the aqueduct. “A listed building, literally leaning.”"
+  }
+ }
+}

@@ -39,6 +39,42 @@ export async function assemble(index, get) {
   return c;
 }
 
+// Tradução: data/en.json traz só os campos traduzidos, por id; aplica por cima do português.
+export function applyOverlay(c, tr) {
+  const byId = (list) => Object.fromEntries(list.map((x) => [x.id, x]));
+  const merge = (list, part) => { const m = byId(list); for (const [id, v] of Object.entries(part || {})) if (m[id]) Object.assign(m[id], v); };
+  merge(c.cards, tr.cards);
+  merge(c.eras, tr.eras);
+  merge(c.expressions, tr.expressions);
+  merge(c.characters, tr.characters);
+  merge(c.achievements, tr.achievements);
+  merge(c.items, tr.items);
+  merge(c.quizzes, tr.quizzes);
+  for (const s of c.tours[0].stops) {
+    const t = tr.stops?.[s.id];
+    if (!t) continue;
+    const { extras, ...rest } = t;
+    Object.assign(s, rest);
+    for (const x of s.extras || []) Object.assign(x, extras?.[x.id] || {});
+  }
+  return c;
+}
+
+// Confere se a tradução aponta para ids que existem e mantém o número de opções.
+export function validateOverlay(c, tr) {
+  const errors = [];
+  const ids = (list) => new Set(list.map((x) => x.id));
+  const check = (section, list) => { const s = ids(list); for (const id of Object.keys(tr[section] || {})) if (!s.has(id)) errors.push(`en.json ${section}: "${id}" não existe`); };
+  check('cards', c.cards); check('eras', c.eras); check('expressions', c.expressions); check('characters', c.characters);
+  check('achievements', c.achievements); check('items', c.items); check('quizzes', c.quizzes); check('stops', c.tours[0].stops);
+  for (const q of c.quizzes) {
+    const t = tr.quizzes?.[q.id];
+    if (q.options && t?.options && t.options.length !== q.options.length) errors.push(`en.json quiz ${q.id}: número de opções diferente`);
+  }
+  for (const k of c.cards) if (!tr.cards?.[k.id]) errors.push(`en.json: card ${k.id} sem tradução`);
+  return errors;
+}
+
 export function validate(c) {
   const errors = [];
   const warnings = [];

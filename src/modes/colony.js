@@ -33,7 +33,8 @@ export function colony(root, { content, t }) {
           ${res()}
           <div class="village">${Object.entries(counts).map(([id, n]) => {
             const b = B(id);
-            return `<div class="bld">${b.card && img(b.card) ? `<img src="assets/img/${img(b.card)}" alt="">` : '<div class="noimg">🏚️</div>'}
+            const pic = b.image || (b.card && img(b.card));
+            return `<div class="bld">${pic ? `<img src="assets/img/${pic}" alt="">` : '<div class="noimg">🏚️</div>'}
               <span>${esc(b.name)}${n > 1 ? ` ×${n}` : ''}</span></div>`;
           }).join('')}</div>
           ${age ? `<button class="btn primary" data-act="age">⬆ Age Up: ${esc(age.label)}</button>` : ''}

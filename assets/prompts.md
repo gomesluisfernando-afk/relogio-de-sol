@@ -121,3 +121,9 @@ Prefixo comum: "SQUARE 1:1, painted 1990s JRPG style, soft outlines, warm light,
 - scenes/estatua.webp — colonial square at dusk with a statue of a clean-shaven 18th-century soldier
 - scenes/sinos.webp — colonial town full of baroque bell towers at sunset, bells swinging
 - scenes/conspiracao.webp — 1780s colonial living room at night, candles, harpsichord, men whispering by the windows
+
+## Bloco 10
+- cards/roca.webp (1:1) — small colonial Brazilian farm plot in a forest clearing, rows of corn and manioc, wooden fence, thatched hut, basket of corn, no people
+
+## Vídeos (Google Flow · Omni 1.1 Flash · 15 créditos cada)
+- video/abertura_portal.mp4 — clipe 1 (a partir de scenes/mirante.webp, "Animar"): "the cowboy seen from behind slowly raises the dented tin canteen and drinks; the camera stays behind him; then the golden sky above the mountain ridge begins to swirl like a glowing time portal, clouds spinning faster, light shimmering over the wooden cross and the colonial town." Original 720×1280, 10 s; comprimido para 540 px, sem áudio (568 KB).

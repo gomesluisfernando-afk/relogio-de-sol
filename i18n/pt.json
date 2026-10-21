@@ -173,5 +173,11 @@
     "colony.endTitle":  "Fim da Capitania",
     "colony.endWealth":  "Riqueza",
     "colony.endCrown":  "A Coroa levou",
-    "colony.endNote":  "Em 1792 a derrama não veio, mas a forca sim: Tiradentes foi enforcado em 21 de abril."
+    "colony.endNote":  "Em 1792 a derrama não veio, mas a forca sim: Tiradentes foi enforcado em 21 de abril.",
+    "card.listen":  "Ouvir gancho",
+    "backup.export":  "Exportar progresso",
+    "backup.import":  "Importar",
+    "backup.done":  "Progresso importado.",
+    "backup.fail":  "Não deu para importar:",
+    "lang.toggle":  "🇺🇸 English"
 }

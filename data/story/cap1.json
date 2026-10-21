@@ -42,7 +42,8 @@
       "bg": {
         "color": "#3a3320",
         "prop": "✝️",
-        "image": "scenes/mirante.webp"
+        "image": "scenes/mirante.webp",
+        "video": "video/abertura_portal.mp4"
       },
       "cards": [
         "C00"

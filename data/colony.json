@@ -17,7 +17,7 @@
   ],
   "buildings": [
     { "id": "feitoria", "name": "Feitoria", "age": "paubrasil", "cost": {}, "prod": { "pau": 3 }, "card": "C07", "max": 3 },
-    { "id": "roca", "name": "Roça", "age": "paubrasil", "cost": { "pau": 2 }, "prod": { "comida": 3 }, "max": 6, "desc": "Comida. Quem só minera passa fome (C31)." },
+    { "id": "roca", "name": "Roça", "age": "paubrasil", "cost": { "pau": 2 }, "prod": { "comida": 3 }, "max": 6, "image": "cards/roca.webp", "desc": "Comida. Quem só minera passa fome (C31)." },
     { "id": "engenho", "name": "Engenho", "age": "acucar", "cost": { "pau": 5 }, "prod": { "acucar": 4 }, "card": "C13", "max": 4 },
     { "id": "vila", "name": "Vila", "age": "acucar", "after": 1532, "cost": { "pau": 6, "acucar": 3 }, "prod": { "pop": 2 }, "card": "C10", "max": 1, "desc": "Câmara + pelourinho + igreja." },
     { "id": "lavra", "name": "Lavra (bateia)", "age": "ouro", "cost": { "acucar": 4, "pau": 2 }, "prod": { "ouro": 5 }, "card": "C42", "max": 5 },
