@@ -1,9 +1,9 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v21';
+const CACHE = 'relogio-v22';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
-  'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js', 'src/colony-logic.js', 'src/modes/colony.js',
+  'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js', 'src/colony-logic.js', 'src/modes/colony.js', 'src/map-logic.js', 'src/modes/map.js', 'data/maps/ouro.json',
   'assets/img/chars/ficha_buck.webp', 'assets/img/chars/ficha_mula.webp', 'assets/img/chars/ficha_cobrador.webp', 'assets/img/chars/ficha_sineiro.webp',
   'assets/img/chars/ficha_caramuru.webp', 'assets/img/chars/ficha_quitandeira.webp', 'assets/img/chars/ficha_tropeiro.webp', 'assets/img/chars/ficha_antonil.webp', 'assets/img/chars/ficha_tiradentes.webp', 'assets/img/chars/ficha_silverio.webp',
   'i18n/pt.json', 'i18n/en.json', 'data/en.json',

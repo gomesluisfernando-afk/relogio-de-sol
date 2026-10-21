@@ -8,16 +8,18 @@ import { train } from './modes/train.js';
 import { story } from './modes/story.js';
 import { quest } from './modes/quest.js';
 import { colony } from './modes/colony.js';
+import { map } from './modes/map.js';
 import { esc, hud, unlock } from './ui.js';
 
 const app = document.getElementById('app');
 let ctx;
 let leave; // limpeza do modo atual (listeners, wake lock, timers)
 
-const ROUTES = { tour, timeline, card, codex, train, story, quest, colony };
+const ROUTES = { tour, timeline, card, codex, train, story, quest, colony, map };
 
 // Modos ainda não construídos aparecem desativados no Mirante.
 const MODES = [
+  { id: 'map', icon: '🗺️', ready: true },
   { id: 'tour', icon: '🕶️', ready: true },
   { id: 'timeline', icon: '🧭', ready: true },
   { id: 'train', icon: '🧠', ready: true },
