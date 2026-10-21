@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#000000">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -10,10 +10,24 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/img/ui/icon-192.png">
 <link rel="apple-touch-icon" href="assets/img/ui/icon-192.png">
-<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  #app { position: fixed; left: 50%; top: 50%; width: 960px; height: 540px; transform-origin: 50% 50%; }
+  canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+  #vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; background: #000; }
+  .hb { position: fixed; right: 10px; bottom: 10px; z-index: 9; width: 42px; height: 42px; border: 2px solid #fff; border-radius: 6px; background: #1a2a8acc; color: #fff; font: 18px monospace; }
+  #snd { right: 60px; }
+</style>
 </head>
-<body class="hub">
-<div id="app">Carregando…</div>
-<script type="module" src="src/main.js"></script>
+<body>
+<div id="app"><canvas id="c" width="960" height="540"></canvas><video id="vid" playsinline muted></video></div>
+<button id="fs" class="hb" aria-label="Tela cheia">⛶</button>
+<button id="snd" class="hb" aria-label="Som">♪</button>
+<script src="content.data.js"></script>
+<script src="maps/hoje.js"></script>
+<script src="game.js"></script>
 </body>
 </html>
