@@ -1,0 +1,150 @@
+{
+  "id": "tiradentes",
+  "name": "City tour · Tiradentes",
+  "note": "approxMinutes e lookAt são estimativas iniciais: ajuste depois de um tour real.",
+  "stops": [
+    {
+      "id": "T0", "order": 0, "name": "Mirante / Alto São Francisco",
+      "cards": ["C00", "C01", "C02", "C03", "C04", "C06", "C13", "C25"],
+      "transition": "Now let's walk down into the gold.",
+      "lookAt": "o cruzeiro de 1718 e a Serra de São José no horizonte",
+      "approxMinutes": 10
+    },
+    {
+      "id": "T1", "order": 1, "name": "Largo das Mercês / Estrada Real",
+      "cards": ["C30", "C41", "C48", "C54", "C74"],
+      "transition": "This street was the highway of gold.",
+      "lookAt": "a Capela das Mercês e o calçamento da Estrada Real",
+      "approxMinutes": 6
+    },
+    {
+      "id": "T2", "order": 2, "name": "Ponte de pedra",
+      "cards": ["C42"],
+      "extras": [
+        { "id": "T2-x1", "title": "Bafômetro do mineiro", "bullets": ["Iron bars along the bridge", "Scrape them? Too much cachaça"], "joke": "This is the Minas breathalyzer. If you scrape it, you had one cachaça too many.", "status": "doc" },
+        { "id": "T2-x2", "title": "Cachaça", "bullets": ["Cachaça: Brazil's moonshine", "Stills all over the region", "Still linked to Tiradentes' family?"], "joke": null, "status": "conferir", "conferir": ["Alambique ligado à família de Tiradentes em Coronel Xavier Chaves (citado no tour)."] }
+      ],
+      "transition": "Below us, enslaved men panned gold for 80 years.",
+      "lookAt": "o talha-mar da ponte e o córrego Santo Antônio",
+      "approxMinutes": 5
+    },
+    {
+      "id": "T3", "order": 3, "name": "Largo das Forras",
+      "cards": ["C67", "C73", "C75"],
+      "extras": [
+        { "id": "T3-x1", "title": "Os passinhos", "bullets": ["Stations of the Senhor dos Passos", "Brotherhood founded 1721", "Stops of the Passos procession"], "joke": null, "status": "doc" }
+      ],
+      "transition": "Forras means freed women. They bought freedom selling food here.",
+      "lookAt": "as figueiras, os jardins de Burle Marx e a capela do Bom Jesus da Pobreza",
+      "approxMinutes": 7
+    },
+    {
+      "id": "T4", "order": 4, "name": "Subida “passinho de procissão”",
+      "cards": ["C25", "C29", "C30", "C31", "C32", "C33", "C34", "C35", "C36", "C37"],
+      "transition": "Walk slowly, like a procession. I need time to tell you about a civil war.",
+      "lookAt": "a ladeira de pedra (subir devagar, contando)",
+      "approxMinutes": 10
+    },
+    {
+      "id": "T5", "order": 5, "name": "Beco da Pedreira",
+      "cards": ["C33", "C42", "C43", "C45", "C46", "C51"],
+      "extras": [
+        { "id": "T5-x1", "title": "O quinto do guia", "bullets": ["Find gold here? Pay the Fifth"], "joke": "If you find gold, 20% goes to the guide. It's called the Fifth. It's tradition.", "status": "doc" }
+      ],
+      "transition": "This alley is where you see how the gold actually came out.",
+      "lookAt": "o barranco de argila com veios de quartzo",
+      "approxMinutes": 8
+    },
+    {
+      "id": "T6", "order": 6, "name": "Vista da serra (perto do Gourmeco)",
+      "cards": ["C41", "C53", "C55"],
+      "transition": "In 1718 this camp became a town. Then the bill came.",
+      "lookAt": "a Serra de São José inteira",
+      "approxMinutes": 5
+    },
+    {
+      "id": "T7", "order": 7, "name": "Museu Padre Toledo",
+      "cards": ["C57", "C58", "C59", "C60"],
+      "transition": "The conspiracy started at a baptism party. Right there.",
+      "lookAt": "fachada do casarão, janelas do segundo andar",
+      "approxMinutes": 6
+    },
+    {
+      "id": "T8", "order": 8, "name": "Estátua de Tiradentes",
+      "cards": ["C61", "C62", "C64", "C65", "C66", "C72"],
+      "transition": "Notice anything missing? The beard.",
+      "lookAt": "o rosto da estátua",
+      "approxMinutes": 7
+    },
+    {
+      "id": "T9", "order": 9, "name": "Igreja de São João Evangelista",
+      "cards": ["C48", "C39"],
+      "transition": "Here's where the 'paradise of the mulattos' quote gets complicated.",
+      "lookAt": "a fachada da igreja dos pardos",
+      "approxMinutes": 4
+    },
+    {
+      "id": "T10", "order": 10, "name": "Beco da Matriz",
+      "cards": ["C49", "C70"],
+      "extras": [
+        { "id": "T10-x1", "title": "Escravos “tigres”", "bullets": ["“Tigres”: enslaved men carrying waste", "Real practice, mainly in Rio", "Details of the stains: check"], "joke": null, "status": "conferir", "tone": "serio", "conferir": ["Detalhes das manchas dos escravos “tigres”."] }
+      ],
+      "transition": "Two cities in one: power above, servitude in the alleys.",
+      "lookAt": "os respiradores de senzala no muro",
+      "approxMinutes": 6
+    },
+    {
+      "id": "T11", "order": 11, "name": "Poço da Matriz",
+      "cards": ["C47", "C75"],
+      "extras": [
+        { "id": "T11-x1", "title": "Poço do PIX", "bullets": ["The 1710 well, now a wishing well"], "joke": "I'm installing a Venmo wishing well. Coins are so 1995.", "status": "doc" }
+      ],
+      "transition": "The well that built the church. And three kids who invented a wishing well.",
+      "lookAt": "o poço de 1710",
+      "approxMinutes": 4
+    },
+    {
+      "id": "T12", "order": 12, "name": "Matriz de Santo Antônio",
+      "cards": ["C47", "C48"],
+      "extras": [
+        { "id": "T12-x1", "title": "Ler a igreja", "bullets": ["Oculus and wind door: natural light", "Baroque fear, rococo lightness", "Column with four ages of woman"], "joke": null, "status": "doc" },
+        { "id": "T12-x2", "title": "Terreno santo", "bullets": ["Numbered floor: graves inside", "Ceiling shaped like a coffin lid", "Church burials banned from 1828"], "joke": null, "status": "conferir", "conferir": ["Instrumento legal que proibiu sepultamento nas igrejas em 1828."] },
+        { "id": "T12-x3", "title": "Casar na Matriz", "bullets": ["Long waiting list for weddings"], "joke": "The waiting list is so long, you book the church first and find the groom later.", "status": "doc" }
+      ],
+      "transition": "482 kilos of gold. Let's talk about why.",
+      "lookAt": "o altar-mor, o órgão e o relógio de sol",
+      "approxMinutes": 12
+    },
+    {
+      "id": "T13", "order": 13, "name": "Beco do Rosário / Largo do Rosário",
+      "cards": ["C13", "C48", "C70"],
+      "extras": [
+        { "id": "T13-x1", "title": "A cadeia em frente", "bullets": ["Jail of 1730 facing the Rosário", "A message of control", "Passinho do Encontro: Mass for prisoners"], "joke": null, "status": "doc", "tone": "serio" }
+      ],
+      "transition": "The church of the Africans. And the jail they put right across the street.",
+      "lookAt": "a igreja do Rosário e a antiga cadeia",
+      "approxMinutes": 8
+    },
+    {
+      "id": "T14", "order": 14, "name": "Rua Direita / Quatro Cantos",
+      "cards": ["C40"],
+      "extras": [
+        { "id": "T14-x1", "title": "Sobrado × solar", "bullets": ["Sobrado: shop below, family above", "Solar: home only", "“Só lar” origin: popular story"], "joke": "Colonial Instagram: sit by the window and watch the feed.", "status": "debatido" },
+        { "id": "T14-x2", "title": "Pedras de amarrar cavalo", "bullets": ["Stones for tying horses at corners"], "joke": "Colonial valet parking. Like forgetting where you parked at Walmart.", "status": "doc" }
+      ],
+      "transition": "Commerce downstairs, family upstairs. That's a sobrado.",
+      "lookAt": "os beirais e as janelas dos sobrados",
+      "approxMinutes": 6
+    },
+    {
+      "id": "T15", "order": 15, "name": "Chafariz de São José",
+      "cards": ["C52", "C68", "C69"],
+      "extras": [
+        { "id": "T15-x1", "title": "Fim do tour", "bullets": ["Spur the mule, fill the belly"], "joke": "Time to spur the mule and fill the belly.", "status": "doc" }
+      ],
+      "transition": "And here's the fountain. Drink at your own risk. It's how I got stuck in time.",
+      "lookAt": "o oratório com São José de Botas e as três carrancas",
+      "approxMinutes": 6
+    }
+  ]
+}

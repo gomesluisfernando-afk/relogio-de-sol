@@ -1,0 +1,15 @@
+{
+  "phases": [
+    {
+      "id": "fase1",
+      "name": "Fase 1 · Minas",
+      "eras": "eras.json",
+      "cards": "cards_fase1.json",
+      "tours": ["tours/tiradentes.json"]
+    }
+  ],
+  "shared": {
+    "characters": "characters.json",
+    "expressions": "expressions.json"
+  }
+}

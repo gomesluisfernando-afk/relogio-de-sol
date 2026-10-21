@@ -1,0 +1,1165 @@
+[
+{
+  "id": "C00", "era": "prologo", "year": 2026, "yearLabel": "HOJE",
+  "title": "A história moderna começa em 1500. Aqui, ela começa 200 anos depois.",
+  "hook": "The modern history of Brazil starts in 1500. Right here, nothing happened for 200 years. Then everything happened at once.",
+  "facts": [
+    "O mirante do Alto São Francisco tem um cruzeiro de 1718, ano em que o arraial virou Vila de São José.",
+    "Da mesma vista se enxerga a Serra de São José, de onde saiu o ouro."
+  ],
+  "joke": "Brazil was discovered in 1500. Tiradentes was discovered in 1972, by an Englishman. We'll get there.",
+  "usa": "In 1718, New Orleans was being founded. Same age.",
+  "usaTitle": "Twin of New Orleans",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Cross from 1718: town is born", "Serra de São José: the gold source", "Nothing for 200 years, then everything"],
+  "keyword": "Cruzeiro 1718",
+  "characters": ["buck"]
+},
+{
+  "id": "C01", "era": "mundo", "year": 1492, "yearLabel": "1492",
+  "title": "Colombo erra o continente",
+  "hook": "Columbus was the first European tourist who refused to admit he was lost.",
+  "facts": [
+    "3 navios (Santa María, Pinta, Niña) e cerca de 90 homens.",
+    "Saída de Palos em 3 ago 1492; chegada às Bahamas em 12 out.",
+    "Achou que estava na Ásia e chamou os nativos de “índios”."
+  ],
+  "joke": "He died in 1506 still insisting he'd reached India. Bless his heart.",
+  "usa": "The word barbecue comes from the Taíno barbacoa, learned on this voyage. Your BBQ is older than your country.",
+  "usaTitle": "BBQ Is Taíno",
+  "status": "doc", "notes": ["A ilha exata da chegada é debatida."], "tone": "normal",
+  "bullets": ["Three ships, about ninety men", "Bahamas, October 12, 1492", "Thought it was Asia: “Indians”"],
+  "keyword": "Colombo"
+},
+{
+  "id": "C02", "era": "mundo", "year": 1494, "yearLabel": "7 JUN 1494",
+  "title": "O Tratado de Tordesilhas",
+  "hook": "In 1494, Spain and Portugal split the planet in half. Nobody asked the planet.",
+  "facts": [
+    "Assinado em 7 jun 1494.",
+    "Linha imaginária a 370 léguas de Cabo Verde: oeste para a Espanha, leste para Portugal.",
+    "Pela linha, só um pedaço do litoral do Brasil era português."
+  ],
+  "joke": "The first real estate deal in the Americas. Zero locals at the closing.",
+  "usa": "Like someone splitting the US at the Mississippi River before any European had seen the river.",
+  "usaTitle": "Split at the Mississippi",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Line 370 leagues west of Cape Verde", "West Spain, east Portugal", "Only a strip of Brazil was Portuguese"],
+  "keyword": "Tordesilhas"
+},
+{
+  "id": "C03", "era": "mundo", "year": 1500, "yearLabel": "JAN 1500",
+  "title": "O espanhol que chegou antes",
+  "hook": "Fun fact: the first European in Brazil was probably Spanish. Awkward.",
+  "facts": [
+    "Vicente Yáñez Pinzón, ex-capitão da Niña de Colombo, tocou o litoral do Nordeste em janeiro de 1500.",
+    "Pelo tratado, aquilo era de Portugal, então a Espanha não reivindicou."
+  ],
+  "joke": "He found it, but it was on the wrong side of the line. Like finding a $100 bill in your ex's yard.",
+  "usa": null,
+  "status": "doc", "notes": ["O local exato da chegada é debatido."], "tone": "normal",
+  "bullets": ["Pinzón, ex-captain of the Niña", "Northeast coast, January 1500", "Wrong side of the line: no claim"],
+  "keyword": "Pinzón"
+},
+{
+  "id": "C04", "era": "mundo", "year": 1500, "yearLabel": "22 ABR 1500",
+  "title": "Cabral e a parada no caminho",
+  "hook": "Cabral wasn't lost. He was going to India, took a wide turn, and bumped into Brazil.",
+  "facts": [
+    "13 navios, cerca de 1.500 homens. Chegada em Porto Seguro (BA).",
+    "Achou que era uma ilha (“Ilha de Vera Cruz”).",
+    "Mandou um navio de volta com a carta de Pero Vaz de Caminha e seguiu para a Índia.",
+    "Deixou 2 degredados; 2 grumetes fugiram e ficaram."
+  ],
+  "joke": "The first Europeans to stay in Brazil were two convicts and two runaways. Honestly, that explains a lot.",
+  "usa": "Georgia was also imagined as a destination for debtors. Your Georgia, our Bahia.",
+  "usaTitle": "Your Georgia, Our Bahia",
+  "status": "doc", "notes": ["Se a chegada foi acaso ou intencional é debatido."], "tone": "normal",
+  "bullets": ["13 ships, 1,500 men, Porto Seguro", "Thought it was an island", "Left two convicts, two runaways"],
+  "keyword": "Cabral"
+},
+{
+  "id": "C05", "era": "paubrasil", "year": 1502, "yearLabel": "1501–1502",
+  "title": "Rio de Janeiro em janeiro",
+  "hook": "They found a bay, thought it was a river, and it was January. That's why it's called January River.",
+  "facts": [
+    "Expedição de reconhecimento de 1501–1502, com Américo Vespúcio.",
+    "Batizou lugares pelo santo do dia: Baía de Todos os Santos (1º nov), Rio de Janeiro (jan 1502)."
+  ],
+  "joke": "Rio de Janeiro is a geographic typo with great beaches.",
+  "usa": "America comes from Vespucci's name. The guy who named your continent also misnamed our city.",
+  "usaTitle": "Vespucci Named You Both",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Vespucci's expedition, 1501–1502", "Places named after the day's saint", "Bay mistaken for a river"],
+  "keyword": "Vespúcio"
+},
+{
+  "id": "C06", "era": "paubrasil", "year": 1502, "yearLabel": "1502",
+  "title": "O primeiro contrato: pau-brasil",
+  "hook": "Brazil is the only country named after a product. Like if America were called 'Tobacco'.",
+  "facts": [
+    "A árvore dava um corante vermelho valioso para tecidos na Europa; o nome vem de “brasa”.",
+    "A Coroa arrendou a exploração ao comerciante Fernão de Noronha (a ilha leva o nome dele).",
+    "Indígenas faziam o trabalho em troca de ferramentas, espelhos e tecidos: o escambo."
+  ],
+  "joke": "Our first export was red dye. Our second was everything else.",
+  "usa": "Like the beaver fur trade in North America: Europeans trading tools with Native peoples for a natural resource.",
+  "usaTitle": "Brazilwood = Beaver Fur",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Red dye tree, from “brasa”", "Leased to Fernão de Noronha", "Barter: tools for logs"],
+  "keyword": "Pau-brasil"
+},
+{
+  "id": "C07", "era": "paubrasil", "year": 1503, "yearLabel": "1503–1504",
+  "title": "A feitoria de Cabo Frio",
+  "hook": "Brazil's first European settlement wasn't a town. It was a warehouse.",
+  "facts": [
+    "Feitoria = entreposto fortificado para estocar pau-brasil.",
+    "A mais antiga registrada ficou perto de Cabo Frio (RJ), com cerca de 24 homens."
+  ],
+  "joke": "Brazil started as an Amazon warehouse. The other Amazon.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Feitoria: fortified trading warehouse", "Near Cabo Frio, Rio", "About 24 men"],
+  "keyword": "Feitoria"
+},
+{
+  "id": "C08", "era": "paubrasil", "year": 1510, "yearLabel": "c.1510",
+  "title": "Os náufragos que viraram chefes",
+  "hook": "Our first 'founding fathers' were shipwreck survivors who married into indigenous families.",
+  "facts": [
+    "Caramuru (Diogo Álvares) naufragou na Bahia e casou com Paraguaçu, batizada na França em 1528 como Catarina.",
+    "João Ramalho viveu entre os Tupiniquins e casou com Bartira, filha do cacique Tibiriçá."
+  ],
+  "joke": "Brazil's early immigration policy: get shipwrecked, marry well.",
+  "usa": "Like the (very romanticized) story of Pocahontas and John Smith, except here it really happened, with dozens of children.",
+  "usaTitle": "The Real Pocahontas Story",
+  "status": "doc", "notes": ["Vários detalhes destas histórias são debatidos."], "tone": "normal",
+  "bullets": ["Caramuru married Paraguaçu in Bahia", "João Ramalho married Bartira", "Bartira: daughter of chief Tibiriçá"],
+  "keyword": "Caramuru",
+  "characters": ["caramuru"]
+},
+{
+  "id": "C09", "era": "paubrasil", "year": 1524, "yearLabel": "1524",
+  "title": "O náufrago que chegou aos Incas",
+  "hook": "A Portuguese castaway walked from the Atlantic to the Inca Empire eight years before Pizarro.",
+  "facts": [
+    "Aleixo Garcia, sobrevivente de naufrágio em Santa Catarina, cruzou o continente pela trilha indígena do Peabiru.",
+    "O Peabiru era uma rede de caminhos guaranis de cerca de 3.000 km.",
+    "Chegou à fronteira inca e morreu na volta."
+  ],
+  "joke": "First Brazilian road trip. No GPS, no return ticket.",
+  "usa": "The Peabiru is like the Native trails that became roads in the US. The Natchez Trace in the South is a great parallel.",
+  "usaTitle": "Our Natchez Trace",
+  "status": "doc", "notes": ["A rota exata é debatida."], "tone": "normal",
+  "bullets": ["Aleixo Garcia, castaway in Santa Catarina", "Peabiru: 3,000 km Guarani trail", "Reached the Incas, died returning"],
+  "keyword": "Peabiru"
+},
+{
+  "id": "C10", "era": "acucar", "year": 1532, "yearLabel": "22 JAN 1532",
+  "title": "São Vicente, a primeira vila",
+  "hook": "After 32 years of 'we'll get to it', Portugal finally built a town.",
+  "facts": [
+    "Martim Afonso de Sousa funda São Vicente (SP) em 22 jan 1532: primeira vila oficial, com câmara e pelourinho.",
+    "Ali perto ficou um dos primeiros engenhos (ruínas do Engenho dos Erasmos)."
+  ],
+  "joke": "Brazilian procrastination is a 500-year-old tradition.",
+  "usa": "São Vicente is 75 years older than Jamestown (1607).",
+  "usaTitle": "Older Than Jamestown",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Martim Afonso founds São Vicente", "First town: council and pillory", "Early sugar mill nearby"],
+  "keyword": "São Vicente"
+},
+{
+  "id": "C11", "era": "acucar", "year": 1534, "yearLabel": "1534",
+  "title": "As capitanias hereditárias",
+  "hook": "Portugal had a giant colony and no money. So they franchised it.",
+  "facts": [
+    "O litoral foi dividido em faixas entregues a donatários, que deviam colonizar por conta própria.",
+    "Quase todas fracassaram; Pernambuco (Duarte Coelho) e São Vicente deram certo, graças ao açúcar."
+  ],
+  "joke": "Brazil was the first franchise model. Most franchises went bankrupt. Some things never change.",
+  "usa": "Like the proprietary colonies, such as William Penn's Pennsylvania.",
+  "usaTitle": "Franchise Pennsylvania",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Coast split into hereditary strips", "Donatários paid their own way", "Only Pernambuco and São Vicente worked"],
+  "keyword": "Capitanias"
+},
+{
+  "id": "C12", "era": "acucar", "year": 1549, "yearLabel": "1549",
+  "title": "Salvador e o governo-geral",
+  "hook": "When the franchises failed, the king sent a manager.",
+  "facts": [
+    "Tomé de Sousa funda Salvador, primeira capital, em 1549.",
+    "Chega com os primeiros jesuítas (Manuel da Nóbrega)."
+  ],
+  "joke": null,
+  "usa": "Salvador was the capital for 214 years. Washington D.C. hasn't made it that far yet.",
+  "usaTitle": "214 Years a Capital",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Tomé de Sousa founds Salvador", "First capital of Brazil", "First Jesuits arrive"],
+  "keyword": "Salvador"
+},
+{
+  "id": "C13", "era": "acucar", "year": 1550, "yearLabel": "1550–1600",
+  "title": "De “negros da terra” a africanos",
+  "hook": "Sugar needed hands. First they enslaved the indigenous peoples. Then they turned to Africa.",
+  "facts": [
+    "A primeira escravidão foi indígena (os “negros da terra”).",
+    "Com epidemias, resistência, pressão jesuíta e o lucro do tráfico atlântico, a escravidão africana cresceu.",
+    "O Brasil recebeu cerca de 4,8 milhões de africanos escravizados, perto de 40% de todo o tráfico atlântico."
+  ],
+  "joke": null,
+  "usa": "The US received directly fewer than 400,000. For every enslaved African brought to the US, Brazil received about twelve.",
+  "usaTitle": "Twelve to One",
+  "status": "doc", "notes": ["Números são estimativas do banco de dados SlaveVoyages."], "tone": "serio",
+  "bullets": ["First, enslaved indigenous peoples", "Then the Atlantic slave trade", "About 4.8 million: 40% of all"],
+  "keyword": "4,8 milhões"
+},
+{
+  "id": "C14", "era": "acucar", "year": 1554, "yearLabel": "1554–1557",
+  "title": "Hans Staden quase vira jantar",
+  "hook": "The first Brazilian bestseller in Europe was written by a German who almost got eaten.",
+  "facts": [
+    "Capturado pelos Tupinambás perto de Bertioga, ficou meses esperando a execução ritual e conseguiu fugir.",
+    "O livro saiu em 1557."
+  ],
+  "joke": "Worst Airbnb review of the 16th century.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["German captured near Bertioga", "Months awaiting ritual execution", "Escaped; book published 1557"],
+  "keyword": "Hans Staden"
+},
+{
+  "id": "C15", "era": "acucar", "year": 1556, "yearLabel": "1556",
+  "title": "O bispo que foi devorado",
+  "hook": "Brazil's first bishop survived a shipwreck. That was the easy part.",
+  "facts": [
+    "Pero Fernandes Sardinha naufragou em Alagoas e foi morto pelos Caetés.",
+    "Em resposta, a Coroa autorizou a escravização dos Caetés."
+  ],
+  "joke": "His name was literally 'Sardine'. I'm just reporting.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["First bishop, Pero Fernandes Sardinha", "Shipwrecked in Alagoas, killed by Caetés", "Crown then allowed enslaving Caetés"],
+  "keyword": "Sardinha"
+},
+{
+  "id": "C16", "era": "acucar", "year": 1555, "yearLabel": "1555–1567",
+  "title": "Os franceses no Rio e a guerra dos Tamoios",
+  "hook": "Rio de Janeiro was founded to kick out the French.",
+  "facts": [
+    "Villegaignon funda a França Antártica na Baía de Guanabara (1555).",
+    "Os Tupinambás (Confederação dos Tamoios, com Cunhambebe e Aimberê) se aliam aos franceses.",
+    "Estácio de Sá funda o Rio em 1º mar 1565; os franceses saem de vez em 1567.",
+    "O temiminó Arariboia, aliado dos portugueses, funda Niterói."
+  ],
+  "joke": "Rio was born out of a French eviction notice.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["France Antarctique in Guanabara, 1555", "Tamoios allied with the French", "Estácio de Sá founds Rio, 1565"],
+  "keyword": "França Antártica"
+},
+{
+  "id": "C17", "era": "acucar", "year": 1563, "yearLabel": "1563",
+  "title": "Anchieta e o poema na areia",
+  "hook": "A Jesuit hostage wrote a 5,000-line poem in the sand and memorized it.",
+  "facts": [
+    "José de Anchieta ficou refém dos Tamoios em Iperoig (Ubatuba) durante negociações de paz."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "lenda", "notes": ["O poema existe; a escrita na areia é tradição."], "tone": "normal",
+  "bullets": ["Anchieta, Jesuit hostage of the Tamoios", "Iperoig (Ubatuba), peace talks", "Poem in the sand: tradition"],
+  "keyword": "Anchieta"
+},
+{
+  "id": "C18", "era": "invasoes", "year": 1580, "yearLabel": "1580",
+  "title": "Portugal vira Espanha (por 60 anos)",
+  "hook": "In 1580, Portugal's king died in Morocco without an heir. Spain inherited Portugal. And all of Spain's enemies.",
+  "facts": [
+    "União Ibérica (1580–1640).",
+    "Os inimigos da Espanha (Holanda, Inglaterra, França) passam a atacar o Brasil."
+  ],
+  "joke": "Brazil inherited Spain's enemies like you inherit your in-laws' drama.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["King dies in Morocco, no heir", "Iberian Union, 1580–1640", "Spain's enemies now attack Brazil"],
+  "keyword": "União Ibérica"
+},
+{
+  "id": "C19", "era": "invasoes", "year": 1591, "yearLabel": "1591",
+  "title": "Piratas ingleses em Santos",
+  "hook": "Before the English bought our gold, they just stole it.",
+  "facts": [
+    "Thomas Cavendish saqueia Santos (1591).",
+    "James Lancaster ataca Recife (1595)."
+  ],
+  "joke": null,
+  "usa": "Pirates of the Caribbean, Brazilian edition.",
+  "usaTitle": "Pirates of the South Atlantic",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Cavendish sacks Santos, 1591", "Lancaster attacks Recife, 1595", "English stole before they bought"],
+  "keyword": "Cavendish"
+},
+{
+  "id": "C20", "era": "invasoes", "year": 1624, "yearLabel": "1624–1625",
+  "title": "Os holandeses tomam Salvador",
+  "hook": "The Dutch took the capital of Brazil. It took Spain and Portugal a giant fleet to get it back.",
+  "facts": [
+    "A WIC (Companhia das Índias Ocidentais) toma Salvador em 1624.",
+    "Uma frota luso-espanhola retoma a cidade em 1625."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Dutch West India Company takes Salvador", "Capital falls in 1624", "Iberian fleet retakes it, 1625"],
+  "keyword": "WIC"
+},
+{
+  "id": "C21", "era": "invasoes", "year": 1630, "yearLabel": "1630–1654",
+  "title": "O Brasil Holandês",
+  "hook": "For 24 years, Recife was a Dutch city. With canals, bridges, an observatory and a zoo.",
+  "facts": [
+    "Os holandeses tomam Pernambuco (1630), o coração do açúcar.",
+    "Maurício de Nassau governa de 1637 a 1644: traz pintores (Frans Post, Albert Eckhout), cientistas, constrói pontes.",
+    "Recife tem a primeira sinagoga das Américas (Kahal Zur Israel)."
+  ],
+  "joke": "The only time Recife had good urban planning, it was Dutch.",
+  "usa": "At the same time, the Dutch held New Amsterdam, the future New York.",
+  "usaTitle": "Recife & New Amsterdam",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Dutch take Pernambuco, 1630", "Nassau rules 1637–1644", "First synagogue in the Americas"],
+  "keyword": "Nassau"
+},
+{
+  "id": "C22", "era": "invasoes", "year": 1648, "yearLabel": "1648–1649",
+  "title": "Guararapes",
+  "hook": "The Dutch were defeated by an army of Portuguese, indigenous and Black soldiers fighting side by side.",
+  "facts": [
+    "Batalhas dos Guararapes: 19 abr 1648 e 19 fev 1649.",
+    "Líderes: Henrique Dias (negro) e Felipe Camarão/Poti (potiguar).",
+    "O 19 de abril virou o Dia do Exército brasileiro."
+  ],
+  "joke": "Brazil's army was diverse 300 years before HR departments existed.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Two battles, 1648 and 1649", "Henrique Dias and Felipe Camarão", "April 19: Brazilian Army Day"],
+  "keyword": "Guararapes"
+},
+{
+  "id": "C23", "era": "invasoes", "year": 1654, "yearLabel": "1654",
+  "title": "Os judeus de Recife fundam a comunidade judaica de Nova York",
+  "hook": "When the Dutch left Brazil, 23 Jewish refugees sailed to New Amsterdam. They became the first Jewish community in New York.",
+  "facts": [
+    "Rendição holandesa em 1654.",
+    "Os judeus sefarditas de Recife se espalham: parte vai para o Caribe.",
+    "23 chegam a Nova Amsterdã em setembro de 1654."
+  ],
+  "joke": null,
+  "usa": "New York's Jewish history starts in Brazil. The strongest hook of the tour for Americans.",
+  "usaTitle": "New York Began in Recife",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Dutch surrender Recife, 1654", "Sephardic Jews scatter to the Caribbean", "23 reach New Amsterdam, September"],
+  "keyword": "23 → NY"
+},
+{
+  "id": "C24", "era": "invasoes", "year": 1661, "yearLabel": "1661",
+  "title": "Ganhou a guerra, pagou a conta",
+  "hook": "Portugal won the war against the Dutch. Then paid the Dutch to go away.",
+  "facts": [
+    "Paz de Haia (1661): Portugal paga uma indenização enorme (cerca de 4 milhões de cruzados) para a Holanda reconhecer a perda do Brasil."
+  ],
+  "joke": "Peak Portuguese diplomacy: win the fight, pay the bill.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Peace of The Hague, 1661", "About 4 million cruzados paid", "Dutch accept losing Brazil"],
+  "keyword": "Paz de Haia"
+},
+{
+  "id": "C25", "era": "invasoes", "year": 1650, "yearLabel": "1650–1690",
+  "title": "A crise do açúcar",
+  "hook": "The Dutch took our sugar know-how to the Caribbean and undersold us. Globalization, 1650s edition.",
+  "facts": [
+    "Nas Antilhas, holandeses, ingleses e franceses passam a produzir açúcar mais barato.",
+    "O preço despenca. Portugal, já endividado, precisa de outra riqueza."
+  ],
+  "joke": "Brazil lost its sugar monopoly. Sugar crash, literally.",
+  "usa": "The English Caribbean colonies (Barbados) supplied the Thirteen Colonies.",
+  "usaTitle": "Barbados Sugar",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Caribbean sugar undersells Brazil", "Sugar price collapses", "Portugal needs a new fortune"],
+  "keyword": "Crise do açúcar"
+},
+{
+  "id": "C26", "era": "invasoes", "year": 1711, "yearLabel": "1711",
+  "title": "O corsário que sequestrou o Rio",
+  "hook": "In 1711 a French privateer took Rio de Janeiro and held the whole city for ransom.",
+  "facts": [
+    "Duguay-Trouin toma o Rio e só sai depois de receber resgate em ouro, açúcar e gado."
+  ],
+  "joke": "Rio: the only city that paid its own ransom in gold from Minas.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Duguay-Trouin takes Rio, 1711", "City held for ransom", "Paid in gold, sugar, cattle"],
+  "keyword": "Duguay-Trouin"
+},
+{
+  "id": "C27", "era": "palmares", "year": 1600, "yearLabel": "c.1600–1694",
+  "title": "Angola Janga",
+  "hook": "For almost 100 years, there was a free Black state in the mountains of northeastern Brazil.",
+  "facts": [
+    "Palmares, na Serra da Barriga (AL).",
+    "Entre 6 mil e 20 mil pessoas, vários mocambos, capital Macaco.",
+    "Plantavam e comerciavam. Resistiu a dezenas de expedições."
+  ],
+  "joke": null,
+  "usa": "Like the maroon communities of the Great Dismal Swamp (Virginia/North Carolina), but much larger and longer-lasting.",
+  "usaTitle": "Bigger Than the Great Dismal Swamp",
+  "status": "doc", "notes": ["Os números de população são debatidos."], "tone": "serio",
+  "bullets": ["Free Black state, Serra da Barriga", "6,000 to 20,000 people", "Resisted dozens of expeditions"],
+  "keyword": "Palmares"
+},
+{
+  "id": "C28", "era": "palmares", "year": 1695, "yearLabel": "1678–1695",
+  "title": "Ganga Zumba, Zumbi e a traição",
+  "hook": "One leader made peace. The other refused it. Both paid with their lives.",
+  "facts": [
+    "Ganga Zumba aceita acordo (1678) e morre envenenado; Zumbi assume.",
+    "Macaco cai em 1694 diante da bandeira de Domingos Jorge Velho.",
+    "Zumbi é morto em 20 nov 1695. Hoje, 20 de novembro é feriado nacional (desde 2023)."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "notes": ["A infância de Zumbi e o envenenamento de Ganga Zumba são debatidos."], "tone": "serio",
+  "bullets": ["Ganga Zumba's treaty, 1678", "Macaco falls, 1694", "Zumbi killed November 20, 1695"],
+  "keyword": "Zumbi 20/11"
+},
+{
+  "id": "C29", "era": "ouro", "year": 1674, "yearLabel": "1674–1681",
+  "title": "O caçador de esmeraldas",
+  "hook": "The man who opened the road to the gold died believing he'd found emeralds. They were tourmalines.",
+  "facts": [
+    "Fernão Dias Paes passou 7 anos no sertão, achou turmalinas e morreu em 1681.",
+    "Deixou trilhas e roças que viraram a infraestrutura da corrida do ouro.",
+    "O genro, Borba Gato, matou um funcionário da Coroa (1682), se escondeu e depois revelou ouro no Rio das Velhas em troca de perdão."
+  ],
+  "joke": "Brazilian plea bargain, 1690s: show us the gold and we'll forget the murder.",
+  "usa": "Bandeirantes ≈ mountain men and frontiersmen, except they also hunted and enslaved indigenous people. Don't romanticize them.",
+  "usaTitle": "Not Your Mountain Men",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Fernão Dias: 7 years searching", "Emeralds were tourmalines", "Borba Gato: gold for a pardon"],
+  "keyword": "Turmalinas"
+},
+{
+  "id": "C30", "era": "ouro", "year": 1693, "yearLabel": "1693–1698",
+  "title": "O ouro aparece",
+  "hook": "Brazil had its gold rush 150 years before California.",
+  "facts": [
+    "1693: Antônio Rodrigues Arzão leva as primeiras amostras oficiais.",
+    "1698: Antônio Dias de Oliveira acha ouro no ribeirão do Tripuí e nasce Ouro Preto (o ouro vinha coberto de óxido de ferro e parecia preto).",
+    "Por volta de 1702, João de Siqueira Afonso chega à região do futuro Arraial Velho (Tiradentes).",
+    "Por volta de 1704, ouro no Rio das Mortes (São João)."
+  ],
+  "joke": "Your 49ers had Levi's jeans. Ours had nothing. Not even food.",
+  "usa": "The California Gold Rush (1848). Same madness: people dropping everything, absurd prices, violence.",
+  "usaTitle": "Gold Rush, 150 Years Early",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Arzão's first samples, 1693", "Ouro Preto: black-coated gold, 1698", "Tiradentes area reached around 1702"],
+  "keyword": "1693 OURO"
+},
+{
+  "id": "C31", "era": "ouro", "year": 1697, "yearLabel": "1697–1701",
+  "title": "A fome no meio do ouro",
+  "hook": "People died of hunger with gold in their pockets.",
+  "facts": [
+    "Ninguém plantava. Fomes terríveis em 1697–98 e 1700–01.",
+    "O texto do tour cita uma galinha por 140 réis em SP e 4.000 réis nas minas."
+  ],
+  "joke": "The first all-you-can't-eat buffet.",
+  "usa": "In California, an egg reached the equivalent of several dollars. Inflation is a gold rush tradition.",
+  "usaTitle": "The Gold Rush Egg",
+  "status": "doc", "conferir": ["Preços da galinha (140 réis em SP × 4.000 réis nas minas): conferir fonte."], "tone": "normal",
+  "bullets": ["Nobody planted food", "Famines in 1697–98 and 1700–01", "Chicken price soared in the mines"],
+  "keyword": "Fome"
+},
+{
+  "id": "C32", "era": "ouro", "year": 1700, "yearLabel": "1700–1720",
+  "title": "A corrida",
+  "hook": "Portugal lost so many people to the gold rush that it restricted emigration.",
+  "facts": [
+    "Dezenas de milhares chegam: paulistas, baianos, portugueses e, em maior número, africanos escravizados.",
+    "Os vindos da Costa da Mina eram valorizados pela experiência em mineração.",
+    "Em 1720, Portugal restringe a emigração."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Tens of thousands rush in", "Most were enslaved Africans", "Portugal restricts emigration, 1720"],
+  "keyword": "Corrida"
+},
+{
+  "id": "C33", "era": "ouro", "year": 1703, "yearLabel": "1703",
+  "title": "O Tratado de Methuen (“Panos e Vinhos”)",
+  "hook": "In 1703 Portugal signed a deal with England: you buy our wine, we buy everything else. Guess who got the gold.",
+  "facts": [
+    "Portugal compra tecidos e manufaturados ingleses; a Inglaterra compra vinho português.",
+    "A balança fica negativa para Portugal, que paga a diferença em ouro brasileiro.",
+    "O ouro de Minas ajuda a financiar a Inglaterra (e indiretamente sua Revolução Industrial)."
+  ],
+  "joke": "That's why the English drink Port wine. They paid for it with our gold. Cheers.",
+  "usa": "Minas Gerais helped fund the British Empire that you guys fought in 1776. You're welcome... sort of.",
+  "usaTitle": "We Funded Your Enemy",
+  "status": "doc", "notes": ["O peso do ouro na Revolução Industrial é debatido."], "tone": "normal",
+  "bullets": ["English cloth for Portuguese wine", "Trade gap paid in Brazilian gold", "Gold helped fund England"],
+  "keyword": "Methuen"
+},
+{
+  "id": "C34", "era": "ouro", "year": 1707, "yearLabel": "1707–1709",
+  "title": "Guerra dos Emboabas",
+  "hook": "Brazil's first civil war: the guys who found the gold versus the guys who showed up later.",
+  "facts": [
+    "Paulistas × emboabas (portugueses e “forasteiros”).",
+    "Líder emboaba: Manuel Nunes Viana, aclamado “governador” sem autorização do rei.",
+    "Borba Gato tenta expulsá-lo e não consegue."
+  ],
+  "joke": "Emboaba might mean a bird with feathery legs. The Paulistas were mocking people who wore boots. Brazil's first fashion war.",
+  "usa": "Like the claim disputes of the Wild West.",
+  "usaTitle": "Claim Jumpers",
+  "status": "doc", "notes": ["A origem da palavra “emboaba” é debatida."], "tone": "normal",
+  "bullets": ["Paulistas versus newcomers (emboabas)", "Nunes Viana self-proclaimed governor", "Borba Gato fails to expel him"],
+  "keyword": "Emboabas"
+},
+{
+  "id": "C35", "era": "ouro", "year": 1709, "yearLabel": "1709",
+  "title": "O Capão da Traição",
+  "hook": "They promised to spare their lives if they surrendered. They surrendered.",
+  "facts": [
+    "Paulistas cercados num capão de mato se rendem sob promessa de vida e são massacrados pelos emboabas de Bento do Amaral Coutinho.",
+    "Aconteceu na região do Rio das Mortes (o tour diz cerca de 10 km de Tiradentes).",
+    "Os paulistas voltaram com um exército de vingança (Amador Bueno da Veiga), atacaram e recuaram."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "notes": ["O local exato e o número de mortos são debatidos."], "tone": "serio",
+  "bullets": ["Surrender under promise of life", "Massacred by Bento do Amaral Coutinho", "About 10 km from here"],
+  "keyword": "Capão da Traição"
+},
+{
+  "id": "C36", "era": "ouro", "year": 1709, "yearLabel": "?",
+  "title": "O nome “Rio das Mortes”",
+  "hook": "Locals say the bodies were thrown into the river, and that's how it got its name. The river disagrees: the name is older.",
+  "facts": [
+    "O nome aparece antes da guerra.",
+    "Explicações antigas falam de afogamentos em travessias e lutas com indígenas.",
+    "A guerra reforçou a lenda."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "lenda", "notes": ["Lenda: a ligação do nome com o Capão. Documentado: o nome é anterior à guerra."], "tone": "normal",
+  "bullets": ["Legend: named after the massacre", "Fact: the name is older", "The war reinforced the legend"],
+  "keyword": "Nome anterior"
+},
+{
+  "id": "C37", "era": "ouro", "year": 1709, "yearLabel": "1709–1711",
+  "title": "O acordo que apagou o massacre",
+  "hook": "Nobody was punished. Everybody got something. Very Brazilian.",
+  "facts": [
+    "Criação da Capitania de São Paulo e Minas do Ouro (1709).",
+    "São Paulo vira cidade (1711).",
+    "Perdão geral. Nunes Viana volta para suas fazendas."
+  ],
+  "joke": "The first Brazilian 'grand bargain'. Spoiler: not the last.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["New captaincy: São Paulo and Minas", "São Paulo becomes a city, 1711", "General pardon for everyone"],
+  "keyword": "Perdão geral"
+},
+{
+  "id": "C38", "era": "ouro", "year": 1711, "yearLabel": "1711",
+  "title": "As vilas do ouro",
+  "hook": "After the war, the king's answer was paperwork.",
+  "facts": [
+    "Mariana (Ribeirão do Carmo, 8 abr, a primeira), Vila Rica (8 jul), Sabará (17 jul).",
+    "O governador batizou “Vila Rica de Albuquerque” com o próprio nome; o rei mandou trocar."
+  ],
+  "joke": "Governor names city after himself. King says no. Ego vs. Crown, round one.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Mariana first, April 1711", "Vila Rica in July, Sabará too", "Governor's own name: king said no"],
+  "keyword": "Vilas 1711"
+},
+{
+  "id": "C39", "era": "ouro", "year": 1711, "yearLabel": "1711",
+  "title": "O livro proibido de Antonil",
+  "hook": "A Jesuit wrote a book about Brazil's wealth. The king banned it. It said too much.",
+  "facts": [
+    "Cultura e Opulência do Brasil (1711) descrevia as minas e os caminhos. A Coroa recolheu.",
+    "É de Antonil a frase: “O Brasil é inferno dos negros, purgatório dos brancos e paraíso dos mulatos.”"
+  ],
+  "joke": null,
+  "usa": "In the colony, printing presses were banned in Brazil until 1808. You had Ben Franklin's printing press. We had a ban.",
+  "usaTitle": "No Ben Franklin Here",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Antonil's book on Brazil's wealth", "Crown seized it, 1711", "“Hell, purgatory, paradise” quote"],
+  "keyword": "Antonil",
+  "characters": ["antonil"]
+},
+{
+  "id": "C40", "era": "ouro", "year": 1713, "yearLabel": "8 DEZ 1713",
+  "title": "São João del-Rei",
+  "hook": "The town that survived the end of the gold because it learned to sell, to pray and to play music.",
+  "facts": [
+    "O Arraial Novo vira vila em 8 dez 1713, homenageando D. João V.",
+    "Em 1714, sede da Comarca do Rio das Mortes.",
+    "Depois do ouro, virou entreposto comercial que abastecia o Rio.",
+    "Orquestras de 1776 (Lira Sanjoanense) e do fim do séc. XVIII (Ribeiro Bastos) ativas até hoje. “A terra onde os sinos falam.”"
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Town in 1713, for King João V", "Survived as a trading hub", "Orchestras since 1776; talking bells"],
+  "keyword": "São João 1713",
+  "characters": ["sineiro"]
+},
+{
+  "id": "C41", "era": "ouro", "year": 1718, "yearLabel": "19 JAN 1718",
+  "title": "Vila de São José (Tiradentes)",
+  "hook": "Founded to honor a prince. Today named after the man the prince's daughter had hanged.",
+  "facts": [
+    "O Arraial Velho de Santo Antônio vira Vila de São José del-Rei em 19 jan 1718, pelo Conde de Assumar, honrando o príncipe D. José.",
+    "Segundo o tour, os moradores pressionaram porque aqui saía mais ouro de superfície que em São João.",
+    "O cruzeiro do Alto São Francisco é dessa elevação."
+  ],
+  "joke": "Father and son, neighbors and rivals: São João for the king, São José for the prince. Typical family business.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Town status January 19, 1718", "Named for Prince José", "More surface gold than São João"],
+  "keyword": "São José 1718"
+},
+{
+  "id": "C42", "era": "ouro", "year": 1702, "yearLabel": "1702–1780",
+  "title": "Ouro de superfície: fácil de achar, fácil de acabar",
+  "hook": "Here the gold 'sprouted sweetly from the earth'. Which is why it ran out so fast.",
+  "facts": [
+    "Em Tiradentes o ouro era de aluvião (córregos e barrancos), não de mina profunda.",
+    "Técnicas: bateia e mundéu (barragens forradas com couro de boi).",
+    "Cerca de 80 anos de extração no pé da serra (dado do tour)."
+  ],
+  "joke": "Easy come, easy go. The first get-rich-quick scheme in Minas.",
+  "usa": "Placer mining in California: exactly the same pan technique (gold panning).",
+  "usaTitle": "Same Gold Pan",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Alluvial gold: streams and banks", "Gold pan and mundéu dams", "About 80 years of mining"],
+  "keyword": "Aluvião"
+},
+{
+  "id": "C43", "era": "ouro", "year": 1720, "yearLabel": "1720",
+  "title": "Casas de Fundição e a revolta de Vila Rica",
+  "hook": "In 1720 the Crown said: no more gold dust. Everything gets melted, stamped and taxed. The miners said no.",
+  "facts": [
+    "Lei de 1719 cria as Casas de Fundição: quinto de 20% cobrado na hora, ouro em barra carimbada.",
+    "Revolta em junho de 1720: Pascoal da Silva Guimarães (rico) e Filipe dos Santos (tropeiro/popular).",
+    "O Conde de Assumar finge negociar, prende os líderes e incendeia o morro de Pascoal (Morro da Queimada).",
+    "Pascoal: preso e mandado a Portugal. Filipe: enforcado e esquartejado em julho de 1720."
+  ],
+  "joke": "The rich guy got exile. The poor guy got the rope. Remember this pattern. It comes back in 1792.",
+  "usa": "Your Boston Tea Party (1773) was about tea. Ours was about gold, 53 years earlier. Yours worked.",
+  "usaTitle": "Gold Party, 53 Years Early",
+  "status": "doc", "notes": ["O arrasto de Filipe por cavalos é lenda."], "tone": "normal",
+  "bullets": ["Smelting houses: 20% taken on the spot", "Revolt in Vila Rica, June 1720", "Rich man exiled, poor man hanged"],
+  "keyword": "Filipe dos Santos",
+  "characters": ["cobrador"]
+},
+{
+  "id": "C44", "era": "ouro", "year": 1720, "yearLabel": "2 DEZ 1720",
+  "title": "Nasce a Capitania de Minas Gerais",
+  "hook": "Minas Gerais was born from a tax, a revolt and a rope.",
+  "facts": [
+    "Minas é separada de São Paulo; capital: Vila Rica.",
+    "Primeiro governador: D. Lourenço de Almeida (1721).",
+    "Casas de Fundição implantadas em 1725."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Minas splits from São Paulo", "Capital: Vila Rica", "Smelting houses running by 1725"],
+  "keyword": "Capitania MG"
+},
+{
+  "id": "C45", "era": "ouro", "year": 1720, "yearLabel": "1720+",
+  "title": "O santo do pau oco",
+  "hook": "Brazilian tax evasion was so creative it was holy.",
+  "facts": [
+    "Imagens de santo ocas recheadas de ouro em pó para passar pelos registros."
+  ],
+  "joke": "Smuggling with a halo.",
+  "usa": null,
+  "status": "lenda", "notes": ["A expressão existe; a prática em larga escala é discutida."], "tone": "normal",
+  "bullets": ["Hollow wooden saints", "Filled with gold dust", "Large-scale smuggling: debated"],
+  "keyword": "Pau oco"
+},
+{
+  "id": "C46", "era": "ouro", "year": 1720, "yearLabel": "1720+",
+  "title": "“Quinto dos infernos”",
+  "hook": "Twenty percent tax. They called it 'the fifth from hell'.",
+  "facts": [],
+  "joke": null,
+  "usa": null,
+  "status": "lenda", "notes": ["A ligação da expressão com o imposto é origem popular."], "tone": "normal",
+  "bullets": ["The Fifth: a 20% tax", "“Fifth from hell”: popular origin", "Tell it as a story"],
+  "keyword": "Quinto"
+},
+{
+  "id": "C47", "era": "apogeu", "year": 1710, "yearLabel": "1710–1752",
+  "title": "A Matriz de Santo Antônio",
+  "hook": "42 years to build, 482 kilos of gold on the walls. According to us, the second richest church in gold in Brazil.",
+  "facts": [
+    "Construída de 1710 a 1752; altar-mor do português João Ferreira Sampaio.",
+    "Órgão português de 632 tubos, feito no Porto, instalado em 1788 segundo o tour.",
+    "Relógio de sol de 1785; fachada com risco atribuído a Aleijadinho (1810)."
+  ],
+  "joke": "Ouro Preto guides say theirs is the second richest. They count the silver. We don't. It's a guide rivalry older than college football.",
+  "usa": "A rivalry like Alabama vs. Auburn. Works VERY well with Southerners.",
+  "usaTitle": "Our Iron Bowl",
+  "status": "doc", "conferir": ["482 kg de ouro e o ranking de “segunda mais rica”: dados locais.", "Ano de instalação do órgão (1788, segundo o tour)."], "tone": "normal",
+  "bullets": ["Built 1710–1752, 42 years", "482 kg of gold (local records)", "Sundial 1785; facade by Aleijadinho"],
+  "keyword": "Matriz 482 kg"
+},
+{
+  "id": "C48", "era": "apogeu", "year": 1720, "yearLabel": "1720–1800",
+  "title": "As irmandades: uma igreja para cada grupo",
+  "hook": "Why so many churches in Minas? Because every social group had to pray separately.",
+  "facts": [
+    "Matriz / São Francisco / Carmo → “homens bons” (brancos ricos, “sangue puro”).",
+    "Rosário → africanos (com elementos de religiões africanas).",
+    "Mercês → crioulos (filhos de africanos nascidos aqui); São João Evangelista → mulatos/pardos.",
+    "Bom Jesus da Pobreza (1782) → brancos que empobreceram."
+  ],
+  "joke": "In Minas, you could tell someone's social class by which church they went to. Kind of like which country club you join.",
+  "usa": "The independent Black churches in the US (AME, 1816) were also born from segregation.",
+  "usaTitle": "Born From Segregation",
+  "status": "doc", "notes": ["O padrão geral é documentado; detalhes de cada capela são debatidos."], "tone": "normal",
+  "bullets": ["Matriz, Carmo: rich whites", "Rosário: Africans; Mercês: crioulos", "São João: mulattos; Pobreza: broke whites"],
+  "keyword": "Irmandades"
+},
+{
+  "id": "C49", "era": "apogeu", "year": 1750, "yearLabel": "séc. XVIII",
+  "title": "Eixo do poder × eixo da servidão",
+  "hook": "Tiradentes has two cities: the streets of power, and the alleys of servitude. You can still cross the whole town without touching a main street.",
+  "facts": [
+    "Os becos serviam para (1) cativos evitarem as ruas principais, (2) acesso às áreas de serviço, (3) escoar dejetos.",
+    "70% da população era cativa (dado do tour)."
+  ],
+  "joke": null,
+  "usa": "The service entrances and the 'colored entrances' of the Jim Crow era.",
+  "usaTitle": "Colonial Jim Crow",
+  "status": "doc", "notes": ["O termo “eixo da servidão” é interpretação do tour."], "tone": "serio",
+  "bullets": ["Alleys kept the enslaved off main streets", "Service access and waste", "70% of people were enslaved"],
+  "keyword": "Becos"
+},
+{
+  "id": "C50", "era": "apogeu", "year": 1729, "yearLabel": "1729",
+  "title": "Diamantes",
+  "hook": "Then they found diamonds. And the Crown locked an entire district.",
+  "facts": [
+    "Anúncio oficial em 1729.",
+    "O Tejuco (Diamantina) vira Distrito Diamantino, com controle rígido.",
+    "Personagem famosa: Chica da Silva."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Diamonds announced, 1729", "Tejuco becomes a locked district", "Famous figure: Chica da Silva"],
+  "keyword": "Diamantes"
+},
+{
+  "id": "C51", "era": "apogeu", "year": 1735, "yearLabel": "1735–1750",
+  "title": "A capitação: imposto por cabeça",
+  "hook": "Portugal tried a head tax. Literally per head, including every enslaved person.",
+  "facts": [
+    "Imposto por pessoa (incluindo escravizados), cobrado semestralmente.",
+    "Tão pesado que foi abandonado em 1750."
+  ],
+  "joke": "Portugal's tax policy: if it breathes, tax it.",
+  "usa": null,
+  "status": "doc", "conferir": ["O tour diz 1734 e “17 gramas”; a capitação vigorou a partir de 1735. Conferir valores."], "tone": "normal",
+  "bullets": ["Tax per head, every six months", "Included every enslaved person", "Dropped in 1750"],
+  "keyword": "Capitação"
+},
+{
+  "id": "C52", "era": "apogeu", "year": 1749, "yearLabel": "1749",
+  "title": "O chafariz de São José",
+  "hook": "The biggest colonial fountain in Minas. Three jobs: drinking water, horse trough and laundry.",
+  "facts": [
+    "Inaugurado em 1749; oratório com São José de Botas (padroeiro dos bandeirantes).",
+    "Aqueduto de pedra até a nascente; levemente inclinado de propósito, apoiado no aqueduto.",
+    "Código de posturas de 1828 com 3 leis: proibido amolar facão, proibido lavar roupa no cocho da frente, proibida aglomeração com “desaforos” às mulheres."
+  ],
+  "joke": "It's a heritage-listed building that's literally leaning. 'Patrimônio tombado' means both.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Opened 1749; Saint Joseph in boots", "Water, horses, laundry", "1828 rules: no knives, no laundry, no catcalling"],
+  "keyword": "Chafariz 1749"
+},
+{
+  "id": "C53", "era": "apogeu", "year": 1750, "yearLabel": "1750",
+  "title": "As 100 arrobas",
+  "hook": "In 1750 Portugal set a minimum: 100 arrobas of gold a year. About 1,500 kilos. Or else.",
+  "facts": [
+    "Se o quinto não chegasse a 100 arrobas (cerca de 1.500 kg), a diferença seria cobrada à força: a derrama."
+  ],
+  "joke": null,
+  "usa": "Imagine the IRS saying: we need $X this year. If you all don't reach it, we'll knock on doors.",
+  "usaTitle": "The IRS Quota",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Quota: 100 arrobas a year", "About 1,500 kg of gold", "Shortfall collected by force: derrama"],
+  "keyword": "100 arrobas",
+  "characters": ["cobrador"]
+},
+{
+  "id": "C54", "era": "apogeu", "year": 1763, "yearLabel": "1763",
+  "title": "A capital desce a serra",
+  "hook": "The gold went down the mountain to Rio. So the capital followed it.",
+  "facts": [
+    "A capital do Brasil passa de Salvador para o Rio de Janeiro em 1763.",
+    "Estrada Real: Caminho Velho (Ouro Preto → São João → Paraty) e Caminho Novo (Ouro Preto → Rio, mais curto, aprox. a BR-040).",
+    "Abrir outro caminho era crime de lesa-majestade."
+  ],
+  "joke": "Follow the money, literally.",
+  "usa": "The Estrada Real ≈ Natchez Trace / Santa Fe Trail; the tropeiros were the mule cowboys.",
+  "usaTitle": "Our Santa Fe Trail",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Capital moves to Rio, 1763", "Old Road via Paraty; New Road to Rio", "Opening other roads was treason"],
+  "keyword": "Estrada Real",
+  "characters": ["tropeiro"]
+},
+{
+  "id": "C55", "era": "inconfidencia", "year": 1763, "yearLabel": "1763–1788",
+  "title": "A bola de neve da derrama",
+  "hook": "Every year they missed the target. Every year the debt rolled over. By 1788, it was huge.",
+  "facts": [
+    "O tour diz que houve uma derrama em 1763 e que a dívida chegou a mais de 8.600 kg em 1788.",
+    "O novo governador, Visconde de Barbacena, chega com ordens de cobrar."
+  ],
+  "joke": "Brazilian credit card debt, 18th-century edition.",
+  "usa": null,
+  "status": "doc", "conferir": ["Derrama de 1763 e dívida de 8.600 kg em 1788: há divergência nas fontes. Dizer “a derrama era a ameaça”."], "tone": "normal",
+  "bullets": ["Quota missed year after year", "Debt rolls over", "Barbacena arrives to collect"],
+  "keyword": "Dívida",
+  "characters": ["cobrador"]
+},
+{
+  "id": "C56", "era": "inconfidencia", "year": 1785, "yearLabel": "1785",
+  "title": "O alvará que fechou as fábricas",
+  "hook": "In 1785 the queen banned manufacturing in Brazil. You want clothes? Buy Portuguese. Or English.",
+  "facts": [
+    "Alvará de D. Maria I proíbe manufaturas têxteis na colônia (só panos grossos para escravizados escapavam)."
+  ],
+  "joke": null,
+  "usa": "The Navigation Acts and the British limits on colonial manufacturing.",
+  "usaTitle": "Our Navigation Acts",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Queen Maria I's decree, 1785", "Textile factories banned", "Only coarse cloth allowed"],
+  "keyword": "Alvará 1785"
+},
+{
+  "id": "C57", "era": "inconfidencia", "year": 1788, "yearLabel": "10 OUT 1788",
+  "title": "A festa de batizado (a primeira reunião)",
+  "hook": "The conspiracy started at a baptism party. In that house.",
+  "facts": [
+    "Padre Toledo, vigário da vila, batizou os filhos de Alvarenga Peixoto e Bárbara Heliodora.",
+    "À noite houve festa na casa dele, considerada pelo tour a primeira reunião dos inconfidentes (10 out 1788).",
+    "Hoje a casa é o Museu Padre Toledo."
+  ],
+  "joke": "Most revolutions start in taverns. Ours started at a christening.",
+  "usa": null,
+  "status": "debatido", "notes": ["A data e o caráter de “primeira reunião” são tradição local."], "tone": "normal",
+  "bullets": ["Padre Toledo baptizes Alvarenga's children", "Party that night in his house", "Tradition: first conspiracy meeting"],
+  "keyword": "Batizado"
+},
+{
+  "id": "C58", "era": "inconfidencia", "year": 1788, "yearLabel": "1788–1789",
+  "title": "O plano",
+  "hook": "They wanted a republic, a university, and São João del-Rei as the capital.",
+  "facts": [
+    "Esperar a derrama, sair às ruas, proclamar república (Minas e parte do Rio).",
+    "Capital em São João del-Rei, universidade em Vila Rica.",
+    "Bandeira com “Libertas quae sera tamen” (hoje bandeira de Minas).",
+    "A escravidão não seria abolida. Padre Toledo tinha escravizados (dado do tour)."
+  ],
+  "joke": "Brazil's Founding Fathers. The ones that failed.",
+  "usa": "Like yours, they read Enlightenment books, wrote poetry, owned slaves and talked about liberty. Unlike yours, they got caught.",
+  "usaTitle": "Founding Fathers Who Got Caught",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Wait for the derrama, then revolt", "Republic, capital São João del-Rei", "Slavery would NOT be abolished"],
+  "keyword": "Libertas"
+},
+{
+  "id": "C59", "era": "inconfidencia", "year": 1787, "yearLabel": "1787",
+  "title": "O estudante que foi falar com Jefferson",
+  "hook": "Two years before the conspiracy, a Brazilian student met Thomas Jefferson in France and asked for help.",
+  "facts": [
+    "José Joaquim da Maia se encontrou com Jefferson, então ministro dos EUA na França.",
+    "Jefferson foi cordial e não prometeu nada."
+  ],
+  "joke": null,
+  "usa": "Jefferson ghosted Brazil.",
+  "usaTitle": "Jefferson Ghosted Us",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Student José Joaquim da Maia", "Met Jefferson in France, 1787", "Polite, but promised nothing"],
+  "keyword": "Jefferson"
+},
+{
+  "id": "C60", "era": "inconfidencia", "year": 1789, "yearLabel": "MAR 1789",
+  "title": "A delação premiada",
+  "hook": "One of them owed the Crown a fortune. He traded his friends for his debt.",
+  "facts": [
+    "Joaquim Silvério dos Reis denuncia o grupo em março de 1789.",
+    "Barbacena suspende a derrama (sem gatilho, sem revolta) e prende todos.",
+    "Silvério ganha perdão das dívidas e benefícios."
+  ],
+  "joke": "Plea bargain, 1789. Brazil invented it before it was cool.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Silvério betrays them, March 1789", "Derrama called off: no trigger", "Debts forgiven for the traitor"],
+  "keyword": "Silvério",
+  "characters": ["silverio"]
+},
+{
+  "id": "C61", "era": "inconfidencia", "year": 1789, "yearLabel": "10 MAI 1789",
+  "title": "Dez dias depois de Washington",
+  "hook": "On April 30, 1789, George Washington became president. Ten days later, Tiradentes was arrested in Rio.",
+  "facts": [
+    "Tiradentes, alferes do regimento dos Dragões, é preso no Rio em 10 mai 1789."
+  ],
+  "joke": null,
+  "usa": "The strongest date comparison of the tour: Washington's inauguration, April 30, 1789.",
+  "usaTitle": "Ten Days",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Washington sworn in April 30, 1789", "Tiradentes arrested May 10, 1789", "Ten days apart"],
+  "keyword": "10 dias",
+  "characters": ["tiradentes"]
+},
+{
+  "id": "C62", "era": "inconfidencia", "year": 1789, "yearLabel": "1789",
+  "title": "Quem era Tiradentes",
+  "hook": "He was a dentist, a soldier, a muleteer, a miner. And the only one who didn't deny it.",
+  "facts": [
+    "Joaquim José da Silva Xavier, nascido na Fazenda do Pombal (região de Ritápolis, então termo de São José).",
+    "Órfão cedo, dentista prático, tropeiro, alferes por cerca de 14 anos (dado do tour); patrulhava o Caminho Novo.",
+    "Era o propagandista do grupo e o único que assumiu a participação."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Born near here, Fazenda do Pombal", "Dentist, muleteer, soldier", "The only one who confessed"],
+  "keyword": "Silva Xavier",
+  "characters": ["tiradentes"]
+},
+{
+  "id": "C63", "era": "inconfidencia", "year": 1789, "yearLabel": "1789",
+  "title": "O poeta morto na cela",
+  "hook": "One of the conspirators was found dead in his cell. Suicide or murder? Still debated.",
+  "facts": [
+    "Cláudio Manuel da Costa, na Casa dos Contos (Ouro Preto)."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "debatido", "tone": "normal",
+  "bullets": ["Poet Cláudio Manuel da Costa", "Found dead in Casa dos Contos", "Suicide or murder: debated"],
+  "keyword": "Cláudio"
+},
+{
+  "id": "C64", "era": "inconfidencia", "year": 1792, "yearLabel": "1792",
+  "title": "O teatro da clemência",
+  "hook": "Eleven sentenced to death. Then the queen's letter of mercy is read. Everyone is spared. Except one.",
+  "facts": [
+    "A carta de D. Maria I já estava pronta antes da sentença.",
+    "Os outros vão para o exílio na África (Gonzaga prosperou em Moçambique; Alvarenga morreu em Angola) ou conventos (padres)."
+  ],
+  "joke": "Portuguese justice: one scapegoat, eleven exiles, zero surprises.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Eleven sentenced to death", "Mercy letter written in advance", "Exile in Africa; only one hanged"],
+  "keyword": "Clemência"
+},
+{
+  "id": "C65", "era": "inconfidencia", "year": 1792, "yearLabel": "21 ABR 1792",
+  "title": "A forca",
+  "hook": "Hanged in Rio, quartered, his head displayed in Vila Rica, his house destroyed and the ground salted.",
+  "facts": [
+    "Largo da Lampadosa (hoje Praça Tiradentes, Rio).",
+    "Partes do corpo expostas no Caminho Novo. Declarado infame por gerações.",
+    "21 de abril é feriado nacional."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "serio",
+  "bullets": ["Hanged in Rio, April 21, 1792", "Body displayed along the New Road", "Declared infamous for generations"],
+  "keyword": "21/04/1792",
+  "characters": ["tiradentes"]
+},
+{
+  "id": "C66", "era": "inconfidencia", "year": 1889, "yearLabel": "1889+",
+  "title": "O Cristo Cívico (a barba inventada)",
+  "hook": "The famous bearded Tiradentes, looking like Jesus? Invented by the Republic a hundred years later.",
+  "facts": [
+    "Alferes não usava barba (no máximo bigode, segundo o tour); presos tinham a cabeça raspada.",
+    "A República (1889) precisava de um herói nacional e criou um “Cristo cívico”: traidor (Judas), apóstolos, martírio."
+  ],
+  "joke": "Brazil's first marketing rebrand. Great beard, though.",
+  "usa": "Like George Washington and the cherry tree: a myth made for the national hero.",
+  "usaTitle": "Our Cherry Tree",
+  "status": "doc", "notes": ["Documentado: a construção da imagem pela República. Lenda: a barba."], "tone": "normal",
+  "bullets": ["Officers didn't wear beards", "Prisoners had shaved heads", "Republic built a “civic Christ”"],
+  "keyword": "Barba",
+  "characters": ["tiradentes"]
+},
+{
+  "id": "C67", "era": "depois", "year": 1782, "yearLabel": "1782",
+  "title": "Bom Jesus da Pobreza",
+  "hook": "When the gold ended, a new social group appeared: white and broke. They got their own chapel too.",
+  "facts": [
+    "Capela de 1782 no Largo das Forras, marco do declínio.",
+    "Do fim do séc. XVIII até a década de 1970, a cidade praticamente parou."
+  ],
+  "joke": "In Minas, even going broke came with a chapel.",
+  "usa": null,
+  "status": "doc", "notes": ["A dedicação a “brancos pobres” é interpretação do tour."], "tone": "normal",
+  "bullets": ["Chapel of 1782, Largo das Forras", "For whites who went broke", "Town frozen until the 1970s"],
+  "keyword": "Pobreza 1782"
+},
+{
+  "id": "C68", "era": "depois", "year": 1808, "yearLabel": "1808",
+  "title": "A corte foge para o Brasil",
+  "hook": "Napoleon invaded Portugal, so the entire Portuguese court moved to Rio. Paid for by England.",
+  "facts": [
+    "Abertura dos portos (1808).",
+    "Impressão Régia: fim da proibição de imprimir.",
+    "Ingleses reativam minas e trazem ferrovias e fábricas no séc. XIX."
+  ],
+  "joke": null,
+  "usa": "Imagine King George moving to Boston.",
+  "usaTitle": "King George in Boston",
+  "status": "doc", "tone": "normal",
+  "bullets": ["Napoleon invades; court flees to Rio", "Ports opened, printing allowed", "English reopen mines, build railways"],
+  "keyword": "Corte 1808"
+},
+{
+  "id": "C69", "era": "depois", "year": 1850, "yearLabel": "séc. XIX",
+  "title": "“Uai” vem de “why”?",
+  "hook": "Locals say 'Uai' comes from English miners asking 'why'. It's a great story. It's probably not true.",
+  "facts": [
+    "É etimologia popular; linguistas ligam “uai” a interjeições portuguesas como “ué”."
+  ],
+  "joke": "Uai, sô = Why, sir? Best fake etymology in Brazil.",
+  "usa": null,
+  "status": "lenda", "tone": "normal",
+  "bullets": ["Story: English miners asking “why”", "Linguists: from Portuguese “ué”", "Great story, probably false"],
+  "keyword": "Uai"
+},
+{
+  "id": "C70", "era": "depois", "year": 1831, "yearLabel": "1831–1888",
+  "title": "“Para inglês ver” e o fim da escravidão",
+  "hook": "Brazil was the last country in the Americas to abolish slavery. It passed laws 'just for the English to see'.",
+  "facts": [
+    "Lei de 1831 que proibia o tráfico e não era cumprida (origem mais aceita de “para inglês ver”).",
+    "Lei Eusébio de Queirós (1850) acaba de fato com o tráfico.",
+    "Ventre Livre (1871); Sexagenários (1885).",
+    "Lei Áurea (13 mai 1888), sem nenhuma reparação."
+  ],
+  "joke": null,
+  "usa": "The US abolished slavery in 1865 (13th Amendment), after a civil war. Brazil did it 23 years later, without war and without reparations.",
+  "usaTitle": "23 Years After the 13th",
+  "status": "doc", "tone": "serio",
+  "bullets": ["1831 law ignored: “for the English”", "1850 law actually ends the trade", "Abolition May 13, 1888, no reparations"],
+  "keyword": "Lei Áurea 1888"
+},
+{
+  "id": "C71", "era": "depois", "year": 1866, "yearLabel": "1866+",
+  "title": "Os Confederados",
+  "hook": "After the Civil War, thousands of Southerners moved to Brazil. Their descendants still hold a Confederate festival near São Paulo.",
+  "facts": [
+    "Incentivados por D. Pedro II, milhares (estimativas variam muito; cerca de 10 mil é número comum) foram para o interior paulista (Americana, Santa Bárbara d'Oeste).",
+    "Muitos vieram porque o Brasil ainda tinha escravidão."
+  ],
+  "joke": null,
+  "usa": "The ultimate Southern hook. Handle with care: many came because Brazil still had slavery.",
+  "usaTitle": "The Confederados",
+  "status": "doc", "notes": ["Os números são debatidos."], "tone": "normal",
+  "bullets": ["Southerners emigrate after the Civil War", "Settled in Americana, São Paulo", "Many came because slavery remained"],
+  "keyword": "Confederados"
+},
+{
+  "id": "C72", "era": "depois", "year": 1889, "yearLabel": "1889",
+  "title": "Vila de São José vira Tiradentes",
+  "hook": "The town traded a prince's name for the name of the man the kingdom hanged.",
+  "facts": [
+    "Com a República, a cidade passa a se chamar Tiradentes.",
+    "Ironia: D. Maria I, que manteve a sentença, era filha de D. José, homenageado no nome antigo."
+  ],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Republic renames the town, 1889", "From Prince José to Tiradentes", "Maria I was José's daughter"],
+  "keyword": "Nome 1889",
+  "characters": ["tiradentes"]
+},
+{
+  "id": "C73", "era": "depois", "year": 1938, "yearLabel": "1938",
+  "title": "O tombamento",
+  "hook": "Being poor saved this town. Nobody had money to tear anything down.",
+  "facts": [
+    "Tiradentes é tombada pelo IPHAN (então SPHAN) em 1938.",
+    "Figueiras plantadas no Largo das Forras para comemorar (dado do tour)."
+  ],
+  "joke": "Our heritage preservation strategy: bankruptcy.",
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Listed by IPHAN in 1938", "Poverty preserved the buildings", "Fig trees planted to celebrate"],
+  "keyword": "IPHAN 1938"
+},
+{
+  "id": "C74", "era": "renascimento", "year": 1972, "yearLabel": "1972",
+  "title": "O inglês que achou Tiradentes",
+  "hook": "In 1972 an English engineer opened a big hotel in an abandoned town. Everyone said he was crazy.",
+  "facts": [
+    "Segundo o tour: John Parsons abre o Solar da Ponte (1972).",
+    "Nos anos 80 ajudou famílias a restaurar casarões e brigou pela fiação subterrânea; morreu em 2016."
+  ],
+  "joke": "The English took our gold in the 1700s and brought it back as tourism in the 1970s. Fair trade.",
+  "usa": null,
+  "status": "doc", "notes": ["Dados locais (texto do tour)."], "tone": "normal",
+  "bullets": ["John Parsons opens Solar da Ponte", "Helped restore old mansions", "Fought for buried wiring"],
+  "keyword": "Solar 1972"
+},
+{
+  "id": "C75", "era": "renascimento", "year": 1980, "yearLabel": "1980–1990",
+  "title": "Burle Marx, Globo e o boom",
+  "hook": "A TV director loved this town, put it in soap operas, and overnight the tourists came.",
+  "facts": [
+    "Segundo o tour: jardins de Burle Marx no Largo das Forras (anos 1980).",
+    "Yves Alves (diretor da Globo) e a Fundação Roberto Marinho restauram a Rua Direita; a cidade vira cenário de novelas nos anos 90.",
+    "Hoje: quase 200 pousadas e a Mostra de Cinema (desde 1998)."
+  ],
+  "joke": null,
+  "usa": "Like towns that boomed after a movie, such as Savannah after Midnight in the Garden of Good and Evil.",
+  "usaTitle": "Our Savannah",
+  "status": "doc", "notes": ["Dados locais (texto do tour)."], "tone": "normal",
+  "bullets": ["Burle Marx gardens, 1980s", "Globo soap operas, 1990s", "Almost 200 inns; film festival"],
+  "keyword": "Novelas"
+},
+{
+  "id": "C76", "era": "renascimento", "year": 2026, "yearLabel": "HOJE",
+  "title": "De volta ao Mirante",
+  "hook": "So: a town born from gold, saved by poverty, and rediscovered by an Englishman. Very Brazilian.",
+  "facts": [],
+  "joke": null,
+  "usa": null,
+  "status": "doc", "tone": "normal",
+  "bullets": ["Born from gold", "Saved by poverty", "Rediscovered by an Englishman"],
+  "keyword": "Ouro, pobreza, inglês",
+  "characters": ["buck", "mula", "sineiro"]
+}
+]
