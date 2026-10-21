@@ -5,7 +5,7 @@
   "stops": [
     {
       "id": "T0", "order": 0, "name": "Mirante / Alto São Francisco",
-      "cards": ["C00", "C01", "C02", "C03", "C04", "C06", "C13", "C25"],
+      "cards": ["C00", "C01", "C02", "C03", "C04", "C06", "C13", "C23", "C25"],
       "transition": "Now let's walk down into the gold.",
       "lookAt": "o cruzeiro de 1718 e a Serra de São José no horizonte",
       "approxMinutes": 10
