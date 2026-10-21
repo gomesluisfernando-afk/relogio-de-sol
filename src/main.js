@@ -2,22 +2,25 @@
 import { loadContent } from './content.js';
 import { state } from './state.js';
 import { tour } from './modes/tour.js';
+import { timeline, card } from './modes/timeline.js';
+import { codex } from './modes/codex.js';
+import { esc } from './ui.js';
 
 const app = document.getElementById('app');
 let ctx;
 let leave; // limpeza do modo atual (listeners, wake lock, timers)
 
-const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+const ROUTES = { tour, timeline, card, codex };
 
 // Modos ainda não construídos aparecem desativados no Mirante.
 const MODES = [
   { id: 'tour', icon: '🕶️', ready: true },
-  { id: 'timeline', icon: '🧭' },
+  { id: 'timeline', icon: '🧭', ready: true },
+  { id: 'codex', icon: '📚', ready: true },
   { id: 'train', icon: '🧠' },
   { id: 'story', icon: '🤠' },
   { id: 'quest', icon: '🔎' },
   { id: 'colony', icon: '🏗️' },
-  { id: 'codex', icon: '📚' },
 ];
 
 function hub() {
@@ -38,14 +41,13 @@ function hub() {
 function route() {
   const [, mode, ...params] = location.hash.replace(/^#\/?/, '#/').split('/');
   leave?.();
-  leave = mode === 'tour' ? tour(app, ctx, params) : hub();
+  leave = ROUTES[mode] ? ROUTES[mode](app, ctx, params) : hub();
 }
 
 async function boot() {
   try {
     const [content, t] = await Promise.all([loadContent(), fetch('i18n/pt.json').then((r) => r.json())]);
-    ctx = { content, t, esc };
-    addEventListener('hashchange', route);
+    ctx = { content, t, esc };    addEventListener('hashchange', route);
     route();
   } catch (err) {
     app.textContent = 'Erro ao carregar: ' + err.message;

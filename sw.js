@@ -1,9 +1,10 @@
-// Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
+﻿// Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v1';
+const CACHE = 'relogio-v2';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
-  'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js',
+  'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js',
+  'assets/img/chars/ficha_buck.webp', 'assets/img/chars/ficha_mula.webp', 'assets/img/chars/ficha_cobrador.webp', 'assets/img/chars/ficha_sineiro.webp',
   'i18n/pt.json',
   'data/index.json', 'data/eras.json', 'data/cards_fase1.json', 'data/tours/tiradentes.json',
   'data/characters.json', 'data/expressions.json',

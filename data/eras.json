@@ -1,5 +1,5 @@
 [
-  { "id": "prologo", "phase": "fase1", "name": "Prólogo · O Mirante", "ageLabel": "Prólogo", "range": [2026, 2026], "color": "#C9A86A", "icon": "cruzeiro", "resource": null, "music": "hub", "intro": "The modern history of Brazil starts in 1500. Right here, nothing happened for 200 years." },
+  { "id": "prologo", "phase": "fase1", "name": "O Mirante", "ageLabel": "Prólogo", "range": [2026, 2026], "color": "#C9A86A", "icon": "cruzeiro", "resource": null, "music": "hub", "intro": "The modern history of Brazil starts in 1500. Right here, nothing happened for 200 years." },
   { "id": "mundo", "phase": "fase1", "name": "O Mundo Antes do Brasil", "ageLabel": "Era 0", "range": [1492, 1500], "color": "#4A5D8A", "icon": "caravela", "resource": null, "music": "era_mundo", "intro": "Columbus was the first European tourist who refused to admit he was lost." },
   { "id": "paubrasil", "phase": "fase1", "name": "A Idade do Pau-Brasil", "ageLabel": "Age I", "range": [1500, 1530], "color": "#B23A2B", "icon": "tora-vermelha", "resource": "pau-brasil", "music": "era_paubrasil", "intro": "Brazil is the only country named after a product." },
   { "id": "acucar", "phase": "fase1", "name": "Açúcar & Sangue", "ageLabel": "Age II", "range": [1530, 1630], "color": "#A86B2D", "icon": "cana-e-caldeira", "resource": "acucar", "music": "era_acucar", "intro": "Sugar needed hands." },
