@@ -24,6 +24,7 @@ export async function assemble(index, get) {
   }
   c.characters = await get(index.shared.characters);
   c.expressions = await get(index.shared.expressions);
+  c.quizzes = await get(index.shared.quizzes);
   c.cards.sort((a, b) => a.year - b.year || a.id.localeCompare(b.id));
   c.byId = Object.fromEntries(c.cards.map((x) => [x.id, x]));
   // Paradas de cada card vêm da rota (fonte única), não do card.
@@ -74,6 +75,17 @@ export function validate(c) {
   for (const e of c.expressions) {
     if (!STATUS.includes(e.status)) errors.push(`${e.id}: status inválido`);
     if (e.card && !c.byId[e.card]) errors.push(`${e.id}: card "${e.card}" não existe`);
+  }
+
+  const exprIds = new Set(c.expressions.map((e) => e.id));
+  const quizIds = new Set();
+  for (const q of c.quizzes) {
+    if (quizIds.has(q.id)) errors.push(`${q.id}: id de quiz repetido`);
+    quizIds.add(q.id);
+    if (q.cardId ? !c.byId[q.cardId] : !exprIds.has(q.exprId)) errors.push(`${q.id}: card/expressão não existe`);
+    if (q.type === 'multiple' && !(q.options?.[q.answer] !== undefined && q.options.length >= 2)) errors.push(`${q.id}: resposta fora das opções`);
+    if (q.type === 'factOrLegend' && !['fato', 'lenda'].includes(q.answer)) errors.push(`${q.id}: resposta deve ser "fato" ou "lenda"`);
+    if (!['multiple', 'factOrLegend'].includes(q.type)) errors.push(`${q.id}: tipo "${q.type}" não suportado`);
   }
 
   return { errors, warnings, conferir };

@@ -10,6 +10,7 @@
   ],
   "shared": {
     "characters": "characters.json",
-    "expressions": "expressions.json"
+    "expressions": "expressions.json",
+    "quizzes": "quizzes.json"
   }
 }

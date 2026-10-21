@@ -139,3 +139,39 @@ body.page #app { max-width: 640px; margin: 0 auto; }
 .medal.gold { background: radial-gradient(circle at 35% 30%, #7a5a1a, #2a1d08); }
 .medal.gold .yr { color: #ffd75e; }
 .medal.mem { border-color: #555; background: #161616; filter: grayscale(1); }
+
+/* ---------- Treino ---------- */
+.pad { padding: 12px 16px 40px; }
+.train .tabs b { flex: 1; }
+.train .mute { font-size: 22px; padding: 4px 8px; }
+.train h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--dim); margin: 22px 0 8px; }
+.train .hint { color: var(--dim); font-size: 15px; }
+.streak { font-size: 18px; margin: 4px 0 12px; }
+.streak small { color: var(--dim); font-size: 13px; }
+.boxes { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; height: 120px; align-items: end; }
+.boxes div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; font-size: 13px; }
+.boxes i { display: block; width: 100%; background: var(--gold); border-radius: 4px 4px 0 0; }
+.boxes small { color: var(--dim); }
+.run .tbar { flex: 1; height: 6px; background: #2a2620; border-radius: 3px; overflow: hidden; margin: 0 8px; }
+.run .tbar i { display: block; height: 100%; width: 0; background: var(--gold); transition: width .5s linear; }
+.run .score { font-size: 15px; color: var(--dim); white-space: nowrap; }
+.run .meta { font-size: 13px; color: var(--dim); border-left: 4px solid var(--era, #555); padding-left: 8px; margin-bottom: 10px; }
+.run .q { font-size: 20px; line-height: 1.35; margin: 4px 0 16px; }
+.run .big { font-size: 26px; line-height: 1.25; margin: 8px 0 12px; }
+.run .hookq { font-size: 21px; line-height: 1.4; color: #f4eee2; }
+.run .opt { width: 100%; text-align: left; font-size: 17px; }
+.run .opt.picked { opacity: .55; }
+.run .two { display: flex; gap: 10px; margin-top: 12px; }
+.run .two .btn { flex: 1; text-align: center; }
+.run .btn.no, .run .btn.leg { border-color: #6b3a1c; }
+.run .btn.yes, .run .btn.fact { border-color: #2d6b45; }
+.run .stmt { font-size: 21px; line-height: 1.4; padding: 22px 18px; border: 1px solid var(--line); border-radius: 14px; background: #1c1915; touch-action: pan-y; user-select: none; }
+.run .fb { font-size: 56px; text-align: center; margin: 8px 0; }
+.run .fb.ok { color: #5fc27e; } .run .fb.no { color: #d4661c; }
+.run .ans { font-size: 17px; margin: 6px 0; }
+.run .ans.miss { color: #e08a50; }
+.run .explain { color: #cfc7b8; }
+.run .gold { color: #ffd75e; margin: 12px 0; }
+.run .sum { font-size: 28px; margin: 0 0 8px; }
+.run .next { margin-top: 18px; text-align: center; width: 100%; }
+.pill.test { border-color: var(--gold); color: var(--gold); }

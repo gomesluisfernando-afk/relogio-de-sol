@@ -3,7 +3,8 @@ import { state } from '../state.js';
 import { esc, tag, norm, markSeen, worldToggle } from '../ui.js';
 
 export function timeline(root, { content, t }) {
-  const f = { q: '', onlyDoc: false, usa: false, jokes: false, stop: '', ...state.get('tlFilters', {}) };
+  const f = { q: '', onlyDoc: false, usa: false, jokes: false, wrong: false, stop: '', ...state.get('tlFilters', {}) };
+  const wrong = state.get('wrong', []);
   const stops = content.tours[0].stops;
   // Texto pesquisável de cada card, calculado uma vez.
   const hay = Object.fromEntries(content.cards.map((k) =>
@@ -16,7 +17,7 @@ export function timeline(root, { content, t }) {
         <div class="row"><a class="back" href="#/">←</a>
           <input type="search" placeholder="${esc(t['tl.search'])}" value="${esc(f.q)}" enterkeyhint="search"></div>
         <div class="chips">
-          ${['onlyDoc', 'usa', 'jokes'].map((k) => `<button class="chip ${f[k] ? 'on' : ''}" data-f="${k}">${esc(t['tl.' + k])}</button>`).join('')}
+          ${['onlyDoc', 'usa', 'jokes', ...(wrong.length ? ['wrong'] : [])].map((k) => `<button class="chip ${f[k] ? 'on' : ''}" data-f="${k}">${esc(t['tl.' + k])}</button>`).join('')}
           <select data-f="stop"><option value="">${esc(t['tl.allStops'])}</option>
             ${stops.map((s) => `<option value="${s.id}" ${f.stop === s.id ? 'selected' : ''}>${s.id} · ${esc(s.name)}</option>`).join('')}</select>
         </div>
@@ -30,6 +31,7 @@ export function timeline(root, { content, t }) {
     state.set('tlFilters', f);
     const terms = norm(f.q).split(/\s+/).filter(Boolean);
     const ok = (k) => (!f.onlyDoc || k.status === 'doc') && (!f.usa || k.usa) && (!f.jokes || k.joke)
+      && (!f.wrong || !wrong.length || wrong.includes(k.id))
       && (!f.stop || k.tourStops.includes(f.stop)) && terms.every((w) => hay[k.id].includes(w));
     const seen = state.get('seen', []);
     const html = content.eras.map((e) => {
@@ -89,6 +91,7 @@ export function card(root, { content, t }, [id]) {
       </nav>
       <div class="meta">${esc(k.yearLabel)} · ${esc(era.ageLabel)} ${tag(t, k.status)} <span class="id">${k.id}</span></div>
       <h1>${esc(k.title)}</h1>
+      <a class="pill test" href="#/train/card/${k.id}">${esc(t['card.test'])}</a>
       ${twoWorlds ? worldToggle(t, world) : ''}
       ${twoWorlds ? `<p class="worldlabel" data-w="lenda">${esc(t['card.told'])}</p><p class="worldlabel" data-w="doc">${esc(t['card.known'])}</p>` : ''}
       <p class="hook" ${twoWorlds ? 'data-w="lenda"' : ''}>“${esc(k.hook)}”</p>
