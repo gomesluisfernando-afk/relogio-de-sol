@@ -7,7 +7,8 @@
       "title": "AGE IV · A Idade do Ouro",
       "bg": {
         "color": "#4a3a12",
-        "image": "cards/c29.webp"
+        "image": "cards/c29.webp",
+        "video": "video/ageup_ouro.mp4"
       },
       "cards": [
         "C29"

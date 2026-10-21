@@ -134,3 +134,14 @@ Prefixo comum: "SQUARE 1:1, painted 1990s JRPG style, soft outlines, warm light,
 - video/forca_praca.mp4 — clipe 6 (cores dessaturadas, sem pessoas, nada violento): "a solemn and silent empty colonial square at dawn, the single bell in the church tower swings slowly once, a few birds lift off from the rooftops, thin mist drifts across the square, light very slowly brightens, camera completely still. Sober memorial mood." → cap6, "21 de abril de 1792" (140 KB).
 - video/final_mirante.mp4 — clipe 7: "at sunset the cowboy seen from behind turns his tin canteen upside down and a last drop falls, wind moves the grass and his bandana, golden clouds drift over the long gray mountain ridge, far away the church bell tower rings, camera slowly pulls back and rises, peaceful ending mood." → cap6, "De volta ao Mirante" (408 KB).
 - Todos: 720×1280, 10 s → `ffmpeg -vf scale=540:-2 -crf 30 -an`. Total gasto: 7 clipes × 15 = 105 de 300 créditos.
+
+### Age Up (Animar a partir do ícone da era, 15 créditos cada)
+Molde: "Animate the attached image into ONE short video clip (only 1 generation, vertical 9:16, about 8 seconds, same painted 1990s JRPG style, no text, no sound needed): AGE UP moment. The round emblem slowly rises and grows toward the camera, golden light rays burst from behind it, and behind it [paisagem] fades in through soft mist. [clima], camera slowly pushes in."
+- video/ageup_paubrasil.mp4 (cap1, AGE I): mata atlântica com pau-brasil de tronco vermelho e uma caravela ao largo. Triunfante.
+- video/ageup_acucar.mp4 (cap2, AGE II, sem pessoas): canaviais e engenho com roda d'água ao entardecer, vapor saindo do tacho. Solene.
+- video/ageup_invasoes.mp4 (cap3, AGE III, nada violento): porto do séc. XVII com navios holandeses, ingleses e franceses, moinho holandês. Aventura.
+- video/ageup_palmares.mp4 (cap3, Palmares, sem pessoas, nada violento): serra verde ao amanhecer, aldeia de casas de palha dentro de uma paliçada, roças e fumaça de cozinha. Digno, orgulhoso, calmo.
+- video/ageup_ouro.mp4 (cap4, AGE IV): montanhas de Minas, rio brilhando com ouro, arraial de cabanas. Empolgante.
+- video/ageup_apogeu.mp4 (cap5, AGE V, sem pessoas): vila barroca com igrejas de torres douradas, calçamento e chafariz, sinos balançando. Esplendor.
+- video/ageup_inconfidencia.mp4 (cap6, AGE VI, sem pessoas, nada violento): vila colonial à noite, uma janela acesa, vela sobre mesa com livros, papéis e pena. Conspiração.
+- Total do projeto: 14 clipes × 15 = 210 de 300 créditos.

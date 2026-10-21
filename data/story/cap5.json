@@ -7,7 +7,8 @@
       "title": "AGE V · Apogeu & Segregação",
       "bg": {
         "color": "#3a2a4a",
-        "image": "cards/c47.webp"
+        "image": "cards/c47.webp",
+        "video": "video/ageup_apogeu.mp4"
       },
       "cards": [
         "C47"

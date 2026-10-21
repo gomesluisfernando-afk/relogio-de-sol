@@ -1,6 +1,6 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v18';
+const CACHE = 'relogio-v19';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
   'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js', 'src/colony-logic.js', 'src/modes/colony.js',
@@ -13,6 +13,7 @@ const FILES = [
   'assets/img/scenes/conspiracao.webp', 'assets/img/scenes/salvador.webp', 'assets/img/scenes/estatua.webp', 'assets/img/scenes/mapa_tiradentes.webp', 'assets/img/scenes/estrada_real.webp', 'assets/img/scenes/arraial.webp', 'assets/img/scenes/sinos.webp', 'assets/img/scenes/engenho.webp',
   'assets/img/cards/roca.webp', 'assets/video/abertura_portal.mp4', 'assets/video/time_gate.mp4',
   'assets/video/porto_seguro.mp4', 'assets/video/methuen.mp4', 'assets/video/queimada.mp4', 'assets/video/forca_praca.mp4', 'assets/video/final_mirante.mp4',
+  'assets/video/ageup_paubrasil.mp4', 'assets/video/ageup_acucar.mp4', 'assets/video/ageup_invasoes.mp4', 'assets/video/ageup_palmares.mp4', 'assets/video/ageup_ouro.mp4', 'assets/video/ageup_apogeu.mp4', 'assets/video/ageup_inconfidencia.mp4',
   'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
 ];
 

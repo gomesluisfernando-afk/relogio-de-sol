@@ -7,7 +7,8 @@
       "title": "AGE II · Açúcar & Sangue",
       "bg": {
         "color": "#4a2f16",
-        "image": "cards/c10.webp"
+        "image": "cards/c10.webp",
+        "video": "video/ageup_acucar.mp4"
       },
       "cards": [
         "C10"

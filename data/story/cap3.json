@@ -7,7 +7,8 @@
       "title": "AGE III · Todo Mundo Quer um Pedaço",
       "bg": {
         "color": "#2a3a4a",
-        "image": "cards/c18.webp"
+        "image": "cards/c18.webp",
+        "video": "video/ageup_invasoes.mp4"
       },
       "cards": [
         "C18"
@@ -271,7 +272,8 @@
       "tone": "serio",
       "bg": {
         "color": "#1f2a1f",
-        "image": "cards/c27.webp"
+        "image": "cards/c27.webp",
+        "video": "video/ageup_palmares.mp4"
       },
       "cards": [
         "C27"
