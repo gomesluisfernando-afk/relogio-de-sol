@@ -1,6 +1,6 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v19';
+const CACHE = 'relogio-v21';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
   'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js', 'src/colony-logic.js', 'src/modes/colony.js',
@@ -22,12 +22,27 @@ const FILES = [
 const imagesFrom = async (file) => (await (await fetch(file, { cache: 'reload' })).json())
   .flatMap((x) => [x.image, x.iconImg]).filter(Boolean).map((p) => 'assets/img/' + p);
 
+// Imagens e vídeos não mudam de conteúdo: numa versão nova, reaproveita do cache
+// antigo em vez de baixar 18 MB de novo. Código e dados vêm sempre frescos.
+const MEDIA = /\.(webp|png|mp4)$/;
+async function fill(c, list) {
+  const old = (await caches.keys()).filter((k) => k !== CACHE);
+  await Promise.all(list.map(async (f) => {
+    if (MEDIA.test(f)) for (const k of old) { const hit = await (await caches.open(k)).match(f); if (hit) return c.put(f, hit); }
+    const r = await fetch(new Request(f, { cache: 'reload' })); // ignora o cache HTTP
+    if (!r.ok) throw new Error(f);
+    return c.put(f, r);
+  }));
+}
+
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
     const c = await caches.open(CACHE);
-    const fresh = (list) => list.map((f) => new Request(f, { cache: 'reload' })); // ignora o cache HTTP
-    await c.addAll(fresh(FILES));
-    await c.addAll(fresh([...new Set([...await imagesFrom('data/cards_fase1.json'), ...await imagesFrom('data/eras.json')])]));
+    const videos = FILES.filter((f) => f.endsWith('.mp4'));
+    // O essencial (Modo Tour incluído) precisa entrar inteiro; os vídeos, se falharem no 4G, vêm depois.
+    await fill(c, FILES.filter((f) => !f.endsWith('.mp4')));
+    await fill(c, [...new Set([...await imagesFrom('data/cards_fase1.json'), ...await imagesFrom('data/eras.json')])]);
+    await Promise.allSettled(videos.map((v) => fill(c, [v])));
     await self.skipWaiting();
   })());
 });
@@ -38,11 +53,24 @@ self.addEventListener('activate', (e) => {
     .then(() => self.clients.claim()));
 });
 
+// Vídeo pedido em pedaços (Range, o iPhone exige): responde 206 a partir do arquivo inteiro no cache.
+async function ranged(res, range) {
+  const buf = await res.arrayBuffer();
+  const [, a, b] = /bytes=(\d*)-(\d*)/.exec(range) || [];
+  const start = +a || 0;
+  const end = b ? Math.min(+b, buf.byteLength - 1) : buf.byteLength - 1;
+  return new Response(buf.slice(start, end + 1), { status: 206, headers: {
+    'Content-Type': res.headers.get('Content-Type') || 'video/mp4', 'Accept-Ranges': 'bytes',
+    'Content-Range': `bytes ${start}-${end}/${buf.byteLength}`, 'Content-Length': String(end - start + 1) } });
+}
+
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || !e.request.url.startsWith(self.location.origin)) return;
   e.respondWith(caches.open(CACHE).then(async (c) => {
     const hit = await c.match(e.request, { ignoreSearch: true });
-    const fresh = fetch(e.request).then((r) => { if (r.ok) c.put(e.request, r.clone()); return r; }).catch(() => hit);
+    const range = e.request.headers.get('range');
+    if (hit && range) return ranged(hit, range);
+    const fresh = fetch(e.request).then((r) => { if (r.status === 200) c.put(e.request, r.clone()); return r; }).catch(() => hit);
     return hit || fresh;
   }));
 });

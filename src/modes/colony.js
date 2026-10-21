@@ -1,11 +1,10 @@
 // Capitania (RTS-lite, Age of Empires de bolso): cada turno é uma década.
 // Construa, passe a década, veja os eventos históricos. O Age Up exige acertar um quiz da era.
 import { state } from '../state.js';
-import { esc, markSeen, toast } from '../ui.js';
+import { esc, markSeen, toast, shuffle } from '../ui.js';
 import { newGame, canBuild, build, endTurn, nextAge } from '../colony-logic.js';
 import { sfx } from '../audio.js';
 
-const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
 
 export function colony(root, { content, t }) {
   const cfg = content.colony;

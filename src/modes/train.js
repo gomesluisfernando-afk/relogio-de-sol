@@ -2,14 +2,13 @@
 // A repetição espaçada (Leitner) decide qual card volta. Acertou um card com
 // ponte EUA → a medalha vira ouro no Códex. Errou → entra em "os que errei".
 import { state } from '../state.js';
-import { esc, tag, unlock, pay, missed, hit, hud } from '../ui.js';
+import { esc, tag, unlock, pay, missed, hit, hud, shuffle } from '../ui.js';
 import { grade, pick } from '../leitner.js';
 import { sfx, speak } from '../audio.js';
 
 const TYPES = ['pic', 'multiple', 'fol', 'first', 'flash', 'hook', 'order'];
 const MIX_WEIGHT = { pic: 3, multiple: 3, fol: 2, first: 2, flash: 2, hook: 2, order: 1 };
 
-const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
 const rnd = (a) => a[Math.floor(Math.random() * a.length)];
 
 export function train(root, ctx, [kind, arg]) {

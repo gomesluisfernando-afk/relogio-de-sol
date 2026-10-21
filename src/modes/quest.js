@@ -2,7 +2,7 @@
 // (cada pista é um fato de um card) e emite a Devassa: quem + quando.
 // Casos sem culpado viram "Descoberta" (regra de humor: nunca tratar vítima como suspeito).
 import { state } from '../state.js';
-import { esc, hud, pay, collect, markSeen, unlock, toast } from '../ui.js';
+import { esc, hud, pay, collect, markSeen, unlock, toast, shuffle } from '../ui.js';
 import { give } from '../economy.js';
 import { sfx } from '../audio.js';
 
@@ -36,6 +36,9 @@ function run(root, { content, t }, q) {
   const revealed = new Set();
   let who = null;
   let when = null;
+  // Ordem embaralhada: nos dados, a resposta certa vem sempre primeiro.
+  const suspects = shuffle(q.suspects);
+  const dates = shuffle(q.dates);
 
   const face = (c) => c?.image
     ? `<div class="qface" style="background-image:url('assets/img/${c.image}');${c.face || ''}"></div>`
@@ -85,11 +88,11 @@ function run(root, { content, t }, q) {
       <h3>${esc(devassa ? t['quest.devassa'] : t['quest.descoberta'])}</h3>
       ${msg ? `<p class="qmsg">${esc(msg)}</p>` : ''}
       <p class="q">${esc(devassa ? t['quest.who'] : t['quest.whoFound'])}</p>
-      <div class="suspects">${q.suspects.map((s) => `
+      <div class="suspects">${suspects.map((s) => `
         <button class="suspect ${who === s.id ? 'on' : ''}" data-s="${s.id}">
           <img src="assets/img/${s.image}" alt=""><span>${esc(s.name)}</span></button>`).join('')}</div>
       <p class="q">${esc(t['quest.when'])}</p>
-      <div class="chips wrap">${q.dates.map((d) => `<button class="chip ${when === d ? 'on' : ''}" data-d="${esc(d)}">${esc(d)}</button>`).join('')}</div>
+      <div class="chips wrap">${dates.map((d) => `<button class="chip ${when === d ? 'on' : ''}" data-d="${esc(d)}">${esc(d)}</button>`).join('')}</div>
       <button class="btn primary" data-go="submit" ${who && when ? '' : 'disabled'}>${esc(devassa ? t['quest.sign'] : t['quest.confirm'])}</button>
       <button class="btn" data-go="back">← ${esc(t['quest.witnesses'])}</button>`);
     root.querySelectorAll('[data-s]').forEach((b) => b.addEventListener('click', () => { who = b.dataset.s; warrant(msg); }));

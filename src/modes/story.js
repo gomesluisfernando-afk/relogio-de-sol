@@ -3,10 +3,9 @@
 // build (construir), pan (bateia), trail (tropa na Estrada Real), map (rua × beco),
 // quiz (Age Up) e gate (Time Gate). Qualquer cena pode ter um easter egg (sc.egg).
 import { state } from '../state.js';
-import { esc, markSeen, collect, unlock, pay, hud, toast } from '../ui.js';
+import { esc, markSeen, collect, unlock, pay, hud, toast, shuffle } from '../ui.js';
 import { sfx, music, seriousDrone, stopMusic } from '../audio.js';
 
-const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
 
 export function story(root, ctx, [chapterId, flag]) {
   document.body.className = 'page';
@@ -201,15 +200,17 @@ function play(root, ctx, ch, start) {
     },
 
     choice(sc) {
+      // Com resposta certa, embaralha (nos dados ela costuma vir primeiro); escolha livre mantém a ordem.
+      const order = sc.options.some((o) => o.ok) ? shuffle(sc.options) : sc.options;
       const ask = () => {
         panel.innerHTML = `<div class="line">${portrait(sc.who)}<div><b>${esc(nameOf(sc.who))}</b><p>${esc(sc.text)}</p></div></div>`;
-        buttons(sc.options.map((o) => (o.locked ? '🔒 ' : '') + o.label), (k) => {
-          const o = sc.options[k];
+        buttons(order.map((o) => (o.locked ? '🔒 ' : '') + o.label), (k) => {
+          const o = order[k];
           if (o.locked) return say(o.reply, ask);
           if (o.ok) sfx.hit();
           say(o.reply, o.retry ? ask : next);
         });
-        sc.options.forEach((o, k) => o.locked && panel.querySelector(`[data-k="${k}"]`)?.classList.add('locked'));
+        order.forEach((o, k) => o.locked && panel.querySelector(`[data-k="${k}"]`)?.classList.add('locked'));
       };
       ask();
     },
@@ -268,8 +269,9 @@ function play(root, ctx, ch, start) {
         if (r >= sc.rounds.length) return next();
         const R = sc.rounds[r];
         panel.innerHTML = `${msg ? `<p class="reply">${esc(msg)}</p>` : ''}<p class="date">📅 ${esc(R.date)}</p><p class="prompt">${esc(R.place)}</p>`;
-        buttons(R.options, (k, b) => {
-          if (k !== R.answer) { b.classList.add('shake'); b.disabled = true; return; }
+        const opts = shuffle(R.options.map((text, k) => ({ text, ok: k === R.answer })));
+        buttons(opts.map((o) => o.text), (k, b) => {
+          if (!opts[k].ok) { b.classList.add('shake'); b.disabled = true; return; }
           sfx.hit();
           r++;
           if (R.after) { panel.innerHTML = `<p class="reply big">“${esc(R.after)}”</p>`; buttons([t['train.continue'] + ' →'], () => round()); } else round(t['story.named']);

@@ -33,6 +33,8 @@ export function unlock(state, content, id) {
   if (a) toast(`${a.icon} Conquista: ${a.title}`);
 }
 
+export const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
+
 export function toast(text, cls = '') {
   const el = document.createElement('div');
   el.className = 'toast ' + cls;
