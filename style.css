@@ -315,3 +315,26 @@ body.hub .hud { margin-bottom: 14px; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 9px #e0a93e44; } }
 .story .spot, .story .eggbtn { animation: pulse 1.6s infinite; opacity: 1; }
 .story .spot.done { animation: none; }
+
+/* ---------- Capitania ---------- */
+.cres { justify-content: space-between; }
+.cyear { color: var(--dim); font-size: 15px; margin: -4px 0 12px; }
+.cyear b { color: var(--gold); font-size: 20px; }
+.village { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.bld { display: flex; flex-direction: column; gap: 4px; font-size: 13px; text-align: center; }
+.bld img, .bld .noimg { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; display: grid; place-items: center; font-size: 32px; background: #1c1915; }
+.colony h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--dim); margin: 16px 0 8px; }
+.bbtn small { color: var(--dim); }
+.bbtn .bdesc { display: block; font-size: 13px; }
+.bbtn[disabled] { opacity: .45; }
+.prodline { font-size: 22px; margin: 4px 0; }
+.qline { color: #e0c27a; }
+.cevent { display: flex; gap: 12px; padding: 10px; margin: 10px 0; border: 1px solid var(--line); border-radius: 12px; background: #1a1610; }
+.cevent img { flex: none; width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
+.cevent small { display: block; color: var(--gold); }
+.cevent p { margin: 4px 0 6px; font-size: 15px; }
+.cevent.serio { background: #161616; border-color: #333; }
+.cevent.serio img { filter: grayscale(1); }
+.colony .q { font-size: 18px; }
+.colony .fbline.ok { color: #7fd69a; } .colony .fbline.no { color: #e8955f; }
+.solved img.sober { filter: grayscale(.8); }

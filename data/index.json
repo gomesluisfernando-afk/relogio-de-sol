@@ -15,6 +15,7 @@
     "story": "story.json",
     "achievements": "achievements.json",
     "items": "items.json",
-    "quests": "quests.json"
+    "quests": "quests.json",
+    "colony": "colony.json"
   }
 }

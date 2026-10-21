@@ -28,6 +28,7 @@ export async function assemble(index, get) {
   c.achievements = await get(index.shared.achievements);
   c.items = await get(index.shared.items);
   c.quests = await get(index.shared.quests);
+  c.colony = await get(index.shared.colony);
   c.chapters = (await get(index.shared.story)).chapters;
   for (const ch of c.chapters) if (ch.file) ch.scenes = (await get(ch.file)).scenes;
   c.cards.sort((a, b) => a.year - b.year || a.id.localeCompare(b.id));
@@ -108,6 +109,15 @@ export function validate(c) {
     if (sc.type === 'map' && sc.spots.length < sc.need) errors.push(`${at}: "need" maior que o número de pontos`);
     if (sc.type === 'gate' && sc.next && !c.chapters.some((x) => x.id === sc.next)) errors.push(`${at}: capítulo "${sc.next}" não existe`);
   });
+
+  if (c.colony) {
+    const ages = new Set(c.colony.ages.map((a) => a.id));
+    for (const b of c.colony.buildings) {
+      if (!ages.has(b.age)) errors.push(`capitania ${b.id}: era "${b.age}" não existe`);
+      if (b.card && !c.byId[b.card]) errors.push(`capitania ${b.id}: card "${b.card}" não existe`);
+    }
+    for (const e of c.colony.events) if (!c.byId[e.card]) errors.push(`capitania ${e.year}: card "${e.card}" não existe`);
+  }
 
   const itemIds = new Set(c.items.map((x) => x.id));
   for (const x of c.items) if (x.card && !c.byId[x.card]) errors.push(`item ${x.id}: card "${x.card}" não existe`);

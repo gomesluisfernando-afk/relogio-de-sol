@@ -7,13 +7,14 @@ import { codex } from './modes/codex.js';
 import { train } from './modes/train.js';
 import { story } from './modes/story.js';
 import { quest } from './modes/quest.js';
+import { colony } from './modes/colony.js';
 import { esc, hud } from './ui.js';
 
 const app = document.getElementById('app');
 let ctx;
 let leave; // limpeza do modo atual (listeners, wake lock, timers)
 
-const ROUTES = { tour, timeline, card, codex, train, story, quest };
+const ROUTES = { tour, timeline, card, codex, train, story, quest, colony };
 
 // Modos ainda não construídos aparecem desativados no Mirante.
 const MODES = [
@@ -23,7 +24,7 @@ const MODES = [
   { id: 'codex', icon: '📚', ready: true },
   { id: 'story', icon: '🤠', ready: true },
   { id: 'quest', icon: '🔎', ready: true },
-  { id: 'colony', icon: '🏗️' },
+  { id: 'colony', icon: '🏗️', ready: true },
 ];
 
 function hub() {

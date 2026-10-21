@@ -1,0 +1,47 @@
+{
+  "start": { "year": 1500, "age": "paubrasil", "pop": 4, "res": { "pau": 4, "acucar": 0, "ouro": 0, "comida": 6 }, "buildings": ["feitoria"] },
+  "turnYears": 10,
+  "end": 1792,
+  "resources": {
+    "pau": { "icon": "🪵", "name": "Pau-brasil" },
+    "acucar": { "icon": "🍬", "name": "Açúcar" },
+    "ouro": { "icon": "🪙", "name": "Ouro" },
+    "comida": { "icon": "🌽", "name": "Comida" }
+  },
+  "ages": [
+    { "id": "paubrasil", "from": 1500, "label": "Age I · Pau-Brasil" },
+    { "id": "acucar", "from": 1530, "label": "Age II · Açúcar" },
+    { "id": "ouro", "from": 1690, "label": "Age IV · Ouro" },
+    { "id": "apogeu", "from": 1720, "label": "Age V · Apogeu" },
+    { "id": "inconfidencia", "from": 1760, "label": "Age VI · Inconfidência" }
+  ],
+  "buildings": [
+    { "id": "feitoria", "name": "Feitoria", "age": "paubrasil", "cost": {}, "prod": { "pau": 3 }, "card": "C07", "max": 3 },
+    { "id": "roca", "name": "Roça", "age": "paubrasil", "cost": { "pau": 2 }, "prod": { "comida": 3 }, "max": 6, "desc": "Comida. Quem só minera passa fome (C31)." },
+    { "id": "engenho", "name": "Engenho", "age": "acucar", "cost": { "pau": 5 }, "prod": { "acucar": 4 }, "card": "C13", "max": 4 },
+    { "id": "vila", "name": "Vila", "age": "acucar", "after": 1532, "cost": { "pau": 6, "acucar": 3 }, "prod": { "pop": 2 }, "card": "C10", "max": 1, "desc": "Câmara + pelourinho + igreja." },
+    { "id": "lavra", "name": "Lavra (bateia)", "age": "ouro", "cost": { "acucar": 4, "pau": 2 }, "prod": { "ouro": 5 }, "card": "C42", "max": 5 },
+    { "id": "fundicao", "name": "Casa de Fundição", "age": "ouro", "after": 1720, "cost": { "ouro": 8 }, "prod": {}, "card": "C43", "max": 1, "desc": "Depois de 1720, sem ela o Quinto vira 30% (multa por ouro em pó)." },
+    { "id": "chafariz", "name": "Chafariz", "age": "apogeu", "cost": { "ouro": 8 }, "prod": { "pop": 1 }, "card": "C52", "max": 1 },
+    { "id": "matriz", "name": "Matriz", "age": "apogeu", "cost": { "ouro": 18 }, "prod": {}, "card": "C47", "max": 1, "desc": "Prestígio. E a vila se divide em irmandades (C48)." },
+    { "id": "tecelagem", "name": "Tecelagem", "age": "apogeu", "cost": { "ouro": 6 }, "prod": { "ouro": 2 }, "card": "C56", "max": 2 }
+  ],
+  "events": [
+    { "year": 1532, "card": "C10", "title": "São Vicente", "text": "Portugal funda a primeira vila. Agora você pode construir a sua (câmara + pelourinho + igreja)." },
+    { "year": 1550, "card": "C13", "tone": "serio", "title": "Quem trabalhava nos engenhos", "text": "Na história real, os engenhos funcionaram com trabalho escravizado: primeiro indígena, depois africano. O Brasil recebeu cerca de 4,8 milhões de africanos escravizados. O jogo não transforma pessoas em recurso." },
+    { "year": 1580, "card": "C18", "title": "União Ibérica", "text": "A Espanha herda Portugal, e os inimigos da Espanha passam a atacar o Brasil." },
+    { "year": 1591, "card": "C19", "title": "Piratas!", "text": "Thomas Cavendish saqueia Santos. Você perde parte do açúcar.", "effect": { "acucarPct": -30 } },
+    { "year": 1630, "card": "C21", "title": "Os holandeses", "text": "A WIC toma Pernambuco, o coração do açúcar.", "effect": { "acucarPct": -40 } },
+    { "year": 1650, "card": "C25", "title": "Crise do açúcar", "text": "O açúcar das Antilhas é mais barato. Daqui em diante, cada engenho rende a metade. Go inland!", "effect": { "acucarHalf": true } },
+    { "year": 1693, "card": "C30", "title": "OURO!", "text": "O ouro aparece em Minas. Faça o Age Up para construir lavras." },
+    { "year": 1697, "card": "C31", "title": "Fome nas minas", "text": "Ninguém plantava. Sem roças, a população cai." },
+    { "year": 1707, "card": "C34", "title": "Guerra dos Emboabas", "text": "Paulistas contra forasteiros. Você perde um pouco de gente.", "effect": { "pop": -1 } },
+    { "year": 1720, "card": "C43", "title": "Casas de Fundição", "text": "Ouro em pó proibido: tudo fundido e carimbado, com o Quinto cobrado na hora. Revolta em Vila Rica; Filipe dos Santos é enforcado." },
+    { "year": 1735, "card": "C51", "title": "Capitação", "text": "Imposto por cabeça: cada pessoa paga 1 de ouro.", "effect": { "capitacao": true } },
+    { "year": 1750, "card": "C53", "title": "As 100 arrobas", "text": "A capitação, pesada demais, é abandonada. No lugar, a Coroa exige uma meta de Quinto por década. Faltou? Vira dívida.", "effect": { "meta": 10, "capitacaoEnd": true } },
+    { "year": 1760, "card": "C42", "title": "O ouro de superfície acaba", "text": "Fácil de achar, fácil de acabar: cada lavra rende menos.", "effect": { "ouroHalf": true } },
+    { "year": 1763, "card": "C54", "title": "A capital desce a serra", "text": "A capital do Brasil passa para o Rio. A Estrada Real leva o ouro até lá." },
+    { "year": 1785, "card": "C56", "title": "O alvará de 1785", "text": "A rainha proíbe manufaturas têxteis. Suas tecelagens são fechadas.", "effect": { "remove": "tecelagem" } },
+    { "year": 1789, "card": "C60", "title": "A derrama suspensa", "text": "A dívida chegou ao limite e a derrama ia sair. Joaquim Silvério delatou a Inconfidência; Barbacena suspendeu a derrama e prendeu todos." }
+  ]
+}
