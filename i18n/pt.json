@@ -179,5 +179,8 @@
     "backup.import":  "Importar",
     "backup.done":  "Progresso importado.",
     "backup.fail":  "Não deu para importar:",
-    "lang.toggle":  "🇺🇸 English"
+    "lang.toggle":  "🇺🇸 English",
+    "story.dog":  "Cachorro do postal achado:",
+    "sun.time":  "Relógio de sol da Matriz (1785): agora são",
+    "sun.night":  "De noite o relógio de sol descansa. Pelo celular, agora são"
 }

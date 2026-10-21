@@ -8,7 +8,7 @@ import { train } from './modes/train.js';
 import { story } from './modes/story.js';
 import { quest } from './modes/quest.js';
 import { colony } from './modes/colony.js';
-import { esc, hud } from './ui.js';
+import { esc, hud, unlock } from './ui.js';
 
 const app = document.getElementById('app');
 let ctx;
@@ -46,6 +46,22 @@ function hub() {
       <button class="linkbtn" data-act="export">💾 ${esc(t['backup.export'])}</button>
       <label class="linkbtn">📂 ${esc(t['backup.import'])}<input type="file" accept="application/json,.json" hidden></label>
       · <a href="debug.html">debug</a></p>`;
+  // Easter egg: 7 toques no título → o relógio de sol da Matriz mostra a hora real (15° por hora).
+  let taps = 0;
+  app.querySelector('h1').addEventListener('click', () => {
+    if (++taps < 7) return;
+    taps = 0;
+    const d = new Date();
+    const h = d.getHours() + d.getMinutes() / 60;
+    const day = h >= 6 && h <= 18;
+    const hhmm = d.toTimeString().slice(0, 5);
+    const marks = [-90, -60, -30, 0, 30, 60, 90].map((a) => `<line y1="34" y2="42" transform="rotate(${180 + a})"/>`).join('');
+    app.querySelector('.sundial')?.remove();
+    app.querySelector('h1').insertAdjacentHTML('afterend', `<div class="sundial">
+      <svg viewBox="-50 -50 100 60"><path d="M-46 0A46 46 0 0 1 46 0Z"/>${marks}${day ? `<line class="shadow" y2="40" transform="rotate(${180 + (h - 12) * 15})"/>` : ''}</svg>
+      <p>☀️ ${esc(t[day ? 'sun.time' : 'sun.night'])} <b>${hhmm}</b></p></div>`);
+    unlock(state, content, 'sombra');
+  });
   app.querySelector('[data-act="lang"]').addEventListener('click', () => { state.set('lang', state.get('lang', 'pt') === 'en' ? 'pt' : 'en'); location.reload(); });
   app.querySelector('[data-act="export"]').addEventListener('click', () => {
     const a = document.createElement('a');

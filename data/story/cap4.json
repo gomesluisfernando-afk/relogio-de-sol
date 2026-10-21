@@ -303,7 +303,26 @@
           "who": "buck",
           "text": "Ego vs. Crown, round one."
         }
-      ]
+      ],
+      "egg": {
+        "label": "🗺️ Mapa riscado",
+        "ach": "albuquerque",
+        "card": "C38",
+        "lines": [
+          {
+            "who": "narr",
+            "text": "Um mapa de 1711 na mesa do governador: “Vila Rica de A̶l̶b̶u̶q̶u̶e̶r̶q̶u̶e̶”."
+          },
+          {
+            "who": "mula",
+            "text": "O governador Antônio de Albuquerque batizou a vila com o próprio nome. O rei mandou riscar."
+          },
+          {
+            "who": "buck",
+            "text": "Governor names a town after himself. King says no. Ego vs. Crown, round one."
+          }
+        ]
+      }
     },
     {
       "type": "dialog",

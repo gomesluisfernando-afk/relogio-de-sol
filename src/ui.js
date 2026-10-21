@@ -28,6 +28,7 @@ export function unlock(state, content, id) {
   const got = state.get('achievements', []);
   if (got.includes(id)) return;
   state.set('achievements', [...got, id]);
+  sfx.achievement();
   const a = content.achievements.find((x) => x.id === id);
   if (a) toast(`${a.icon} Conquista: ${a.title}`);
 }
@@ -49,6 +50,7 @@ export function pay(state, amount) {
   else toast(`+${r.net} 🪙 · 👑 Quinto −${r.quinto}`, 'stamp');
   if (r.newYear) setTimeout(() => toast(`👑 Meta da Coroa batida. Começa o ano ${r.eco.year}.`), 900);
   sfx.stamp();
+  setTimeout(sfx.coin, 150);
   return r;
 }
 

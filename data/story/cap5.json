@@ -29,7 +29,26 @@
           "who": "buck",
           "text": "A guide rivalry older than college football. Alabama vs. Auburn!"
         }
-      ]
+      ],
+      "egg": {
+        "label": "👁️ Contar os rostos",
+        "ach": "estipite",
+        "card": "C47",
+        "lines": [
+          {
+            "who": "narr",
+            "text": "Na Matriz, uma coluna estípite tem rostos esculpidos. Conte: menina, moça, mulher, velha."
+          },
+          {
+            "who": "mula",
+            "text": "As quatro idades da mulher, numa coluna só. O barroco lembra: tudo passa, menos a fila para casar na Matriz."
+          },
+          {
+            "who": "buck",
+            "text": "Four faces, one column. The whole life in one piece of wood."
+          }
+        ]
+      }
     },
     {
       "type": "name",

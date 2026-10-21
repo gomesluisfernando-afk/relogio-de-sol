@@ -1,6 +1,6 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v16';
+const CACHE = 'relogio-v17';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
   'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js', 'src/colony-logic.js', 'src/modes/colony.js',

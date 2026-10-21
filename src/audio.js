@@ -20,11 +20,11 @@ function bell(freq, at, gain = 0.25, len = 0.9, wave = 'sine') {
   o.stop(at + len + 0.1);
 }
 
-function ring(notes, gap) {
+function ring(notes, gap, gain, len, wave) {
   if (muted()) return;
   try {
     const t0 = ctx().currentTime + 0.02;
-    notes.forEach((f, i) => bell(f, t0 + i * gap));
+    notes.forEach((f, i) => bell(f, t0 + i * gap, gain, len, wave));
   } catch { /* sem áudio */ }
 }
 
@@ -34,6 +34,9 @@ export const sfx = {
   mission: () => ring([392], 0.3),
   derrama: () => ring([784, 659, 523], 0.28),
   stamp: () => ring([180, 140], 0.05),
+  coin: () => ring([1976, 2637], 0.07, 0.12, 0.25, 'triangle'),
+  hooves: () => ring([110, 95, 110, 95], 0.16, 0.3, 0.06, 'square'), // cascos de mula
+  uai: () => { if (!muted()) speak('uai!', 'pt-BR'); },
 };
 
 // ---- Trilha por era (semitons a partir de uma nota base) ----
@@ -84,11 +87,11 @@ export function seriousDrone() {
 }
 
 // Gancho em inglês em voz alta (voz do próprio celular).
-export function speak(text) {
+export function speak(text, lang = 'en-US') {
   try {
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-US';
+    u.lang = lang;
     u.rate = 0.95;
     speechSynthesis.speak(u);
   } catch { /* sem voz */ }

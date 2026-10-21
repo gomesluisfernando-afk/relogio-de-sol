@@ -179,5 +179,8 @@
   "backup.export": "Export progress",
   "backup.import": "Import",
   "backup.done": "Progress imported.",
-  "backup.fail": "Couldn't import:"
+  "backup.fail": "Couldn't import:",
+  "story.dog": "Postcard dog found:",
+  "sun.time": "Matriz sundial (1785): it is now",
+  "sun.night": "At night the sundial takes a break. Your phone says it is"
 }

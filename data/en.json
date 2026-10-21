@@ -1057,6 +1057,22 @@
   "fase2": {
    "title": "Next Stop: Petrópolis",
    "desc": "Drink from the fountain with the empty canteen at the end of Phase 1."
+  },
+  "albuquerque": {
+   "title": "Ego vs. Crown",
+   "desc": "Find the crossed-out name on the 1711 map."
+  },
+  "estipite": {
+   "title": "The Four Ages",
+   "desc": "Count the faces on the Matriz estípite column."
+  },
+  "cachorro": {
+   "title": "Great-Grandpa of Today’s Dog",
+   "desc": "Find the postcard dog hidden in all 6 eras."
+  },
+  "sombra": {
+   "title": "The Shadow Moved",
+   "desc": "Tap the sundial 7 times."
   }
  },
  "items": {
@@ -2082,6 +2098,12 @@
   "colony.events.14.title": "The 1785 decree",
   "colony.events.14.text": "The queen bans textile manufacturing. Your weaving shops are closed.",
   "colony.events.15.title": "The derrama called off",
-  "colony.events.15.text": "The debt hit the limit and the derrama was coming. Joaquim Silvério betrayed the Conspiracy; Barbacena called off the derrama and arrested everyone."
+  "colony.events.15.text": "The debt hit the limit and the derrama was coming. Joaquim Silvério betrayed the Conspiracy; Barbacena called off the derrama and arrested everyone.",
+  "cap4.scenes.7.egg.label": "🗺️ Crossed-out map",
+  "cap4.scenes.7.egg.lines.0.text": "A 1711 map on the governor’s desk: “Vila Rica de A̶l̶b̶u̶q̶u̶e̶r̶q̶u̶e̶”.",
+  "cap4.scenes.7.egg.lines.1.text": "Governor Antônio de Albuquerque named the town after himself. The king had it crossed out.",
+  "cap5.scenes.0.egg.label": "👁️ Count the faces",
+  "cap5.scenes.0.egg.lines.0.text": "In the Matriz, an estípite column has carved faces. Count them: girl, young woman, woman, old woman.",
+  "cap5.scenes.0.egg.lines.1.text": "The four ages of woman, on a single column. Baroque reminds you: everything passes, except the waiting list to get married in the Matriz."
  }
 }

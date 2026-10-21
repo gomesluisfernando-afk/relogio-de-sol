@@ -60,6 +60,32 @@
     "card": "C33"
   },
   {
+    "id": "albuquerque",
+    "icon": "🗺️",
+    "title": "Ego × Coroa",
+    "desc": "Achar o nome riscado no mapa de 1711.",
+    "card": "C38"
+  },
+  {
+    "id": "estipite",
+    "icon": "👁️",
+    "title": "As Quatro Idades",
+    "desc": "Contar os rostos da coluna estípite da Matriz.",
+    "card": "C47"
+  },
+  {
+    "id": "cachorro",
+    "icon": "🐕",
+    "title": "Bisavô do Cachorro Atual",
+    "desc": "Achar o cachorro do postal escondido nas 6 eras."
+  },
+  {
+    "id": "sombra",
+    "icon": "☀️",
+    "title": "A Sombra Andou",
+    "desc": "Tocar 7 vezes no relógio de sol."
+  },
+  {
     "id": "fase1",
     "icon": "🏁",
     "title": "Fim da Fase 1",

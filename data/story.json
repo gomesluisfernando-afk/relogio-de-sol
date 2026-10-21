@@ -7,7 +7,8 @@
       "eras": [
         "mundo",
         "paubrasil"
-      ]
+      ],
+      "dog": 12
     },
     {
       "id": "cap2",
@@ -15,7 +16,8 @@
       "title": "Capítulo 2 · Açúcar & Sangue",
       "eras": [
         "acucar"
-      ]
+      ],
+      "dog": 3
     },
     {
       "id": "cap3",
@@ -24,7 +26,8 @@
       "eras": [
         "invasoes",
         "palmares"
-      ]
+      ],
+      "dog": 6
     },
     {
       "id": "cap4",
@@ -32,7 +35,8 @@
       "title": "Capítulo 4 · A Idade do Ouro",
       "eras": [
         "ouro"
-      ]
+      ],
+      "dog": 9
     },
     {
       "id": "cap5",
@@ -40,7 +44,8 @@
       "title": "Capítulo 5 · Apogeu & Segregação",
       "eras": [
         "apogeu"
-      ]
+      ],
+      "dog": 5
     },
     {
       "id": "cap6",
@@ -48,7 +53,8 @@
       "title": "Capítulo 6 · Inconfidência",
       "eras": [
         "inconfidencia"
-      ]
+      ],
+      "dog": 1
     }
   ]
 }

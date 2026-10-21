@@ -3,7 +3,7 @@
 // build (construir), pan (bateia), trail (tropa na Estrada Real), map (rua × beco),
 // quiz (Age Up) e gate (Time Gate). Qualquer cena pode ter um easter egg (sc.egg).
 import { state } from '../state.js';
-import { esc, markSeen, collect, unlock, pay, hud } from '../ui.js';
+import { esc, markSeen, collect, unlock, pay, hud, toast } from '../ui.js';
 import { sfx, music, seriousDrone, stopMusic } from '../audio.js';
 
 const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
@@ -87,6 +87,7 @@ function play(root, ctx, ch, start) {
     if (picks === 10) {
       const p = panel.querySelector('.line p');
       if (p) p.textContent = t['story.strike'];
+      sfx.uai();
       unlock(state, content, 'pica-mula');
     }
   }
@@ -156,6 +157,7 @@ function play(root, ctx, ch, start) {
         panel.innerHTML = `${meters()}${msg ? `<p class="reply">${esc(msg)}</p>` : ''}<p class="date">📍 ${esc(L.place)}</p><p class="prompt">${esc(L.text)}</p>`;
         buttons(L.options.map((o) => o.label), (k) => {
           const o = L.options[k];
+          sfx.hooves();
           r.food += (o.food || 0) - 1;
           r.mules += o.mules || 0;
           r.gold += o.gold || 0;
@@ -406,6 +408,21 @@ function play(root, ctx, ch, start) {
         if (sc.egg.card) markSeen(state, sc.egg.card);
         unlock(state, content, sc.egg.ach);
         say(sc.egg.lines, () => SCENES[sc.type](sc));
+      });
+    }
+    // Easter egg: o cachorro do postal antigo, escondido numa cena de cada capítulo.
+    $('.stage').querySelector('.dog')?.remove();
+    if (ch.dog === i && !state.get('dogs', []).includes(ch.id)) {
+      $('.stage').insertAdjacentHTML('beforeend', '<button class="dog" aria-label="🐕">🐕</button>');
+      $('.stage .dog').addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.currentTarget.remove();
+        const dogs = [...state.get('dogs', []), ch.id];
+        const total = content.chapters.filter((c) => c.dog != null).length;
+        state.set('dogs', dogs);
+        sfx.hit();
+        toast(`🐕 ${t['story.dog']} ${dogs.length}/${total}`);
+        if (dogs.length >= total) unlock(state, content, 'cachorro');
       });
     }
     SCENES[sc.type](sc);
