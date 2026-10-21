@@ -145,3 +145,7 @@ Molde: "Animate the attached image into ONE short video clip (only 1 generation,
 - video/ageup_apogeu.mp4 (cap5, AGE V, sem pessoas): vila barroca com igrejas de torres douradas, calçamento e chafariz, sinos balançando. Esplendor.
 - video/ageup_inconfidencia.mp4 (cap6, AGE VI, sem pessoas, nada violento): vila colonial à noite, uma janela acesa, vela sobre mesa com livros, papéis e pena. Conspiração.
 - Total do projeto: 14 clipes × 15 = 210 de 300 créditos.
+
+## Mapa do Tempo (Nano Banana, 2026-10-21)
+- Terrenos (7 quadrados 1:1, sem emendas, vistos de cima): "game map terrain tiles for a top-down 2D strategy map, painted 1990s JRPG style (like Heroes of Might and Magic 3 adventure map but softer), seamless texture that tiles edge to edge…" → campo, mata, morro, serra, rio, estrada (+ estrada_h girada 90°), ponte. 192 px WebP em assets/img/map/.
+- Peças (9 medalhões no estilo dos ícones de era: "round medallion with a dark navy background and a worn gold rim"): vila, fundicao, registro, mina, ouro, portal, buraco, item, bandeirante (retrato do rival).

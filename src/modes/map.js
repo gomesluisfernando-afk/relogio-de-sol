@@ -8,7 +8,6 @@ import { give } from '../economy.js';
 import * as L from '../map-logic.js';
 
 const TERR = { '=': 'estrada', b: 'ponte', v: 'campo', '.': 'campo', f: 'mata', h: 'morro', '^': 'serra', '~': 'rio' };
-const ICON = { portal: '🌀', vila: '🏘️', fundicao: '🏭', registro: '🚧', ouro: '✨', mina: '⛏️', buraco: '🕳️', item: '🎁' };
 const KEYS = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0],
   Home: [-1, -1], PageUp: [1, -1], End: [-1, 1], PageDown: [1, 1] };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -56,9 +55,10 @@ function play(root, { content, t }, m) {
     if (o.type === 'ouro' && st.done[o.id]) return '';
     const own = o.type === 'mina' ? `own-${st.owner[o.id] || 'none'}` : '';
     const lit = o.type === 'portal' && L.portalOpen(m, st) ? 'lit' : '';
-    return `<i class="tok obj tok-${o.type} ${own} ${lit}">${ICON[o.type]}</i>`;
+    return `<i class="tok obj tok-${o.type} ${own} ${lit}" style="background-image:url('assets/img/map/${o.type}.webp')" title="${esc(nameOf(o))}"></i>`;
   }
   function face(c, def) {
+    if (!c && def?.image) return `<i class="tok who" style="background-image:url('assets/img/${def.image}');background-size:cover"></i>`;
     if (c?.image) return `<i class="tok who" style="background-image:url('assets/img/${c.image}');${c.face || 'background-size:300% auto;background-position:12% 10%'}"></i>`;
     return `<i class="tok who emo">${def?.icon || '?'}</i>`;
   }
@@ -81,7 +81,9 @@ function play(root, { content, t }, m) {
       const ag = seen && agentAt(x, y);
       const p = onPath.get(y * g.W + x);
       const here = st.x === x && st.y === y;
-      html += `<div class="t t-${TERR[g.at(x, y)]} ${seen ? '' : 'fog'} ${p ? 'p-' + p : ''} ${sel && sel.x === x && sel.y === y ? 'tgt' : ''}" data-x="${x}" data-y="${y}">${o ? token(o) : ''}${ag && !here ? face(chars[ag.char], ag) : ''}${here ? face(chars.buck) : ''}</div>`;
+      const road = (dx, dy) => '=bv'.includes(g.at(x + dx, y + dy));
+      const rot = g.at(x, y) === '=' && (road(-1, 0) || road(1, 0)) && !(road(0, -1) || road(0, 1)) ? 'rot' : '';
+      html += `<div class="t t-${TERR[g.at(x, y)]} ${rot} ${seen ? '' : 'fog'} ${p ? 'p-' + p : ''} ${sel && sel.x === x && sel.y === y ? 'tgt' : ''}" data-x="${x}" data-y="${y}">${o ? token(o) : ''}${ag && !here ? face(chars[ag.char], ag) : ''}${here ? face(chars.buck) : ''}</div>`;
     }
     $('.mgrid').innerHTML = html;
     panel();

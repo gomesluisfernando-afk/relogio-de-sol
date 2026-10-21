@@ -369,6 +369,7 @@ body.mapmode #app { padding: 0; margin: 0; max-width: none; }
 .t-rio { background-color: #2f6a8f; background-image: url('assets/img/map/rio.webp'); cursor: not-allowed; }
 .t-estrada { background-color: #b08a55; background-image: url('assets/img/map/estrada.webp'); }
 .t-ponte { background-color: #7a5532; background-image: url('assets/img/map/ponte.webp'); }
+.t-estrada.rot { background-image: url('assets/img/map/estrada_h.webp'); }
 .t.fog { background: #0d0c0b radial-gradient(circle at 30% 40%, #1a1815 0, transparent 60%) !important; }
 .t.fog > * { display: none; }
 .t.p-go::after, .t.p-far::after { content: ''; position: absolute; inset: 38%; border-radius: 50%; background: #9be36a; box-shadow: 0 0 0 2px #0008; z-index: 3; }
@@ -378,12 +379,12 @@ body.mapmode #app { padding: 0; margin: 0; max-width: none; }
 .tok.card { border: 2px solid var(--gold); box-shadow: 0 2px 6px #000a; }
 .tok.card.done { filter: grayscale(.9) brightness(.7); border-color: #6a6358; }
 .tok.card.serio { border-color: #9a9a9a; filter: grayscale(.6); }
-.tok.obj { background: radial-gradient(circle, #2a2218 55%, #1a150f 100%); border: 2px solid #c9a35a; box-shadow: 0 2px 6px #000a; }
-.tok-ouro { border-color: #ffd34d !important; animation: pulse 1.8s infinite; }
-.tok-portal { filter: grayscale(1) brightness(.6); }
-.tok-portal.lit { filter: none; animation: pulse 1.4s infinite; border-color: #b78cff !important; }
-.tok.own-buck { border-color: #9be36a !important; }
-.tok.own-rival { border-color: #e2574c !important; }
+.tok.obj { inset: 3%; background-color: #1a1f2e; box-shadow: 0 3px 8px #000c; }
+.tok-ouro { animation: pulse 1.8s infinite; }
+.tok-portal { filter: grayscale(1) brightness(.55); }
+.tok-portal.lit { filter: none; animation: pulse 1.4s infinite; }
+.tok.own-buck { box-shadow: 0 0 0 3px #9be36a, 0 3px 8px #000c; }
+.tok.own-rival { box-shadow: 0 0 0 3px #e2574c, 0 3px 8px #000c; }
 .tok.who { inset: 4%; border: 2px solid #fff; box-shadow: 0 0 0 2px #000, 0 3px 8px #000; z-index: 4; background-color: #ddd; }
 .tok.who.emo { background: #3a2a1a; font-size: calc(var(--t) * .5); }
 .mpanel { padding: 8px 12px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--bg); }

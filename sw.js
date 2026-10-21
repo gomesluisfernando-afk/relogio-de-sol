@@ -1,6 +1,6 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v22';
+const CACHE = 'relogio-v23';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
   'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js', 'src/colony-logic.js', 'src/modes/colony.js', 'src/map-logic.js', 'src/modes/map.js', 'data/maps/ouro.json',
@@ -14,6 +14,7 @@ const FILES = [
   'assets/img/cards/roca.webp', 'assets/video/abertura_portal.mp4', 'assets/video/time_gate.mp4',
   'assets/video/porto_seguro.mp4', 'assets/video/methuen.mp4', 'assets/video/queimada.mp4', 'assets/video/forca_praca.mp4', 'assets/video/final_mirante.mp4',
   'assets/video/ageup_paubrasil.mp4', 'assets/video/ageup_acucar.mp4', 'assets/video/ageup_invasoes.mp4', 'assets/video/ageup_palmares.mp4', 'assets/video/ageup_ouro.mp4', 'assets/video/ageup_apogeu.mp4', 'assets/video/ageup_inconfidencia.mp4',
+  'assets/img/map/bandeirante.webp', 'assets/img/map/buraco.webp', 'assets/img/map/campo.webp', 'assets/img/map/estrada.webp', 'assets/img/map/estrada_h.webp', 'assets/img/map/fundicao.webp', 'assets/img/map/item.webp', 'assets/img/map/mata.webp', 'assets/img/map/mina.webp', 'assets/img/map/morro.webp', 'assets/img/map/ouro.webp', 'assets/img/map/ponte.webp', 'assets/img/map/portal.webp', 'assets/img/map/registro.webp', 'assets/img/map/rio.webp', 'assets/img/map/serra.webp', 'assets/img/map/vila.webp',
   'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
 ];
 
