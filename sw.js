@@ -1,27 +1,29 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v6';
+const CACHE = 'relogio-v9';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
-  'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js',
+  'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js', 'src/modes/quest.js', 'src/economy.js',
   'assets/img/chars/ficha_buck.webp', 'assets/img/chars/ficha_mula.webp', 'assets/img/chars/ficha_cobrador.webp', 'assets/img/chars/ficha_sineiro.webp',
+  'assets/img/chars/ficha_caramuru.webp', 'assets/img/chars/ficha_quitandeira.webp', 'assets/img/chars/ficha_tropeiro.webp', 'assets/img/chars/ficha_antonil.webp', 'assets/img/chars/ficha_tiradentes.webp', 'assets/img/chars/ficha_silverio.webp',
   'i18n/pt.json',
   'data/index.json', 'data/eras.json', 'data/cards_fase1.json', 'data/tours/tiradentes.json',
-  'data/characters.json', 'data/expressions.json', 'data/quizzes.json', 'data/story.json', 'data/story/cap1.json', 'data/achievements.json',
+  'data/characters.json', 'data/expressions.json', 'data/quizzes.json', 'data/story.json', 'data/story/cap1.json', 'data/achievements.json', 'data/items.json', 'data/quests.json',
   'assets/img/scenes/aldeia.webp', 'assets/img/scenes/chafariz.webp', 'assets/img/scenes/feitoria.webp', 'assets/img/scenes/frota.webp', 'assets/img/scenes/mirante.webp', 'assets/img/scenes/pau_brasil.webp', 'assets/img/scenes/porto_seguro.webp',
   'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
 ];
 
 // As imagens dos cards e os ícones de era vêm dos próprios JSON: card novo com imagem
 // entra no offline sem mexer aqui.
-const imagesFrom = async (file) => (await (await fetch(file)).json())
+const imagesFrom = async (file) => (await (await fetch(file, { cache: 'reload' })).json())
   .flatMap((x) => [x.image, x.iconImg]).filter(Boolean).map((p) => 'assets/img/' + p);
 
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
     const c = await caches.open(CACHE);
-    await c.addAll(FILES);
-    await c.addAll([...new Set([...await imagesFrom('data/cards_fase1.json'), ...await imagesFrom('data/eras.json')])]);
+    const fresh = (list) => list.map((f) => new Request(f, { cache: 'reload' })); // ignora o cache HTTP
+    await c.addAll(fresh(FILES));
+    await c.addAll(fresh([...new Set([...await imagesFrom('data/cards_fase1.json'), ...await imagesFrom('data/eras.json')])]));
     await self.skipWaiting();
   })());
 });

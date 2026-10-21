@@ -6,13 +6,14 @@ import { timeline, card } from './modes/timeline.js';
 import { codex } from './modes/codex.js';
 import { train } from './modes/train.js';
 import { story } from './modes/story.js';
-import { esc } from './ui.js';
+import { quest } from './modes/quest.js';
+import { esc, hud } from './ui.js';
 
 const app = document.getElementById('app');
 let ctx;
 let leave; // limpeza do modo atual (listeners, wake lock, timers)
 
-const ROUTES = { tour, timeline, card, codex, train, story };
+const ROUTES = { tour, timeline, card, codex, train, story, quest };
 
 // Modos ainda não construídos aparecem desativados no Mirante.
 const MODES = [
@@ -21,7 +22,7 @@ const MODES = [
   { id: 'train', icon: '🧠', ready: true },
   { id: 'codex', icon: '📚', ready: true },
   { id: 'story', icon: '🤠', ready: true },
-  { id: 'quest', icon: '🔎' },
+  { id: 'quest', icon: '🔎', ready: true },
   { id: 'colony', icon: '🏗️' },
 ];
 
@@ -33,6 +34,7 @@ function hub() {
   app.innerHTML = `
     <img class="hubimg" src="assets/img/scenes/mirante.webp" alt="">
     <h1>${esc(t['hub.title'])}</h1>
+    ${hud(state, t)}
     ${stop ? `<a class="btn primary" href="#/tour/${stop.id}/${last.item}">▶ ${esc(t['hub.continue'])}<small>${stop.id} · ${esc(stop.name)}</small></a>` : ''}
     <a class="btn primary" href="#/train/mix/5">⚡ ${esc(t['hub.five'])}<small>${esc(t['hub.fiveHint'])}</small></a>
     <nav class="modes">${MODES.map((m) => m.ready

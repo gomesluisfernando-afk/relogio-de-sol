@@ -16,15 +16,15 @@
     "function": "Dá as missões tocando sinos (missão, acerto, perigo, conquista). Mora em São João del-Rei.",
     "catchphrase": "Aqui o sino fala. Você só precisa aprender a escutar.", "image": "chars/ficha_sineiro.webp" },
   { "id": "caramuru", "name": "Caramuru", "kind": "historico", "role": "NPC · Diogo Álvares", "eras": ["paubrasil", "acucar"],
-    "visual": null, "function": "Primeiro “brasileiro adotivo”; ensina o escambo.", "catchphrase": null, "card": "C08", "image": null },
+    "visual": null, "function": "Primeiro “brasileiro adotivo”; ensina o escambo.", "catchphrase": null, "card": "C08", "image": "chars/ficha_caramuru.webp" },
   { "id": "quitandeira", "name": "A quitandeira forra", "kind": "ficcional", "role": "NPC", "eras": ["ouro", "apogeu", "inconfidencia"],
-    "visual": null, "function": "Vende comida na entrada do arraial e dá pistas em troca de moedas. Símbolo da alforria comprada.", "catchphrase": null, "image": null },
+    "visual": null, "function": "Vende comida na entrada do arraial e dá pistas em troca de moedas. Símbolo da alforria comprada.", "catchphrase": null, "image": "chars/ficha_quitandeira.webp" },
   { "id": "tropeiro", "name": "O tropeiro", "kind": "ficcional", "role": "NPC", "eras": ["ouro", "apogeu", "inconfidencia"],
-    "visual": null, "function": "O cowboy brasileiro; espelho do protagonista.", "catchphrase": null, "image": null },
+    "visual": null, "function": "O cowboy brasileiro; espelho do protagonista.", "catchphrase": null, "image": "chars/ficha_tropeiro.webp" },
   { "id": "antonil", "name": "Antonil", "kind": "historico", "role": "NPC · jesuíta", "eras": ["ouro"],
-    "visual": null, "function": "Escreveu demais e teve o livro recolhido.", "catchphrase": null, "card": "C39", "image": null },
+    "visual": null, "function": "Escreveu demais e teve o livro recolhido.", "catchphrase": null, "card": "C39", "image": "chars/ficha_antonil.webp" },
   { "id": "tiradentes", "name": "Tiradentes", "kind": "historico", "role": "NPC · Joaquim José da Silva Xavier", "eras": ["apogeu", "inconfidencia"],
-    "visual": "Barbeado, de farda de alferes.", "function": "O propagandista da Inconfidência; a barba foi inventada depois.", "catchphrase": null, "card": "C62", "image": null },
+    "visual": "Barbeado, de farda de alferes.", "function": "O propagandista da Inconfidência; a barba foi inventada depois.", "catchphrase": null, "card": "C62", "image": "chars/ficha_tiradentes.webp" },
   { "id": "silverio", "name": "Joaquim Silvério dos Reis", "kind": "historico", "role": "NPC · o traidor", "eras": ["inconfidencia"],
-    "visual": "Sempre segurando um papel de dívida.", "function": "Delação premiada de 1789.", "catchphrase": null, "card": "C60", "image": null }
+    "visual": "Sempre segurando um papel de dívida.", "function": "Delação premiada de 1789.", "catchphrase": null, "card": "C60", "image": "chars/ficha_silverio.webp" }
 ]

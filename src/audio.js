@@ -27,4 +27,7 @@ function ring(notes, gap) {
 export const sfx = {
   hit: () => ring([1320, 1320], 0.12),
   achievement: () => ring([1568, 1319, 1175, 1047, 1568, 1319], 0.09),
+  mission: () => ring([392], 0.3),                // 1 toque grave = nova missão
+  derrama: () => ring([784, 659, 523], 0.28),     // 3 descendentes = Derrama chegando
+  stamp: () => ring([180, 140], 0.05),            // carimbo do Quinto
 };

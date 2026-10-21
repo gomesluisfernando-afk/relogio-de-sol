@@ -1,15 +1,15 @@
 // Códex: Personagens, Dicionário Mineiro e Conexões EUA.
 import { state } from '../state.js';
-import { esc, tag, worldToggle } from '../ui.js';
+import { esc, tag, worldToggle, hud } from '../ui.js';
 
-const TABS = ['chars', 'dict', 'usa', 'ach'];
+const TABS = ['chars', 'dict', 'usa', 'bag', 'ach'];
 
 export function codex(root, ctx, [tab, id]) {
   const { t } = ctx;
   if (!TABS.includes(tab)) tab = state.get('codexTab', 'usa');
   state.set('codexTab', tab);
   document.body.className = 'page';
-  const body = id ? (tab === 'chars' ? charPage : exprPage)(ctx, id) : { chars: charList, dict: exprList, usa: usaGrid, ach: achList }[tab](ctx);
+  const body = id ? (tab === 'chars' ? charPage : exprPage)(ctx, id) : { chars: charList, dict: exprList, usa: usaGrid, bag: bagList, ach: achList }[tab](ctx);
   root.innerHTML = `
     <div class="codex">
       <nav class="tabs"><a class="back" href="${id ? '#/codex/' + tab : '#/'}">←</a>
@@ -104,4 +104,17 @@ function achList({ content }) {
   return `<div class="exprs">${content.achievements.map((a) => `
     <div class="rowcard ach ${got.includes(a.id) ? 'got' : ''}"><span class="yr">${got.includes(a.id) ? a.icon : '🔒'}</span>
       <span class="ttl"><b>${esc(a.title)}</b><br><small>${esc(a.desc)}</small></span></div>`).join('')}</div>`;
+}
+
+function bagList({ content, t }) {
+  const have = state.get('eco', {}).items || [];
+  const from = (id) => content.quests.find((q) => q.reward.item === id);
+  return `<div class="pad">${hud(state, t)}<p class="hint">${esc(t['codex.bagHint'])}</p></div><div class="exprs">${content.items.map((i) => {
+    const got = have.includes(i.id);
+    const card = content.byId[i.card];
+    const q = from(i.id);
+    return `<div class="rowcard ach ${got ? 'got' : ''}">
+      ${got && card?.image ? `<img class="tthumb" src="assets/img/${card.image}" alt="">` : `<span class="yr bigicon">${got ? i.icon : '🔒'}</span>`}
+      <span class="ttl"><b>${got ? i.icon + ' ' : ''}${esc(i.name)}</b><br><small>${got ? esc(i.desc) : q ? `${esc(t['codex.bagFrom'])}: ${esc(q.title)}` : '—'}</small></span></div>`;
+  }).join('')}</div>`;
 }

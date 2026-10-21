@@ -1,0 +1,6 @@
+[
+  { "id": "santo", "name": "Santo do Pau Oco", "icon": "🗿", "card": "C45", "desc": "Esconde o ouro do Cobrador uma vez: o próximo Quinto não é cobrado. Lenda virando mecânica." },
+  { "id": "turmalina", "name": "A “esmeralda” de Fernão Dias", "icon": "💎", "card": "C29", "desc": "Examine de perto: é turmalina." },
+  { "id": "livro-antonil", "name": "Cultura e Opulência do Brasil", "icon": "📕", "card": "C39", "desc": "O livro de Antonil que a Coroa recolheu em 1711. Leia escondido." },
+  { "id": "carta-tj", "name": "Carta assinada “T.J.”", "icon": "✉️", "card": "C59", "desc": "Cordial, educada e sem nenhuma promessa. Jefferson ghosted Brazil." }
+]

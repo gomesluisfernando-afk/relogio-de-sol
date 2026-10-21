@@ -1,0 +1,174 @@
+[
+  {
+    "id": "QST-01", "kind": "descoberta", "era": "mundo", "title": "Quem chegou primeiro?",
+    "brief": "Um capitão jura que viu o litoral do Brasil antes de Cabral. Descubra quem foi e quando.",
+    "witnesses": [
+      { "from": "Um marinheiro de Palos", "text": "Ele foi capitão da Niña, na viagem de Colombo.", "card": "C03" },
+      { "from": "mula", "text": "Chegou num mês de janeiro, antes da frota de 13 navios.", "card": "C03" },
+      { "from": "Um grumete fugido", "text": "Pelo tratado, aquela terra era de Portugal. Por isso a Espanha nem reivindicou.", "card": "C02" }
+    ],
+    "suspects": [
+      { "id": "pinzon", "name": "Vicente Yáñez Pinzón", "image": "cards/c03.webp" },
+      { "id": "cabral", "name": "Pedro Álvares Cabral", "image": "scenes/porto_seguro.webp", "why": "Cabral chegou em abril. Alguém chegou antes." },
+      { "id": "colombo", "name": "Cristóvão Colombo", "image": "cards/c01.webp", "why": "Colombo chegou às Bahamas, não ao Brasil." },
+      { "id": "vespucio", "name": "Américo Vespúcio", "image": "cards/c05.webp", "why": "Vespúcio veio na expedição de 1501–1502." }
+    ],
+    "answer": "pinzon", "dates": ["JAN 1500", "22 ABR 1500", "1492", "1501"], "date": "JAN 1500",
+    "reward": { "gold": 40 }, "cards": ["C03"], "ach": "pinzon"
+  },
+  {
+    "id": "QST-02", "kind": "devassa", "era": "paubrasil", "title": "O carregamento vermelho sumiu",
+    "brief": "Toras de pau-brasil sumiram da feitoria antes do navio do arrendatário chegar. Quem levou?",
+    "witnesses": [
+      { "from": "Um vigia da feitoria", "text": "A feitoria guardava as toras até o próximo navio. Éramos uns 24 homens.", "card": "C07" },
+      { "from": "mula", "text": "O corante vermelho valia muito na Europa. Muita gente queria um pedaço sem pagar ao arrendatário.", "card": "C06" },
+      { "from": "Um intérprete", "text": "O navio que levou as toras não tinha a cruz de Portugal nas velas.", "card": "C16" }
+    ],
+    "suspects": [
+      { "id": "frances", "name": "Um contrabandista francês", "image": "cards/c16.webp" },
+      { "id": "noronha", "name": "Fernão de Noronha", "image": "scenes/pau_brasil.webp", "why": "Noronha era o arrendatário: as toras já eram dele." },
+      { "id": "aldeia", "name": "A aldeia vizinha", "image": "scenes/aldeia.webp", "why": "Quem cortava as toras eram os indígenas, no escambo. Eles não precisavam roubar o próprio trabalho." },
+      { "id": "pinzon2", "name": "Um capitão espanhol", "image": "cards/c03.webp", "why": "A Espanha não reivindicava aquele litoral." }
+    ],
+    "answer": "frances", "dates": ["c.1503–1510", "1494", "1565", "1630"], "date": "c.1503–1510",
+    "reward": { "gold": 40 }, "cards": ["C06", "C07"],
+    "conferir": ["Contrabando francês de pau-brasil no início do séc. XVI: não está nos cards (só a França Antártica de 1555, C16)."]
+  },
+  {
+    "id": "QST-03", "kind": "descoberta", "era": "invasoes", "title": "De Recife para Nova York",
+    "brief": "Quando os holandeses saíram de Recife, um grupo levou a história da cidade para o norte. Quem eram e quando chegaram?",
+    "witnesses": [
+      { "from": "Um pintor de Nassau", "text": "Recife tinha canais, pontes e a primeira sinagoga das Américas.", "card": "C21" },
+      { "from": "Um soldado de Guararapes", "text": "Depois das batalhas, os holandeses se renderam.", "card": "C22" },
+      { "from": "mula", "text": "Parte foi para o Caribe. Outros chegaram a Nova Amsterdã, a futura Nova York.", "card": "C23" }
+    ],
+    "suspects": [
+      { "id": "judeus", "name": "23 refugiados judeus de Recife", "image": "cards/c23.webp" },
+      { "id": "nassau", "name": "Maurício de Nassau", "image": "cards/c21.webp", "why": "Nassau saiu do Brasil em 1644, antes da rendição." },
+      { "id": "post", "name": "Os pintores Frans Post e Eckhout", "image": "cards/c21.webp", "why": "Eles pintaram o Brasil holandês, mas não fundaram nada em Nova York." },
+      { "id": "wic", "name": "A Companhia das Índias Ocidentais", "image": "cards/c20.webp", "why": "A WIC tomou Salvador e Pernambuco. Quem chegou a Nova Amsterdã foi gente." }
+    ],
+    "answer": "judeus", "dates": ["SET 1654", "1630", "1661", "1624"], "date": "SET 1654",
+    "reward": { "gold": 50 }, "cards": ["C21", "C23"]
+  },
+  {
+    "id": "QST-04", "kind": "devassa", "era": "ouro", "title": "Quem roubou o quinto de 1720?",
+    "brief": "Em 1720 Vila Rica pegou fogo e um quinto do ouro de todo mundo sumiu. Emita a Devassa.",
+    "witnesses": [
+      { "from": "quitandeira", "text": "Ele falou de barras com o selo do rei. Ouro em pó, nunca mais.", "card": "C43" },
+      { "from": "tropeiro", "text": "Vi um morro em chamas em Vila Rica. Quem mandou queimar foi gente do governo.", "card": "C43" },
+      { "from": "mula", "text": "Teve gente escondendo ouro dentro de santo de madeira oco… dizem por aí.", "card": "C45" }
+    ],
+    "suspects": [
+      { "id": "cobrador", "name": "O Cobrador do Quinto", "image": "chars/ficha_cobrador.webp" },
+      { "id": "filipe", "name": "Filipe dos Santos", "image": "cards/c43.webp", "why": "Filipe liderou a revolta contra o imposto e foi enforcado. Ele não roubou o quinto: o quinto era tirado dele." },
+      { "id": "pascoal", "name": "Pascoal da Silva Guimarães", "image": "cards/c43.webp", "why": "Pascoal era um rico revoltado contra o imposto. Foi mandado a Portugal." },
+      { "id": "assumar", "name": "O Conde de Assumar", "image": "cards/c44.webp", "why": "Quente! Assumar trabalhava para ele. Mas quem leva o quinto não é uma pessoa." }
+    ],
+    "answer": "cobrador", "dates": ["1720", "1711", "1750", "1789"], "date": "1720",
+    "twist": "You can't hang a tax, cowboy. They hanged the dentist instead.",
+    "reward": { "gold": 60, "item": "santo" }, "cards": ["C43", "C45"]
+  },
+  {
+    "id": "QST-05", "kind": "descoberta", "era": "ouro", "title": "O livro que o rei não quer que você leia",
+    "brief": "Um livro descrevia as minas e os caminhos do ouro. A Coroa mandou recolher. Quem escreveu?",
+    "witnesses": [
+      { "from": "Um livreiro de Lisboa", "text": "O autor era jesuíta. Escreveu demais.", "card": "C39" },
+      { "from": "mula", "text": "É dele a frase do “inferno, purgatório e paraíso”.", "card": "C39" },
+      { "from": "Um tipógrafo frustrado", "text": "No Brasil nem dava para imprimir: tipografia era proibida até 1808.", "card": "C68" }
+    ],
+    "suspects": [
+      { "id": "antonil", "name": "Antonil", "image": "cards/c39.webp" },
+      { "id": "fernao", "name": "Fernão Dias", "image": "cards/c29.webp", "why": "Fernão Dias era bandeirante, não escritor." },
+      { "id": "nunes", "name": "Manuel Nunes Viana", "image": "cards/c34.webp", "why": "Nunes Viana liderou os emboabas, não escreveu livro." },
+      { "id": "borba", "name": "Borba Gato", "image": "cards/c29.webp", "why": "Borba Gato trocou ouro por perdão. Livro, não." }
+    ],
+    "answer": "antonil", "dates": ["1711", "1808", "1693", "1763"], "date": "1711",
+    "reward": { "gold": 40, "item": "livro-antonil" }, "cards": ["C39"]
+  },
+  {
+    "id": "QST-06", "kind": "descoberta", "era": "ouro", "title": "A esmeralda que não era",
+    "brief": "Um caçador de esmeraldas morreu feliz com seu tesouro. Quem era, e o que ele tinha de verdade?",
+    "witnesses": [
+      { "from": "Um guia do sertão", "text": "Ele passou 7 anos no sertão.", "card": "C29" },
+      { "from": "mula", "text": "As trilhas e roças dele viraram o caminho da corrida do ouro.", "card": "C29" },
+      { "from": "O genro dele", "text": "Eu achei ouro no Rio das Velhas… em troca de um perdão. Mas essa é outra história.", "card": "C29" }
+    ],
+    "suspects": [
+      { "id": "fernao", "name": "Fernão Dias (eram turmalinas)", "image": "cards/c29.webp" },
+      { "id": "borba", "name": "Borba Gato (eram diamantes)", "image": "cards/c50.webp", "why": "Borba Gato achou ouro, e os diamantes só apareceram em 1729." },
+      { "id": "arzao", "name": "Arzão (era quartzo)", "image": "cards/c30.webp", "why": "Arzão levou as primeiras amostras de ouro, em 1693." },
+      { "id": "antonio", "name": "Antônio Dias (era ouro preto)", "image": "cards/c30.webp", "why": "Antônio Dias achou ouro de verdade, em 1698." }
+    ],
+    "answer": "fernao", "dates": ["1674–1681", "1693", "1698", "1729"], "date": "1674–1681",
+    "reward": { "gold": 40, "item": "turmalina" }, "cards": ["C29"]
+  },
+  {
+    "id": "QST-07", "kind": "devassa", "era": "inconfidencia", "title": "Quem entregou os inconfidentes?",
+    "brief": "O plano esperava a derrama. A derrama foi suspensa e todos foram presos. Alguém falou. Quem, e quando?",
+    "witnesses": [
+      { "from": "Um convidado do batizado", "text": "Eles queriam república, universidade e São João del-Rei como capital.", "card": "C58" },
+      { "from": "quitandeira", "text": "Um deles devia uma fortuna à Coroa.", "card": "C60" },
+      { "from": "mula", "text": "Depois, o delator ganhou perdão das dívidas. Delação premiada no século XVIII.", "card": "C60" }
+    ],
+    "suspects": [
+      { "id": "silverio", "name": "Joaquim Silvério dos Reis", "image": "cards/c60.webp" },
+      { "id": "toledo", "name": "Padre Toledo", "image": "cards/c57.webp", "why": "Padre Toledo deu a festa. Ele era do grupo, não o delator." },
+      { "id": "tiradentes", "name": "Tiradentes", "image": "cards/c62.webp", "why": "Tiradentes foi o único que assumiu tudo. Não entregou ninguém." },
+      { "id": "claudio", "name": "Cláudio Manuel da Costa", "image": "cards/c63.webp", "why": "Cláudio foi preso e apareceu morto na cela." }
+    ],
+    "answer": "silverio", "dates": ["MAR 1789", "10 OUT 1788", "21 ABR 1792", "1785"], "date": "MAR 1789",
+    "reward": { "gold": 60 }, "cards": ["C58", "C60"]
+  },
+  {
+    "id": "QST-08", "kind": "descoberta", "era": "inconfidencia", "title": "A carta para Jefferson",
+    "brief": "Dois anos antes da conspiração, alguém pediu ajuda aos Estados Unidos. Quem foi?",
+    "witnesses": [
+      { "from": "Um estalajadeiro francês", "text": "Era um estudante brasileiro.", "card": "C59" },
+      { "from": "Um diplomata americano", "text": "O ministro dos EUA na França o recebeu. Foi cordial.", "card": "C59" },
+      { "from": "mula", "text": "Promessa? Nenhuma. Jefferson ghosted Brazil.", "card": "C59" }
+    ],
+    "suspects": [
+      { "id": "maia", "name": "José Joaquim da Maia", "image": "cards/c59.webp" },
+      { "id": "tiradentes", "name": "Tiradentes", "image": "cards/c62.webp", "why": "Tiradentes patrulhava o Caminho Novo. Nunca foi à França." },
+      { "id": "gonzaga", "name": "Gonzaga", "image": "cards/c64.webp", "why": "Gonzaga acabou exilado em Moçambique." },
+      { "id": "alvarenga", "name": "Alvarenga Peixoto", "image": "cards/c57.webp", "why": "Alvarenga foi o pai do batizado de 1788." }
+    ],
+    "answer": "maia", "dates": ["1787", "1776", "1789", "1792"], "date": "1787",
+    "reward": { "gold": 50, "item": "carta-tj" }, "cards": ["C59"]
+  },
+  {
+    "id": "QST-09", "kind": "devassa", "era": "inconfidencia", "title": "A barba de Tiradentes",
+    "brief": "O Tiradentes das estátuas tem barba de santo. Mas alferes não usava barba. Quem inventou?",
+    "witnesses": [
+      { "from": "Um velho dragão", "text": "Alferes usava, no máximo, bigode.", "card": "C66" },
+      { "from": "Um carcereiro", "text": "Preso tinha a cabeça raspada.", "card": "C66" },
+      { "from": "mula", "text": "Cem anos depois, alguém precisava de um herói com cara de Cristo.", "card": "C66" }
+    ],
+    "suspects": [
+      { "id": "republica", "name": "A República", "image": "cards/c72.webp" },
+      { "id": "maria", "name": "A rainha D. Maria I", "image": "cards/c64.webp", "why": "D. Maria I manteve a sentença. Herói ela não queria fazer." },
+      { "id": "inconfidentes", "name": "Os próprios inconfidentes", "image": "cards/c58.webp", "why": "Eles nem chegaram a fazer a revolta." },
+      { "id": "aleijadinho", "name": "Aleijadinho", "image": "cards/c47.webp", "why": "Aleijadinho esculpia santos, não o Tiradentes." }
+    ],
+    "answer": "republica", "dates": ["1889", "1792", "1808", "1938"], "date": "1889",
+    "reward": { "gold": 50 }, "cards": ["C66"]
+  },
+  {
+    "id": "QST-10", "kind": "descoberta", "era": "ouro", "title": "Por que o rio tem esse nome?",
+    "brief": "Dizem que o Rio das Mortes ganhou o nome por causa do Capão da Traição. Será?",
+    "witnesses": [
+      { "from": "Um paulista sobrevivente", "text": "Em 1709 nos rendemos com promessa de vida, e não cumpriram.", "card": "C35" },
+      { "from": "Um velho barqueiro", "text": "Esse nome eu já ouvia antes da guerra. Muita gente se afogava nas travessias.", "card": "C36" },
+      { "from": "mula", "text": "A guerra só reforçou a lenda.", "card": "C36" }
+    ],
+    "suspects": [
+      { "id": "antigo", "name": "Nome mais antigo: travessias e lutas", "image": "cards/c36.webp" },
+      { "id": "capao", "name": "Os corpos do Capão da Traição", "image": "cards/c35.webp", "why": "Essa é a lenda. O nome aparece antes da guerra." },
+      { "id": "rei", "name": "Uma ordem do rei", "image": "cards/c38.webp", "why": "O rei batizou vilas, não esse rio." },
+      { "id": "emboabas", "name": "Os emboabas, para assustar", "image": "cards/c34.webp", "why": "Não há registro disso." }
+    ],
+    "answer": "antigo", "dates": ["antes de 1709", "1709", "1711", "1720"], "date": "antes de 1709",
+    "reward": { "gold": 40 }, "cards": ["C35", "C36"]
+  }
+]

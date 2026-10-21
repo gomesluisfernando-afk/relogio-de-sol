@@ -2,7 +2,7 @@
 // Tipos de cena: dialog, choice, sail (navegação), name (batizar lugares), barter (escambo),
 // build (construir), quiz (Age Up) e gate (Time Gate).
 import { state } from '../state.js';
-import { esc, markSeen, collect, unlock } from '../ui.js';
+import { esc, markSeen, collect, unlock, pay, hud } from '../ui.js';
 import { sfx } from '../audio.js';
 
 const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
@@ -22,7 +22,7 @@ function menu(root, { content, t }) {
   root.innerHTML = `
     <div class="storymenu">
       <nav class="tabs"><a class="back" href="#/">←</a><b>${esc(t['mode.story'])}</b></nav>
-      <div class="pad">${content.chapters.map((c) => {
+      <div class="pad">${hud(state, t)}${content.chapters.map((c) => {
         if (!c.scenes) return `<span class="btn off">${esc(c.title)}<small>${esc(t['hub.soon'])}</small></span>`;
         const at = progress[c.id] || 0;
         const status = done.includes(c.id) ? '✔ ' + t['story.done'] : at ? `${t['story.scene']} ${at + 1}/${c.scenes.length}` : t['story.new'];
@@ -231,7 +231,7 @@ function play(root, ctx, ch, start) {
         });
       };
       const result = () => {
-        if (right >= sc.pass) return next();
+        if (right >= sc.pass) { pay(state, 30); return next(); }
         panel.innerHTML = `<p class="prompt">${esc(t['story.quiet'])} (${right}/${qs.length})</p>`;
         buttons([t['story.retry']], () => SCENES.quiz(sc));
       };
@@ -246,7 +246,7 @@ function play(root, ctx, ch, start) {
       sfx.achievement();
       unlock(state, content, sc.ach);
       const done = state.get('storyDone', []);
-      if (!done.includes(ch.id)) state.set('storyDone', [...done, ch.id]);
+      if (!done.includes(ch.id)) { state.set('storyDone', [...done, ch.id]); setTimeout(() => pay(state, 100), 1200); }
       panel.onclick = null;
       panel.innerHTML = `<h2 class="ageup">${esc(sc.title)}</h2><p class="reply">${esc(sc.text)}</p>
         <a class="btn primary" href="#/train/mix/3">⚡ ${esc(t['train.mix3'])}</a>

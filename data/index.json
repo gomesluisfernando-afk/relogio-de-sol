@@ -13,6 +13,8 @@
     "expressions": "expressions.json",
     "quizzes": "quizzes.json",
     "story": "story.json",
-    "achievements": "achievements.json"
+    "achievements": "achievements.json",
+    "items": "items.json",
+    "quests": "quests.json"
   }
 }

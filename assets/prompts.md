@@ -103,3 +103,11 @@ Prefixo comum: "SQUARE 1:1, painted 1990s JRPG style, soft outlines, warm light,
 
 ## Ícones de era (1:1, depois reduzidos para 192 px)
 "single object centered on a dark round badge with a thin gold rim, painted 1990s JRPG item icon, plain black background, no text": cruz (prólogo), caravela (era 0), tora de pau-brasil (Age I), cana + caldeira (Age II), velas com bandeiras (Age III), paliçada (III-B), bateia com pepitas (Age IV), coroa (Age V), corda + livro (Age VI), casarão fechado (Era VII), câmera + igreja (Era VIII).
+
+## Retratos dos NPCs (16:9, ficha de 3 vistas) — Bloco 7
+- chars/ficha_quitandeira.webp — dignified free Black woman food seller (quitandeira), 18th-century Minas: head wrap, white blouse, colorful skirt, basket of food on her head, proud and kind
+- chars/ficha_tropeiro.webp — 1700s Brazilian muleteer: wide straw hat, poncho, leather boots, coiled whip, leading a pack mule
+- chars/ficha_caramuru.webp — Portuguese castaway living with an Indigenous community c.1510: long hair and beard, worn linen trousers, feather necklace
+- chars/ficha_antonil.webp — Italian Jesuit c.1711: black cassock, quill and thick book held to the chest, sly look
+- chars/ficha_tiradentes.webp — clean-shaven alferes of 1789: blue dragoon uniform with red trim, tricorn, no beard, dentist pliers at the belt
+- chars/ficha_silverio.webp — wealthy 18th-century Portuguese landowner: brown coat and wig, shifty eyes, debt paper in hand, sealed letter behind his back

@@ -26,6 +26,8 @@ export async function assemble(index, get) {
   c.expressions = await get(index.shared.expressions);
   c.quizzes = await get(index.shared.quizzes);
   c.achievements = await get(index.shared.achievements);
+  c.items = await get(index.shared.items);
+  c.quests = await get(index.shared.quests);
   c.chapters = (await get(index.shared.story)).chapters;
   for (const ch of c.chapters) if (ch.file) ch.scenes = (await get(ch.file)).scenes;
   c.cards.sort((a, b) => a.year - b.year || a.id.localeCompare(b.id));
@@ -104,6 +106,20 @@ export function validate(c) {
     for (const l of [...lines, ...(sc.who ? [{ who: sc.who }] : [])]) if (!who.has(l.who)) errors.push(`${at}: quem fala "${l.who}" não existe`);
     if (sc.type === 'quiz' && sc.quizIds.length < sc.ask) errors.push(`${at}: poucas perguntas para "ask"`);
   });
+
+  const itemIds = new Set(c.items.map((x) => x.id));
+  for (const x of c.items) if (x.card && !c.byId[x.card]) errors.push(`item ${x.id}: card "${x.card}" não existe`);
+  for (const q of c.quests) {
+    const at = q.id;
+    if (!['devassa', 'descoberta'].includes(q.kind)) errors.push(`${at}: kind deve ser devassa ou descoberta`);
+    if (!q.suspects.some((s) => s.id === q.answer)) errors.push(`${at}: resposta não está entre os suspeitos`);
+    if (!q.dates.includes(q.date)) errors.push(`${at}: data certa não está nas opções`);
+    for (const s of q.suspects) if (s.id !== q.answer && !s.why) warnings.push(`${at}: suspeito ${s.id} sem "why"`);
+    for (const w of q.witnesses) if (w.card && !c.byId[w.card]) errors.push(`${at}: card "${w.card}" não existe`);
+    for (const id of q.cards || []) if (!c.byId[id]) errors.push(`${at}: card "${id}" não existe`);
+    if (q.reward.item && !itemIds.has(q.reward.item)) errors.push(`${at}: item "${q.reward.item}" não existe`);
+    for (const t of q.conferir || []) conferir.push({ id: at, text: t });
+  }
 
   return { errors, warnings, conferir };
 }

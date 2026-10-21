@@ -2,7 +2,7 @@
 // A repetição espaçada (Leitner) decide qual card volta. Acertou um card com
 // ponte EUA → a medalha vira ouro no Códex. Errou → entra em "os que errei".
 import { state } from '../state.js';
-import { esc, tag, unlock } from '../ui.js';
+import { esc, tag, unlock, pay, missed, hit, hud } from '../ui.js';
 import { grade, pick } from '../leitner.js';
 import { sfx } from '../audio.js';
 
@@ -34,6 +34,7 @@ function menu(root, { content, t }) {
       <nav class="tabs"><a class="back" href="#/">←</a><b>${esc(t['mode.train'])}</b>
         <button class="mute" data-act="mute">${muted ? '🔇' : '🔔'}</button></nav>
       <div class="pad">
+        ${hud(state, t)}
         ${streak ? `<p class="streak">🔥 ${streak.days} ${esc(t[streak.days === 1 ? 'train.day' : 'train.days'])}</p>` : ''}
         <a class="btn primary" href="#/train/mix/3">⚡ ${esc(t['train.mix3'])}</a>
         <a class="btn primary" href="#/train/mix/5">⚡ ${esc(t['train.mix5'])}</a>
@@ -94,6 +95,8 @@ function session(root, { content, t }, opt) {
     state.set('collected', [...collected]);
     const allOk = results.every((r) => r.ok);
     allOk ? s.ok++ : s.bad++;
+    // Ouro só para acerto em card não-sério (card sério dá memória, não dá ouro).
+    if (allOk) { hit(state); if (!quiet) pay(state, 10); } else missed(state, content);
     s.n++;
     root.querySelector('.score').textContent = `✔ ${s.ok} · ✘ ${s.bad}`;
     if (allOk && !quiet) sfx.hit();
