@@ -11,5 +11,12 @@ console.log(`${c.cards.length} cards · ${c.eras.length} eras · ${c.tours[0].st
 console.log('fora do tour:', c.cards.filter((k) => !k.tourStops.length).map((k) => k.id).join(' '));
 for (const w of warnings) console.log('aviso:', w);
 for (const q of conferir) console.log('conferir:', q.id, '-', q.text);
+// O cache offline (sw.js) precisa listar todo JSON de dados e todo arquivo precisa existir.
+const sw = await readFile(new URL('../sw.js', import.meta.url), 'utf8');
+const cached = [...sw.matchAll(/'([^']+\.[a-z]+)'/g)].map((m) => m[1]);
+const index = await get('index.json');
+const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards, ...p.tours]), ...Object.values(index.shared)];
+for (const f of dataFiles) if (!cached.includes('data/' + f)) errors.push(`sw.js não guarda data/${f} para offline`);
+for (const f of cached) await readFile(new URL('../' + f, import.meta.url)).catch(() => errors.push(`sw.js lista ${f}, que não existe`));
 for (const e of errors) console.log('ERRO:', e);
 process.exit(errors.length ? 1 : 0);
