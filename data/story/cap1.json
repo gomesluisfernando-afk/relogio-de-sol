@@ -3,179 +3,561 @@
   "title": "Capítulo 1 · Pau-Brasil",
   "scenes": [
     {
-      "type": "dialog", "title": "Tiradentes · hoje", "bg": { "color": "#2b3a2e", "prop": "⛲" }, "cards": ["C52"],
+      "type": "dialog",
+      "title": "Tiradentes · hoje",
+      "bg": {
+        "color": "#2b3a2e",
+        "prop": "⛲",
+        "image": "scenes/chafariz.webp"
+      },
+      "cards": [
+        "C52"
+      ],
       "lines": [
-        { "who": "narr", "text": "Chafariz de São José, 1749. Fim de tarde." },
-        { "who": "buck", "text": "Howdy. Long ride from Nashville. That water looks mighty fine." },
-        { "who": "mula", "text": "Eu não beberia, cowboy. Esse chafariz tem três funções: água pra beber, cocho de cavalo e lavanderia." },
-        { "who": "buck", "text": "Bless your heart. *glub, glub*" },
-        { "who": "narr", "text": "O céu gira. O cantil fica gelado. Buck Calhoun está preso no tempo." }
+        {
+          "who": "narr",
+          "text": "Chafariz de São José, 1749. Fim de tarde."
+        },
+        {
+          "who": "buck",
+          "text": "Howdy. Long ride from Nashville. That water looks mighty fine."
+        },
+        {
+          "who": "mula",
+          "text": "Eu não beberia, cowboy. Esse chafariz tem três funções: água pra beber, cocho de cavalo e lavanderia."
+        },
+        {
+          "who": "buck",
+          "text": "Bless your heart. *glub, glub*"
+        },
+        {
+          "who": "narr",
+          "text": "O céu gira. O cantil fica gelado. Buck Calhoun está preso no tempo."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "O Mirante", "bg": { "color": "#3a3320", "prop": "✝️" }, "cards": ["C00"],
+      "type": "dialog",
+      "title": "O Mirante",
+      "bg": {
+        "color": "#3a3320",
+        "prop": "✝️",
+        "image": "scenes/mirante.webp"
+      },
+      "cards": [
+        "C00"
+      ],
       "lines": [
-        { "who": "sineiro", "text": "Aqui o sino fala. Você só precisa aprender a escutar." },
-        { "who": "sineiro", "text": "Este é o Mirante. O cruzeiro é de 1718, o ano em que o arraial virou vila. Lá adiante, a Serra de São José: foi de lá que saiu o ouro." },
-        { "who": "buck", "text": "So where's the history? Y'all start in 1500 like everybody?" },
-        { "who": "sineiro", "text": "A história moderna começa em 1500. Aqui, nada aconteceu por 200 anos. Depois, tudo aconteceu de uma vez." },
-        { "who": "sineiro", "text": "Para entender esta cidade, você vai ter que voltar ao começo." },
-        { "who": "mula", "text": "Pega o cantil. A gente vai de caravela." }
+        {
+          "who": "sineiro",
+          "text": "Aqui o sino fala. Você só precisa aprender a escutar."
+        },
+        {
+          "who": "sineiro",
+          "text": "Este é o Mirante. O cruzeiro é de 1718, o ano em que o arraial virou vila. Lá adiante, a Serra de São José: foi de lá que saiu o ouro."
+        },
+        {
+          "who": "buck",
+          "text": "So where's the history? Y'all start in 1500 like everybody?"
+        },
+        {
+          "who": "sineiro",
+          "text": "A história moderna começa em 1500. Aqui, nada aconteceu por 200 anos. Depois, tudo aconteceu de uma vez."
+        },
+        {
+          "who": "sineiro",
+          "text": "Para entender esta cidade, você vai ter que voltar ao começo."
+        },
+        {
+          "who": "mula",
+          "text": "Pega o cantil. A gente vai de caravela."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "Era 0 · O Mundo Antes do Brasil", "bg": { "color": "#1f2a44", "prop": "🌍" }, "cards": ["C01", "C02"],
+      "type": "dialog",
+      "title": "Era 0 · O Mundo Antes do Brasil",
+      "bg": {
+        "color": "#1f2a44",
+        "prop": "🌍",
+        "image": "scenes/frota.webp"
+      },
+      "cards": [
+        "C01",
+        "C02"
+      ],
       "lines": [
-        { "who": "mula", "text": "1492. Um genovês com 3 navios chega às Bahamas achando que estava na Ásia." },
-        { "who": "buck", "text": "Columbus! He never asked for directions either. Respect." },
-        { "who": "mula", "text": "E foi nessa viagem que os europeus aprenderam a palavra taína barbacoa." },
-        { "who": "buck", "text": "Wait. Our BBQ is older than our country?" },
-        { "who": "mula", "text": "Em 1494, Espanha e Portugal dividiram o planeta em Tordesilhas. Oeste pra Espanha, leste pra Portugal." },
-        { "who": "buck", "text": "In 1494, Spain and Portugal split the planet in half. Nobody asked the planet." }
+        {
+          "who": "mula",
+          "text": "1492. Um genovês com 3 navios chega às Bahamas achando que estava na Ásia."
+        },
+        {
+          "who": "buck",
+          "text": "Columbus! He never asked for directions either. Respect."
+        },
+        {
+          "who": "mula",
+          "text": "E foi nessa viagem que os europeus aprenderam a palavra taína barbacoa."
+        },
+        {
+          "who": "buck",
+          "text": "Wait. Our BBQ is older than our country?"
+        },
+        {
+          "who": "mula",
+          "text": "Em 1494, Espanha e Portugal dividiram o planeta em Tordesilhas. Oeste pra Espanha, leste pra Portugal."
+        },
+        {
+          "who": "buck",
+          "text": "In 1494, Spain and Portugal split the planet in half. Nobody asked the planet."
+        }
       ]
     },
     {
-      "type": "sail", "title": "Lisboa · março de 1500", "bg": { "color": "#123048", "prop": "⛵" }, "cards": ["C04"],
+      "type": "sail",
+      "title": "Lisboa · março de 1500",
+      "bg": {
+        "color": "#123048",
+        "prop": "⛵",
+        "image": "scenes/frota.webp"
+      },
+      "cards": [
+        "C04"
+      ],
       "intro": "Cabral sai de Lisboa rumo à Índia com 13 navios e cerca de 1.500 homens. Você está no leme.",
       "legs": [
         {
-          "at": "lisboa", "prompt": "Primeiro trecho. Para onde?",
+          "at": "lisboa",
+          "prompt": "Primeiro trecho. Para onde?",
           "options": [
-            { "label": "Sul, descendo ao longo da África", "ok": true, "reply": "Isso. Primeiro as Canárias, depois Cabo Verde." },
-            { "label": "Oeste, direto para o mar aberto", "ok": false, "reply": "Cedo demais, cowboy. Primeiro desce a costa da África." }
+            {
+              "label": "Sul, descendo ao longo da África",
+              "ok": true,
+              "reply": "Isso. Primeiro as Canárias, depois Cabo Verde."
+            },
+            {
+              "label": "Oeste, direto para o mar aberto",
+              "ok": false,
+              "reply": "Cedo demais, cowboy. Primeiro desce a costa da África."
+            }
           ]
         },
         {
-          "at": "caboverde", "prompt": "Depois de Cabo Verde, o caminho da Índia contorna a África. Como fazer a curva?",
+          "at": "caboverde",
+          "prompt": "Depois de Cabo Verde, o caminho da Índia contorna a África. Como fazer a curva?",
           "options": [
-            { "label": "Colado na costa africana", "ok": false, "reply": "Aí você fica empacado. Abre mais essa curva." },
-            { "label": "Abrir uma curva larga para oeste", "ok": true, "reply": "Curva larga… larga demais. Tem alguma coisa lá na frente." }
+            {
+              "label": "Colado na costa africana",
+              "ok": false,
+              "reply": "Aí você fica empacado. Abre mais essa curva."
+            },
+            {
+              "label": "Abrir uma curva larga para oeste",
+              "ok": true,
+              "reply": "Curva larga… larga demais. Tem alguma coisa lá na frente."
+            }
           ]
         }
       ],
       "egg": {
-        "label": "🏴 ?", "ach": "pinzon", "card": "C03",
+        "label": "🏴 ?",
+        "ach": "pinzon",
+        "card": "C03",
         "lines": [
-          { "who": "mula", "text": "Psiu. Antes de vocês, em janeiro de 1500, um espanhol já tinha tocado esse litoral: Vicente Yáñez Pinzón, ex-capitão da Niña de Colombo." },
-          { "who": "buck", "text": "Fun fact: the first European in Brazil was probably Spanish. Awkward." },
-          { "who": "mula", "text": "Pelo tratado, aquilo era de Portugal. Achou, mas não levou." }
+          {
+            "who": "mula",
+            "text": "Psiu. Antes de vocês, em janeiro de 1500, um espanhol já tinha tocado esse litoral: Vicente Yáñez Pinzón, ex-capitão da Niña de Colombo."
+          },
+          {
+            "who": "buck",
+            "text": "Fun fact: the first European in Brazil was probably Spanish. Awkward."
+          },
+          {
+            "who": "mula",
+            "text": "Pelo tratado, aquilo era de Portugal. Achou, mas não levou."
+          }
         ]
       },
       "arrive": "Terra à vista!"
     },
     {
-      "type": "dialog", "title": "22 de abril de 1500 · Porto Seguro", "bg": { "color": "#1d4a3c", "prop": "🏝️" }, "cards": ["C04"],
-      "lines": [
-        { "who": "buck", "text": "Cabral wasn't lost. He was going to India, took a wide turn, and bumped into Brazil." },
-        { "who": "mula", "text": "E achou que era uma ilha. Batizou de Ilha de Vera Cruz." }
-      ]
-    },
-    {
-      "type": "choice", "bg": { "color": "#1d4a3c", "prop": "📜" }, "cards": ["C04"],
-      "who": "mula", "text": "Cabral precisa avisar o rei. E agora?",
-      "options": [
-        { "label": "Mandar um navio de volta com a carta de Pero Vaz de Caminha", "ok": true,
-          "reply": [{ "who": "mula", "text": "Foi isso mesmo. Um navio voltou com a carta, e o resto da frota seguiu para a Índia." }] },
-        { "label": "Ficar e fundar uma cidade", "ok": false,
-          "reply": [{ "who": "mula", "text": "Calma. Portugal ainda vai levar 32 anos para fundar a primeira vila. A carta voltou num navio, e a frota seguiu para a Índia." }] }
-      ]
-    },
-    {
-      "type": "dialog", "bg": { "color": "#1d4a3c", "prop": "🏝️" }, "cards": ["C04"],
-      "lines": [
-        { "who": "mula", "text": "Ficaram para trás 2 degredados. E 2 grumetes fugiram e ficaram também." },
-        { "who": "buck", "text": "The first Europeans to stay in Brazil were two convicts and two runaways. Honestly, that explains a lot." },
-        { "who": "mula", "text": "Ei!… Tá. É verdade." }
-      ]
-    },
-    {
-      "type": "dialog", "title": "AGE I · A Idade do Pau-Brasil", "bg": { "color": "#5a1f17", "prop": "🪵" }, "cards": ["C05"],
-      "lines": [
-        { "who": "mula", "text": "1501. Uma expedição com Américo Vespúcio sobe o litoral batizando tudo pelo santo do dia." },
-        { "who": "buck", "text": "Vespucci? The guy who named America?" },
-        { "who": "mula", "text": "Esse mesmo. Agora é a sua vez: batize os lugares pelo calendário." }
-      ]
-    },
-    {
-      "type": "name", "bg": { "color": "#5a1f17", "prop": "🗺️" }, "cards": ["C05"],
-      "rounds": [
-        { "date": "1º de novembro de 1501 · Dia de Todos os Santos", "place": "Uma baía enorme no litoral da Bahia.",
-          "options": ["Baía de Todos os Santos", "Baía de Vespúcio", "Baía de Cabral"], "answer": 0 },
-        { "date": "Janeiro de 1502", "place": "Uma baía tão fechada que parece a foz de um rio.",
-          "options": ["Rio de Janeiro", "Baía de Janeiro", "Rio Vespúcio"], "answer": 0,
-          "after": "They found a bay, thought it was a river, and it was January. That's why it's called January River." }
-      ]
-    },
-    {
-      "type": "dialog", "bg": { "color": "#5a1f17", "prop": "🌳" }, "cards": ["C06"],
-      "lines": [
-        { "who": "mula", "text": "Agora, o primeiro negócio da terra: o pau-brasil. A árvore dá um corante vermelho valioso na Europa. O nome vem de brasa." },
-        { "who": "buck", "text": "Brazil is the only country named after a product. Like if America were called 'Tobacco'." },
-        { "who": "mula", "text": "A Coroa arrendou a exploração ao comerciante Fernão de Noronha. Quem cortava e carregava eram os indígenas, em troca de ferramentas, espelhos e tecidos: o escambo." },
-        { "who": "buck", "text": "Like the beaver fur trade back home." }
-      ]
-    },
-    {
-      "type": "barter", "bg": { "color": "#3d2414", "prop": "🪓" }, "cards": ["C06"],
-      "intro": "O navio precisa de 12 toras de pau-brasil. Você negocia. A confiança da aldeia importa.",
-      "goal": 12, "trust": 3,
-      "offers": [
-        { "label": "Machados de ferro", "logs": 3, "trust": 1, "line": "Ferramenta boa. A troca é justa, e a aldeia confia mais." },
-        { "label": "Tecidos", "logs": 2, "trust": 1, "line": "Troca justa. Mais confiança." },
-        { "label": "Espelhinhos", "logs": 3, "trust": -1, "line": "Rende toras hoje, mas a aldeia percebe que saiu perdendo." },
-        { "label": "Promessas em nome da Coroa", "logs": 1, "trust": -2, "line": "A Coroa promete muito e entrega pouco. A aldeia não é boba." }
+      "type": "dialog",
+      "title": "22 de abril de 1500 · Porto Seguro",
+      "bg": {
+        "color": "#1d4a3c",
+        "prop": "🏝️",
+        "image": "scenes/porto_seguro.webp"
+      },
+      "cards": [
+        "C04"
       ],
-      "win": [{ "who": "mula", "text": "12 toras, e a aldeia ainda confia em você. Troca justa gera aliança." }],
-      "lose": [{ "who": "mula", "text": "A confiança acabou. A troca abusiva virou conflito." }],
-      "after": [
-        { "who": "mula", "tone": "serio", "text": "Na história real, o escambo foi virando exploração. Quando o açúcar chegou, veio a escravização indígena. Depois, a africana." }
+      "lines": [
+        {
+          "who": "buck",
+          "text": "Cabral wasn't lost. He was going to India, took a wide turn, and bumped into Brazil."
+        },
+        {
+          "who": "mula",
+          "text": "E achou que era uma ilha. Batizou de Ilha de Vera Cruz."
+        }
       ]
     },
     {
-      "type": "build", "title": "1503–1504 · Cabo Frio", "bg": { "color": "#3d2414", "prop": "🏚️" }, "cards": ["C07"],
+      "type": "choice",
+      "bg": {
+        "color": "#1d4a3c",
+        "prop": "📜",
+        "image": "scenes/porto_seguro.webp"
+      },
+      "cards": [
+        "C04"
+      ],
+      "who": "mula",
+      "text": "Cabral precisa avisar o rei. E agora?",
+      "options": [
+        {
+          "label": "Mandar um navio de volta com a carta de Pero Vaz de Caminha",
+          "ok": true,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "Foi isso mesmo. Um navio voltou com a carta, e o resto da frota seguiu para a Índia."
+            }
+          ]
+        },
+        {
+          "label": "Ficar e fundar uma cidade",
+          "ok": false,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "Calma. Portugal ainda vai levar 32 anos para fundar a primeira vila. A carta voltou num navio, e a frota seguiu para a Índia."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dialog",
+      "bg": {
+        "color": "#1d4a3c",
+        "prop": "🏝️",
+        "image": "scenes/porto_seguro.webp"
+      },
+      "cards": [
+        "C04"
+      ],
+      "lines": [
+        {
+          "who": "mula",
+          "text": "Ficaram para trás 2 degredados. E 2 grumetes fugiram e ficaram também."
+        },
+        {
+          "who": "buck",
+          "text": "The first Europeans to stay in Brazil were two convicts and two runaways. Honestly, that explains a lot."
+        },
+        {
+          "who": "mula",
+          "text": "Ei!… Tá. É verdade."
+        }
+      ]
+    },
+    {
+      "type": "dialog",
+      "title": "AGE I · A Idade do Pau-Brasil",
+      "bg": {
+        "color": "#5a1f17",
+        "prop": "🪵",
+        "image": "scenes/porto_seguro.webp"
+      },
+      "cards": [
+        "C05"
+      ],
+      "lines": [
+        {
+          "who": "mula",
+          "text": "1501. Uma expedição com Américo Vespúcio sobe o litoral batizando tudo pelo santo do dia."
+        },
+        {
+          "who": "buck",
+          "text": "Vespucci? The guy who named America?"
+        },
+        {
+          "who": "mula",
+          "text": "Esse mesmo. Agora é a sua vez: batize os lugares pelo calendário."
+        }
+      ]
+    },
+    {
+      "type": "name",
+      "bg": {
+        "color": "#5a1f17",
+        "prop": "🗺️",
+        "image": "scenes/porto_seguro.webp"
+      },
+      "cards": [
+        "C05"
+      ],
+      "rounds": [
+        {
+          "date": "1º de novembro de 1501 · Dia de Todos os Santos",
+          "place": "Uma baía enorme no litoral da Bahia.",
+          "options": [
+            "Baía de Todos os Santos",
+            "Baía de Vespúcio",
+            "Baía de Cabral"
+          ],
+          "answer": 0
+        },
+        {
+          "date": "Janeiro de 1502",
+          "place": "Uma baía tão fechada que parece a foz de um rio.",
+          "options": [
+            "Rio de Janeiro",
+            "Baía de Janeiro",
+            "Rio Vespúcio"
+          ],
+          "answer": 0,
+          "after": "They found a bay, thought it was a river, and it was January. That's why it's called January River."
+        }
+      ]
+    },
+    {
+      "type": "dialog",
+      "bg": {
+        "color": "#5a1f17",
+        "prop": "🌳",
+        "image": "scenes/pau_brasil.webp"
+      },
+      "cards": [
+        "C06"
+      ],
+      "lines": [
+        {
+          "who": "mula",
+          "text": "Agora, o primeiro negócio da terra: o pau-brasil. A árvore dá um corante vermelho valioso na Europa. O nome vem de brasa."
+        },
+        {
+          "who": "buck",
+          "text": "Brazil is the only country named after a product. Like if America were called 'Tobacco'."
+        },
+        {
+          "who": "mula",
+          "text": "A Coroa arrendou a exploração ao comerciante Fernão de Noronha. Quem cortava e carregava eram os indígenas, em troca de ferramentas, espelhos e tecidos: o escambo."
+        },
+        {
+          "who": "buck",
+          "text": "Like the beaver fur trade back home."
+        }
+      ]
+    },
+    {
+      "type": "barter",
+      "bg": {
+        "color": "#3d2414",
+        "prop": "🪓",
+        "image": "scenes/pau_brasil.webp"
+      },
+      "cards": [
+        "C06"
+      ],
+      "intro": "O navio precisa de 12 toras de pau-brasil. Você negocia. A confiança da aldeia importa.",
+      "goal": 12,
+      "trust": 3,
+      "offers": [
+        {
+          "label": "Machados de ferro",
+          "logs": 3,
+          "trust": 1,
+          "line": "Ferramenta boa. A troca é justa, e a aldeia confia mais."
+        },
+        {
+          "label": "Tecidos",
+          "logs": 2,
+          "trust": 1,
+          "line": "Troca justa. Mais confiança."
+        },
+        {
+          "label": "Espelhinhos",
+          "logs": 3,
+          "trust": -1,
+          "line": "Rende toras hoje, mas a aldeia percebe que saiu perdendo."
+        },
+        {
+          "label": "Promessas em nome da Coroa",
+          "logs": 1,
+          "trust": -2,
+          "line": "A Coroa promete muito e entrega pouco. A aldeia não é boba."
+        }
+      ],
+      "win": [
+        {
+          "who": "mula",
+          "text": "12 toras, e a aldeia ainda confia em você. Troca justa gera aliança."
+        }
+      ],
+      "lose": [
+        {
+          "who": "mula",
+          "text": "A confiança acabou. A troca abusiva virou conflito."
+        }
+      ],
+      "after": [
+        {
+          "who": "mula",
+          "tone": "serio",
+          "text": "Na história real, o escambo foi virando exploração. Quando o açúcar chegou, veio a escravização indígena. Depois, a africana."
+        }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "1503–1504 · Cabo Frio",
+      "bg": {
+        "color": "#3d2414",
+        "prop": "🏚️",
+        "image": "scenes/feitoria.webp",
+        "before": "scenes/pau_brasil.webp"
+      },
+      "cards": [
+        "C07"
+      ],
       "intro": "Para estocar as toras até o próximo navio, Portugal constrói um entreposto fortificado: a feitoria.",
       "button": "Construir a feitoria de Cabo Frio",
       "lines": [
-        { "who": "mula", "text": "A mais antiga registrada ficou perto de Cabo Frio, com cerca de 24 homens." },
-        { "who": "buck", "text": "Brazil's first European settlement wasn't a town. It was a warehouse." },
-        { "who": "mula", "text": "Brazil started as an Amazon warehouse. The other Amazon." }
+        {
+          "who": "mula",
+          "text": "A mais antiga registrada ficou perto de Cabo Frio, com cerca de 24 homens."
+        },
+        {
+          "who": "buck",
+          "text": "Brazil's first European settlement wasn't a town. It was a warehouse."
+        },
+        {
+          "who": "mula",
+          "text": "Brazil started as an Amazon warehouse. The other Amazon."
+        }
       ]
     },
     {
-      "type": "dialog", "title": "c.1510 · Bahia", "bg": { "color": "#24402a", "prop": "🛖" }, "cards": ["C08"],
+      "type": "dialog",
+      "title": "c.1510 · Bahia",
+      "bg": {
+        "color": "#24402a",
+        "prop": "🛖",
+        "image": "scenes/aldeia.webp"
+      },
+      "cards": [
+        "C08"
+      ],
       "lines": [
-        { "who": "narr", "text": "Um português naufragou aqui e ficou. Os indígenas o chamam de Caramuru." },
-        { "who": "caramuru", "text": "Naufraguei, fiquei e casei com Paraguaçu. Quer negociar com a aldeia? Primeiro aprenda a chegar." }
+        {
+          "who": "narr",
+          "text": "Um português naufragou aqui e ficou. Os indígenas o chamam de Caramuru."
+        },
+        {
+          "who": "caramuru",
+          "text": "Naufraguei, fiquei e casei com Paraguaçu. Quer negociar com a aldeia? Primeiro aprenda a chegar."
+        }
       ]
     },
     {
-      "type": "choice", "bg": { "color": "#24402a", "prop": "🛖" }, "cards": ["C08"],
-      "who": "caramuru", "text": "Como você chega numa aldeia?",
+      "type": "choice",
+      "bg": {
+        "color": "#24402a",
+        "prop": "🛖",
+        "image": "scenes/aldeia.webp"
+      },
+      "cards": [
+        "C08"
+      ],
+      "who": "caramuru",
+      "text": "Como você chega numa aldeia?",
       "options": [
-        { "label": "Com um presente, e ouvindo antes de falar", "ok": true,
-          "reply": [{ "who": "caramuru", "text": "É assim que se faz aliança." }] },
-        { "label": "Dando ordens em nome do rei", "ok": false, "retry": true,
-          "reply": [{ "who": "mula", "text": "O rei está a um oceano daqui, cowboy. Tenta de novo, com educação." }] }
+        {
+          "label": "Com um presente, e ouvindo antes de falar",
+          "ok": true,
+          "reply": [
+            {
+              "who": "caramuru",
+              "text": "É assim que se faz aliança."
+            }
+          ]
+        },
+        {
+          "label": "Dando ordens em nome do rei",
+          "ok": false,
+          "retry": true,
+          "reply": [
+            {
+              "who": "mula",
+              "text": "O rei está a um oceano daqui, cowboy. Tenta de novo, com educação."
+            }
+          ]
+        }
       ]
     },
     {
-      "type": "dialog", "bg": { "color": "#24402a", "prop": "💍" }, "cards": ["C08", "C09"],
+      "type": "dialog",
+      "bg": {
+        "color": "#24402a",
+        "prop": "💍",
+        "image": "scenes/aldeia.webp"
+      },
+      "cards": [
+        "C08",
+        "C09"
+      ],
       "lines": [
-        { "who": "mula", "text": "Paraguaçu foi batizada na França em 1528, como Catarina. Mais ao sul, João Ramalho viveu entre os Tupiniquins e casou com Bartira, filha do cacique Tibiriçá." },
-        { "who": "buck", "text": "Brazil's early immigration policy: get shipwrecked, marry well." },
-        { "who": "buck", "text": "Kinda like Pocahontas and John Smith." },
-        { "who": "mula", "text": "Só que aqui foi de verdade, e com dezenas de filhos." },
-        { "who": "mula", "text": "E em 1524 outro náufrago, Aleixo Garcia, andou do Atlântico até a fronteira do Império Inca pela trilha do Peabiru: uns 3.000 km de caminhos guaranis. Morreu na volta." },
-        { "who": "buck", "text": "First Brazilian road trip. No GPS, no return ticket. Like our Natchez Trace!" }
+        {
+          "who": "mula",
+          "text": "Paraguaçu foi batizada na França em 1528, como Catarina. Mais ao sul, João Ramalho viveu entre os Tupiniquins e casou com Bartira, filha do cacique Tibiriçá."
+        },
+        {
+          "who": "buck",
+          "text": "Brazil's early immigration policy: get shipwrecked, marry well."
+        },
+        {
+          "who": "buck",
+          "text": "Kinda like Pocahontas and John Smith."
+        },
+        {
+          "who": "mula",
+          "text": "Só que aqui foi de verdade, e com dezenas de filhos."
+        },
+        {
+          "who": "mula",
+          "text": "E em 1524 outro náufrago, Aleixo Garcia, andou do Atlântico até a fronteira do Império Inca pela trilha do Peabiru: uns 3.000 km de caminhos guaranis. Morreu na volta."
+        },
+        {
+          "who": "buck",
+          "text": "First Brazilian road trip. No GPS, no return ticket. Like our Natchez Trace!"
+        }
       ]
     },
     {
-      "type": "quiz", "title": "O sino toca", "bg": { "color": "#3a3320", "prop": "🔔" },
+      "type": "quiz",
+      "title": "O sino toca",
+      "bg": {
+        "color": "#3a3320",
+        "prop": "🔔",
+        "image": "scenes/mirante.webp"
+      },
       "intro": "Para avançar de era, mostre o que aprendeu. Acerte 2 de 3.",
-      "quizIds": ["Q04", "Q05", "Q06", "F12", "Q03"], "ask": 3, "pass": 2
+      "quizIds": [
+        "Q04",
+        "Q05",
+        "Q06",
+        "F12",
+        "Q03"
+      ],
+      "ask": 3,
+      "pass": 2
     },
     {
-      "type": "gate", "title": "AGE UP", "ach": "age1",
+      "type": "gate",
+      "title": "AGE UP",
+      "ach": "age1",
       "text": "Próxima era: Age II · Açúcar & Sangue. Em breve."
     }
   ]

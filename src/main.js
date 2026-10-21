@@ -31,6 +31,7 @@ function hub() {
   const stop = last && content.tours[0].stops.find((s) => s.id === last.stop);
   document.body.className = 'hub';
   app.innerHTML = `
+    <img class="hubimg" src="assets/img/scenes/mirante.webp" alt="">
     <h1>${esc(t['hub.title'])}</h1>
     ${stop ? `<a class="btn primary" href="#/tour/${stop.id}/${last.item}">▶ ${esc(t['hub.continue'])}<small>${stop.id} · ${esc(stop.name)}</small></a>` : ''}
     <a class="btn primary" href="#/train/mix/5">⚡ ${esc(t['hub.five'])}<small>${esc(t['hub.fiveHint'])}</small></a>

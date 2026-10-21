@@ -201,11 +201,11 @@ function play(root, ctx, ch, start) {
 
     build(sc) {
       panel.innerHTML = `<p class="reply">${esc(sc.intro)}</p>`;
-      $('.prop').textContent = '🌳';
+      if (sc.bg.before) { setImage(sc.bg.before); $('.prop').textContent = ''; } else $('.prop').textContent = '🌳';
       buttons([sc.button], () => {
         const prop = $('.prop');
-        prop.textContent = sc.bg.prop;
-        prop.classList.add('pop');
+        if (sc.bg.image) setImage(sc.bg.image); else prop.textContent = sc.bg.prop;
+        $('.stage').classList.remove('pop'); void prop.offsetWidth; $('.stage').classList.add('pop');
         sfx.hit();
         say(sc.lines, next);
       });
@@ -241,6 +241,7 @@ function play(root, ctx, ch, start) {
 
     gate(sc) {
       root.querySelector('.story').classList.add('gating');
+      setImage(null);
       $('.prop').innerHTML = '<div class="gate"></div>';
       sfx.achievement();
       unlock(state, content, sc.ach);
@@ -254,6 +255,11 @@ function play(root, ctx, ch, start) {
     },
   };
 
+  // Imagem do cenário ocupa o palco; sem imagem, fica a cor + o emoji (prop).
+  function setImage(src) {
+    $('.stage').style.backgroundImage = src ? `url('assets/img/${src}')` : '';
+  }
+
   function scene() {
     const sc = ch.scenes[i];
     if (!sc) return;
@@ -265,9 +271,10 @@ function play(root, ctx, ch, start) {
     const box = root.querySelector('.story');
     box.classList.remove('serio', 'gating');
     if (sc.bg) box.style.setProperty('--bg', sc.bg.color);
+    setImage(sc.bg?.image);
     const prop = $('.prop');
     prop.className = 'prop';
-    prop.textContent = sc.bg?.prop || '';
+    prop.textContent = sc.bg?.image ? '' : sc.bg?.prop || '';
     const banner = $('.banner');
     banner.textContent = sc.title || '';
     banner.classList.toggle('on', !!sc.title);

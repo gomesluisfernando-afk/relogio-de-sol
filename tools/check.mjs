@@ -17,6 +17,11 @@ const cached = [...sw.matchAll(/'([^']+\.[a-z]+)'/g)].map((m) => m[1]);
 const index = await get('index.json');
 const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards, ...p.tours]), ...Object.values(index.shared), ...c.chapters.filter((ch) => ch.file).map((ch) => ch.file)];
 for (const f of dataFiles) if (!cached.includes('data/' + f)) errors.push(`sw.js não guarda data/${f} para offline`);
+// Toda imagem citada nos dados precisa existir e estar no cache offline.
+const images = [...c.characters.map((x) => x.image), ...c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.image, s.bg?.before])), ...c.cards.map((k) => k.image)].filter(Boolean);
+for (const img of new Set(images)) {
+  if (!cached.includes('assets/img/' + img)) errors.push(`sw.js não guarda assets/img/${img} para offline`);
+}
 const { readdir } = await import('node:fs/promises');
 for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true }))
   if (f.endsWith('.js') && !cached.includes('src/' + f.replaceAll('\\', '/'))) errors.push(`sw.js não guarda src/${f} para offline`);

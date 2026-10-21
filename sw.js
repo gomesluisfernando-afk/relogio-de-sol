@@ -1,6 +1,6 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v4';
+const CACHE = 'relogio-v5';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.webmanifest',
   'src/main.js', 'src/state.js', 'src/content.js', 'src/modes/tour.js', 'src/modes/timeline.js', 'src/modes/codex.js', 'src/ui.js', 'src/modes/train.js', 'src/leitner.js', 'src/audio.js', 'src/modes/story.js',
@@ -8,6 +8,7 @@ const FILES = [
   'i18n/pt.json',
   'data/index.json', 'data/eras.json', 'data/cards_fase1.json', 'data/tours/tiradentes.json',
   'data/characters.json', 'data/expressions.json', 'data/quizzes.json', 'data/story.json', 'data/story/cap1.json', 'data/achievements.json',
+  'assets/img/scenes/aldeia.webp', 'assets/img/scenes/chafariz.webp', 'assets/img/scenes/feitoria.webp', 'assets/img/scenes/frota.webp', 'assets/img/scenes/mirante.webp', 'assets/img/scenes/pau_brasil.webp', 'assets/img/scenes/porto_seguro.webp',
   'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
 ];
 
