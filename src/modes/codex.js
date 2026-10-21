@@ -84,7 +84,7 @@ function usaGrid({ content, t }) {
   const usa = content.cards.filter((k) => k.usa);
   const medal = (k) => {
     const st = collected.includes(k.id) ? 'gold' : seen.includes(k.id) ? 'silver' : 'locked';
-    return `<a class="medal ${st} ${k.tone === 'serio' ? 'mem' : ''}" href="#/card/${k.id}" style="--era:${color[k.era]}">
+    return `<a class="medal ${st} ${k.tone === 'serio' ? 'mem' : ''}" href="#/card/${k.id}" style="--era:${color[k.era]};${st !== 'locked' && k.image ? `background-image:url('assets/img/${k.image}')` : ''}">
       <span class="yr">${esc(k.yearLabel)}</span>
       <span class="name">${st === 'locked' ? '???' : esc(k.usaTitle)}</span>
       ${st === 'locked' ? `<small>${esc(t['codex.locked'])}</small>` : ''}</a>`;

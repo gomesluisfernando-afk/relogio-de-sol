@@ -112,5 +112,8 @@
     "story.retry":  "Tentar de novo",
     "story.go":  "Seguir",
     "story.quiet":  "O sino ficou quieto.",
-    "story.ready":  "Estou pronto"
+    "story.ready":  "Estou pronto",
+    "train.t.pic":  "Que cena é essa?",
+    "train.d.pic":  "só a imagem: qual é o card?",
+    "tour.images":  "Imagens no tour"
 }

@@ -48,6 +48,7 @@ export function tour(root, { content, t, esc }, params) {
 
   function render(it, stop) {
     if (it.type === 'card') return `
+      ${state.get('tourImages', true) && it.image ? `<img class="timg" src="assets/img/${it.image}" alt="">` : ''}
       <div class="meta">${esc(it.yearLabel)} ${tag(it.status)} <span class="id">${it.id}</span></div>
       <p class="hook">“${esc(it.hook)}”</p>
       <ul>${it.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
@@ -112,6 +113,7 @@ export function tour(root, { content, t, esc }, params) {
       ${withHelp ? `<h2>${esc(t['tour.help'])}</h2><p class="help">${esc(t['tour.helpText'])}</p>` : ''}
       <h2>${esc(t['tour.stops'])}</h2>
       <ol>${stops.map((x, k) => `<li><button data-stop="${k}" class="${k === s ? 'cur' : ''}">${x.id} · ${esc(x.name)}</button></li>`).join('')}</ol>
+      <p class="row"><button data-act="imgs">🖼 ${esc(t['tour.images'])}: ${state.get('tourImages', true) ? 'on' : 'off'}</button></p>
       <p class="row"><button data-act="help">${esc(t['tour.help'])}</button><a href="#/">${esc(t['tour.home'])}</a><button data-act="close">${esc(t['tour.close'])}</button></p>`;
     el.hidden = false;
   }
@@ -151,6 +153,7 @@ export function tour(root, { content, t, esc }, params) {
     if (act === 'stops') return sheet(false);
     if (act === 'help') return sheet(true);
     if (act === 'close') return ($('.sheet').hidden = true);
+    if (act === 'imgs') { state.set('tourImages', !state.get('tourImages', true)); draw(); return sheet(false); }
     if (stopBtn) { $('.sheet').hidden = true; return goStop(+stopBtn.dataset.stop); }
     if (e.target.closest('.black, .panic')) e.target.closest('.overlay').hidden = true;
   });

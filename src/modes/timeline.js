@@ -21,7 +21,7 @@ export function timeline(root, { content, t }) {
           <select data-f="stop"><option value="">${esc(t['tl.allStops'])}</option>
             ${stops.map((s) => `<option value="${s.id}" ${f.stop === s.id ? 'selected' : ''}>${s.id} · ${esc(s.name)}</option>`).join('')}</select>
         </div>
-        <div class="eras">${content.eras.map((e) => `<button style="background:${e.color}" data-era="${e.id}">${esc(e.ageLabel)}</button>`).join('')}</div>
+        <div class="eras">${content.eras.map((e) => `<button style="background:${e.color}" data-era="${e.id}">${e.iconImg ? `<img src="assets/img/${e.iconImg}" alt="">` : ''}${esc(e.ageLabel)}</button>`).join('')}</div>
       </div>
       <div class="list"></div>
     </div>`;
@@ -37,10 +37,10 @@ export function timeline(root, { content, t }) {
     const html = content.eras.map((e) => {
       const cards = content.cards.filter((k) => k.era === e.id && ok(k));
       if (!cards.length) return '';
-      return `<h2 id="era-${e.id}" style="background:${e.color}">${esc(e.ageLabel)} · ${esc(e.name)}</h2>` + cards.map((k) => `
+      return `<h2 id="era-${e.id}" style="background:${e.color}">${e.iconImg ? `<img src="assets/img/${e.iconImg}" alt="">` : ''}${esc(e.ageLabel)} · ${esc(e.name)}</h2>` + cards.map((k) => `
         <a class="rowcard ${k.tone === 'serio' ? 'serio' : ''} ${seen.includes(k.id) ? 'seen' : ''}" id="row-${k.id}" href="#/card/${k.id}" style="--era:${e.color}">
-          <span class="yr">${esc(k.yearLabel)}</span>
-          <span class="ttl">${esc(k.title)}</span>
+          ${k.image ? `<img class="tthumb" src="assets/img/${k.image}" alt="" loading="lazy">` : ''}
+          <span class="ttl"><small class="yr">${esc(k.yearLabel)}</small>${esc(k.title)}</span>
           <span class="mk">${k.status === 'doc' ? '' : tag(t, k.status)}${k.usa ? ' 🇺🇸' : ''}${k.joke ? ' 😂' : ''}</span>
         </a>`).join('');
     }).join('');
@@ -89,13 +89,14 @@ export function card(root, { content, t }, [id]) {
         <a href="#/timeline">← ${esc(t['mode.timeline'])}</a>
         <span>${prev ? `<a href="#/card/${prev.id}" aria-label="anterior">‹</a>` : ''}${next ? `<a href="#/card/${next.id}" aria-label="próximo">›</a>` : ''}</span>
       </nav>
+      ${k.image ? `<img class="cardimg" src="assets/img/${k.image}" alt="">` : ''}
       <div class="meta">${esc(k.yearLabel)} · ${esc(era.ageLabel)} ${tag(t, k.status)} <span class="id">${k.id}</span></div>
       <h1>${esc(k.title)}</h1>
       <a class="pill test" href="#/train/card/${k.id}">${esc(t['card.test'])}</a>
       ${twoWorlds ? worldToggle(t, world) : ''}
       ${twoWorlds ? `<p class="worldlabel" data-w="lenda">${esc(t['card.told'])}</p><p class="worldlabel" data-w="doc">${esc(t['card.known'])}</p>` : ''}
       <p class="hook" ${twoWorlds ? 'data-w="lenda"' : ''}>“${esc(k.hook)}”</p>
-      ${sec(t['card.facts'], ul(k.facts), 'doc')}
+      ${twoWorlds ? sec(t['card.facts'], ul(k.facts), 'doc') : `${ul(k.bullets)}${k.facts.length ? `<details class="more"><summary>${esc(t['card.facts'])} (${k.facts.length})</summary>${ul(k.facts)}</details>` : ''}`}
       ${sec(t['card.notes'], ul(k.notes), 'doc')}
       ${sec(t['card.joke'], k.joke ? `<p>${esc(k.joke)}</p>` : '', 'lenda')}
       ${sec(t['card.usa'], k.usa ? `<p><b>${esc(k.usaTitle)}</b> · ${esc(k.usa)}</p>` : '')}

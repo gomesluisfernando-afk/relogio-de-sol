@@ -6,8 +6,8 @@ import { esc, tag, unlock } from '../ui.js';
 import { grade, pick } from '../leitner.js';
 import { sfx } from '../audio.js';
 
-const TYPES = ['multiple', 'fol', 'first', 'flash', 'hook', 'order'];
-const MIX_WEIGHT = { multiple: 3, fol: 2, first: 2, flash: 2, hook: 2, order: 1 };
+const TYPES = ['pic', 'multiple', 'fol', 'first', 'flash', 'hook', 'order'];
+const MIX_WEIGHT = { pic: 3, multiple: 3, fol: 2, first: 2, flash: 2, hook: 2, order: 1 };
 
 const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
 const rnd = (a) => a[Math.floor(Math.random() * a.length)];
@@ -15,7 +15,7 @@ const rnd = (a) => a[Math.floor(Math.random() * a.length)];
 export function train(root, ctx, [kind, arg]) {
   document.body.className = 'page';
   if (!kind) return menu(root, ctx);
-  if (kind === 'card') return session(root, ctx, { types: ['flash', 'hook', 'multiple', 'fol'], pool: [arg], max: 3, minutes: 30, back: `#/card/${arg}` });
+  if (kind === 'card') return session(root, ctx, { types: ['pic', 'flash', 'hook', 'multiple', 'fol'], pool: [arg], max: 3, minutes: 30, back: `#/card/${arg}` });
   if (kind === 'wrong') return session(root, ctx, { types: TYPES, pool: state.get('wrong', []), minutes: +arg || 3 });
   if (kind === 'mix') return session(root, ctx, { types: TYPES, minutes: +arg || 5 });
   if (TYPES.includes(kind)) return session(root, ctx, { types: [kind], minutes: +arg || 3 });
@@ -117,15 +117,33 @@ function session(root, { content, t }, opt) {
   }
 
   const head = (k) => `<div class="meta" style="--era:${color[k.era]}">${esc(content.eras.find((e) => e.id === k.era).ageLabel)} ${k.status !== 'doc' ? tag(t, k.status) : ''}</div>`;
+  const thumb = (k) => (k.image ? `<img class="othumb" src="assets/img/${k.image}" alt="">` : '');
   const answerLine = (k) => `<p class="ans"><b>${esc(k.yearLabel)}</b> · ${esc(k.title)}</p>`;
 
   // ---- exercícios: cada um devolve false se não tem material ----
   const make = {
+    // Só a imagem: qual é o card? (memória visual, pensado para afantasia)
+    pic() {
+      const withImg = datable.filter((k) => k.image);
+      const key = pick(withImg.map((k) => k.id).filter(inPool), boxes, sessionNo);
+      if (!key) return false;
+      const k = content.byId[key];
+      const others = shuffle(withImg.filter((x) => x.id !== key && x.image !== k.image)).slice(0, 3);
+      const opts = shuffle([k, ...others]);
+      ex.innerHTML = `<p class="q">${esc(t['train.t.pic'])}</p><img class="exImg" src="assets/img/${k.image}" alt="">
+        ${opts.map((o, i) => `<button class="btn opt" data-i="${i}">${esc(o.title)}</button>`).join('')}`;
+      ex.querySelectorAll('.opt').forEach((el) => el.addEventListener('click', () => {
+        const ok = opts[+el.dataset.i] === k;
+        finishWith([{ key, ok }], `<img class="exImg small" src="assets/img/${k.image}" alt="">${answerLine(k)}<p class="hookq">“${esc(k.hook)}”</p>`);
+      }));
+      return true;
+    },
+
     flash() {
       const key = pick(datable.map((k) => k.id).filter(inPool), boxes, sessionNo);
       if (!key) return false;
       const k = content.byId[key];
-      ex.innerHTML = `${head(k)}<p class="q">${esc(t['train.t.flash'])}</p><h2 class="big">${esc(k.title)}</h2>
+      ex.innerHTML = `${head(k)}${k.image ? `<img class="exImg" src="assets/img/${k.image}" alt="">` : ''}<h2 class="big">${esc(k.title)}</h2>
         <p class="hint">${esc(t['train.flashAsk'])}</p><button class="btn primary show">${esc(t['train.show'])}</button>`;
       ex.querySelector('.show').addEventListener('click', () => {
         ex.innerHTML = `${head(k)}<h2 class="big">${esc(k.yearLabel)}</h2><p class="hookq">“${esc(k.hook)}”</p>
@@ -162,7 +180,7 @@ function session(root, { content, t }, opt) {
       const b = rnd(datable.filter((k) => k.year !== a.year));
       const pair = shuffle([a, b]);
       ex.innerHTML = `<p class="q">${esc(t['train.t.first'])}</p>
-        ${pair.map((k, i) => `<button class="btn opt" data-i="${i}" style="border-left:4px solid ${color[k.era]}">${esc(k.title)}</button>`).join('')}`;
+        ${pair.map((k, i) => `<button class="btn opt img" data-i="${i}" style="border-left:4px solid ${color[k.era]}">${thumb(k)}<span>${esc(k.title)}</span></button>`).join('')}`;
       ex.querySelectorAll('.opt').forEach((el) => el.addEventListener('click', () => {
         const chosen = pair[+el.dataset.i];
         const ok = chosen.year === Math.min(a.year, b.year);
@@ -188,7 +206,7 @@ function session(root, { content, t }, opt) {
         ex.innerHTML = `<p class="q">${esc(t['train.t.order'])}</p><p class="hint">${esc(t['train.orderHint'])}</p>
           ${shown.map((k, i) => {
             const pos = chosen.indexOf(i);
-            return `<button class="btn opt ${pos >= 0 ? 'picked' : ''}" data-i="${i}" style="border-left:4px solid ${color[k.era]}">${pos >= 0 ? `<b>${pos + 1}.</b> ` : ''}${esc(k.title)}</button>`;
+            return `<button class="btn opt img ${pos >= 0 ? 'picked' : ''}" data-i="${i}" style="border-left:4px solid ${color[k.era]}">${thumb(k)}<span>${pos >= 0 ? `<b>${pos + 1}.</b> ` : ''}${esc(k.title)}</span></button>`;
           }).join('')}
           ${chosen.length ? `<button class="btn reset">↺ ${esc(t['train.reset'])}</button>` : ''}`;
         ex.querySelector('.reset')?.addEventListener('click', () => { chosen.length = 0; draw(); });

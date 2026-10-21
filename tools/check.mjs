@@ -18,13 +18,24 @@ const index = await get('index.json');
 const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards, ...p.tours]), ...Object.values(index.shared), ...c.chapters.filter((ch) => ch.file).map((ch) => ch.file)];
 for (const f of dataFiles) if (!cached.includes('data/' + f)) errors.push(`sw.js não guarda data/${f} para offline`);
 // Toda imagem citada nos dados precisa existir e estar no cache offline.
-const images = [...c.characters.map((x) => x.image), ...c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.image, s.bg?.before])), ...c.cards.map((k) => k.image)].filter(Boolean);
+// (imagens de card e ícones de era o sw.js lê dos JSON; aqui basta existirem)
+const images = [...c.characters.map((x) => x.image), ...c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.image, s.bg?.before]))].filter(Boolean);
 for (const img of new Set(images)) {
   if (!cached.includes('assets/img/' + img)) errors.push(`sw.js não guarda assets/img/${img} para offline`);
 }
+for (const img of [...c.cards.map((k) => k.image), ...c.eras.map((e) => e.iconImg)].filter(Boolean))
+  await readFile(new URL('../assets/img/' + img, import.meta.url)).catch(() => errors.push(`imagem ${img} não existe`));
+for (const k of c.cards) if (!k.image) warnings.push(`${k.id}: sem imagem`);
 const { readdir } = await import('node:fs/promises');
 for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true }))
   if (f.endsWith('.js') && !cached.includes('src/' + f.replaceAll('\\', '/'))) errors.push(`sw.js não guarda src/${f} para offline`);
 for (const f of cached) await readFile(new URL('../' + f, import.meta.url)).catch(() => errors.push(`sw.js lista ${f}, que não existe`));
+// Erro de sintaxe em qualquer arquivo do jogo trava tudo em "Carregando…".
+const { execFileSync } = await import('node:child_process');
+for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true })) {
+  if (!f.endsWith('.js')) continue;
+  try { execFileSync(process.execPath, ['--check', new URL('../src/' + f.replaceAll('\\', '/'), import.meta.url).pathname.replace(/^\/(\w:)/, '$1')], { stdio: 'pipe' }); }
+  catch (err) { errors.push(`sintaxe em src/${f}: ${String(err.stderr).split('\n').find((l) => l.includes('Error')) || 'erro'}`); }
+}
 for (const e of errors) console.log('ERRO:', e);
 process.exit(errors.length ? 1 : 0);
