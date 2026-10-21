@@ -187,7 +187,8 @@
       "bg": {
         "color": "#1d4a3c",
         "prop": "🏝️",
-        "image": "scenes/porto_seguro.webp"
+        "image": "scenes/porto_seguro.webp",
+        "video": "video/porto_seguro.mp4"
       },
       "cards": [
         "C04"

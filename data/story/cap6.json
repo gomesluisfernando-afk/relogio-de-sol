@@ -273,7 +273,8 @@
       "tone": "serio",
       "bg": {
         "color": "#111",
-        "image": "cards/c65.webp"
+        "image": "cards/c65.webp",
+        "video": "video/forca_praca.mp4"
       },
       "cards": [
         "C65"
@@ -351,7 +352,8 @@
       "title": "De volta ao Mirante",
       "bg": {
         "color": "#3a2a1a",
-        "image": "cards/c76.webp"
+        "image": "cards/c76.webp",
+        "video": "video/final_mirante.mp4"
       },
       "cards": [
         "C76"

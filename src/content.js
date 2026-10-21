@@ -50,6 +50,11 @@ export function applyOverlay(c, tr) {
   merge(c.achievements, tr.achievements);
   merge(c.items, tr.items);
   merge(c.quizzes, tr.quizzes);
+  // Textos longos (História, casos, Capitania) vêm por endereço: "cap4.scenes.11.lines.0.text".
+  for (const [path, text] of Object.entries(tr.paths || {})) {
+    const hit = resolvePath(c, path);
+    if (hit) hit.obj[hit.key] = text;
+  }
   for (const s of c.tours[0].stops) {
     const t = tr.stops?.[s.id];
     if (!t) continue;
@@ -58,6 +63,18 @@ export function applyOverlay(c, tr) {
     for (const x of s.extras || []) Object.assign(x, extras?.[x.id] || {});
   }
   return c;
+}
+
+// Acha o texto que um endereço aponta; só aceita se ali já existir um texto (evita criar lixo).
+export function resolvePath(c, path) {
+  const [root, ...rest] = path.split('.');
+  const questId = root === 'quests' ? rest.shift() : null;
+  let obj = root.startsWith('cap') ? c.chapters.find((ch) => ch.id === root)
+    : questId ? c.quests.find((q) => q.id === questId)
+    : root === 'colony' ? c.colony : null;
+  const key = rest.pop();
+  for (const p of rest) obj = obj?.[p];
+  return obj && typeof obj[key] === 'string' ? { obj, key } : null;
 }
 
 // Confere se a tradução aponta para ids que existem e mantém o número de opções.
@@ -72,6 +89,13 @@ export function validateOverlay(c, tr) {
     if (q.options && t?.options && t.options.length !== q.options.length) errors.push(`en.json quiz ${q.id}: número de opções diferente`);
   }
   for (const k of c.cards) if (!tr.cards?.[k.id]) errors.push(`en.json: card ${k.id} sem tradução`);
+  for (const p of Object.keys(tr.paths || {})) if (!resolvePath(c, p)) errors.push(`en.json: endereço "${p}" não aponta para um texto`);
+  // Casos: a data traduzida precisa continuar entre as opções traduzidas.
+  for (const q of c.quests) {
+    const date = tr.paths?.[`quests.${q.id}.date`] ?? q.date;
+    const dates = q.dates.map((d, i) => tr.paths?.[`quests.${q.id}.dates.${i}`] ?? d);
+    if (!dates.includes(date)) errors.push(`en.json: ${q.id} data traduzida fora das opções`);
+  }
   return errors;
 }
 
