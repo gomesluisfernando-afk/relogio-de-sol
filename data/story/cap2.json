@@ -74,7 +74,7 @@
         "C11"
       ],
       "who": "mula",
-      "text": "1534. Colônia gigante, cofre vazio. Portugal divide o litoral em faixas para donatários. Escolha a sua capitania:",
+      "text": "1534. Colônia gigante, cofre vazio. O litoral vira faixas para donatários. Escolha a sua:",
       "options": [
         {
           "label": "Pernambuco, de Duarte Coelho",
@@ -129,7 +129,7 @@
         },
         {
           "who": "mula",
-          "text": "Tomé de Sousa. Ele funda Salvador, a primeira capital, e chegam os primeiros jesuítas, com Manuel da Nóbrega."
+          "text": "Tomé de Sousa funda Salvador, a primeira capital. Com ele, os primeiros jesuítas."
         },
         {
           "who": "buck",
@@ -159,11 +159,11 @@
         },
         {
           "who": "narr",
-          "text": "Com epidemias, resistência, pressão jesuíta e o lucro do tráfico atlântico, cresceu a escravidão africana."
+          "text": "Epidemias, resistência indígena, pressão jesuíta e o lucro do tráfico: cresce a escravidão africana."
         },
         {
           "who": "narr",
-          "text": "O Brasil recebeu cerca de 4,8 milhões de africanos escravizados: perto de 40% de todo o tráfico atlântico."
+          "text": "O Brasil recebeu cerca de 4,8 milhões de africanos escravizados: perto de 40% do tráfico atlântico."
         },
         {
           "who": "buck",
@@ -184,7 +184,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "Um alemão, Hans Staden, é capturado pelos Tupinambás perto de Bertioga. Passa meses esperando a execução ritual. E foge."
+          "text": "O alemão Hans Staden é capturado pelos Tupinambás. Meses esperando a execução ritual. E foge."
         },
         {
           "who": "buck",
@@ -217,7 +217,7 @@
         },
         {
           "who": "mula",
-          "text": "Pero Fernandes Sardinha. Naufragou em Alagoas e foi morto pelos Caetés. O nome dele era Sardinha: só estou informando."
+          "text": "Bispo Sardinha. Naufragou em Alagoas e foi morto pelos Caetés. O nome era Sardinha: só estou informando."
         },
         {
           "who": "mula",
@@ -307,7 +307,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "O jesuíta José de Anchieta fica refém dos Tamoios em Iperoig, hoje Ubatuba, durante negociações de paz."
+          "text": "O jesuíta Anchieta fica refém dos Tamoios em Iperoig, hoje Ubatuba, negociando a paz."
         },
         {
           "who": "buck",

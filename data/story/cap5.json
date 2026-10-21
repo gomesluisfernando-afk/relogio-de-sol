@@ -23,7 +23,7 @@
         },
         {
           "who": "mula",
-          "text": "Segundo os registros locais. Os guias de Ouro Preto dizem que a deles é a segunda mais rica… mas contam a prata. A gente não."
+          "text": "Segundo os registros locais. Ouro Preto diz que a deles é a segunda… mas conta a prata. A gente não."
         },
         {
           "who": "buck",
@@ -41,7 +41,7 @@
           },
           {
             "who": "mula",
-            "text": "As quatro idades da mulher, numa coluna só. O barroco lembra: tudo passa, menos a fila para casar na Matriz."
+            "text": "As quatro idades da mulher numa coluna só. Tudo passa, menos a fila para casar na Matriz."
           },
           {
             "who": "buck",
@@ -170,7 +170,7 @@
             {
               "who": "mula",
               "tone": "serio",
-              "text": "Os becos serviam para os cativos evitarem as ruas principais, para o acesso às áreas de serviço e para escoar dejetos."
+              "text": "Os becos: caminho dos cativos longe das ruas principais, acesso aos fundos e escoamento de dejetos."
             }
           ]
         },
@@ -332,7 +332,7 @@
       "legs": [
         {
           "place": "Vila Rica",
-          "text": "Dois caminhos oficiais: o Caminho Velho, por São João até Paraty, e o Caminho Novo, mais curto, até o Rio.",
+          "text": "Dois caminhos oficiais: o Velho, por São João até Paraty, e o Novo, mais curto, até o Rio.",
           "options": [
             {
               "label": "Caminho Novo",

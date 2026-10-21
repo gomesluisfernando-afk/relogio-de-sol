@@ -36,12 +36,12 @@
     { "year": 1693, "card": "C30", "title": "OURO!", "text": "O ouro aparece em Minas. Faça o Age Up para construir lavras." },
     { "year": 1697, "card": "C31", "title": "Fome nas minas", "text": "Ninguém plantava. Sem roças, a população cai." },
     { "year": 1707, "card": "C34", "title": "Guerra dos Emboabas", "text": "Paulistas contra forasteiros. Você perde um pouco de gente.", "effect": { "pop": -1 } },
-    { "year": 1720, "card": "C43", "title": "Casas de Fundição", "text": "Ouro em pó proibido: tudo fundido e carimbado, com o Quinto cobrado na hora. Revolta em Vila Rica; Filipe dos Santos é enforcado." },
+    { "year": 1720, "card": "C43", "title": "Casas de Fundição", "text": "Ouro em pó proibido: tudo fundido, carimbado e quintado. Revolta em Vila Rica; Filipe dos Santos é enforcado." },
     { "year": 1735, "card": "C51", "title": "Capitação", "text": "Imposto por cabeça: cada pessoa paga 1 de ouro.", "effect": { "capitacao": true } },
     { "year": 1750, "card": "C53", "title": "As 100 arrobas", "text": "A capitação, pesada demais, é abandonada. No lugar, a Coroa exige uma meta de Quinto por década. Faltou? Vira dívida.", "effect": { "meta": 10, "capitacaoEnd": true } },
     { "year": 1760, "card": "C42", "title": "O ouro de superfície acaba", "text": "Fácil de achar, fácil de acabar: cada lavra rende menos.", "effect": { "ouroHalf": true } },
     { "year": 1763, "card": "C54", "title": "A capital desce a serra", "text": "A capital do Brasil passa para o Rio. A Estrada Real leva o ouro até lá." },
     { "year": 1785, "card": "C56", "title": "O alvará de 1785", "text": "A rainha proíbe manufaturas têxteis. Suas tecelagens são fechadas.", "effect": { "remove": "tecelagem" } },
-    { "year": 1789, "card": "C60", "title": "A derrama suspensa", "text": "A dívida chegou ao limite e a derrama ia sair. Joaquim Silvério delatou a Inconfidência; Barbacena suspendeu a derrama e prendeu todos." }
+    { "year": 1789, "card": "C60", "title": "A derrama suspensa", "text": "A derrama ia sair. Silvério delata a Inconfidência; Barbacena suspende a derrama e prende todos." }
   ]
 }

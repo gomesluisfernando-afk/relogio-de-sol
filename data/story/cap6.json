@@ -40,7 +40,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "A rainha D. Maria I proíbe manufaturas têxteis no Brasil. Só escapavam os panos grossos para os escravizados."
+          "text": "D. Maria I proíbe fábricas de tecido no Brasil. Só sobra o pano grosso para os escravizados."
         },
         {
           "who": "buck",
@@ -59,7 +59,7 @@
         "C57"
       ],
       "who": "mula",
-      "text": "Padre Toledo batizou os filhos de Alvarenga Peixoto e Bárbara Heliodora. À noite, festa na casa dele. Que roda você escuta?",
+      "text": "Padre Toledo batizou os filhos de Alvarenga Peixoto e Bárbara Heliodora. À noite, festa. Que roda você escuta?",
       "options": [
         {
           "label": "A roda perto da janela",
@@ -95,7 +95,7 @@
           "reply": [
             {
               "who": "mula",
-              "text": "A tradição diz que essa foi a primeira reunião dos inconfidentes. Hoje a casa é o Museu Padre Toledo."
+              "text": "Diz a tradição: a primeira reunião dos inconfidentes. Hoje a casa é o Museu Padre Toledo."
             },
             {
               "who": "buck",
@@ -116,7 +116,7 @@
         "C58"
       ],
       "who": "mula",
-      "text": "República em Minas e parte do Rio, universidade, bandeira com “Libertas quae sera tamen”. Vote na assembleia:",
+      "text": "República em Minas, universidade, bandeira com “Libertas quae sera tamen”. Vote:",
       "options": [
         {
           "label": "Abolir a escravidão",
@@ -125,7 +125,7 @@
             {
               "who": "mula",
               "tone": "serio",
-              "text": "Opção travada. Os inconfidentes não iam abolir a escravidão. Padre Toledo, por exemplo, tinha escravizados, segundo o tour."
+              "text": "Opção travada. Os inconfidentes não iam abolir a escravidão. Padre Toledo tinha escravizados, diz o tour."
             }
           ]
         },
@@ -158,7 +158,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "Dois anos antes, o estudante José Joaquim da Maia foi falar com Thomas Jefferson, ministro dos EUA na França."
+          "text": "Dois anos antes, o estudante José Joaquim da Maia vai falar com Thomas Jefferson, na França."
         },
         {
           "who": "buck",
@@ -191,7 +191,7 @@
         },
         {
           "who": "narr",
-          "text": "Joaquim Silvério dos Reis denuncia o grupo. Barbacena suspende a derrama: sem gatilho, sem revolta. E prende todos."
+          "text": "Silvério dos Reis denuncia o grupo. Barbacena suspende a derrama: sem gatilho, sem revolta. E prende todos."
         },
         {
           "who": "mula",
@@ -225,7 +225,7 @@
         },
         {
           "who": "tiradentes",
-          "text": "Joaquim José da Silva Xavier. Dentista prático, tropeiro, alferes dos Dragões. Eu patrulhava o Caminho Novo."
+          "text": "Joaquim José da Silva Xavier. Dentista prático, tropeiro, alferes. Eu patrulhava o Caminho Novo."
         },
         {
           "who": "mula",
@@ -251,11 +251,11 @@
       "lines": [
         {
           "who": "mula",
-          "text": "O poeta Cláudio Manuel da Costa aparece morto na cela, na Casa dos Contos. Suicídio ou assassinato? Ainda se discute."
+          "text": "O poeta Cláudio Manuel da Costa aparece morto na cela. Suicídio ou assassinato? Ainda se discute."
         },
         {
           "who": "mula",
-          "text": "1792: onze condenados à morte. Aí leem a carta de clemência da rainha… que já estava pronta antes da sentença."
+          "text": "1792: onze condenados à morte. Aí chega a clemência da rainha… escrita antes da sentença."
         },
         {
           "who": "buck",
@@ -286,7 +286,7 @@
         },
         {
           "who": "narr",
-          "text": "Tiradentes é enforcado e esquartejado. Partes do corpo ficam expostas no Caminho Novo; a cabeça, em Vila Rica. A casa é destruída e o chão, salgado."
+          "text": "Tiradentes é enforcado e esquartejado. Partes do corpo expostas no Caminho Novo; a casa, destruída e salgada."
         },
         {
           "who": "narr",
@@ -324,7 +324,7 @@
         },
         {
           "who": "mula",
-          "text": "Em 1889 a Vila de São José vira Tiradentes. Ironia: D. Maria I, que manteve a sentença, era filha do príncipe D. José, do nome antigo."
+          "text": "1889: a Vila de São José vira Tiradentes. Ironia: D. Maria I, que manteve a sentença, era filha do príncipe D. José."
         }
       ]
     },
@@ -395,7 +395,7 @@
       "type": "gate",
       "title": "FIM DA FASE 1",
       "ach": "fase1",
-      "text": "Você atravessou 300 anos, do pau-brasil à forca. Próxima parada: Fase 2 · Rio, Petrópolis e o Império.",
+      "text": "300 anos, do pau-brasil à forca. Próxima parada: Fase 2 · Rio, Petrópolis e o Império.",
       "video": "video/time_gate.mp4"
     }
   ]

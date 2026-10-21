@@ -24,7 +24,7 @@
         },
         {
           "who": "mula",
-          "text": "Eu não beberia, cowboy. Esse chafariz tem três funções: água pra beber, cocho de cavalo e lavanderia."
+          "text": "Eu não beberia, cowboy. Esse chafariz é bebedouro, cocho de cavalo e lavanderia."
         },
         {
           "who": "buck",
@@ -55,7 +55,7 @@
         },
         {
           "who": "sineiro",
-          "text": "Este é o Mirante. O cruzeiro é de 1718, o ano em que o arraial virou vila. Lá adiante, a Serra de São José: foi de lá que saiu o ouro."
+          "text": "Este é o Mirante. Cruzeiro de 1718, quando o arraial virou vila. Ali, a Serra de São José: dela saiu o ouro."
         },
         {
           "who": "buck",
@@ -63,7 +63,7 @@
         },
         {
           "who": "sineiro",
-          "text": "A história moderna começa em 1500. Aqui, nada aconteceu por 200 anos. Depois, tudo aconteceu de uma vez."
+          "text": "A história moderna começa em 1500. Aqui, nada por 200 anos. Depois, tudo de uma vez."
         },
         {
           "who": "sineiro",
@@ -106,7 +106,7 @@
         },
         {
           "who": "mula",
-          "text": "Em 1494, Espanha e Portugal dividiram o planeta em Tordesilhas. Oeste pra Espanha, leste pra Portugal."
+          "text": "1494, Tordesilhas: Espanha e Portugal dividem o planeta. Oeste pra Espanha, leste pra Portugal."
         },
         {
           "who": "buck",
@@ -167,7 +167,7 @@
         "lines": [
           {
             "who": "mula",
-            "text": "Psiu. Antes de vocês, em janeiro de 1500, um espanhol já tinha tocado esse litoral: Vicente Yáñez Pinzón, ex-capitão da Niña de Colombo."
+            "text": "Psiu. Em janeiro de 1500 um espanhol já tinha passado aqui: Pinzón, ex-capitão da Niña de Colombo."
           },
           {
             "who": "buck",
@@ -233,7 +233,7 @@
           "reply": [
             {
               "who": "mula",
-              "text": "Calma. Portugal ainda vai levar 32 anos para fundar a primeira vila. A carta voltou num navio, e a frota seguiu para a Índia."
+              "text": "Calma. A primeira vila só vem 32 anos depois. A carta volta num navio; a frota segue para a Índia."
             }
           ]
         }
@@ -337,7 +337,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "Agora, o primeiro negócio da terra: o pau-brasil. A árvore dá um corante vermelho valioso na Europa. O nome vem de brasa."
+          "text": "Primeiro negócio da terra: o pau-brasil, corante vermelho caro na Europa. O nome vem de brasa."
         },
         {
           "who": "buck",
@@ -345,7 +345,7 @@
         },
         {
           "who": "mula",
-          "text": "A Coroa arrendou a exploração ao comerciante Fernão de Noronha. Quem cortava e carregava eram os indígenas, em troca de ferramentas, espelhos e tecidos: o escambo."
+          "text": "A Coroa arrenda o negócio a Fernão de Noronha. Os indígenas cortam e carregam, em troca de ferramentas e tecidos: o escambo."
         },
         {
           "who": "buck",
@@ -408,7 +408,7 @@
         {
           "who": "mula",
           "tone": "serio",
-          "text": "Na história real, o escambo foi virando exploração. Quando o açúcar chegou, veio a escravização indígena. Depois, a africana."
+          "text": "Na vida real, o escambo virou exploração. Com o açúcar veio a escravização indígena. Depois, a africana."
         }
       ]
     },
@@ -513,7 +513,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "Paraguaçu foi batizada na França em 1528, como Catarina. Mais ao sul, João Ramalho viveu entre os Tupiniquins e casou com Bartira, filha do cacique Tibiriçá."
+          "text": "Paraguaçu é batizada na França em 1528: Catarina. Mais ao sul, João Ramalho casa com Bartira, filha do cacique Tibiriçá."
         },
         {
           "who": "buck",
@@ -529,7 +529,7 @@
         },
         {
           "who": "mula",
-          "text": "E em 1524 outro náufrago, Aleixo Garcia, andou do Atlântico até a fronteira do Império Inca pela trilha do Peabiru: uns 3.000 km de caminhos guaranis. Morreu na volta."
+          "text": "1524: o náufrago Aleixo Garcia anda do Atlântico até os Incas pelo Peabiru, 3.000 km de trilha guarani. Morre na volta."
         },
         {
           "who": "buck",

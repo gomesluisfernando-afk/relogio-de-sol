@@ -15,7 +15,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "1674. Fernão Dias Paes passa 7 anos no sertão caçando esmeraldas. Morre em 1681, feliz com umas pedras verdes."
+          "text": "1674. Fernão Dias passa 7 anos caçando esmeraldas. Morre feliz com umas pedras verdes."
         },
         {
           "who": "buck",
@@ -23,7 +23,7 @@
         },
         {
           "who": "mula",
-          "text": "O genro, Borba Gato, matou um funcionário da Coroa, se escondeu e depois revelou ouro no Rio das Velhas em troca de perdão."
+          "text": "O genro, Borba Gato, matou um oficial da Coroa e se escondeu. Trocou o perdão por ouro no Rio das Velhas."
         },
         {
           "who": "buck",
@@ -48,7 +48,7 @@
       "lines": [
         {
           "who": "mula",
-          "text": "1693: Arzão leva as primeiras amostras oficiais. 1698: Antônio Dias acha ouro no Tripuí, coberto de óxido de ferro. Parece preto: nasce Ouro Preto."
+          "text": "1693: Arzão leva as primeiras amostras. 1698: ouro no Tripuí, coberto de óxido de ferro. Parece preto: Ouro Preto."
         },
         {
           "who": "buck",
@@ -192,7 +192,7 @@
         "C34"
       ],
       "who": "mula",
-      "text": "Primeira guerra civil do Brasil: os paulistas, que acharam o ouro, contra os emboabas, que chegaram depois. De que lado você fica?",
+      "text": "Primeira guerra civil do Brasil: paulistas, que acharam o ouro, contra emboabas, que chegaram depois. Seu lado?",
       "options": [
         {
           "label": "Paulistas",
@@ -214,7 +214,7 @@
           "reply": [
             {
               "who": "mula",
-              "text": "O líder emboaba, Manuel Nunes Viana, foi aclamado “governador” sem autorização do rei. Borba Gato tentou expulsá-lo e não conseguiu."
+              "text": "O emboaba Nunes Viana se fez “governador” sem o rei deixar. Borba Gato tentou expulsá-lo e não conseguiu."
             },
             {
               "who": "buck",
@@ -242,7 +242,7 @@
         },
         {
           "who": "narr",
-          "text": "São massacrados pelos emboabas de Bento do Amaral Coutinho, na região do Rio das Mortes. O tour diz: uns 10 km de Tiradentes."
+          "text": "Massacrados pelos emboabas no Rio das Mortes. O tour diz: uns 10 km de Tiradentes."
         },
         {
           "who": "buck",
@@ -267,7 +267,7 @@
         },
         {
           "who": "mula",
-          "text": "Causo! O nome aparece antes da guerra: afogamentos nas travessias, lutas com indígenas. A guerra só reforçou a lenda."
+          "text": "Causo! O nome é anterior à guerra: afogamentos, lutas com indígenas. A guerra só reforçou a lenda."
         },
         {
           "who": "buck",
@@ -297,7 +297,7 @@
         },
         {
           "who": "mula",
-          "text": "1711: nascem Mariana, Vila Rica e Sabará. O governador batizou “Vila Rica de Albuquerque” com o próprio nome… e o rei mandou trocar."
+          "text": "1711: nascem Mariana, Vila Rica e Sabará. O governador pôs o próprio nome numa delas… e o rei mandou tirar."
         },
         {
           "who": "buck",
@@ -349,7 +349,7 @@
         },
         {
           "who": "mula",
-          "text": "A frase é dele, de 1711. No tour, na igreja de São João Evangelista, a gente discute por que ela é complicada."
+          "text": "A frase é dele, de 1711. No tour, em São João Evangelista, a gente discute por que ela é complicada."
         }
       ]
     },
@@ -375,7 +375,7 @@
         },
         {
           "who": "mula",
-          "text": "E em 19 de janeiro de 1718, o Arraial Velho vira Vila de São José del-Rei, homenagem ao príncipe D. José."
+          "text": "19 de janeiro de 1718: o Arraial Velho vira Vila de São José del-Rei, pelo príncipe D. José."
         },
         {
           "who": "buck",
@@ -430,15 +430,15 @@
       "lines": [
         {
           "who": "cobrador",
-          "text": "Chega de ouro em pó. Tudo vai para a Casa de Fundição: fundido, carimbado, com o quinto cobrado na hora."
+          "text": "Chega de ouro em pó. Tudo vai para a Casa de Fundição: fundido, carimbado, quinto na hora."
         },
         {
           "who": "narr",
-          "text": "Junho de 1720: revolta em Vila Rica, com Pascoal da Silva Guimarães, rico, e Filipe dos Santos, tropeiro."
+          "text": "Junho de 1720: revolta em Vila Rica, com o rico Pascoal da Silva e o tropeiro Filipe dos Santos."
         },
         {
           "who": "narr",
-          "text": "O Conde de Assumar finge negociar, prende os líderes e queima o morro de Pascoal: o Morro da Queimada."
+          "text": "O Conde de Assumar finge negociar, prende os líderes e queima o morro de Pascoal: Morro da Queimada."
         },
         {
           "who": "buck",
@@ -446,7 +446,7 @@
         },
         {
           "who": "mula",
-          "text": "Guarda esse padrão: volta em 1792. E a Boston Tea Party de vocês foi por chá; a nossa foi por ouro, 53 anos antes. A de vocês deu certo."
+          "text": "Guarda esse padrão: volta em 1792. A Boston Tea Party foi por chá; a nossa, por ouro, 53 anos antes. A sua deu certo."
         }
       ]
     },
@@ -473,7 +473,7 @@
         },
         {
           "who": "mula",
-          "text": "E o povo apelidou o imposto de “quinto dos infernos”… dizem. E escondia ouro em santo de pau oco… dizem também."
+          "text": "O povo chamou o imposto de “quinto dos infernos”… dizem. E escondia ouro em santo de pau oco… dizem."
         },
         {
           "who": "buck",
