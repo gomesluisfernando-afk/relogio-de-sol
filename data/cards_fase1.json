@@ -1161,5 +1161,18 @@
   "bullets": ["Born from gold", "Saved by poverty", "Rediscovered by an Englishman"],
   "keyword": "Ouro, pobreza, inglês", "image": "cards/c76.webp",
   "characters": ["buck", "mula", "sineiro"]
+},
+{
+  "id": "C77", "era": "renascimento", "year": 2026, "yearLabel": "Hoje",
+  "title": "Os sinos falam",
+  "hook": "In São João del-Rei the bells don't just ring. They talk, and the whole town understands.",
+  "facts": ["Em São João del-Rei, cada toque tem significado: festa, procissão, incêndio, morte.", "O toque de defunto diferencia homem, mulher e criança pela contagem das badaladas.", "O toque dos sinos em Minas Gerais e o ofício de sineiro foram registrados como patrimônio imaterial."],
+  "joke": "Before WhatsApp groups, the whole town got the notification at once. And nobody could mute it.",
+  "usa": null, "status": "doc",
+  "conferir": ["Ano e detalhes do registro do toque dos sinos e do ofício de sineiro como patrimônio (IPHAN, 2009?).", "Os padrões de toque do minigame são simplificados."],
+  "tone": "normal",
+  "bullets": ["Bells announce feasts, fires and deaths", "Death toll counts tell man, woman or child", "Registered as intangible heritage"],
+  "keyword": "Sinos falam", "image": "scenes/sinos.webp",
+  "characters": ["sineiro"]
 }
 ]

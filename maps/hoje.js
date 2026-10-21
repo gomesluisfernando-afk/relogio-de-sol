@@ -6,6 +6,7 @@ window.MAPS.hoje = {
   id: 'hoje', era: 'prologo', title: 'Brasil · Hoje', music: 'hoje',
   w: 2400, h: 2000, cell: 8,
   start: 'chafariz',
+  // portão para a cidade de Tiradentes (mapa com as 16 paradas do tour)
   draft: {
     land: [[300, 500], [500, 350], [800, 300], [1000, 210], [1200, 250], [1350, 180], [1500, 300], [1700, 350], [1900, 450], [2100, 500],
       [2300, 600], [2340, 700], [2260, 800], [2160, 950], [2110, 1100], [2060, 1250], [1960, 1400], [1810, 1520], [1650, 1600], [1500, 1700],
@@ -35,8 +36,16 @@ window.MAPS.hoje = {
     towns: [[1440, 1420, 6], [1500, 1370, 8], [1700, 1230, 9], [1770, 1470, 10], [2000, 1200, 4], [2210, 720, 7], [1300, 1090, 5]],
   },
   pois: {
-    chafariz: [1418, 1428], mirante: [1398, 1478], sineiro: [1512, 1392], tropeiro: [1600, 1430],
+    chafariz: [1418, 1428], mirante: [1398, 1478], sineiro: [1512, 1392], tropeiro: [1600, 1430], estrada: [1660, 1455],
+    estatua: [1452, 1408], door_tiradentes: [1466, 1440],
   },
+  doors: { door_tiradentes: { map: 'tiradentes', title: 'Tiradentes · Hoje' } },
+  cards: { C00: [1478, 1428] },
+  npcs: [
+    { id: 'sineiro', at: 'sineiro', mini: 'sinos', lines: ['Os sinos daqui falam, forasteiro. Quando você estiver pronto, eu te ensino a língua deles.'] },
+    { id: 'tropeiro', at: 'tropeiro', shop: true },
+  ],
+  minis: [{ id: 'sinos', act: 3, label: 'A Língua dos Sinos', locked: 'Os sinos ainda não confiam em você. Volte quando o Ato IV abrir.' }],
   labels: [
     [1440, 1395, 'Tiradentes'], [1505, 1342, 'São João del-Rei'], [1705, 1200, 'Vila Rica'], [1775, 1445, 'Rio de Janeiro'],
     [2005, 1172, 'Porto Seguro'], [2215, 695, 'Recife'], [2140, 760, 'Serra da Barriga'], [800, 560, 'Amazônia'], [1640, 1462, 'Estrada Real'],

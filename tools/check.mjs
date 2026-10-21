@@ -1,55 +1,72 @@
-// node tools/check.mjs  → valida todo o /data e sai com código 1 se houver erro.
-import { readFile } from 'node:fs/promises';
-import { assemble, validate } from '../src/content.js';
+// Verificador do Relógio de Sol v2: node tools/check.mjs
+// Confere conteúdo, mapas, minigames, imagens, cache offline e os critérios do motor (sem turnos).
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import vm from 'node:vm';
 
-const get = async (f) => JSON.parse(await readFile(new URL('../data/' + f, import.meta.url), 'utf8'));
-const c = await assemble(await get('index.json'), get);
-const { errors, warnings, conferir } = validate(c);
+const root = new URL('../', import.meta.url);
+const rd = (f) => readFileSync(new URL(f, root), 'utf8');
+const has = (f) => existsSync(new URL(f, root));
+const errors = [], warns = [];
+const err = (m) => errors.push(m), warn = (m) => warns.push(m);
 
-const usa = c.cards.filter((k) => k.usa).length;
-console.log(`${c.cards.length} cards · ${c.eras.length} eras · ${c.tours[0].stops.length} paradas · ${c.expressions.length} expressões · ${c.characters.length} personagens · ${usa} conexões EUA`);
-console.log('fora do tour:', c.cards.filter((k) => !k.tourStops.length).map((k) => k.id).join(' '));
-for (const w of warnings) console.log('aviso:', w);
-for (const q of conferir) console.log('conferir:', q.id, '-', q.text);
-// O cache offline (sw.js) precisa listar todo JSON de dados e todo arquivo precisa existir.
-const sw = await readFile(new URL('../sw.js', import.meta.url), 'utf8');
-const cached = [...sw.matchAll(/'([^']+\.[a-z0-9]+)'/g)].map((m) => m[1]);
-const index = await get('index.json');
-const dataFiles = ['index.json', ...index.phases.flatMap((p) => [p.eras, p.cards, ...p.tours]), ...Object.values(index.shared), ...c.chapters.filter((ch) => ch.file).map((ch) => ch.file)];
-for (const f of dataFiles) if (!cached.includes('data/' + f)) errors.push(`sw.js não guarda data/${f} para offline`);
-// Toda imagem citada nos dados precisa existir e estar no cache offline.
-// (imagens de card e ícones de era o sw.js lê dos JSON; aqui basta existirem)
-const images = [...c.characters.map((x) => x.image), ...c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.image, s.bg?.before, s.map]))].filter(Boolean);
-const dynamic = new Set([...c.cards.map((k) => k.image), ...c.eras.map((e) => e.iconImg)]);
-for (const img of new Set(images)) {
-  if (!dynamic.has(img) && !cached.includes('assets/img/' + img)) errors.push(`sw.js não guarda assets/img/${img} para offline`);
+// 1. sintaxe de todo o JS do jogo
+for (const f of ['game.js', 'minis.js', 'sw.js', 'content.data.js', ...readdirSync(new URL('maps/', root)).map((m) => 'maps/' + m)]) {
+  try { execFileSync(process.execPath, ['--check', new URL(f, root).pathname.replace(/^\/([A-Z]:)/, '$1')], { stdio: 'pipe' }); } catch (e) { err(`${f}: erro de sintaxe\n${e.stderr}`); }
 }
-for (const img of [...c.cards.map((k) => k.image), ...c.eras.map((e) => e.iconImg)].filter(Boolean))
-  await readFile(new URL('../assets/img/' + img, import.meta.url)).catch(() => errors.push(`imagem ${img} não existe`));
-for (const k of c.cards) if (!k.image) warnings.push(`${k.id}: sem imagem`);
-// Vídeos citados nas cenas: precisam existir e estar no cache offline.
-for (const v of new Set(c.chapters.flatMap((ch) => (ch.scenes || []).flatMap((s) => [s.bg?.video, s.video])).filter(Boolean))) {
-  await readFile(new URL('../assets/' + v, import.meta.url)).catch(() => errors.push(`vídeo ${v} não existe`));
-  if (!cached.includes('assets/' + v)) errors.push(`sw.js não guarda assets/${v} para offline`);
-}
-const { readdir } = await import('node:fs/promises');
-for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true }))
-  if (f.endsWith('.js') && !cached.includes('src/' + f.replaceAll('\\', '/'))) errors.push(`sw.js não guarda src/${f} para offline`);
-for (const f of cached) await readFile(new URL('../' + f, import.meta.url)).catch(() => errors.push(`sw.js lista ${f}, que não existe`));
-// Tradução para inglês: ids válidos, mesmas chaves de interface.
-const { validateOverlay } = await import('../src/content.js');
-errors.push(...validateOverlay(c, await get('en.json')));
-const ptUi = JSON.parse(await readFile(new URL('../i18n/pt.json', import.meta.url), 'utf8'));
-const enUi = JSON.parse(await readFile(new URL('../i18n/en.json', import.meta.url), 'utf8'));
-for (const k of Object.keys(ptUi)) if (!(k in enUi)) errors.push(`i18n/en.json sem a chave "${k}"`);
-if (!cached.includes('data/en.json') || !cached.includes('i18n/en.json')) errors.push('sw.js não guarda a tradução para offline');
 
-// Erro de sintaxe em qualquer arquivo do jogo trava tudo em "Carregando…".
-const { execFileSync } = await import('node:child_process');
-for (const f of await readdir(new URL('../src', import.meta.url), { recursive: true })) {
-  if (!f.endsWith('.js')) continue;
-  try { execFileSync(process.execPath, ['--check', new URL('../src/' + f.replaceAll('\\', '/'), import.meta.url).pathname.replace(/^\/(\w:)/, '$1')], { stdio: 'pipe' }); }
-  catch (err) { errors.push(`sintaxe em src/${f}: ${String(err.stderr).split('\n').find((l) => l.includes('Error')) || 'erro'}`); }
+// 2. content.data.js em dia com data/*.json
+const ctx = { window: {} };
+vm.createContext(ctx);
+vm.runInContext(rd('content.data.js'), ctx);
+const RAW = ctx.window.CONTENT_RAW;
+const fresh = JSON.parse(rd('data/cards_fase1.json'));
+if (RAW.cards.length !== fresh.length || JSON.stringify(RAW.cards) !== JSON.stringify(fresh)) err('content.data.js desatualizado: rode node tools/build_content.mjs');
+const CARD = Object.fromEntries(RAW.cards.map((c) => [c.id, c]));
+
+// 3. mapas
+for (const f of readdirSync(new URL('maps/', root))) vm.runInContext(rd('maps/' + f), ctx);
+const MAPS = ctx.window.MAPS;
+const miniKeys = [...rd('minis.js').matchAll(/return \{ ([a-z, ]+) \};\n\}\)\(\);/g)][0]?.[1].split(',').map((s) => s.trim()) || [];
+const QUESTS = new Set(RAW.quests.map((q) => q.id));
+const ERAS = new Set(RAW.eras.map((e) => e.id));
+for (const [id, M] of Object.entries(MAPS)) {
+  if (!ERAS.has(M.era)) err(`${id}: era ${M.era} não existe`);
+  if (!M.pois[M.start]) err(`${id}: start sem POI`);
+  if (id !== 'hoje' && !M.pois.portal) err(`${id}: sem portal`);
+  for (const n of M.npcs || []) {
+    if (n.at && !M.pois[n.at]) err(`${id}: NPC ${n.id} em POI inexistente ${n.at}`);
+    if (n.quest && !QUESTS.has(n.quest)) err(`${id}: quest ${n.quest} não existe`);
+    if (n.mini && !(M.minis || []).some((x) => x.id === n.mini)) err(`${id}: NPC ${n.id} aponta para mini ${n.mini} fora do mapa`);
+  }
+  for (const mi of M.minis || []) { if (mi.at && !M.pois[mi.at]) err(`${id}: mini ${mi.id} em POI inexistente`); if (!miniKeys.includes(mi.id)) err(`${id}: mini ${mi.id} não existe em minis.js`); if (!mi.at && !(M.npcs || []).some((n) => n.mini === mi.id)) err(`${id}: mini ${mi.id} sem lugar nem NPC`); }
+  if (M.needMini && !(M.minis || []).some((x) => x.id === M.needMini)) err(`${id}: needMini ${M.needMini} sem mini`);
+  for (const p of M.cobrador?.patrol || []) if (!M.pois[p]) err(`${id}: rota do Cobrador em POI inexistente ${p}`);
+  for (const c of Object.keys(M.cards || {})) if (!CARD[c]) err(`${id}: card fixo ${c} não existe`);
+  for (const [k, d] of Object.entries(M.doors || {})) { if (!M.pois[k]) err(`${id}: porta ${k} sem POI`); if (!MAPS[d.map]) err(`${id}: porta para mapa inexistente ${d.map}`); }
+  if (M.exit && !MAPS[M.exit.map]) err(`${id}: saída para mapa inexistente`);
 }
-for (const e of errors) console.log('ERRO:', e);
-process.exit(errors.length ? 1 : 0);
+for (const e of ERAS) if (e !== 'prologo' && !MAPS[e]) err(`era ${e} sem mapa`);
+for (const e of ERAS) if (e !== 'prologo' && !MAPS.hoje.holes[e]) err(`era ${e} sem buraco no Hoje`);
+
+// 4. imagens: cards, eras, retratos, fundos citados no código
+for (const c of RAW.cards) if (!has('assets/img/' + c.image)) err(`${c.id}: imagem ${c.image} não existe`);
+for (const e of RAW.eras) if (!has('assets/img/' + e.iconImg)) err(`era ${e.id}: ícone não existe`);
+for (const c of RAW.chars) if (!has(`img/p_${c.id}.png`)) err(`retrato img/p_${c.id}.png não existe`);
+for (const m of rd('game.js').matchAll(/'(assets\/img\/scenes\/[^']+)'/g)) if (!has(m[1])) err(`game.js cita ${m[1]} que não existe`);
+for (const m of rd('minis.js').matchAll(/'(assets\/img\/[^']+)'/g)) if (!has(m[1])) err(`minis.js cita ${m[1]} que não existe`);
+for (const m of rd('minis.js').matchAll(/'(img\/bg_[^']+)'/g)) if (!has(m[1])) warn(`fundo ${m[1]} ainda não existe (usa o plano B)`);
+
+// 5. cache offline cobre o essencial
+const sw = rd('sw.js');
+for (const f of ['index.html', 'game.js', 'minis.js', 'content.data.js', 'maps/hoje.js', 'maps/eras.js']) if (!sw.includes(`'${f}'`)) err(`sw.js não guarda ${f}`);
+
+// 6. critérios do motor: tempo real, conteúdo histórico nos dados
+const code = rd('game.js') + rd('minis.js');
+for (const bad of ['day', 'turn', 'mp', 'night']) if (new RegExp(`\\b(let|const|var)\\s+${bad}\\b|\\.${bad}\\b`).test(code)) err(`variável proibida no motor: ${bad}`);
+
+for (const c of RAW.cards) for (const n of c.conferir || []) warn(`conferir: ${c.id} - ${n}`);
+console.log(`${RAW.cards.length} cards · ${Object.keys(MAPS).length} mapas · ${miniKeys.length} minigames · ${RAW.quests.length} quests`);
+for (const w of warns) console.log('aviso:', w);
+if (errors.length) { for (const e of errors) console.log('ERRO:', e); process.exit(1); }
+console.log('tudo ok');
