@@ -50,7 +50,7 @@
   { "id": "F09", "cardId": "C23", "type": "factOrLegend", "prompt": "A primeira comunidade judaica de Nova York veio de Recife.", "answer": "fato", "explain": "23 refugiados chegaram a Nova Amsterdã em setembro de 1654." },
   { "id": "F10", "cardId": "C59", "type": "factOrLegend", "prompt": "Um estudante brasileiro pediu ajuda a Thomas Jefferson em 1787.", "answer": "fato", "explain": "José Joaquim da Maia. Jefferson não prometeu nada." },
   { "id": "F11", "cardId": "C61", "type": "factOrLegend", "prompt": "Tiradentes foi preso dez dias depois da posse de George Washington.", "answer": "fato", "explain": "30 abr 1789 × 10 mai 1789." },
-  { "id": "F12", "cardId": "C04", "type": "factOrLegend", "prompt": "Os primeiros europeus a ficar no Brasil foram dois degredados e dois grumetes fugidos.", "answer": "fato", "explain": "Cabral deixou os degredados; os grumetes fugiram." },
+  { "id": "F12", "cardId": "C04", "type": "factOrLegend", "prompt": "Os primeiros europeus a ficar no Brasil foram dois degredados e dois marujos fugidos.", "answer": "fato", "explain": "Cabral deixou os degredados; os marujos fugiram." },
   { "id": "F13", "cardId": "C30", "type": "factOrLegend", "prompt": "O ouro de Ouro Preto parecia preto porque vinha coberto de óxido de ferro.", "answer": "fato", "explain": "Daí o nome." },
   { "id": "F14", "exprId": "EXP-lavar-egua", "type": "factOrLegend", "prompt": "“Lavar a égua” vem de escravizados que escondiam ouro no barro do lombo das éguas.", "answer": "lenda", "explain": "Etimologia popular, sem documentação." },
   { "id": "F15", "exprId": "EXP-pe-rapado", "type": "factOrLegend", "prompt": "“Pé-rapado” vem do raspa-pé na porta das igrejas.", "answer": "lenda", "explain": "Etimologia popular, sem documentação." },

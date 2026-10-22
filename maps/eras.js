@@ -38,17 +38,31 @@ window.MAPS = window.MAPS || {};
       roads: [{ w: 20, pts: [[700, 840], [645, 700], [645, 590]] }, { w: 16, pts: [[645, 700], [770, 745]] }, { w: 16, pts: [[645, 610], [420, 420], [270, 290]] }],
       ships: [[990, 640, -1]],
     },
-    pois: { start: [700, 845], portal: [640, 870], feitoria: [645, 560], cruz: [765, 755], aldeia: [275, 300], praia: [790, 820] },
+    pois: { start: [700, 845], portal: [640, 870], feitoria: [645, 560], cruz: [765, 755], aldeia: [275, 300], roda: [200, 330], praia: [790, 820] },
     labels: [[640, 425, 'Feitoria'], [270, 85, 'Aldeia tupi'], [1000, 560, 'Caravela']],
     npcs: [
       { id: 'caramuru', at: 'aldeia', quiz: true, lines: ['Naufraguei, aprendi a língua, casei aqui. Os portugueses chamam isso de sorte. Eu chamo de vida.'] },
+      // Paraguaçu: a professora da era. Um bloco de falas "imagine..." (as formas são lugar de imagem futura).
+      { id: 'paraguacu', at: 'roda', lesson: [
+        ['paraguacu', 'Eu sou Paraguaçu, tupinambá. Meu marido é Diogo, o Caramuru. Senta aqui: vou te contar como dois mundos aprenderam a conversar.', 'circle:Paraguaçu e Caramuru na aldeia'],
+        ['paraguacu', 'Imagine: quando os navios chegaram, viviam nesta terra milhões de pessoas, em centenas de povos, falando mais de mil línguas.', 'square:Mapa dos povos e das línguas'],
+        ['paraguacu', 'Agora imagine descer de um navio sem saber uma palavra da língua daqui. Como pedir água? Como dizer "não vim brigar"?', 'triangle:Caravela e canoa frente a frente'],
+        ['paraguacu', 'Começou com gestos e trocas. Depois vieram os "línguas": náufragos e degredados que ficaram, aprenderam o tupi e viraram intérpretes. Diogo foi um deles.', 'diamond:O intérprete entre dois grupos'],
+        ['paraguacu', 'Quando o governador Tomé de Sousa chegou, em 1549, foi Diogo quem ajudou a conversar com o meu povo para fundar Salvador.', 'square:A fundação de Salvador'],
+        ['paraguacu', 'O tupi virou a "língua geral" da costa. Até os padres aprenderam: Anchieta publicou uma gramática do tupi em 1595.', 'triangle:O livro de gramática do tupi'],
+        ['paraguacu', 'Imagine quantas palavras vocês ainda usam do meu povo: mandioca, pipoca, abacaxi, jacaré, capivara. Você fala tupi sem saber.', 'circle:Palavras tupis do dia a dia'],
+        ['paraguacu', 'Os portugueses aprenderam com a gente a fazer farinha de mandioca e a dormir na rede. Sem isso, muitos não teriam sobrevivido aqui.', 'diamond:A rede e a farinha de mandioca'],
+        ['paraguacu', 'Em 1528 atravessei o mar com Diogo até a França. Lá me batizaram: virei Catarina. Imagine trocar a praia da Bahia por uma cidade de pedra.', 'square:O navio para a França'],
+        ['paraguacu', 'Mas nem tudo foi troca bonita. As doenças que vieram nos navios mataram mais gente do que as guerras. Lembre disso quando ouvir a palavra "descobrimento".', 'triangle:A aldeia vazia'],
+        ['paraguacu', 'E hoje? Segundo o Censo de 2022, cerca de 1,7 milhão de indígenas vivem no Brasil, e ainda se falam mais de 270 línguas. Nós continuamos aqui.', 'circle:Os povos indígenas hoje'],
+      ] },
       { id: 'feitor', pal: 'cortesao', at: 'praia', quest: 'QST-02', lines: ['Feitor da Coroa. Alguém anda sumindo com o pau-brasil.'] },
     ],
     minis: [
       { id: 'escambo', at: 'feitoria', label: 'Escambo na feitoria', lines: [['caramuru', 'Toras de pau-brasil por objetos. Mas escolha bem o que aceita: espelho não derruba árvore.']] },
       { id: 'carta', at: 'cruz', label: 'A carta em pedaços', lines: [['narr', 'O vento espalhou a carta de Caminha pela praia.']] },
     ],
-    arrive: [['mula', '22 de abril de 1500. Portugal "descobre" uma terra cheia de gente.'], ['buck', 'Discovered. Sure. Like I discovered your kitchen.']],
+    arrive: [['mula', '22 de abril de 1500. Portugal "descobre" uma terra cheia de gente.'], ['buck', 'Discovered. Sure. Like I discovered your kitchen.'], ['mula', 'De 1500 a 1530, o pau-brasil foi o grande negócio exclusivo da Coroa por aqui. Mas a extração continuou por mais de 300 anos.'], ['mula', 'Na aldeia, procure Paraguaçu. Ela ensina o que nenhum português sabia.']],
   });
 
   // ---------- ATO II ----------
@@ -104,7 +118,7 @@ window.MAPS = window.MAPS || {};
     pois: { start: [600, 860], portal: [540, 880], portao: [600, 650], centro: [600, 440] },
     labels: [[600, 285, 'Palmares']],
     npcs: [
-      { id: 'vigia', at: 'portao', mini: 'fogueiras', lines: ['Daqui de cima a gente vê tudo. Quando a fogueira acende num morro, o mocambo inteiro sabe.'] },
+      { id: 'vigia', at: 'portao', mini: 'fogueiras', quiz: true, lines: ['Daqui de cima a gente vê tudo. Quando a fogueira acende num morro, o mocambo inteiro sabe.'] },
       { id: 'zumbi', at: 'centro', cond: 'fogueiras', lines: [['zumbi', 'Palmares não é um esconderijo. É um lugar. Quase cem anos de gente livre.'], ['narr', 'Zumbi não faz perguntas. Só observa você ir embora.']] },
     ],
     minis: [{ id: 'fogueiras', label: 'Fogueiras de Palmares' }],

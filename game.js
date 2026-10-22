@@ -20,7 +20,7 @@
   const ERAS = RAW.eras;
   const ERA = Object.fromEntries(ERAS.map((e) => [e.id, e]));
   // Personagens novos (só do v2): nome da plaquinha; retrato em img/p_<id>.png quando existir.
-  const EXTRA = { nassau: 'Maurício de Nassau', fernao: 'Fernão Dias', vigia: 'O vigia', zumbi: 'Zumbi', yves: 'Yves Alves', louie: 'Louie', aprendiz: 'O aprendiz', caminha: 'Pero Vaz de Caminha', fundidor: 'O fundidor', turista: 'Turista', colombo: 'Colombo', cortesao: 'O cortesão', feitor: 'O feitor', frans: 'Frans Post', capitao: 'Capitão holandês', velho: 'Um velho morador', guia: 'Guia' };
+  const EXTRA = { paraguacu: 'Paraguaçu', nassau: 'Maurício de Nassau', fernao: 'Fernão Dias', vigia: 'O vigia', zumbi: 'Zumbi', yves: 'Yves Alves', louie: 'Louie', aprendiz: 'O aprendiz', caminha: 'Pero Vaz de Caminha', fundidor: 'O fundidor', turista: 'Turista', colombo: 'Colombo', cortesao: 'O cortesão', feitor: 'O feitor', frans: 'Frans Post', capitao: 'Capitão holandês', velho: 'Um velho morador', guia: 'Guia' };
   const nameOf = (id) => CHARS[id]?.name || EXTRA[id] || (id && id.includes(' ') ? id : ''); // testemunhas sem ficha: o nome é o próprio id
   // Atos do Dossiê: liberdade dentro do Ato; o seguinte abre com relatórios suficientes deste.
   const ACTS = [
@@ -50,10 +50,27 @@
   const gotIn = (eras) => G.cards.filter((id) => eras.includes(CARD[id]?.era)).length;
   const actOpen = (i) => i <= 0 || gotIn(ACTS[i - 1].eras) >= ACTS[i - 1].need;
   const curAct = () => { let i = 0; while (i < ACTS.length - 1 && actOpen(i + 1)) i++; return i; };
-  const eraOpen = (era) => era === 'prologo' || actOpen(actOf(era));
-  const needOf = (era) => { const M = window.MAPS[era]; return { cards: Math.min(M?.need ?? 3, eraCards(era).filter((c) => !REWARD.has(c.id)).length), mini: M?.needMini || null }; };
-  const eraNeedMet = (era) => { const n = needOf(era); return gotIn([era]) >= n.cards && (!n.mini || G.minis[n.mini]); };
-  const finalOpen = () => actOpen(4) && ERAS.every((e) => e.id === 'prologo' || (G.eras[e.id]?.visited && eraNeedMet(e.id)));
+  // As eras abrem em ordem cronológica: um portal só abre quando o anterior foi concluído.
+  const SEQ = ['mundo', 'paubrasil', 'acucar', 'invasoes', 'palmares', 'ouro', 'apogeu', 'inconfidencia', 'depois', 'renascimento'];
+  const eraDone = (era) => !!G.eras[era]?.done;
+  const eraOpen = (era) => era === 'prologo' || SEQ.indexOf(era) <= 0 || eraDone(SEQ[SEQ.indexOf(era) - 1]);
+  const nextEra = () => SEQ.find((e) => !eraDone(e));
+  const eraTitle = (era) => `${YEAR[era]} - ${ERA[era].name}`;
+  // Concluir uma era: todos os relatórios do chão -> todas as perguntas -> o minigame.
+  const groundOf = (era) => eraCards(era).filter((c) => !REWARD.has(c.id)).map((c) => c.id);
+  const quizOf = (era) => RAW.quizzes.filter((q) => CARD[q.cardId]?.era === era).map((q) => q.id);
+  const needOf = (era) => { const gr = groundOf(era), qz = quizOf(era); return { cards: gr.length, got: gr.filter((id) => G.cards.includes(id)).length, quiz: qz.length, ok: qz.filter((id) => G.qok.includes(id)).length, mini: window.MAPS[era]?.needMini || null }; };
+  const eraNeedMet = (era) => { const n = needOf(era); return n.got >= n.cards && n.ok >= n.quiz && (!n.mini || !!G.minis[n.mini]); };
+  const finalOpen = () => SEQ.every(eraDone);
+  // Perdeu o minigame da era: a fase inteira volta do começo.
+  function resetEra(era) {
+    const qz = quizOf(era);
+    G.cards = G.cards.filter((id) => CARD[id]?.era !== era);
+    G.qok = G.qok.filter((id) => !qz.includes(id));
+    for (const mi of window.MAPS[era]?.minis || []) delete G.minis[mi.id];
+    G.eras[era] = { ...(G.eras[era] || {}), done: false };
+    delete G.pos[era]; save();
+  }
 
   // ================= tela: encaixe e rotação =================
   let ROT = false;
@@ -198,6 +215,7 @@
     antonil: { skin: '#e8c8a8', hair: '#5a4a3a', shirt: '#111111', pants: '#111111', boots: '#111', robe: 1, hat: 'barrete', hatc: '#111', redbook: 1 },
     quitandeira: { skin: '#6a4430', hair: '#b23a2b', shirt: '#c9a86a', pants: '#c9a86a', boots: null, robe: 1, turban: '#b23a2b', tray: 1 },
     tropeiro: { skin: '#c89a74', hair: '#3a2a1a', shirt: '#a0522d', plaid: '#e0c080', pants: '#5a4a3a', boots: '#3a2212', hat: 'leather', hatc: '#7a5a3a' },
+    paraguacu: { skin: '#a8724c', hair: '#111', shirt: null, paint: '#2a6a8a', pants: '#8a5a3a', boots: null, long: 1 },
     caramuru: { skin: '#b07a52', hair: '#1a1a1a', shirt: null, paint: '#b23a2b', pants: '#6a4a2a', boots: null, cocar: 1 },
     nassau: { skin: '#f0d8c0', hair: '#c8a878', shirt: '#e07a20', buttons: '#fff', pants: '#2a2a3a', boots: '#111', hat: 'tricorne', hatc: '#1a1a1a', long: 1 },
     fernao: { skin: '#d8b090', hair: '#dddddd', shirt: '#6a5030', pants: '#4a3a2a', boots: '#2a1a0a', beard: '#dddddd', hat: 'leather', hatc: '#5a4030' },
@@ -298,10 +316,10 @@
   const PAGE = 4, CPS = 50;
   function say(lines, done) {
     const pages = [];
-    for (const [who, text] of lines) {
+    for (const [who, text, pic] of lines) {
       const hasP = who && who !== 'narr' && who !== 'lum';
       const ls = wrap(text, hasP ? W - 260 : W - 100, who === 'lum' ? 14 : 16);
-      for (let i = 0; i < ls.length; i += PAGE) pages.push({ who, lines: ls.slice(i, i + PAGE) });
+      for (let i = 0; i < ls.length; i += PAGE) pages.push({ who, lines: ls.slice(i, i + PAGE), pic });
     }
     if (!pages.length) { done?.(); return; }
     DLG = { pages, i: 0, shown: 0, done, bipAt: 0 };
@@ -319,6 +337,7 @@
     const isLum = p.who === 'lum';
     if (DLG.shown < total) { DLG.shown = Math.min(total, DLG.shown + CPS * dt); if (!isLum && DLG.shown - DLG.bipAt >= 2) { DLG.bipAt = DLG.shown; sfx('bip'); } } else DLG.bipAt = 0;
     const y0 = H - 196;
+    if (p.pic) picHolder(p.pic, y0);
     let tx = 48;
     if (isLum) lumBox(60, y0 + 20, W - 120, 150); else box(16, y0, W - 32, 180);
     const nm = isLum ? '' : nameOf(p.who);
@@ -337,6 +356,18 @@
     let left = Math.floor(DLG.shown);
     p.lines.forEach((l, k) => { const s = l.slice(0, Math.max(0, left)); left -= l.length; txt(s, tx, y0 + (isLum ? 44 : 30) + k * 30, isLum ? 14 : 16, isLum ? '#f3e2a0' : '#fff'); });
     if (DLG.shown >= total && Math.floor(t * 3) % 2) txt('▼', W - (isLum ? 90 : 60), y0 + 146, 14, isLum ? '#e8c04a' : '#ffd84a');
+  }
+  // Lugar da imagem de uma fala ('forma:legenda'): por enquanto, forma geométrica de place holder.
+  function picHolder(pic, y0) {
+    const [shape, label = ''] = pic.split(':'), w = 300, h = y0 - 60, x = W / 2 - w / 2, y = 34, cx = W / 2, cy = y + h / 2 - 10, r = Math.min(70, h / 3);
+    g.fillStyle = 'rgba(10,16,64,.92)'; g.fillRect(x, y, w, h); g.strokeStyle = '#ffd84a'; g.lineWidth = 3; g.setLineDash([10, 6]); g.strokeRect(x, y, w, h); g.setLineDash([]);
+    g.fillStyle = '#8a9ad8'; g.beginPath();
+    if (shape === 'circle') g.arc(cx, cy, r, 0, 7);
+    else if (shape === 'triangle') { g.moveTo(cx, cy - r); g.lineTo(cx + r, cy + r * 0.8); g.lineTo(cx - r, cy + r * 0.8); }
+    else if (shape === 'diamond') { g.moveTo(cx, cy - r); g.lineTo(cx + r, cy); g.lineTo(cx, cy + r); g.lineTo(cx - r, cy); }
+    else g.rect(cx - r, cy - r * 0.75, r * 2, r * 1.5);
+    g.fill();
+    wrap(label, w - 30, 9).slice(0, 2).forEach((l, i) => txt(l, cx, y + h - 34 + i * 14, 9, '#fff', 'center'));
   }
   function ask(q, opts, cb) { ASK = { q, opts, cb, rects: [] }; }
   function drawAsk() {
@@ -400,7 +431,8 @@
     let y = 56;
     txt('RELATÓRIO', 500, y, 12, '#ffd84a'); y += 26;
     for (const f of (c.facts || []).slice(0, 3)) { const ls = wrap('• ' + f, W - 560, 10).slice(0, 5); ls.forEach((l, i) => txt(l, 500, y + i * 16, 10, '#fff')); y += ls.length * 16 + 10; }
-    if (c.joke && !serio && y < H - 160) { const ls = wrap(c.joke, W - 580, 9).slice(0, 5); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(500, y, W - 560, hgt); txt('Dona Mula:', 510, y + 8, 9, '#4aa8ff'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#ddd')); }
+    if (c.imagine) { const ls = wrap(c.imagine, W - 580, 9).slice(0, 6); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(255,216,74,.12)'; g.fillRect(500, y, W - 560, hgt); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(500, y, W - 560, hgt); txt('Imagine…', 510, y + 8, 9, '#ffd84a'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#fff')); y += hgt + 10; }
+    if (c.joke && !serio && y < H - 230) { const ls = wrap(c.joke, W - 580, 9).slice(0, 5); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(500, y, W - 560, hgt); txt('Dona Mula:', 510, y + 8, 9, '#4aa8ff'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#ddd')); }
     g.fillStyle = '#ffd84a'; g.fillRect(W - 210, H - 84, 150, 40); txt('FECHAR', W - 135, H - 72, 14, '#1a1030', 'center');
   }
 
@@ -474,7 +506,7 @@
       if (im) g.drawImage(im, 70, 300, 96, 96);
       txt(`${YEAR[e.id]} · ${e.name}`, 186, 306, 13, '#ffd84a');
       wrap(`“${e.intro}”`, W - 280, 10).slice(0, 3).forEach((l, i) => txt(l, 186, 336 + i * 18, 10, '#cfe0ff'));
-      txt(`relatórios ${gotIn([e.id])}/${eraCards(e.id).length}${eraOpen(e.id) ? '' : ' · ato fechado'}`, 186, 396, 10, '#fff');
+      txt(`relatórios ${gotIn([e.id])}/${eraCards(e.id).length}${eraOpen(e.id) ? '' : ' · portal fechado'}`, 186, 396, 10, '#fff');
       if (G.eras[e.id]?.visited && e.id !== 'prologo' && G.era === 'hoje') txt('toque de novo: viagem rápida até o buraco', 186, 418, 9, '#9be36a');
     } else txt('Toque numa era para ver o relatório.', W / 2, 330, 10, '#8a9ad8', 'center');
     txt('toque fora para fechar', W / 2, H - 50, 9, '#8a9ad8', 'center');
@@ -890,21 +922,17 @@
     function goal() {
       if (isHoje && !G.flags.tut1 && K.cardPos.C00) return { text: 'Pegue o papel ali no chão', at: K.cardPos.C00 };
       if (!isHoje && M.era !== 'prologo') {
-        const n = needOf(M.era), got = gotIn([M.era]);
-        if (got < n.cards) { const c = Object.entries(K.cardPos).find(([cid]) => !G.cards.includes(cid)); return { text: `Ache relatórios desta época (${got}/${n.cards})`, at: c?.[1] }; }
+        const n = needOf(M.era);
+        if (n.got < n.cards) { const c = Object.entries(K.cardPos).find(([cid]) => !G.cards.includes(cid)); return { text: `Ache os relatórios desta era (${n.got}/${n.cards})`, at: c?.[1] }; }
+        if (n.ok < n.quiz) { const qn = npcs.find((x) => x.quiz); return { text: `Responda às perguntas (${n.ok}/${n.quiz})${qn ? `: fale com ${nameOf(qn.id)}` : ''}`, at: qn && [qn.x, qn.y] }; }
         if (n.mini && !G.minis[n.mini]) { const mi = (M.minis || []).find((x) => x.id === n.mini); return { text: `Vença: ${mi?.label || 'o desafio'}`, at: mi && (K.pois[mi.at] || (npcs.find((x) => x.mini === mi.id) && [npcs.find((x) => x.mini === mi.id).x, npcs.find((x) => x.mini === mi.id).y])) }; }
         return { text: 'Volte pelo portal', at: K.pois.portal };
       }
       if (!isHoje) return { text: M.goalText || 'Explore e volte pela saída', at: K.pois.portal };
       if (finalOpen()) return { text: 'Volte ao Mirante. O Sineiro quer o seu relatório final.', at: K.pois.mirante };
       if (G.flags.guia) return { text: 'Modo Guia: os buracos continuam abertos.', at: null };
-      for (let i = 0; i < ACTS.length; i++) {
-        if (!actOpen(i)) break;
-        const era = ACTS[i].eras.find((e) => !G.eras[e]?.done);
-        if (era) return { text: `Caia no buraco: ${ERA[era].name} (${YEAR[era]})`, at: M.holes[era] };
-      }
-      const ca = curAct(), a = ACTS[ca];
-      return { text: `Junte relatórios do Ato ${a.id} (${gotIn(a.eras)}/${a.need}) para abrir o próximo`, at: null };
+      const era = nextEra();
+      return { text: `Entre no portal ${eraTitle(era)}`, at: M.holes[era] };
     }
 
     function walkTo(wx, wy) {
@@ -919,32 +947,45 @@
       if (n.egg) return n.egg(S, n, window.ENG);
       if (n.quest) return questTalk(n);
       if (n.shop) return shop(n);
-      if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) return miniTalk(mi, n); }
-      const pool = RAW.quizzes.filter((q) => CARD[q.cardId]?.era === M.era && !G.qok.includes(q.id));
+      if (n.lesson) return say(n.lesson);
       const lines = asLines(n, n.lines);
-      if (!n.quiz || !pool.length || G.flags.guia) { say(lines.length ? lines : [[n.id, CHARS[n.id]?.catchphrase || 'Bom dia, forasteiro.']]); return; }
-      const q = pool[hash(n.id + G.qok.length) % pool.length];
-      const opts = q.type === 'multiple' ? q.options.map((t, i) => ({ t, ok: i === q.answer })) : [{ t: 'É fato', ok: q.answer === 'fato' }, { t: 'É lenda', ok: q.answer === 'lenda' }];
-      const order = opts.map((o, i) => [hash(q.id + i), o]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
-      say(lines, () => ask(q.prompt, order.map((o) => o.t), (k) => {
-        if (order[k].ok) {
-          sfx('ok'); G.qok.push(q.id); giveGold(10); save();
-          const rew = q.cardId && !G.cards.includes(q.cardId) && CARD[q.cardId].era === M.era && !REWARD.has(q.cardId);
-          say([[n.id, n.right || 'Isso mesmo.'], ['narr', `${q.explain}${rew ? ' Em troca, um relatório.' : ' (+10 de ouro)'}`]], () => { if (rew) giveCard(q.cardId); });
-        } else {
-          sfx('bad'); SHAKE = 0.3; giveGold(-5); n.away = tt + 20;
-          say([[n.id, n.wrong || 'Não foi bem assim...'], [CARD[q.cardId]?.tone === 'serio' ? 'narr' : 'mula', `Dica: ${q.explain} (-5 de ouro. Volte daqui a pouco.)`]]);
-        }
-      }));
+      const pool = () => RAW.quizzes.filter((q) => CARD[q.cardId]?.era === M.era && !G.qok.includes(q.id));
+      if (!n.quiz || !pool().length || G.flags.guia) {
+        if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) return miniTalk(mi, n); }
+        say(lines.length ? lines : [[n.id, CHARS[n.id]?.catchphrase || 'Bom dia, forasteiro.']]); return;
+      }
+      // uma pergunta atrás da outra, sem ir e voltar: acertou +5 de ouro, errou -5
+      const one = () => {
+        const left = pool(); if (!left.length) { say([[n.id, 'Você respondeu tudo o que eu sabia perguntar.']], () => { if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) miniTalk(mi, n); } }); return; }
+        const q = left[hash(n.id + G.qok.length + Math.floor(G.played)) % left.length];
+        const opts = q.type === 'multiple' ? q.options.map((t, i) => ({ t, ok: i === q.answer })) : [{ t: 'É fato', ok: q.answer === 'fato' }, { t: 'É lenda', ok: q.answer === 'lenda' }];
+        const order = opts.map((o, i) => [hash(q.id + i), o]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
+        const again = () => { const k = needOf(M.era); ask(`Perguntas desta era: ${k.ok}/${k.quiz}. Quer outra pergunta? (acertou +5, errou -5)`, ['Quero', 'Agora não'], (j) => { if (j === 0) one(); }); };
+        ask(q.prompt, order.map((o) => o.t), (k) => {
+          if (order[k].ok) {
+            sfx('ok'); G.qok.push(q.id); giveGold(5); save();
+            const rew = q.cardId && !G.cards.includes(q.cardId) && CARD[q.cardId].era === M.era && !REWARD.has(q.cardId);
+            say([[n.id, n.right || 'Isso mesmo.'], ['narr', `${q.explain} (+5 de ouro${rew ? ' e um relatório' : ''})`]], () => (rew ? giveCard(q.cardId, again) : again()));
+          } else {
+            sfx('bad'); SHAKE = 0.3; giveGold(-5);
+            say([[n.id, n.wrong || 'Não foi bem assim...'], [CARD[q.cardId]?.tone === 'serio' ? 'narr' : 'mula', `Dica: ${q.explain} (-5 de ouro)`]], again);
+          }
+        });
+      };
+      say(lines, one);
     }
     function miniTalk(mi, n) {
       if (mi.act != null && !actOpen(mi.act)) { say([[n?.id || 'mula', mi.locked || 'Ainda não é hora disso. Volte num Ato mais adiante.']]); return; }
+      if (!isHoje && M.needMini === mi.id) {
+        const k = needOf(M.era);
+        if (k.got < k.cards || k.ok < k.quiz) { say([[n?.id || 'mula', 'O desafio desta era só abre para quem já sabe a história.'], ['mula', `Falta: ${k.got < k.cards ? `${k.cards - k.got} relatório${k.cards - k.got > 1 ? 's' : ''}` : ''}${k.got < k.cards && k.ok < k.quiz ? ' e ' : ''}${k.ok < k.quiz ? `${k.quiz - k.ok} pergunta${k.quiz - k.ok > 1 ? 's' : ''} certa${k.quiz - k.ok > 1 ? 's' : ''}` : ''}. Se perder o desafio, o portal te joga para fora e a era recomeça.`]]); return; }
+      }
       const done = G.minis[mi.id];
       const intro = asLines(n || { id: 'mula' }, n?.lines || mi.lines);
       say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }));
     }
     function shop(n) {
-      const items = [['botas', 'Botas de tropeiro (+40% velocidade)', 40], ['lampiao', 'Lampião (revela mais névoa)', 30], ['rapadura', 'Rapadura (corre mais por 40 s)', 5]];
+      const items = [['botas', 'Botas de tropeiro (+40% velocidade)', 200], ['lampiao', 'Lampião (revela mais névoa)', 150], ['rapadura', 'Rapadura (corre mais por 40 s)', 20]];
       say([[n.id, G.flags.guia ? 'Guia agora, é? Pra guia eu faço preço.' : 'Venda do Tropeiro. Tem de tudo que cabe numa mula.']], () => ask(`Seu ouro: $${G.gold}`, [...items.map(([, l, p]) => `${l} · $${p}`), 'Nada, obrigado'], (k) => {
         if (k >= items.length) return;
         const [it, , p] = items[k];
@@ -998,7 +1039,7 @@
       sfx('fall'); SHAKE = 0.4;
       G.pos.hoje = [Math.round(P.x), Math.round(P.y + 30)];
       G.flags.lastHole = era; save();
-      go(() => OW(era), `Caindo em ${YEAR[era]}… ${ERA[era].name}`);
+      go(() => OW(era), `Entrando no portal… ${eraTitle(era)}`);
     }
     function caught() {
       COB.state = 'patrol'; COB.cool = 12; chase = false; music(M.music || M.era); COB.path = null;
@@ -1032,7 +1073,7 @@
           setTimeout(() => say([['mula', 'Levanta. Você tem um trabalho.'], ['buck', 'I have a WHAT?'], ['mula', 'Observar. Anotar. Mandar. Toca em qualquer lugar e anda. Eu te sigo.']], () => {
             if (G.flags.migratedN) say([['mula', `Ah: você trouxe ${G.flags.migratedN} relatórios de um caderno antigo. Já mandei.`]]);
           }), 600);
-        } else if (!isHoje && first) setTimeout(() => say(M.arrive || [['mula', `${ERA[M.era]?.name || M.title}. Relatórios espalhados por aí. Junte ${needOf(M.era).cards} e o portal abre.`]]), 700);
+        } else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${ERA[M.era]?.name || M.title}.`]]), ['mula', `Para o portal abrir: ${k.cards} relatórios, ${k.quiz} pergunta${k.quiz === 1 ? '' : 's'} certa${k.quiz === 1 ? '' : 's'}${k.mini ? ' e vencer o desafio da era' : ''}.`]]); }, 700);
       },
       update(dt) {
         tt += dt; G.played += dt;
@@ -1127,8 +1168,12 @@
               go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje');
               return;
             }
-            const n = needOf(M.era), falta = Math.max(0, n.cards - gotIn([M.era]));
-            say([['mula', `O portal ainda está fraco. Falta${falta ? `: ${falta} relatório${falta > 1 ? 's' : ''}` : ''}${n.mini && !G.minis[n.mini] ? `${falta ? ' e ' : ': '}vencer o desafio desta época` : ''}.`]]);
+            const k = needOf(M.era), falta = [k.got < k.cards && `${k.cards - k.got} relatório(s)`, k.ok < k.quiz && `${k.quiz - k.ok} pergunta(s)`, k.mini && !G.minis[k.mini] && 'o desafio'].filter(Boolean).join(', ');
+            say([['mula', `A era ainda não está completa. Falta: ${falta}.`]], () => ask('Sair mesmo assim? (o próximo portal continua fechado)', ['Ficar', 'Sair'], (j) => {
+              if (j !== 1) return;
+              const hole = window.MAPS.hoje.holes[M.era]; sfx('portal');
+              go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje');
+            }));
           }
           if (d > 40) near.portal = 0;
         }
@@ -1154,8 +1199,7 @@
             if (d < 16 && !near['h' + era]) {
               near['h' + era] = 1; P.path = [];
               if (open) { fallInto(era); return; }
-              const ai = actOf(era), prev = ACTS[ai - 1];
-              say([['mula', `Laje do Ato ${ACTS[ai].id}. Faltam ${Math.max(0, prev.need - gotIn(prev.eras))} relatórios do Ato ${prev.id} para ela cair.`]]);
+              say([['mula', `Portal fechado. A viagem no tempo é em ordem: o próximo é ${eraTitle(nextEra())}.`]]);
             }
             if (d > 40) near['h' + era] = 0;
           }
@@ -1204,9 +1248,10 @@
           if (open) { g.fillStyle = done ? `rgba(255,210,80,${0.25 + p * 0.3})` : `rgba(80,170,255,${0.25 + p * 0.35})`; g.beginPath(); g.ellipse(x, y, 26 + p * 4, 13 + p * 2, 0, 0, 7); g.fill(); }
           g.fillStyle = '#4a3a2a'; g.beginPath(); g.ellipse(x, y, 22, 11, 0, 0, 7); g.fill();
           if (open) { g.fillStyle = '#0a0a18'; g.beginPath(); g.ellipse(x, y + 1, 17, 8, 0, 0, 7); g.fill(); }
-          else { g.fillStyle = '#8a847a'; g.beginPath(); g.ellipse(x, y, 20, 10, 0, 0, 7); g.fill(); g.fillStyle = '#5a544c'; g.fillRect(x - 12, y - 1, 24, 2); txt(ACTS[actOf(era)].id, x, y - 5, 8, '#2a2a2a', 'center'); }
+          else { g.fillStyle = '#8a847a'; g.beginPath(); g.ellipse(x, y, 20, 10, 0, 0, 7); g.fill(); g.fillStyle = '#5a544c'; g.fillRect(x - 12, y - 1, 24, 2); }
           g.strokeStyle = '#2a1a0a'; g.lineWidth = 2; g.beginPath(); g.moveTo(x - 22, y); g.lineTo(x - 28, y - 4); g.moveTo(x + 20, y + 4); g.lineTo(x + 27, y + 7); g.moveTo(x + 4, y - 11); g.lineTo(x + 7, y - 16); g.stroke();
-          txt(String(YEAR[era]), x, y + 16, 8, done ? '#ffd84a' : open ? '#bfe3ff' : '#aaa', 'center');
+          const full = era === nextEra() || Math.hypot(P.x - hx, P.y - hy) < 90;
+          txt(full ? eraTitle(era) : String(YEAR[era]), x, y + 16, 8, done ? '#ffd84a' : open ? '#bfe3ff' : '#aaa', 'center');
         }
         if (!isHoje && K.pois.portal) {
           const [px, py] = K.pois.portal, x = sx(px), y = sy(py), ok = M.exit || eraNeedMet(M.era), p = 0.5 + 0.5 * Math.sin(tt * 4);
@@ -1244,7 +1289,7 @@
           { y: mulaS.y, d: () => mula(sx(mulaS.x), sy(mulaS.y), mulaS.ph, mulaS.dir, 2, mulaS.moving, tt, { flame: (0.4 + 0.15 * curAct()) + (FLAMEPULSE > 0 ? 0.7 : 0), flicker: curAct() >= 3 && !G.flags.guia, hat: G.flags.guia, stetson: eggSwap > 0 }) },
           ...npcs.filter((n) => n.away <= tt && onS(n.x, n.y)).map((n) => ({ y: n.y, d: () => {
             dude(sx(n.x), sy(n.y), PAL[n.pal || n.id] || PAL.turista, n.ph * 14, n.face, 2, !!n.wander, { noHat: n.noHat });
-            const mk = n.quest && !G.quests[n.quest]?.done ? '?' : n.mini && !G.minis[n.mini] && !(((M.minis || []).find((x) => x.id === n.mini) || {}).act != null && !actOpen(((M.minis || []).find((x) => x.id === n.mini)).act)) ? '!' : n.shop ? '$' : '';
+            const mk = (n.quest && !G.quests[n.quest]?.done) || (n.quiz && !G.flags.guia && quizOf(M.era).some((qid) => !G.qok.includes(qid))) ? '?' : n.lesson ? 'i' : n.mini && !G.minis[n.mini] && !(((M.minis || []).find((x) => x.id === n.mini) || {}).act != null && !actOpen(((M.minis || []).find((x) => x.id === n.mini)).act)) ? '!' : n.shop ? '$' : '';
             if (mk) txt(mk, sx(n.x), sy(n.y) - 66 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#ffd84a', 'center');
           } })),
           ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), PAL[w.id] || PAL.turista, 0, 0, 2, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 70, 12, '#fff', 'center'); } })),
@@ -1326,7 +1371,7 @@
       win(reward = {}) {
         const first = !G.minis[mid];
         G.minis[mid] = 1; save();
-        if (reward.gold && first) giveGold(reward.gold);
+        if (first) giveGold(10); // todo minigame vencido paga +10 de ouro
         if (reward.dust) { G.dust += reward.dust; save(); }
         if (reward.item) giveItem(reward.item);
         if (!reward.serio) { sfx('win'); confetti(); } else sfx('sino');
@@ -1335,6 +1380,17 @@
         else setTimeout(finish, reward.serio ? 900 : 1500);
       },
       quit: back,
+      // Perdeu: no desafio que fecha a era, o portal joga para fora e a era recomeça do zero.
+      // Nos desafios extras (ou já vencidos), só recomeça o minigame.
+      lose(msg) {
+        sfx('bad');
+        const M = window.MAPS[fromMap], hard = M?.needMini === mid && !G.minis[mid];
+        if (!hard) { say([['mula', `${msg} Tenta de novo.`]], () => go(() => f(api), null)); return; }
+        say([['narr', 'Você não conseguiu.'], ['narr', msg], ['mula', 'O portal te jogou para fora. A era recomeça do zero: relatórios, perguntas e o desafio.']], () => {
+          resetEra(M.era); const h = window.MAPS.hoje.holes[M.era];
+          go(() => OW('hoje', [h[0], h[1] + 30]), 'Brasil · Hoje');
+        });
+      },
     };
     go(() => f(api), null);
   }

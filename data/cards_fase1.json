@@ -2,6 +2,7 @@
 {
   "id": "C00", "era": "prologo", "year": 2026, "yearLabel": "HOJE",
   "title": "A história moderna começa em 1500. Aqui, ela começa 200 anos depois.",
+  "imagine": "Imagine você neste mirante em 1718. Lá embaixo, em vez de pousadas, barracos de garimpeiros e o barulho da bateia raspando o cascalho do rio.",
   "hook": "The modern history of Brazil starts in 1500. Right here, nothing happened for 200 years. Then everything happened at once.",
   "facts": [
     "O mirante do Alto São Francisco tem um cruzeiro de 1718, ano em que o arraial virou Vila de São José.",
@@ -18,6 +19,7 @@
 {
   "id": "C01", "era": "mundo", "year": 1492, "yearLabel": "1492",
   "title": "Colombo erra o continente",
+  "imagine": "Imagine atravessar um oceano sem saber o que tem do outro lado, em três barcos de madeira, por mais de dois meses. Colombo morreu achando que tinha chegado à Ásia.",
   "hook": "Columbus was the first European tourist who refused to admit he was lost.",
   "facts": [
     "3 navios (Santa María, Pinta, Niña) e cerca de 90 homens.",
@@ -34,6 +36,7 @@
 {
   "id": "C02", "era": "mundo", "year": 1494, "yearLabel": "7 JUN 1494",
   "title": "O Tratado de Tordesilhas",
+  "imagine": "Imagine dois reis dividindo o mundo numa mesa, com uma régua, sem nunca ter visto aquelas terras. E sem perguntar nada a quem já morava nelas.",
   "hook": "In 1494, Spain and Portugal split the planet in half. Nobody asked the planet.",
   "facts": [
     "Assinado em 7 jun 1494.",
@@ -50,6 +53,7 @@
 {
   "id": "C03", "era": "mundo", "year": 1500, "yearLabel": "JAN 1500",
   "title": "O espanhol que chegou antes",
+  "imagine": "Imagine chegar a uma terra nova e ir embora só porque um papel assinado na Europa dizia que ela não era sua.",
   "hook": "Fun fact: the first European in Brazil was probably Spanish. Awkward.",
   "facts": [
     "Vicente Yáñez Pinzón, ex-capitão da Niña de Colombo, tocou o litoral do Nordeste em janeiro de 1500.",
@@ -64,12 +68,13 @@
 {
   "id": "C04", "era": "mundo", "year": 1500, "yearLabel": "22 ABR 1500",
   "title": "Cabral e a parada no caminho",
+  "imagine": "Imagine ser um marujo de Cabral e decidir fugir do navio para ficar numa terra desconhecida, sem falar a língua de ninguém.",
   "hook": "Cabral wasn't lost. He was going to India, took a wide turn, and bumped into Brazil.",
   "facts": [
     "13 navios, cerca de 1.500 homens. Chegada em Porto Seguro (BA).",
     "Achou que era uma ilha (“Ilha de Vera Cruz”).",
     "Mandou um navio de volta com a carta de Pero Vaz de Caminha e seguiu para a Índia.",
-    "Deixou 2 degredados; 2 grumetes fugiram e ficaram."
+    "Deixou 2 degredados; 2 marujos fugiram e ficaram."
   ],
   "joke": "The first Europeans to stay in Brazil were two convicts and two runaways. Honestly, that explains a lot.",
   "usa": "Georgia was also imagined as a destination for debtors. Your Georgia, our Bahia.",
@@ -81,6 +86,7 @@
 {
   "id": "C05", "era": "paubrasil", "year": 1502, "yearLabel": "1501–1502",
   "title": "Rio de Janeiro em janeiro",
+  "imagine": "Imagine batizar lugares pelo santo do dia no calendário. Se a baía tivesse sido vista em outro mês, o Rio de Janeiro teria outro nome.",
   "hook": "They found a bay, thought it was a river, and it was January. That's why it's called January River.",
   "facts": [
     "Expedição de reconhecimento de 1501–1502, com Américo Vespúcio.",
@@ -96,6 +102,8 @@
 {
   "id": "C06", "era": "paubrasil", "year": 1502, "yearLabel": "1502",
   "title": "O primeiro contrato: pau-brasil",
+  "imagine": "Imagine: na Europa, roupa vermelho forte era coisa de rei, de nobre e de cardeal. A tinta desta madeira coloria esses tecidos. Uma árvore cor de brasa deu nome a um país inteiro.",
+  "conferir": ["1500–1530 é a fase em que o pau-brasil foi o grande negócio exclusivo da Coroa; a extração seguiu por mais de 300 anos e o monopólio real (estanco) só acabou em 1859. Conferir a data do fim do estanco."],
   "hook": "Brazil is the only country named after a product. Like if America were called 'Tobacco'.",
   "facts": [
     "A árvore dava um corante vermelho valioso para tecidos na Europa; o nome vem de “brasa”.",
@@ -112,6 +120,7 @@
 {
   "id": "C07", "era": "paubrasil", "year": 1503, "yearLabel": "1503–1504",
   "title": "A feitoria de Cabo Frio",
+  "imagine": "Imagine 24 homens numa paliçada de madeira, a meses de casa, vigiando pilhas de troncos vermelhos à espera do próximo navio.",
   "hook": "Brazil's first European settlement wasn't a town. It was a warehouse.",
   "facts": [
     "Feitoria = entreposto fortificado para estocar pau-brasil.",
@@ -126,6 +135,7 @@
 {
   "id": "C08", "era": "paubrasil", "year": 1510, "yearLabel": "c.1510",
   "title": "Os náufragos que viraram chefes",
+  "imagine": "Imagine naufragar, chegar nadando a uma praia e ter que aprender tudo de novo: língua, comida, costumes. Caramuru virou uma ponte entre dois mundos.",
   "hook": "Our first 'founding fathers' were shipwreck survivors who married into indigenous families.",
   "facts": [
     "Caramuru (Diogo Álvares) naufragou na Bahia e casou com Paraguaçu, batizada na França em 1528 como Catarina.",
@@ -142,6 +152,7 @@
 {
   "id": "C09", "era": "paubrasil", "year": 1524, "yearLabel": "1524",
   "title": "O náufrago que chegou aos Incas",
+  "imagine": "Imagine caminhar de Santa Catarina até os Andes por trilhas abertas pelos guaranis, séculos antes de existir qualquer estrada.",
   "hook": "A Portuguese castaway walked from the Atlantic to the Inca Empire eight years before Pizarro.",
   "facts": [
     "Aleixo Garcia, sobrevivente de naufrágio em Santa Catarina, cruzou o continente pela trilha indígena do Peabiru.",
@@ -158,6 +169,7 @@
 {
   "id": "C10", "era": "acucar", "year": 1532, "yearLabel": "22 JAN 1532",
   "title": "São Vicente, a primeira vila",
+  "imagine": "Imagine uma vila com câmara e pelourinho na beira do mar, e a fumaça de um dos primeiros engenhos subindo logo atrás.",
   "hook": "After 32 years of 'we'll get to it', Portugal finally built a town.",
   "facts": [
     "Martim Afonso de Sousa funda São Vicente (SP) em 22 jan 1532: primeira vila oficial, com câmara e pelourinho.",
@@ -173,6 +185,7 @@
 {
   "id": "C11", "era": "acucar", "year": 1534, "yearLabel": "1534",
   "title": "As capitanias hereditárias",
+  "imagine": "Imagine receber do rei uma faixa de terra do tamanho de um país europeu, com a ordem de colonizar tudo com o seu próprio dinheiro.",
   "hook": "Portugal had a giant colony and no money. So they franchised it.",
   "facts": [
     "O litoral foi dividido em faixas entregues a donatários, que deviam colonizar por conta própria.",
@@ -188,6 +201,7 @@
 {
   "id": "C12", "era": "acucar", "year": 1549, "yearLabel": "1549",
   "title": "Salvador e o governo-geral",
+  "imagine": "Imagine construir uma capital do zero: uma cidade no alto, de frente para a baía, com padres, soldados e funcionários do rei chegando de navio.",
   "hook": "When the franchises failed, the king sent a manager.",
   "facts": [
     "Tomé de Sousa funda Salvador, primeira capital, em 1549.",
@@ -203,6 +217,7 @@
 {
   "id": "C13", "era": "acucar", "year": 1550, "yearLabel": "1550–1600",
   "title": "De “negros da terra” a africanos",
+  "imagine": "Imagine ser arrancado da sua terra e atravessar o mar acorrentado. De cada 10 africanos trazidos à força para as Américas, cerca de 4 vieram para o Brasil.",
   "hook": "Sugar needed hands. First they enslaved the indigenous peoples. Then they turned to Africa.",
   "facts": [
     "A primeira escravidão foi indígena (os “negros da terra”).",
@@ -219,6 +234,7 @@
 {
   "id": "C14", "era": "acucar", "year": 1554, "yearLabel": "1554–1557",
   "title": "Hans Staden quase vira jantar",
+  "imagine": "Imagine passar meses prisioneiro sem saber se o dia seguinte seria o último, e depois escrever um livro que a Europa inteira leu.",
   "hook": "The first Brazilian bestseller in Europe was written by a German who almost got eaten.",
   "facts": [
     "Capturado pelos Tupinambás perto de Bertioga, ficou meses esperando a execução ritual e conseguiu fugir.",
@@ -233,6 +249,7 @@
 {
   "id": "C15", "era": "acucar", "year": 1556, "yearLabel": "1556",
   "title": "O bispo que foi devorado",
+  "imagine": "Imagine a punição por um único ataque caindo sobre um povo inteiro. Foi o que a Coroa decidiu contra os Caetés.",
   "hook": "Brazil's first bishop survived a shipwreck. That was the easy part.",
   "facts": [
     "Pero Fernandes Sardinha naufragou em Alagoas e foi morto pelos Caetés.",
@@ -247,6 +264,7 @@
 {
   "id": "C16", "era": "acucar", "year": 1555, "yearLabel": "1555–1567",
   "title": "Os franceses no Rio e a guerra dos Tamoios",
+  "imagine": "Imagine a Baía de Guanabara cheia de navios franceses e aldeias tupinambás em guerra. O Rio de Janeiro quase foi francês.",
   "hook": "Rio de Janeiro was founded to kick out the French.",
   "facts": [
     "Villegaignon funda a França Antártica na Baía de Guanabara (1555).",
@@ -263,6 +281,7 @@
 {
   "id": "C17", "era": "acucar", "year": 1563, "yearLabel": "1563",
   "title": "Anchieta e o poema na areia",
+  "imagine": "Imagine ser refém e, para passar o tempo, escrever um poema na areia e decorar verso por verso. É assim que a tradição conta a história de Anchieta.",
   "hook": "A Jesuit hostage wrote a 5,000-line poem in the sand and memorized it.",
   "facts": [
     "José de Anchieta ficou refém dos Tamoios em Iperoig (Ubatuba) durante negociações de paz."
@@ -276,6 +295,7 @@
 {
   "id": "C18", "era": "invasoes", "year": 1580, "yearLabel": "1580",
   "title": "Portugal vira Espanha (por 60 anos)",
+  "imagine": "Imagine acordar e descobrir que o seu rei agora é o rei de outro país. E que os inimigos dele viraram os seus inimigos também.",
   "hook": "In 1580, Portugal's king died in Morocco without an heir. Spain inherited Portugal. And all of Spain's enemies.",
   "facts": [
     "União Ibérica (1580–1640).",
@@ -290,6 +310,7 @@
 {
   "id": "C19", "era": "invasoes", "year": 1591, "yearLabel": "1591",
   "title": "Piratas ingleses em Santos",
+  "imagine": "Imagine morar numa vila de praia e ver velas de piratas no horizonte, sem um exército de verdade para defender ninguém.",
   "hook": "Before the English bought our gold, they just stole it.",
   "facts": [
     "Thomas Cavendish saqueia Santos (1591).",
@@ -305,6 +326,7 @@
 {
   "id": "C20", "era": "invasoes", "year": 1624, "yearLabel": "1624–1625",
   "title": "Os holandeses tomam Salvador",
+  "imagine": "Imagine a capital do Brasil amanhecendo com bandeira holandesa. Durou só um ano, mas mostrou que o Brasil era cobiçado.",
   "hook": "The Dutch took the capital of Brazil. It took Spain and Portugal a giant fleet to get it back.",
   "facts": [
     "A WIC (Companhia das Índias Ocidentais) toma Salvador em 1624.",
@@ -319,6 +341,7 @@
 {
   "id": "C21", "era": "invasoes", "year": 1630, "yearLabel": "1630–1654",
   "title": "O Brasil Holandês",
+  "imagine": "Imagine pintores europeus desenhando pela primeira vez cajus, tamanduás e a gente daqui. É graças a eles que sabemos como era aquele Recife.",
   "hook": "For 24 years, Recife was a Dutch city. With canals, bridges, an observatory and a zoo.",
   "facts": [
     "Os holandeses tomam Pernambuco (1630), o coração do açúcar.",
@@ -335,6 +358,7 @@
 {
   "id": "C22", "era": "invasoes", "year": 1648, "yearLabel": "1648–1649",
   "title": "Guararapes",
+  "imagine": "Imagine um exército misturado: negros, indígenas, brancos e mestiços lutando lado a lado. Daí nasceu a ideia de um exército brasileiro.",
   "hook": "The Dutch were defeated by an army of Portuguese, indigenous and Black soldiers fighting side by side.",
   "facts": [
     "Batalhas dos Guararapes: 19 abr 1648 e 19 fev 1649.",
@@ -350,6 +374,7 @@
 {
   "id": "C23", "era": "invasoes", "year": 1654, "yearLabel": "1654",
   "title": "Os judeus de Recife fundam a comunidade judaica de Nova York",
+  "imagine": "Imagine ser obrigado a deixar o Recife, atravessar o oceano e ajudar a começar a comunidade judaica de uma cidade que viraria Nova York.",
   "hook": "When the Dutch left Brazil, 23 Jewish refugees sailed to New Amsterdam. They became the first Jewish community in New York.",
   "facts": [
     "Rendição holandesa em 1654.",
@@ -366,6 +391,7 @@
 {
   "id": "C24", "era": "invasoes", "year": 1661, "yearLabel": "1661",
   "title": "Ganhou a guerra, pagou a conta",
+  "imagine": "Imagine vencer uma guerra e ainda ter que pagar ao perdedor para ele aceitar que perdeu.",
   "hook": "Portugal won the war against the Dutch. Then paid the Dutch to go away.",
   "facts": [
     "Paz de Haia (1661): Portugal paga uma indenização enorme (cerca de 4 milhões de cruzados) para a Holanda reconhecer a perda do Brasil."
@@ -379,6 +405,7 @@
 {
   "id": "C25", "era": "invasoes", "year": 1650, "yearLabel": "1650–1690",
   "title": "A crise do açúcar",
+  "imagine": "Imagine alguém do outro lado do mar vendendo o mesmo produto que você, mais barato. O açúcar do Brasil perdeu espaço e Portugal ficou sem dinheiro.",
   "hook": "The Dutch took our sugar know-how to the Caribbean and undersold us. Globalization, 1650s edition.",
   "facts": [
     "Nas Antilhas, holandeses, ingleses e franceses passam a produzir açúcar mais barato.",
@@ -394,6 +421,7 @@
 {
   "id": "C26", "era": "invasoes", "year": 1711, "yearLabel": "1711",
   "title": "O corsário que sequestrou o Rio",
+  "imagine": "Imagine um corsário tomando o Rio inteiro e só indo embora depois de levar ouro, açúcar e bois como resgate.",
   "hook": "In 1711 a French privateer took Rio de Janeiro and held the whole city for ransom.",
   "facts": [
     "Duguay-Trouin toma o Rio e só sai depois de receber resgate em ouro, açúcar e gado."
@@ -407,6 +435,7 @@
 {
   "id": "C27", "era": "palmares", "year": 1600, "yearLabel": "c.1600–1694",
   "title": "Angola Janga",
+  "imagine": "Imagine milhares de pessoas que fugiram da escravidão construindo vilas, roças e comércio no alto da serra, livres, por quase cem anos.",
   "hook": "For almost 100 years, there was a free Black state in the mountains of northeastern Brazil.",
   "facts": [
     "Palmares, na Serra da Barriga (AL).",
@@ -423,6 +452,7 @@
 {
   "id": "C28", "era": "palmares", "year": 1695, "yearLabel": "1678–1695",
   "title": "Ganga Zumba, Zumbi e a traição",
+  "imagine": "Imagine resistir por décadas e cair por traição. Hoje, 20 de novembro, o dia em que Zumbi foi morto, é dia de lembrar a luta contra a escravidão.",
   "hook": "One leader made peace. The other refused it. Both paid with their lives.",
   "facts": [
     "Ganga Zumba aceita acordo (1678) e morre envenenado; Zumbi assume.",
@@ -438,6 +468,7 @@
 {
   "id": "C29", "era": "ouro", "year": 1674, "yearLabel": "1674–1681",
   "title": "O caçador de esmeraldas",
+  "imagine": "Imagine passar sete anos no mato procurando esmeraldas e morrer segurando pedras verdes que eram só turmalinas.",
   "hook": "The man who opened the road to the gold died believing he'd found emeralds. They were tourmalines.",
   "facts": [
     "Fernão Dias Paes passou 7 anos no sertão, achou turmalinas e morreu em 1681.",
@@ -454,6 +485,7 @@
 {
   "id": "C30", "era": "ouro", "year": 1693, "yearLabel": "1693–1698",
   "title": "O ouro aparece",
+  "imagine": "Imagine achar ouro e ele parecer pedra preta, coberto de ferro. Por isso a cidade ganhou o nome de Ouro Preto.",
   "hook": "Brazil had its gold rush 150 years before California.",
   "facts": [
     "1693: Antônio Rodrigues Arzão leva as primeiras amostras oficiais.",
@@ -471,6 +503,7 @@
 {
   "id": "C31", "era": "ouro", "year": 1697, "yearLabel": "1697–1701",
   "title": "A fome no meio do ouro",
+  "imagine": "Imagine ter ouro no bolso e não ter o que comer. Nas minas, uma galinha chegou a custar quase 30 vezes mais do que em São Paulo.",
   "hook": "People died of hunger with gold in their pockets.",
   "facts": [
     "Ninguém plantava. Fomes terríveis em 1697–98 e 1700–01.",
@@ -486,6 +519,7 @@
 {
   "id": "C32", "era": "ouro", "year": 1700, "yearLabel": "1700–1720",
   "title": "A corrida",
+  "imagine": "Imagine estradas de terra lotadas de gente correndo para o mesmo lugar atrás de ouro. E a maioria, trazida à força, nunca ficou com nada.",
   "hook": "Portugal lost so many people to the gold rush that it restricted emigration.",
   "facts": [
     "Dezenas de milhares chegam: paulistas, baianos, portugueses e, em maior número, africanos escravizados.",
@@ -501,6 +535,7 @@
 {
   "id": "C33", "era": "ouro", "year": 1703, "yearLabel": "1703",
   "title": "O Tratado de Methuen (“Panos e Vinhos”)",
+  "imagine": "Imagine o ouro tirado daqui ajudando a pagar fábricas na Inglaterra. Um pedaço da Revolução Industrial passou por Minas.",
   "hook": "In 1703 Portugal signed a deal with England: you buy our wine, we buy everything else. Guess who got the gold.",
   "facts": [
     "Portugal compra tecidos e manufaturados ingleses; a Inglaterra compra vinho português.",
@@ -517,6 +552,7 @@
 {
   "id": "C34", "era": "ouro", "year": 1707, "yearLabel": "1707–1709",
   "title": "Guerra dos Emboabas",
+  "imagine": "Imagine chamar de \"emboaba\" quem chegou depois de você. A briga era para saber quem tinha direito ao ouro.",
   "hook": "Brazil's first civil war: the guys who found the gold versus the guys who showed up later.",
   "facts": [
     "Paulistas × emboabas (portugueses e “forasteiros”).",
@@ -533,6 +569,7 @@
 {
   "id": "C35", "era": "ouro", "year": 1709, "yearLabel": "1709",
   "title": "O Capão da Traição",
+  "imagine": "Imagine se render com a promessa de ficar vivo e ser traído. O lugar ficou conhecido como Capão da Traição.",
   "hook": "They promised to spare their lives if they surrendered. They surrendered.",
   "facts": [
     "Paulistas cercados num capão de mato se rendem sob promessa de vida e são massacrados pelos emboabas de Bento do Amaral Coutinho.",
@@ -548,6 +585,7 @@
 {
   "id": "C36", "era": "ouro", "year": 1709, "yearLabel": "?",
   "title": "O nome “Rio das Mortes”",
+  "imagine": "Imagine uma lenda explicando um nome, e depois uma guerra parecendo confirmar a lenda. Às vezes a história e o mito se misturam.",
   "hook": "Locals say the bodies were thrown into the river, and that's how it got its name. The river disagrees: the name is older.",
   "facts": [
     "O nome aparece antes da guerra.",
@@ -563,6 +601,7 @@
 {
   "id": "C37", "era": "ouro", "year": 1709, "yearLabel": "1709–1711",
   "title": "O acordo que apagou o massacre",
+  "imagine": "Imagine um massacre terminando em perdão geral, como se nada tivesse acontecido. O acordo serviu para a Coroa controlar o ouro.",
   "hook": "Nobody was punished. Everybody got something. Very Brazilian.",
   "facts": [
     "Criação da Capitania de São Paulo e Minas do Ouro (1709).",
@@ -578,6 +617,7 @@
 {
   "id": "C38", "era": "ouro", "year": 1711, "yearLabel": "1711",
   "title": "As vilas do ouro",
+  "imagine": "Imagine um governador batizando uma cidade com o próprio nome e o rei mandando trocar. Assim ficou só Vila Rica.",
   "hook": "After the war, the king's answer was paperwork.",
   "facts": [
     "Mariana (Ribeirão do Carmo, 8 abr, a primeira), Vila Rica (8 jul), Sabará (17 jul).",
@@ -592,6 +632,7 @@
 {
   "id": "C39", "era": "ouro", "year": 1711, "yearLabel": "1711",
   "title": "O livro proibido de Antonil",
+  "imagine": "Imagine escrever um livro tão detalhado sobre a riqueza do Brasil que o rei manda recolher, com medo de ensinar o caminho do ouro aos inimigos.",
   "hook": "A Jesuit wrote a book about Brazil's wealth. The king banned it. It said too much.",
   "facts": [
     "Cultura e Opulência do Brasil (1711) descrevia as minas e os caminhos. A Coroa recolheu.",
@@ -608,6 +649,7 @@
 {
   "id": "C40", "era": "ouro", "year": 1713, "yearLabel": "8 DEZ 1713",
   "title": "São João del-Rei",
+  "imagine": "Imagine uma cidade onde os sinos avisam festa, morte e incêndio, e todo mundo entende. Em São João del-Rei ainda é assim.",
   "hook": "The town that survived the end of the gold because it learned to sell, to pray and to play music.",
   "facts": [
     "O Arraial Novo vira vila em 8 dez 1713, homenageando D. João V.",
@@ -625,6 +667,7 @@
 {
   "id": "C41", "era": "ouro", "year": 1718, "yearLabel": "19 JAN 1718",
   "title": "Vila de São José (Tiradentes)",
+  "imagine": "Imagine moradores pressionando para virar vila porque tinham mais ouro que o vizinho. Assim nasceu a Vila de São José, a Tiradentes de hoje.",
   "hook": "Founded to honor a prince. Today named after the man the prince's daughter had hanged.",
   "facts": [
     "O Arraial Velho de Santo Antônio vira Vila de São José del-Rei em 19 jan 1718, pelo Conde de Assumar, honrando o príncipe D. José.",
@@ -640,6 +683,7 @@
 {
   "id": "C42", "era": "ouro", "year": 1702, "yearLabel": "1702–1780",
   "title": "Ouro de superfície: fácil de achar, fácil de acabar",
+  "imagine": "Imagine forrar o fundo do riacho com couro de boi para prender o ouro fino. Em uns 80 anos, o ouro fácil acabou.",
   "hook": "Here the gold 'sprouted sweetly from the earth'. Which is why it ran out so fast.",
   "facts": [
     "Em Tiradentes o ouro era de aluvião (córregos e barrancos), não de mina profunda.",
@@ -656,6 +700,7 @@
 {
   "id": "C43", "era": "ouro", "year": 1720, "yearLabel": "1720",
   "title": "Casas de Fundição e a revolta de Vila Rica",
+  "imagine": "Imagine entregar à Coroa um quinto de tudo o que você acha, na hora. Quem protestou terminou enforcado.",
   "hook": "In 1720 the Crown said: no more gold dust. Everything gets melted, stamped and taxed. The miners said no.",
   "facts": [
     "Lei de 1719 cria as Casas de Fundição: quinto de 20% cobrado na hora, ouro em barra carimbada.",
@@ -674,6 +719,7 @@
 {
   "id": "C44", "era": "ouro", "year": 1720, "yearLabel": "2 DEZ 1720",
   "title": "Nasce a Capitania de Minas Gerais",
+  "imagine": "Imagine Minas ganhando governo próprio só para a Coroa vigiar melhor o ouro de perto.",
   "hook": "Minas Gerais was born from a tax, a revolt and a rope.",
   "facts": [
     "Minas é separada de São Paulo; capital: Vila Rica.",
@@ -689,6 +735,7 @@
 {
   "id": "C45", "era": "ouro", "year": 1720, "yearLabel": "1720+",
   "title": "O santo do pau oco",
+  "imagine": "Imagine uma imagem de santo, oca por dentro, cheia de ouro em pó passando pelos fiscais. É o que conta a origem popular da expressão \"santo do pau oco\".",
   "hook": "Brazilian tax evasion was so creative it was holy.",
   "facts": [
     "Imagens de santo ocas recheadas de ouro em pó para passar pelos registros."
@@ -702,6 +749,7 @@
 {
   "id": "C46", "era": "ouro", "year": 1720, "yearLabel": "1720+",
   "title": "“Quinto dos infernos”",
+  "imagine": "Imagine um imposto tão odiado que virou xingamento. Diz o ditado popular que \"quinto dos infernos\" vem do quinto do ouro.",
   "hook": "Twenty percent tax. They called it 'the fifth from hell'.",
   "facts": [],
   "joke": null,
@@ -713,6 +761,7 @@
 {
   "id": "C47", "era": "apogeu", "year": 1710, "yearLabel": "1710–1752",
   "title": "A Matriz de Santo Antônio",
+  "imagine": "Imagine levar mais de 40 anos construindo uma igreja e cobrir tudo de ouro por dentro. A Matriz de Santo Antônio é isso.",
   "hook": "42 years to build, 482 kilos of gold on the walls. According to us, the second richest church in gold in Brazil.",
   "facts": [
     "Construída de 1710 a 1752; altar-mor do português João Ferreira Sampaio.",
@@ -729,6 +778,7 @@
 {
   "id": "C48", "era": "apogeu", "year": 1720, "yearLabel": "1720–1800",
   "title": "As irmandades: uma igreja para cada grupo",
+  "imagine": "Imagine cada grupo da cidade rezando numa igreja diferente: os ricos numa, os africanos noutra, os pardos noutra. Até a fé era dividida.",
   "hook": "Why so many churches in Minas? Because every social group had to pray separately.",
   "facts": [
     "Matriz / São Francisco / Carmo → “homens bons” (brancos ricos, “sangue puro”).",
@@ -746,6 +796,7 @@
 {
   "id": "C49", "era": "apogeu", "year": 1750, "yearLabel": "séc. XVIII",
   "title": "Eixo do poder × eixo da servidão",
+  "imagine": "Imagine uma cidade onde 7 de cada 10 pessoas eram cativas e andavam pelos becos, longe das ruas principais.",
   "hook": "Tiradentes has two cities: the streets of power, and the alleys of servitude. You can still cross the whole town without touching a main street.",
   "facts": [
     "Os becos serviam para (1) cativos evitarem as ruas principais, (2) acesso às áreas de serviço, (3) escoar dejetos.",
@@ -761,6 +812,7 @@
 {
   "id": "C50", "era": "apogeu", "year": 1729, "yearLabel": "1729",
   "title": "Diamantes",
+  "imagine": "Imagine uma região inteira fechada pela Coroa, com guardas e regras duras, só para controlar os diamantes.",
   "hook": "Then they found diamonds. And the Crown locked an entire district.",
   "facts": [
     "Anúncio oficial em 1729.",
@@ -776,6 +828,7 @@
 {
   "id": "C51", "era": "apogeu", "year": 1735, "yearLabel": "1735–1750",
   "title": "A capitação: imposto por cabeça",
+  "imagine": "Imagine pagar imposto por cada pessoa da casa, até pelos escravizados, duas vezes por ano. Ficou tão pesado que a própria Coroa desistiu.",
   "hook": "Portugal tried a head tax. Literally per head, including every enslaved person.",
   "facts": [
     "Imposto por pessoa (incluindo escravizados), cobrado semestralmente.",
@@ -790,6 +843,7 @@
 {
   "id": "C52", "era": "apogeu", "year": 1749, "yearLabel": "1749",
   "title": "O chafariz de São José",
+  "imagine": "Imagine buscar água no chafariz todo dia e ter lei até para isso: era proibido lavar roupa no cocho da frente.",
   "hook": "The biggest colonial fountain in Minas. Three jobs: drinking water, horse trough and laundry.",
   "facts": [
     "Inaugurado em 1749; oratório com São José de Botas (padroeiro dos bandeirantes).",
@@ -805,6 +859,7 @@
 {
   "id": "C53", "era": "apogeu", "year": 1750, "yearLabel": "1750",
   "title": "As 100 arrobas",
+  "imagine": "Imagine uma conta que ninguém consegue pagar: 100 arrobas de ouro por ano. Se faltasse, a Coroa cobrava à força.",
   "hook": "In 1750 Portugal set a minimum: 100 arrobas of gold a year. About 1,500 kilos. Or else.",
   "facts": [
     "Se o quinto não chegasse a 100 arrobas (cerca de 1.500 kg), a diferença seria cobrada à força: a derrama."
@@ -820,6 +875,7 @@
 {
   "id": "C54", "era": "apogeu", "year": 1763, "yearLabel": "1763",
   "title": "A capital desce a serra",
+  "imagine": "Imagine ser preso por abrir um caminho novo. Toda estrada do ouro tinha que passar pelos fiscais do rei.",
   "hook": "The gold went down the mountain to Rio. So the capital followed it.",
   "facts": [
     "A capital do Brasil passa de Salvador para o Rio de Janeiro em 1763.",
@@ -837,6 +893,7 @@
 {
   "id": "C55", "era": "inconfidencia", "year": 1763, "yearLabel": "1763–1788",
   "title": "A bola de neve da derrama",
+  "imagine": "Imagine uma dívida que cresce todo ano e um governador novo chegando com ordem de cobrar tudo de uma vez.",
   "hook": "Every year they missed the target. Every year the debt rolled over. By 1788, it was huge.",
   "facts": [
     "O tour diz que houve uma derrama em 1763 e que a dívida chegou a mais de 8.600 kg em 1788.",
@@ -852,6 +909,7 @@
 {
   "id": "C56", "era": "inconfidencia", "year": 1785, "yearLabel": "1785",
   "title": "O alvará que fechou as fábricas",
+  "imagine": "Imagine ser proibido de fabricar o próprio tecido. A colônia tinha que comprar quase tudo de fora.",
   "hook": "In 1785 the queen banned manufacturing in Brazil. You want clothes? Buy Portuguese. Or English.",
   "facts": [
     "Alvará de D. Maria I proíbe manufaturas têxteis na colônia (só panos grossos para escravizados escapavam)."
@@ -866,6 +924,7 @@
 {
   "id": "C57", "era": "inconfidencia", "year": 1788, "yearLabel": "10 OUT 1788",
   "title": "A festa de batizado (a primeira reunião)",
+  "imagine": "Imagine uma festa de batizado em que, entre um brinde e outro, alguém começa a falar de revolução.",
   "hook": "The conspiracy started at a baptism party. In that house.",
   "facts": [
     "Padre Toledo, vigário da vila, batizou os filhos de Alvarenga Peixoto e Bárbara Heliodora.",
@@ -881,6 +940,7 @@
 {
   "id": "C58", "era": "inconfidencia", "year": 1788, "yearLabel": "1788–1789",
   "title": "O plano",
+  "imagine": "Imagine planejar uma república livre que manteria a escravidão. Liberdade, mas não para todos.",
   "hook": "They wanted a republic, a university, and São João del-Rei as the capital.",
   "facts": [
     "Esperar a derrama, sair às ruas, proclamar república (Minas e parte do Rio).",
@@ -898,6 +958,7 @@
 {
   "id": "C59", "era": "inconfidencia", "year": 1787, "yearLabel": "1787",
   "title": "O estudante que foi falar com Jefferson",
+  "imagine": "Imagine um estudante brasileiro em Paris pedindo a Thomas Jefferson ajuda para uma revolução.",
   "hook": "Two years before the conspiracy, a Brazilian student met Thomas Jefferson in France and asked for help.",
   "facts": [
     "José Joaquim da Maia se encontrou com Jefferson, então ministro dos EUA na França.",
@@ -913,6 +974,7 @@
 {
   "id": "C60", "era": "inconfidencia", "year": 1789, "yearLabel": "MAR 1789",
   "title": "A delação premiada",
+  "imagine": "Imagine trair os amigos em troca do perdão das suas dívidas. O nome de Silvério dos Reis virou sinônimo de traição.",
   "hook": "One of them owed the Crown a fortune. He traded his friends for his debt.",
   "facts": [
     "Joaquim Silvério dos Reis denuncia o grupo em março de 1789.",
@@ -929,6 +991,7 @@
 {
   "id": "C61", "era": "inconfidencia", "year": 1789, "yearLabel": "10 MAI 1789",
   "title": "Dez dias depois de Washington",
+  "imagine": "Imagine: dez dias antes, nos Estados Unidos, George Washington tomava posse como presidente. Aqui, quem sonhava com república era preso.",
   "hook": "On April 30, 1789, George Washington became president. Ten days later, Tiradentes was arrested in Rio.",
   "facts": [
     "Tiradentes, alferes do regimento dos Dragões, é preso no Rio em 10 mai 1789."
@@ -944,6 +1007,7 @@
 {
   "id": "C62", "era": "inconfidencia", "year": 1789, "yearLabel": "1789",
   "title": "Quem era Tiradentes",
+  "imagine": "Imagine um homem que arrancava dentes, guiava tropas e patrulhava estradas. Dos inconfidentes, foi o único que assumiu tudo.",
   "hook": "He was a dentist, a soldier, a muleteer, a miner. And the only one who didn't deny it.",
   "facts": [
     "Joaquim José da Silva Xavier, nascido na Fazenda do Pombal (região de Ritápolis, então termo de São José).",
@@ -960,6 +1024,7 @@
 {
   "id": "C63", "era": "inconfidencia", "year": 1789, "yearLabel": "1789",
   "title": "O poeta morto na cela",
+  "imagine": "Imagine um poeta morrendo numa cela sem que ninguém consiga explicar direito como.",
   "hook": "One of the conspirators was found dead in his cell. Suicide or murder? Still debated.",
   "facts": [
     "Cláudio Manuel da Costa, na Casa dos Contos (Ouro Preto)."
@@ -973,6 +1038,7 @@
 {
   "id": "C64", "era": "inconfidencia", "year": 1792, "yearLabel": "1792",
   "title": "O teatro da clemência",
+  "imagine": "Imagine uma sentença de morte para todos e uma carta de perdão já escrita antes, guardada para o último momento. Só um não foi perdoado.",
   "hook": "Eleven sentenced to death. Then the queen's letter of mercy is read. Everyone is spared. Except one.",
   "facts": [
     "A carta de D. Maria I já estava pronta antes da sentença.",
@@ -987,6 +1053,7 @@
 {
   "id": "C65", "era": "inconfidencia", "year": 1792, "yearLabel": "21 ABR 1792",
   "title": "A forca",
+  "imagine": "Imagine partes do corpo de alguém expostas na estrada como aviso. A Coroa queria que todos tivessem medo de sonhar com liberdade.",
   "hook": "Hanged in Rio, quartered, his head displayed in Vila Rica, his house destroyed and the ground salted.",
   "facts": [
     "Largo da Lampadosa (hoje Praça Tiradentes, Rio).",
@@ -1003,6 +1070,7 @@
 {
   "id": "C66", "era": "inconfidencia", "year": 1889, "yearLabel": "1889+",
   "title": "O Cristo Cívico (a barba inventada)",
+  "imagine": "Imagine um herói redesenhado cem anos depois, com barba e cabelo compridos parecidos com os de Jesus. Era a República criando o seu símbolo.",
   "hook": "The famous bearded Tiradentes, looking like Jesus? Invented by the Republic a hundred years later.",
   "facts": [
     "Alferes não usava barba (no máximo bigode, segundo o tour); presos tinham a cabeça raspada.",
@@ -1019,6 +1087,7 @@
 {
   "id": "C67", "era": "depois", "year": 1782, "yearLabel": "1782",
   "title": "Bom Jesus da Pobreza",
+  "imagine": "Imagine uma cidade que parou no tempo por quase 200 anos. Foi isso que salvou os casarões e as igrejas que você vê hoje.",
   "hook": "When the gold ended, a new social group appeared: white and broke. They got their own chapel too.",
   "facts": [
     "Capela de 1782 no Largo das Forras, marco do declínio.",
@@ -1033,6 +1102,7 @@
 {
   "id": "C68", "era": "depois", "year": 1808, "yearLabel": "1808",
   "title": "A corte foge para o Brasil",
+  "imagine": "Imagine a rainha, o príncipe e milhares de nobres desembarcando no Rio, fugindo de Napoleão. A colônia virou sede do império.",
   "hook": "Napoleon invaded Portugal, so the entire Portuguese court moved to Rio. Paid for by England.",
   "facts": [
     "Abertura dos portos (1808).",
@@ -1049,6 +1119,7 @@
 {
   "id": "C69", "era": "depois", "year": 1850, "yearLabel": "séc. XIX",
   "title": "“Uai” vem de “why”?",
+  "imagine": "Imagine uma palavra tão mineira que todo mundo inventa uma origem para ela. Nem sempre a história mais divertida é a verdadeira.",
   "hook": "Locals say 'Uai' comes from English miners asking 'why'. It's a great story. It's probably not true.",
   "facts": [
     "É etimologia popular; linguistas ligam “uai” a interjeições portuguesas como “ué”."
@@ -1062,6 +1133,7 @@
 {
   "id": "C70", "era": "depois", "year": 1831, "yearLabel": "1831–1888",
   "title": "“Para inglês ver” e o fim da escravidão",
+  "imagine": "Imagine uma lei que proíbe o tráfico de escravizados só no papel, \"para inglês ver\". A abolição levou mais de 50 anos para chegar, e sem reparação.",
   "hook": "Brazil was the last country in the Americas to abolish slavery. It passed laws 'just for the English to see'.",
   "facts": [
     "Lei de 1831 que proibia o tráfico e não era cumprida (origem mais aceita de “para inglês ver”).",
@@ -1079,6 +1151,7 @@
 {
   "id": "C71", "era": "depois", "year": 1866, "yearLabel": "1866+",
   "title": "Os Confederados",
+  "imagine": "Imagine americanos do sul dos Estados Unidos vindo para o Brasil depois de perder a guerra, porque aqui a escravidão ainda era permitida.",
   "hook": "After the Civil War, thousands of Southerners moved to Brazil. Their descendants still hold a Confederate festival near São Paulo.",
   "facts": [
     "Incentivados por D. Pedro II, milhares (estimativas variam muito; cerca de 10 mil é número comum) foram para o interior paulista (Americana, Santa Bárbara d'Oeste).",
@@ -1094,6 +1167,7 @@
 {
   "id": "C72", "era": "depois", "year": 1889, "yearLabel": "1889",
   "title": "Vila de São José vira Tiradentes",
+  "imagine": "Imagine uma cidade trocando o nome de um rei pelo nome do homem que a Coroa mandou enforcar.",
   "hook": "The town traded a prince's name for the name of the man the kingdom hanged.",
   "facts": [
     "Com a República, a cidade passa a se chamar Tiradentes.",
@@ -1109,6 +1183,7 @@
 {
   "id": "C73", "era": "depois", "year": 1938, "yearLabel": "1938",
   "title": "O tombamento",
+  "imagine": "Imagine o governo dizendo: esta cidade inteira é patrimônio e não pode ser destruída. Foi em 1938.",
   "hook": "Being poor saved this town. Nobody had money to tear anything down.",
   "facts": [
     "Tiradentes é tombada pelo IPHAN (então SPHAN) em 1938.",
@@ -1123,6 +1198,7 @@
 {
   "id": "C74", "era": "renascimento", "year": 1972, "yearLabel": "1972",
   "title": "O inglês que achou Tiradentes",
+  "imagine": "Imagine chegar a uma cidade quase esquecida e enxergar ali um tesouro. Um inglês ajudou Tiradentes a acordar.",
   "hook": "In 1972 an English engineer opened a big hotel in an abandoned town. Everyone said he was crazy.",
   "facts": [
     "Segundo o tour: John Parsons abre o Solar da Ponte (1972).",
@@ -1137,6 +1213,7 @@
 {
   "id": "C75", "era": "renascimento", "year": 1980, "yearLabel": "1980–1990",
   "title": "Burle Marx, Globo e o boom",
+  "imagine": "Imagine a sua rua virando cenário de novela. Tiradentes passou de cidade parada a destino de turistas e de cinema.",
   "hook": "A TV director loved this town, put it in soap operas, and overnight the tourists came.",
   "facts": [
     "Segundo o tour: jardins de Burle Marx no Largo das Forras (anos 1980).",
@@ -1153,6 +1230,7 @@
 {
   "id": "C76", "era": "renascimento", "year": 2026, "yearLabel": "HOJE",
   "title": "De volta ao Mirante",
+  "imagine": "Imagine contar toda esta história, do pau-brasil ao turismo, olhando para a mesma serra de onde saiu o ouro.",
   "hook": "So: a town born from gold, saved by poverty, and rediscovered by an Englishman. Very Brazilian.",
   "facts": [],
   "joke": null,
@@ -1165,6 +1243,7 @@
 {
   "id": "C77", "era": "renascimento", "year": 2026, "yearLabel": "Hoje",
   "title": "Os sinos falam",
+  "imagine": "Imagine uma cidade onde o sino diz se morreu um homem, uma mulher ou uma criança, e todos entendem só de ouvir.",
   "hook": "In São João del-Rei the bells don't just ring. They talk, and the whole town understands.",
   "facts": ["Em São João del-Rei, cada toque tem significado: festa, procissão, incêndio, morte.", "O toque de defunto diferencia homem, mulher e criança pela contagem das badaladas.", "O toque dos sinos em Minas Gerais e o ofício de sineiro foram registrados como patrimônio imaterial."],
   "joke": "Before WhatsApp groups, the whole town got the notification at once. And nobody could mute it.",

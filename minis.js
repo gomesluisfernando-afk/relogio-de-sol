@@ -1,6 +1,7 @@
 // Minigames do Relógio de Sol v2. Cada um é uma cena: MINIS[id](api) → { enter, update, draw, tap, down, drag, up, key }.
-// Regra comum: 60–120 s, toque ou setas, a mecânica ensina (não o texto), recomeço sem punição, prêmio concreto.
-// api: g, W, H, txt, box, wrap, say, sfx, music, bg, dude, mula, PAL, CARD, G, win(prêmio), quit().
+// Regra comum: toque ou setas, a mecânica ensina (não o texto), vitória paga +10 de ouro.
+// Perder o desafio que fecha a era (A.lose) joga o jogador para fora do portal e a era recomeça.
+// api: g, W, H, txt, box, wrap, say, sfx, music, bg, dude, mula, PAL, CARD, G, win(prêmio), lose(motivo), quit().
 'use strict';
 window.MINIS = (() => {
   const inR = (x, y, r) => r && x >= r[0] && y >= r[1] && x <= r[0] + r[2] && y <= r[1] + r[3];
@@ -32,17 +33,26 @@ window.MINIS = (() => {
   // ===================== 1. A Régua dos Reis (Tordesilhas, 1494) =====================
   function regua(A) {
     const { g, W, H, txt } = A;
-    const X0 = 140, X1 = 820, REAL = 560;
-    let x = 480, stage = 'intro', t = 0, reveal = 0, q = null;
-    const sa = [[230, 250], [300, 200], [380, 230], [470, 300], [560, 330], [600, 380], [580, 440], [530, 500], [470, 560], [400, 590], [330, 560], [270, 470], [230, 380]];
+    // mapa em graus: x = 480 + (27 - longitude oeste) * 4,5 ; y = 92 + (44 - latitude norte) * 4,5
+    const X0 = 140, X1 = 820, px = (lo) => 480 + (27 - lo) * 4.5, py = (la) => 92 + (44 - la) * 4.5;
+    const REAL = px(46.6), OK = 25; // meridiano de Tordesilhas: 370 léguas a oeste de Cabo Verde (~46°37' O)
+    const BR = [[51, 4], [50, 0], [44, -2.5], [38.5, -3.7], [35.2, -5.8], [34.8, -7.1], [35, -9], [37, -11], [38.5, -13], [39, -17], [40.3, -20.3], [42, -23], [45, -23.8], [48.5, -26.5], [48.8, -28.5], [51, -31], [53.4, -33.7], [57.6, -30.2], [54.6, -25.6], [55, -24], [57.9, -19], [60, -13.5], [65, -10], [70, -9.5], [73.9, -7.4], [69.9, -4.2], [69.5, 1], [67, 2], [63, 4], [60.7, 5.2], [59.5, 1.5], [56, 2], [54, 2.2], [51.5, 4.2]];
+    const AF = [[17.5, 14.7], [16.8, 21], [13, 27.5], [9.8, 30.5], [5.9, 35.8], [-10, 37.3], [-20, 32], [-32, 31.3], [-34, 28], [-43, 12], [-51, 11.8], [-40, -15], [-35, -25], [-20, -34.8], [-18, -31], [-12, -17], [-13, -6], [-9, -1], [-9.5, 4], [-4, 5], [4, 5], [8, 4.5], [13, 9], [16.5, 12.3]];
+    const IB = [[9.3, 43], [8, 43.7], [1.8, 43.4], [-3.2, 42.3], [-0.3, 39.5], [0.6, 38.7], [2, 36.7], [5.6, 36], [6.4, 36.8], [8.9, 37], [9.5, 38.8], [8.8, 41]];
+    const PT = [[8.9, 42.1], [6.2, 41.9], [6.9, 40.2], [7.4, 38.5], [7.4, 37.2], [8.9, 37], [9.5, 38.8], [8.8, 41]];
+    let x = 700, stage = 'intro', t = 0, reveal = 0, q = null;
+    const poly = (pts, col, a = 1) => { g.globalAlpha = a; g.fillStyle = col; g.beginPath(); pts.forEach(([lo, la], k) => (k ? g.lineTo(px(lo), py(la)) : g.moveTo(px(lo), py(la)))); g.closePath(); g.fill(); g.globalAlpha = 1; };
     function world() {
-      g.fillStyle = '#e8d8a8'; g.fillRect(X0, 90, X1 - X0, 360); g.strokeStyle = '#7a5a2a'; g.lineWidth = 4; g.strokeRect(X0, 90, X1 - X0, 360);
-      g.fillStyle = '#c8a868';
-      g.beginPath(); g.moveTo(700, 110); g.lineTo(790, 120); g.lineTo(800, 200); g.lineTo(760, 240); g.lineTo(700, 210); g.closePath(); g.fill(); // Europa
-      g.beginPath(); g.moveTo(690, 250); g.lineTo(790, 250); g.lineTo(800, 330); g.lineTo(760, 430); g.lineTo(720, 420); g.lineTo(690, 320); g.closePath(); g.fill(); // África
-      g.fillStyle = '#7a5a2a'; g.fillRect(640, 328, 6, 6); txt('Cabo Verde', 650, 312, 7, '#5a3a1a');
-      g.globalAlpha = reveal; g.fillStyle = '#9ab060'; g.beginPath(); sa.forEach(([a, b], i) => (i ? g.lineTo(a, b) : g.moveTo(a, b))); g.closePath(); g.fill(); g.globalAlpha = 1;
-      if (reveal < 1) { g.fillStyle = `rgba(200,190,160,${0.9 - reveal * 0.9})`; g.fillRect(X0 + 4, 94, 520, 352); txt('???', 380, 260, 20, `rgba(90,70,40,${1 - reveal})`, 'center'); }
+      g.fillStyle = '#e8d8a8'; g.fillRect(X0, 90, X1 - X0, 360);
+      g.save(); g.beginPath(); g.rect(X0, 90, X1 - X0, 360); g.clip();
+      poly(AF, '#c8a868'); poly(IB, '#c8a868'); poly(PT, '#b08a4a');
+      poly(BR, '#4a7a2a', 0.22 + reveal * 0.6); // sombra suave do Brasil (didática: em 1494 ninguém sabia que ele estava ali)
+      g.restore();
+      g.strokeStyle = '#7a5a2a'; g.lineWidth = 4; g.strokeRect(X0, 90, X1 - X0, 360);
+      txt('Portugal', px(8.6) - 6, py(39.5) - 4, 7, '#3a2a10', 'right'); txt('Espanha', px(-1) + 4, py(41), 7, '#3a2a10');
+      txt('ÁFRICA', px(-12), py(10), 9, '#7a5a2a', 'center');
+      g.fillStyle = '#7a1a1a'; g.fillRect(px(24) - 3, py(15) - 3, 6, 6); txt('Cabo Verde', px(24), py(15) + 6, 7, '#5a3a1a', 'center');
+      txt('Mar Oceano', px(32), py(30), 8, '#8a7a5a', 'center');
     }
     return {
       enter() { A.music('mundo'); },
@@ -53,27 +63,30 @@ window.MINIS = (() => {
         world();
         g.strokeStyle = '#a01a1a'; g.lineWidth = 4; g.setLineDash([8, 6]); g.beginPath(); g.moveTo(x, 92); g.lineTo(x, 448); g.stroke(); g.setLineDash([]);
         if (stage === 'signed' && reveal > 0.6) { g.strokeStyle = '#1a3aa0'; g.lineWidth = 3; g.beginPath(); g.moveTo(REAL, 92); g.lineTo(REAL, 448); g.stroke(); txt('linha real', REAL + 6, 96, 8, '#1a3aa0'); }
-        // cortesãos: Castela (esquerda) gosta da linha à direita; Portugal (direita) gosta à esquerda
+        // cortesãos: Castela (esquerda) quer a linha mais a leste; Portugal (direita), mais a oeste
         const k = (x - X0) / (X1 - X0);
         A.dude(70, 430, A.PAL.cortesao, 0, 2, 4, false); A.dude(890, 430, { ...A.PAL.cortesao, shirt: '#2a6a2a' }, 0, -1, 4, false);
         txt('Castela', 70, 450, 8, '#fff', 'center'); txt('Portugal', 890, 450, 8, '#fff', 'center');
         txt(k > 0.5 ? ':)' : ':(', 70, 300, 16, k > 0.5 ? '#9be36a' : '#ff5a5a', 'center'); txt(k < 0.5 ? ':)' : ':(', 890, 300, 16, k < 0.5 ? '#9be36a' : '#ff5a5a', 'center');
-        head(A, 'A Régua dos Reis · 1494', stage === 'signed' ? 'Ninguém sabia o que havia do outro lado da linha.' : 'Arraste a linha. Depois, assine.');
+        head(A, 'A Régua dos Reis · 1494', stage === 'signed' ? 'Em 1494 ninguém sabia o que havia do outro lado da linha.' : 'Arraste a linha até 370 léguas a oeste de Cabo Verde. Depois, assine.');
         if (stage === 'play') q = btn(A, [W / 2 - 80, H - 66, 160, 44], 'ASSINAR');
-        if (stage === 'intro') intro(A, 'A Régua dos Reis', ['1494. Espanha e Portugal dividem o mundo com uma linha.', 'Arraste a linha vermelha para onde quiser e assine. Não há resposta errada: ninguém sabia o que tinha do outro lado.']);
+        if (stage === 'intro') intro(A, 'A Régua dos Reis', ['1494. Espanha e Portugal dividem o mundo com uma linha: 370 léguas a oeste de Cabo Verde.', 'A sombra verde é o Brasil. Em 1494 ninguém sabia que ele existia, mas aqui você aprende onde a linha caiu.', 'Arraste a linha vermelha até o lugar certo e assine. Se errar feio, o portal te joga para fora.']);
         quitBtn(A);
       },
-      tap(px, py) {
-        if (inR(px, py, [W - 110, H - 46, 96, 34])) return A.quit();
+      tap(px0, py0) {
+        if (inR(px0, py0, [W - 110, H - 46, 96, 34])) return A.quit();
         if (stage === 'intro') { stage = 'play'; A.sfx('tap'); return; }
-        if (stage === 'play' && inR(px, py, q)) {
+        if (stage === 'play' && inR(px0, py0, q)) {
           stage = 'signed'; A.sfx('sino');
-          const diff = Math.abs(x - REAL), side = x > REAL ? 'mais para leste' : 'mais para oeste';
-          setTimeout(() => A.say([['narr', 'A névoa se abre: atrás da linha havia um continente inteiro.'], ['mula', diff < 30 ? 'Quase em cima da linha de verdade: 370 léguas a oeste de Cabo Verde. Você tem régua no sangue.' : `A linha real ficou ${side} que a sua. E o Brasil ficou cortado por ela. Ninguém perguntou para quem morava aqui.`]], () => A.win({ card: 'C02', item: 'regua', gold: 20 })), 1600);
+          const diff = Math.abs(x - REAL);
+          setTimeout(() => {
+            if (diff <= OK) A.say([['narr', 'A névoa se abre: atrás da linha havia um continente inteiro.'], ['mula', 'Quase em cima da linha de verdade: 370 léguas a oeste de Cabo Verde. Só a ponta leste do Brasil ficava com Portugal.'], ['mula', 'E ninguém perguntou nada para quem morava aqui.']], () => A.win({ card: 'C02', item: 'regua' }));
+            else A.lose(`A linha ficou ${x > REAL ? 'a leste' : 'a oeste'} demais. A de verdade passava a 370 léguas de Cabo Verde, cortando o Brasil de Belém até Laguna.`);
+          }, 1600);
         }
       },
-      down(px, py) { if (stage === 'play' && py > 90 && py < 450) x = Math.max(X0 + 10, Math.min(X1 - 10, px)); },
-      drag(px) { if (stage === 'play') { x = Math.max(X0 + 10, Math.min(X1 - 10, px)); } },
+      down(px0, py0) { if (stage === 'play' && py0 > 90 && py0 < 450) x = Math.max(X0 + 10, Math.min(X1 - 10, px0)); },
+      drag(px0) { if (stage === 'play') { x = Math.max(X0 + 10, Math.min(X1 - 10, px0)); } },
       key(k) { if (stage === 'play') { if (k === 'ArrowLeft') x = Math.max(X0 + 10, x - 10); if (k === 'ArrowRight') x = Math.min(X1 - 10, x + 10); if (k === 'Enter') this.tap(W / 2, H - 44); } else if (stage === 'intro') this.tap(0, 0); },
     };
   }
@@ -82,20 +95,22 @@ window.MINIS = (() => {
   function escambo(A) {
     const { g, W, H, txt } = A;
     const OFFERS = [['Machado', 100], ['Faca', 85], ['Miçangas', 25], ['Espelho', 10]];
-    let stage = 'intro', bx = 140, tx = 140, carry = 0, logs = 0, util = [], waves = [], tw = 1.5, rects = [], msg = '', t = 0;
+    const TEMPO = 30, VEL = 260; // ajuste fino: segundos para as 12 toras e velocidade do Buck
+    let stage = 'intro', bx = 140, tx = 140, carry = 0, logs = 0, util = [], waves = [], tw = 0.75, rects = [], msg = '', t = 0, left = TEMPO;
     const avg = () => (util.length ? Math.round(util.reduce((a, b) => a + b, 0) / util.length) : 0);
     return {
       enter() { A.music('paubrasil'); },
       update(dt) {
         t += dt;
         if (stage !== 'walk') return;
-        const sp = 140 * dt, kx = (A.keys.ArrowRight || A.keys.d ? 1 : 0) - (A.keys.ArrowLeft || A.keys.a ? 1 : 0);
+        if ((left -= dt) <= 0) { stage = 'gone'; A.lose('O tempo acabou antes de 12 toras bem trocadas.'); return; }
+        const sp = VEL * dt, kx = (A.keys.ArrowRight || A.keys.d ? 1 : 0) - (A.keys.ArrowLeft || A.keys.a ? 1 : 0);
         if (kx) tx = bx + kx * 40;
         if (Math.abs(tx - bx) > 2) bx += Math.sign(tx - bx) * Math.min(sp, Math.abs(tx - bx));
         if (bx < 200 && carry < 3) { carry = 3; A.sfx('hop'); msg = 'Três toras nas costas. Atravesse a praia.'; }
         if (bx > 780 && carry > 0) { stage = 'offer'; A.sfx('coin'); }
-        if ((tw -= dt) <= 0) { tw = 1.2 + Math.random() * 1.4; const wx = 260 + Math.random() * 460; waves.push({ x: wx, y: H, warn: 0.9 }); }
-        waves = waves.filter((w) => { if (w.warn > 0) { w.warn -= dt; return true; } w.y -= 360 * dt; if (Math.abs(w.y - 360) < 14 && Math.abs(w.x - bx) < 46 && carry > 0 && !w.hit) { w.hit = 1; carry--; A.sfx('hit'); A.shake(0.2); msg = 'A onda levou uma tora!'; } return w.y > 180; });
+        if ((tw -= dt) <= 0) { tw = 0.6 + Math.random() * 0.7; const wx = 260 + Math.random() * 460; waves.push({ x: wx, y: H, warn: 0.9 }); }
+        waves = waves.filter((w) => { if (w.warn > 0) { w.warn -= dt; return true; } w.y -= 720 * dt; if (Math.abs(w.y - 360) < 14 && Math.abs(w.x - bx) < 46 && carry > 0 && !w.hit) { w.hit = 1; carry--; A.sfx('hit'); A.shake(0.2); msg = 'A onda levou uma tora!'; } return w.y > 180; });
       },
       draw() {
         g.fillStyle = '#5a8a3a'; g.fillRect(0, 0, W, H);
@@ -105,7 +120,7 @@ window.MINIS = (() => {
         for (const w of waves) { if (w.warn > 0) { g.fillStyle = `rgba(255,255,255,${0.4 + 0.4 * Math.sin(t * 20)})`; g.fillRect(w.x - 40, 420, 80, 8); } else { g.fillStyle = 'rgba(160,210,255,.85)'; g.fillRect(w.x - 46, w.y - 10, 92, 24); g.fillStyle = '#fff'; g.fillRect(w.x - 46, w.y - 12, 92, 4); } }
         A.dude(bx, 380, A.PAL.buck, t * 14, tx > bx ? 2 : -1, 3, Math.abs(tx - bx) > 2);
         for (let i = 0; i < carry; i++) { g.fillStyle = '#9a3a22'; g.fillRect(bx - 20, 300 - i * 9, 40, 8); }
-        head(A, 'Escambo · 1502', `Toras entregues: ${logs}/12 · Utilidade média: ${avg()}%`);
+        head(A, 'Escambo · 1502', `Toras: ${logs}/12 · Utilidade: ${avg()}%`, stage === 'intro' ? null : left, TEMPO);
         if (msg) A.txt(msg, W / 2, 80, 10, '#fff', 'center');
         // medidor de utilidade
         g.fillStyle = '#0a1040'; g.fillRect(W / 2 - 150, 460, 300, 14); g.fillStyle = avg() >= 70 ? '#9be36a' : '#ffb04a'; g.fillRect(W / 2 - 150, 460, 3 * avg(), 14); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(W / 2 - 150, 460, 300, 14); g.fillStyle = '#fff'; g.fillRect(W / 2 - 150 + 210, 456, 2, 22);
@@ -113,7 +128,7 @@ window.MINIS = (() => {
           A.box(220, 150, 520, 260, 0.96); A.txt(`O português oferece, por ${carry} toras:`, W / 2, 175, 11, '#ffd84a', 'center');
           rects = OFFERS.map(([l], i) => btn(A, [250 + (i % 2) * 240, 210 + Math.floor(i / 2) * 80, 220, 60], l, '#e8dcb0', '#1a1030', 12));
         }
-        if (stage === 'intro') intro(A, 'Escambo', ['Busque toras de pau-brasil na mata (esquerda) e leve até a feitoria (direita).', 'As ondas levam toras. Escolha bem o que aceitar em troca: o medidor só sobe com o que serve para quem derruba árvore com pedra.', 'Meta: 12 toras com utilidade de 70% ou mais.']);
+        if (stage === 'intro') intro(A, 'Escambo', ['Busque toras de pau-brasil na mata (esquerda) e leve até a feitoria (direita).', 'As ondas levam toras. Escolha bem o que aceitar em troca: o medidor só sobe com o que serve para quem derruba árvore com pedra.', 'Meta: 12 toras com utilidade de 70% ou mais em 30 segundos. O relógio para enquanto você escolhe a troca.']);
         quitBtn(A);
       },
       tap(px, py) {
@@ -124,7 +139,7 @@ window.MINIS = (() => {
           const i = rects.findIndex((r) => inR(px, py, r)); if (i < 0) return;
           logs += carry; for (let k = 0; k < carry; k++) util.push(OFFERS[i][1]); carry = 0; A.sfx(OFFERS[i][1] > 50 ? 'ok' : 'tap');
           msg = OFFERS[i][1] > 50 ? `${OFFERS[i][0]}: isso muda a vida de quem corta árvore.` : `${OFFERS[i][0]}: bonito, mas não corta nada.`;
-          if (logs >= 12 && avg() >= 70) { stage = 'done'; A.say([['caramuru', 'Agora você entendeu. O valor de uma coisa depende de quem precisa dela.'], ['mula', 'Machado de ferro para quem só tinha pedra: isso valia uma floresta. Literalmente.']], () => A.win({ card: 'C06', item: 'machado', gold: 25 })); return; }
+          if (logs >= 12 && avg() >= 70) { stage = 'done'; A.say([['caramuru', 'Agora você entendeu. O valor de uma coisa depende de quem precisa dela.'], ['mula', 'Machado de ferro para quem só tinha pedra: isso valia uma floresta. Literalmente.']], () => A.win({ card: 'C06', item: 'machado' })); return; }
           if (logs >= 12) msg = 'Muitas toras, pouca utilidade. Continue trocando melhor.';
           stage = 'walk'; tx = 140;
         }
@@ -167,7 +182,7 @@ window.MINIS = (() => {
           order.push(hit[1]); A.sfx('tap');
           if (order.length === SEQ.length) {
             const ok = order.every((v, k) => v === k);
-            if (ok) { stage = 'done'; A.say([['caminha', 'Senhor, posto que o capitão-mor e os outros capitães escrevam... eu também escrevo. E nesta ordem.'], ['mula', 'A primeira notícia do Brasil foi uma carta. E já tinha propaganda imobiliária no final.']], () => A.win({ card: 'C05', gold: 15 })); }
+            if (ok) { stage = 'done'; A.say([['caminha', 'Senhor, posto que o capitão-mor e os outros capitães escrevam... eu também escrevo. E nesta ordem.'], ['mula', 'A primeira notícia do Brasil foi uma carta. E já tinha propaganda imobiliária no final.']], () => A.win({ card: 'C05' })); }
             else { A.sfx('bad'); const wrong = order.map((i) => SEQ[i]).slice(0, 3).join(' Depois: '); order = []; A.say([['caminha', `Majestade... "${wrong}"...`], ['mula', 'Ficou parecendo que rezaram a missa antes de chegar. Tenta de novo.']]); }
           }
         }
@@ -187,7 +202,7 @@ window.MINIS = (() => {
         if (stage !== 'play') return;
         t += dt; rot += dt * 3;
         if (t > next + WIN) { if (!hit) { jams++; streak++; flash = 0.4; A.sfx('hit'); A.shake(0.15); } hit = false; next += BEAT; }
-        if (streak >= 3) { streak = 0; t = 0; next = BEAT; A.sfx('bad'); jams = 0; }
+        if (streak >= 3) { stage = 'gone'; A.lose('Três entaladas seguidas. A moenda parou.'); return; }
         if (flash > 0) flash -= dt;
         if (t >= TOTAL) { stage = 'end'; A.music(null); A.sfx('sino'); }
       },
@@ -204,7 +219,7 @@ window.MINIS = (() => {
         for (let i = 0; i < hands; i++) { g.fillStyle = '#5a3a28'; g.fillRect(140 + i * 110, 400, 34, 22); g.fillRect(150 + i * 110, 390, 14, 12); }
         head(A, 'A Moenda · 1570', 'Toque quando a cana chega no quadrado. O engenho não para.', stage === 'play' ? TOTAL - t : null, TOTAL);
         txt(`mãos: ${hands}`, 30, H - 40, 10, '#ddd');
-        if (stage === 'intro') intro(A, 'A Moenda', ['Toque no ritmo para empurrar a cana entre os cilindros.', 'Três entaladas seguidas e o ciclo recomeça.', 'Aguente 90 segundos.']);
+        if (stage === 'intro') intro(A, 'A Moenda', ['Toque no ritmo para empurrar a cana entre os cilindros.', 'Três entaladas seguidas e você perde.', 'Aguente 90 segundos.']);
         if (stage === 'end') { g.fillStyle = 'rgba(0,0,0,.75)'; g.fillRect(0, 0, W, H); const c = A.CARD.C12; A.wrap(c.title, W - 200, 16).forEach((l, i) => txt(l, W / 2, 200 + i * 28, 16, '#fff', 'center')); txt('toque para continuar', W / 2, 400, 10, '#aaa', 'center'); }
         quitBtn(A);
       },
@@ -228,7 +243,7 @@ window.MINIS = (() => {
     const sx = (i) => 120 + i * 60;
     return {
       enter() { A.music('invasoes'); deal(); },
-      update(dt) { if (stage === 'play') { t -= dt; if (t <= 0) { stage = 'lost'; A.sfx('bad'); } } },
+      update(dt) { if (stage === 'play') { t -= dt; if (t <= 0) { stage = 'gone'; A.lose('A maré subiu antes de a ponte ficar pronta.'); } } },
       draw() {
         A.bg('img/bg_capibaribe.jpg', 3, 0.3, '#2a6fb0');
         if (!A.img('img/bg_capibaribe.jpg')) { g.fillStyle = '#2a6fb0'; g.fillRect(0, 0, W, H); g.fillStyle = '#7a9a50'; g.fillRect(0, 70, 100, H); g.fillRect(W - 100, 70, 100, H); }
@@ -258,7 +273,7 @@ window.MINIS = (() => {
         slots[i] = true; A.sfx('stone'); msg = '';
         const n = slots.filter(Boolean).length;
         if (n === 4) facts.push('Primeira ponte do Brasil'); if (n === 8) facts.push('Observatório no Recife'); if (n === 11) facts.push('Frans Post pintava a paisagem');
-        if (n === 12) { stage = 'done'; A.say([['nassau', 'Uma ponte! Invasores também constroem, forasteiro. Recife ganhou ponte, observatório e pintores.'], ['mula', 'Ninguém conta essa parte na escola. Agora o relatório conta.']], () => A.win({ card: 'C22', gold: 25 })); return; }
+        if (n === 12) { stage = 'done'; A.say([['nassau', 'Uma ponte! Invasores também constroem, forasteiro. Recife ganhou ponte, observatório e pintores.'], ['mula', 'Ninguém conta essa parte na escola. Agora o relatório conta.']], () => A.win({ card: 'C22' })); return; }
         deal();
       },
       key() { if (stage === 'intro') this.tap(0, 0); },
@@ -277,7 +292,7 @@ window.MINIS = (() => {
         prog += dt * (0.022 + lit * 0.006);
         if (hold === lit && hold < 4) { holdT += dt; if (holdT >= 2) { lit++; hold = -1; holdT = 0; A.sfx('ok'); } }
         if (lit >= 4) { stage = 'won'; A.sfx('sino'); }
-        else if (prog >= 1) { stage = 'lost'; A.sfx('bad'); }
+        else if (prog >= 1) { stage = 'gone'; A.lose('O bandeirante chegou antes de o mocambo ser avisado.'); }
       },
       draw() {
         g.fillStyle = '#2a4a2a'; g.fillRect(0, 0, W, H);
@@ -323,7 +338,7 @@ window.MINIS = (() => {
       update(dt) { if (stage === 'play') { t -= dt; if (t <= 0) this.check(); } if (zoom) { zoom.t -= dt; if (zoom.t <= 0) zoom = null; } },
       check() {
         const right = stones.filter((s, i) => s.tur === marks.has(i)).length;
-        if (right >= 8) { stage = 'done'; A.say([['fernao', `...${right} de 10. Então eram... turmalinas? Sete anos no mato por pedra verde comum?`], ['mula', 'Fernão Dias morreu achando que tinha esmeraldas. A corrida do ouro nasceu de uma busca errada.']], () => A.win({ card: 'C29', item: 'turmalina', gold: 15 })); }
+        if (right >= 8) { stage = 'done'; A.say([['fernao', `...${right} de 10. Então eram... turmalinas? Sete anos no mato por pedra verde comum?`], ['mula', 'Fernão Dias morreu achando que tinha esmeraldas. A corrida do ouro nasceu de uma busca errada.']], () => A.win({ card: 'C29', item: 'turmalina' })); }
         else { A.sfx('bad'); A.say([['fernao', `Só ${right} certas! Olhe de novo: turmalina é prisma de três lados, fosca, com estrias compridas.`]], () => { deal(); t = 60; lupa = 2; }); }
       },
       draw() {
@@ -388,7 +403,7 @@ window.MINIS = (() => {
       tap(px, py) {
         if (inR(px, py, [W - 110, H - 46, 96, 34])) return A.quit();
         if (stage === 'intro') { stage = 'play'; return; }
-        if (stage === 'end') { if (got >= 15) { stage = 'done'; A.say([['mula', `${got} de pó na mochila. Agora corre para a Casa de Fundição antes que o Cobrador de verdade te veja.`]], () => A.win({ dust: got })); } else { stage = 'play'; t = 60; got = 0; nug = []; } return; }
+        if (stage === 'end') { if (got >= 15) { stage = 'done'; A.say([['mula', `${got} de pó na mochila. Agora corre para a Casa de Fundição antes que o Cobrador de verdade te veja.`]], () => A.win({ dust: got })); } else { stage = 'gone'; A.lose(`Só ${got} pepitas de 15.`); } return; }
         if (stage === 'play') { P.tx = px; P.ty = py; }
       },
       key() { if (stage === 'intro' || stage === 'end') this.tap(0, 0); },
@@ -398,7 +413,7 @@ window.MINIS = (() => {
   // ===================== 9. A Balança do Quinto (Casa de Fundição, 1725) =====================
   function balanca(A) {
     const { g, W, H, txt } = A;
-    let stage = 'intro', dust = 0, put = [], streak = 0, rects = {}, msg = '';
+    let stage = 'intro', dust = 0, put = [], streak = 0, erros = 0, rects = {}, msg = '';
     const deal = () => { dust = 5 * (4 + Math.floor(Math.random() * 17)); put = []; };
     const sum = () => put.reduce((a, b) => a + b, 0);
     return {
@@ -420,7 +435,7 @@ window.MINIS = (() => {
         rects.undo = btn(A, [610, 380, 110, 44], 'TIRAR', '#8a9ad8');
         rects.ok = btn(A, [W / 2 - 80, 440, 160, 44], 'PESAR');
         if (msg) txt(msg, W / 2, 352, 10, '#fff', 'center');
-        if (stage === 'intro') intro(A, 'A Balança do Quinto', ['Só barra com o selo do rei podia circular. Pó de ouro era crime.', 'Ponha pesos no outro prato até dar exatamente 20% do pó: o Quinto da Coroa.', 'Três fundições certas seguidas.']);
+        if (stage === 'intro') intro(A, 'A Balança do Quinto', ['Só barra com o selo do rei podia circular. Pó de ouro era crime.', 'Ponha pesos no outro prato até dar exatamente 20% do pó: o Quinto da Coroa.', 'Três fundições certas seguidas. Três erros e você perde.']);
         quitBtn(A);
       },
       tap(px, py) {
@@ -431,9 +446,10 @@ window.MINIS = (() => {
         if (inR(px, py, rects.undo)) { put.pop(); A.sfx('tap'); return; }
         if (inR(px, py, rects.ok)) {
           const target = dust * 0.2, s = sum();
-          if (s === target) { streak++; A.sfx('coin'); msg = `Barra com o selo real! ${dust} de pó, ${target} para a Coroa.`; if (streak >= 3) { stage = 'done'; const n = A.G.dust; A.G.dust = 0; A.G.gold += n; A.save(); A.say([['fundidor', 'Três barras certinhas. A Coroa não tem do que reclamar.'], ['cobrador', 'Hmpf. Por hoje.'], ['mula', n ? `E todo o seu pó (${n}) virou ouro selado.` : 'Viu? 20% de qualquer coisa: a Coroa sempre sabia fazer essa conta.']], () => A.win({ card: 'C43', gold: 30 })); return; } }
-          else if (s < target) { streak = 0; A.sfx('bad'); msg = ''; A.say([['cobrador', `Sonegação! O Quinto de ${dust} é ${target}. Você separou ${s}.`]]); }
-          else { streak = 0; A.sfx('bad'); msg = ''; A.say([['cobrador', `A Coroa agradece os ${s - target} a mais. Era ${target}.`]]); }
+          if (s === target) { streak++; A.sfx('coin'); msg = `Barra com o selo real! ${dust} de pó, ${target} para a Coroa.`; if (streak >= 3) { stage = 'done'; const n = A.G.dust; A.G.dust = 0; A.G.gold += n; A.save(); A.say([['fundidor', 'Três barras certinhas. A Coroa não tem do que reclamar.'], ['cobrador', 'Hmpf. Por hoje.'], ['mula', n ? `E todo o seu pó (${n}) virou ouro selado.` : 'Viu? 20% de qualquer coisa: a Coroa sempre sabia fazer essa conta.']], () => A.win({ card: 'C43' })); return; } }
+          else if (++erros >= 3) { stage = 'gone'; A.lose(`Três pesagens erradas. O Quinto de ${dust} era ${target}.`); return; }
+          else if (s < target) { streak = 0; A.sfx('bad'); msg = ''; A.say([['cobrador', `Sonegação! O Quinto de ${dust} é ${target}. Você separou ${s}. (erro ${erros} de 3)`]]); }
+          else { streak = 0; A.sfx('bad'); msg = ''; A.say([['cobrador', `A Coroa agradece os ${s - target} a mais. Era ${target}. (erro ${erros} de 3)`]]); }
           deal();
         }
       },
@@ -451,7 +467,7 @@ window.MINIS = (() => {
     const shuffle = () => { for (let i = pos.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pos[i], pos[j]] = [pos[j], pos[i]]; } };
     return {
       enter() { A.music('depois'); order = P.map((_, i) => i).sort(() => Math.random() - 0.5); shuffle(); },
-      update(dt) { if (stage !== 'play') return; t -= dt; if ((wind -= dt) <= 0) { wind = 8; shuffle(); A.sfx('hop'); msg = 'O vento trocou os pedestais de lugar!'; } if (t <= 0) { stage = 'lost'; A.sfx('bad'); } },
+      update(dt) { if (stage !== 'play') return; t -= dt; if ((wind -= dt) <= 0) { wind = 8; shuffle(); A.sfx('hop'); msg = 'O vento trocou os pedestais de lugar!'; } if (t <= 0) { stage = 'gone'; A.lose('O tempo acabou antes dos doze profetas.'); } },
       draw() {
         A.bg('img/bg_congonhas.jpg', 3, 0.4, '#8a8a6a');
         if (!A.img('img/bg_congonhas.jpg')) { g.fillStyle = '#a8a888'; g.fillRect(0, 70, W, H); }
@@ -470,7 +486,7 @@ window.MINIS = (() => {
         if (stage === 'lost') { stage = 'play'; t = 120; cur = 0; placed = new Set(); return; }
         if (stage !== 'play') return;
         const k = pos.findIndex((_, i) => inR(px, py, slot(i))); if (k < 0) return;
-        if (pos[k] === order[cur]) { placed.add(order[cur]); cur++; A.sfx('ok'); msg = ''; if (cur >= 12) { stage = 'done'; A.say([['aprendiz', 'Os doze estão no lugar. O mestre fez isso quando o ouro já tinha ido embora.'], ['mula', 'O ouro acabou. O barroco ficou. Anota isso: é a pista do relatório final.']], () => A.win({ card: 'C67', gold: 30 })); } }
+        if (pos[k] === order[cur]) { placed.add(order[cur]); cur++; A.sfx('ok'); msg = ''; if (cur >= 12) { stage = 'done'; A.say([['aprendiz', 'Os doze estão no lugar. O mestre fez isso quando o ouro já tinha ido embora.'], ['mula', 'O ouro acabou. O barroco ficou. Anota isso: é a pista do relatório final.']], () => A.win({ card: 'C67' })); } }
         else { A.sfx('bad'); t -= 3; msg = 'Esse não. -3 s'; }
       },
       key() { if (stage === 'intro') this.tap(0, 0); },
@@ -533,7 +549,7 @@ window.MINIS = (() => {
           if (!cur.seq.startsWith(input)) { A.sfx('bad'); A.say([['sineiro', 'Errou a badalada. A cidade inteira ouviu. De novo.']]); play = cur.seq.split(''); pi = 0; pt = 0.8; phase = 'listen'; input = ''; return; }
           if (input === cur.seq) {
             wins++; A.sfx('ok');
-            if (wins >= 5) { stage = 'done'; A.say([['sineiro', 'Agora você fala a língua dos sinos. E eu vou te ajudar: quando houver um relatório perto, eu toco.'], ['mula', 'Radar de igreja. O melhor prêmio do jogo, confia.']], () => A.win({ card: 'C77', gold: 40 })); return; }
+            if (wins >= 5) { stage = 'done'; A.say([['sineiro', 'Agora você fala a língua dos sinos. E eu vou te ajudar: quando houver um relatório perto, eu toco.'], ['mula', 'Radar de igreja. O melhor prêmio do jogo, confia.']], () => A.win({ card: 'C77' })); return; }
             pick();
           }
         }

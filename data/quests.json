@@ -5,7 +5,7 @@
     "witnesses": [
       { "from": "Um marinheiro de Palos", "text": "Ele foi capitão da Niña, na viagem de Colombo.", "card": "C03" },
       { "from": "mula", "text": "Chegou num mês de janeiro, antes da frota de 13 navios.", "card": "C03" },
-      { "from": "Um grumete fugido", "text": "Pelo tratado, aquela terra era de Portugal. Por isso a Espanha nem reivindicou.", "card": "C02" }
+      { "from": "Um marujo fugido", "text": "Pelo tratado, aquela terra era de Portugal. Por isso a Espanha nem reivindicou.", "card": "C02" }
     ],
     "suspects": [
       { "id": "pinzon", "name": "Vicente Yáñez Pinzón", "image": "cards/c03.webp" },
