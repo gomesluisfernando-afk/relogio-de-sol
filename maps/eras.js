@@ -239,13 +239,13 @@ window.MAPS = window.MAPS || {};
       start: [160, 780], portal: [60, 860],
       T0: [130, 140], T1: [270, 210], T2: [440, 380], T3: [530, 420], T4: [560, 490], T5: [480, 580], T6: [380, 650], T7: [300, 610], T8: [650, 800], T9: [330, 560], T10: [840, 690], T11: [910, 270], T12: [790, 230], T13: [960, 500], T14: [880, 600], T15: [170, 860],
     },
-    labels: [[130, 70, 'Mirante'], [800, 105, 'Matriz'], [500, 610, 'Beco da Pedreira'], [530, 395, 'Largo das Forras']],
+    // placas das paradas mostram o nome de cada uma (game.js); sem rótulos repetidos aqui
     npcs: [{ id: 'louie', at: 'T3', lines: [], egg(S, n, E) {
       const k = (E.G.flags.louieN = (E.G.flags.louieN || 0) + 1);
       if (E.G.flags.guia) return E.say([['louie', 'Hey, colleague! How\'s the cowboy-hat thing working with the Texans?'], ['buck', 'Like a charm, partner. They think I\'m one of them.'], ['louie', 'Aren\'t you?'], ['buck', 'Long story. Involves a fountain.']]);
       if (k < 3) return E.say([['louie', k === 1 ? 'Folks, this is the Largo das Forras. "Forras" were freed women who sold food here.' : 'And yes, the cobblestones are original. Your ankles will remember Tiradentes.']]);
       E.secret('louie', [['louie', 'You know, you\'d make a decent guide. Cowboy hat\'s a nice touch.'], ['mula', 'Ouviu isso? Anota.']]);
     } }],
-    arrive: [['sineiro', 'Tiradentes de hoje. As paradas do tour estão marcadas (T0 a T15). Ande até elas.']],
+    arrive: [['sineiro', 'Tiradentes de hoje. As paradas do tour têm placa com o nome. Ande até elas.']],
   });
 })();

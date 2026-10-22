@@ -1124,9 +1124,9 @@
       }
       if (M.tour) for (const st of RAW.tour.stops) {
         const q = K.pois[st.id]; if (!q) continue;
-        add(q[0], q[1], 34, st.id, () => {
+        add(q[0], q[1], 34, st.name, () => {
           const seen = (G.flags.tour ||= {}); const novo = !seen[st.id]; seen[st.id] = 1; save();
-          const ls = [['sineiro', `${st.id} · ${st.name}. Olhe: ${st.lookAt}.`], ...(st.extras || []).slice(0, 2).map((x) => ['buck', x.joke])];
+          const ls = [['sineiro', `${st.name}. Olhe: ${st.lookAt}.`], ...(st.extras || []).slice(0, 2).map((x) => ['buck', x.joke])];
           if (st.transition) ls.push(['buck', st.transition]);
           say(ls, () => { if (novo) floatTxt(`parada ${Object.keys(seen).length}/${RAW.tour.stops.length}`, '#9be36a'); });
         });
@@ -1265,7 +1265,7 @@
           if (k.startsWith('bateia') && !(dustAt[k] > tt)) { g.fillStyle = '#ffd84a'; for (let i = 0; i < 4; i++) g.fillRect(sx(p[0]) - 8 + i * 5, sy(p[1]) - 3 + Math.sin(tt * 6 + i) * 2, 3, 3); }
           if (k.startsWith('door_')) { g.fillStyle = `rgba(255,216,74,${0.4 + 0.3 * Math.sin(tt * 4)})`; g.fillRect(sx(p[0]) - 10, sy(p[1]) - 4, 20, 8); }
         }
-        if (M.tour) for (const st of RAW.tour.stops) { const p = K.pois[st.id]; if (!p || !onS(p[0], p[1])) continue; const ok = G.flags.tour?.[st.id]; g.fillStyle = ok ? '#3a7a3a' : '#2a3a8a'; g.fillRect(sx(p[0]) - 14, sy(p[1]) - 40, 28, 16); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(sx(p[0]) - 14, sy(p[1]) - 40, 28, 16); txt(st.id, sx(p[0]), sy(p[1]) - 36, 8, '#fff', 'center'); }
+        if (M.tour) for (const st of RAW.tour.stops) { const p = K.pois[st.id]; if (!p || !onS(p[0], p[1]) || (TGT?.label === st.name && !busy())) continue; const ok = G.flags.tour?.[st.id]; g.font = `8px ${FONT}`; const w = g.measureText(st.name).width + 12; g.fillStyle = ok ? '#3a7a3a' : '#2a3a8a'; g.fillRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); txt(st.name, sx(p[0]), sy(p[1]) - 36, 8, '#fff', 'center'); }
         for (const mi of M.minis || []) {
           if (!mi.at) continue;
           const p = K.pois[mi.at]; if (!p || !onS(p[0], p[1])) continue;
