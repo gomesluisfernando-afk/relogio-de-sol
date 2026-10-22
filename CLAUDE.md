@@ -21,7 +21,9 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 
 ## Controles (nada de tocar no mundo)
 - Celular: joystick virtual à esquerda + botão A à direita. A faz o que estiver perto (falar, pegar, entrar).
-- Com diálogo/pergunta na tela, joystick e A somem; fica o botão ▶ de passar do próprio diálogo.
+- Com diálogo, pergunta ou janela (relatório, caderno, dossiê, inventário) na tela, joystick e A somem.
+- Diálogo só avança no botão ▶ dele; janela só fecha no botão FECHAR. Tocar fora não passa nem fecha nada.
+  No teclado: Espaço/Enter passa o diálogo, Esc fecha a janela.
 - Teclado: setas/WASD + Espaço/Enter/E. Toque só em botões de interface (SAIR, opções, som, tela cheia, mochila).
 
 ## Diretriz dos minigames (`minis.js`)
