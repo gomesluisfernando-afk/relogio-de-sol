@@ -81,7 +81,7 @@
   let AC = null, MASTER = null, muted = !!G.flags.muted;
   function audio() {
     if (AC) { if (AC.state === 'suspended') AC.resume(); return AC; }
-    try { AC = new (window.AudioContext || window.webkitAudioContext)(); MASTER = AC.createGain(); MASTER.gain.value = muted ? 0 : 0.5; MASTER.connect(AC.destination); } catch { AC = null; }
+    try { AC = new (window.AudioContext || window.webkitAudioContext)(); MASTER = AC.createGain(); MASTER.gain.value = muted ? 0 : 0.5; MASTER.connect(AC.destination); loadSamples(); bgm(0.18); } catch { AC = null; }
     return AC;
   }
   const NOTE = { C: 0, 'C#': 1, D: 2, 'D#': 3, E: 4, F: 5, 'F#': 6, G: 7, 'G#': 8, A: 9, 'A#': 10, B: 11 };
@@ -104,6 +104,7 @@
   }
   function sfx(n) {
     if (!audio()) return;
+    if (BUF[n]) { const src = AC.createBufferSource(), v = AC.createGain(); v.gain.value = 0.8; src.buffer = BUF[n]; src.connect(v).connect(MASTER); src.start(); return; }
     const t = AC.currentTime + 0.01;
     ({
       bip: () => tone(880, t, 0.03, 'square', 0.05),
@@ -125,48 +126,16 @@
       flash: () => { noise(t, 0.3, 0.25); tone(1600, t, 0.2, 'square', 0.06, 400); },
     })[n]?.();
   }
-  // Músicas: trilhas como strings de notas, uma por colcheia; '.' = pausa; 'x' = ruído.
-  const SONGS = {
-    title: [120, ['square', 0.07, 'C5 . G5 . C6 . . . G5 . E5 . G5 . . . F5 . A5 . C6 . . . G5 . B5 . D6 . . .'], ['triangle', 0.16, 'C3 . C3 . C3 . C3 . E3 . E3 . E3 . E3 . F3 . F3 . F3 . F3 . G3 . G3 . G3 . G3 .'], ['noise', 0.05, 'x . . . x . x . x . . . x . x . x . . . x . x . x . . . x x x x']],
-    hoje: [96, ['triangle', 0.12, 'E5 . G5 . C6 . G5 . F5 . A5 . C6 . A5 . E5 . G5 . C6 . G5 . D5 . F5 . B5 . G5 .'], ['square', 0.04, 'C3 . . C3 . . G2 . A2 . . A2 . . E2 . F2 . . F2 . . C3 . G2 . . G2 . . D3 .'], ['noise', 0.025, '. . x . . . x . . . x . . . x . . . x . . . x . . . x . . . x .']],
-    mundo: [100, ['triangle', 0.12, 'D5 . F5 . A5 . . . G5 . E5 . C5 . . . D5 . F5 . A5 . D6 . C6 . A5 . G5 . . .'], ['square', 0.04, 'D3 . . . A2 . . . C3 . . . G2 . . . D3 . . . A2 . . . F2 . . . A2 . . .']],
-    paubrasil: [150, ['square', 0.05, 'C5 D5 E5 G5 A5 G5 E5 D5 C5 . A4 . C5 . . . E5 G5 A5 C6 A5 G5 E5 . D5 . C5 . . . . .'], ['triangle', 0.14, 'C3 . G3 . C3 . G3 . A2 . E3 . A2 . E3 . F2 . C3 . F2 . C3 . G2 . D3 . G2 . D3 .'], ['noise', 0.03, 'x . . x . . x . x . . x . . x . x . . x . . x . x . . x . . x .']],
-    acucar: [72, ['sine', 0.14, 'A4 . . . C5 . . . B4 . . . E4 . . . A4 . . . C5 . . . E5 . . . D5 . . .'], ['triangle', 0.12, 'A2 . . . . . . . E2 . . . . . . . F2 . . . . . . . E2 . . . . . . .']],
-    invasoes: [112, ['square', 0.06, 'G4 . G4 . D5 . D5 . E5 . E5 . D5 . . . C5 . C5 . B4 . B4 . A4 . A4 . G4 . . .'], ['triangle', 0.14, 'G2 . D3 . G2 . D3 . C3 . G2 . C3 . G2 . D3 . A2 . D3 . A2 . G2 . D3 . G2 . . .'], ['noise', 0.04, 'x . x x x . x . x . x x x . x . x . x x x . x . x . x x x x x x']],
-    palmares: [108, ['triangle', 0.12, 'E4 . G4 . A4 . . . E4 . G4 . A4 . . . E4 . G4 . A4 . G4 . E4 . . . . . . .'], ['noise', 0.06, 'x . x . . x x . x . x . . x x . x . x . . x x . x x . x . x x .'], ['sine', 0.12, 'E2 . . . E2 . . . A2 . . . E2 . . . E2 . . . A2 . . . B2 . . . E2 . . .']],
-    ouro: [132, ['square', 0.06, 'A4 . C5 . E5 . C5 . A4 . C5 . E5 . A5 . G5 . E5 . D5 . C5 . B4 . C5 . A4 . . .'], ['triangle', 0.14, 'A2 A2 . A2 A2 . E2 . A2 A2 . A2 A2 . E2 . F2 F2 . F2 F2 . C3 . E2 E2 . E2 E2 . B2 .'], ['noise', 0.04, 'x . . . x . . . x . . . x . x . x . . . x . . . x . . . x x x x']],
-    apogeu: [90, ['triangle', 0.11, 'C5 E5 G5 C6 G5 E5 C5 E5 F5 A5 C6 F6 C6 A5 F5 A5 G5 B5 D6 G6 D6 B5 G5 B5 C6 G5 E5 G5 C6 . . .'], ['square', 0.04, 'C3 . . . . . . . F2 . . . . . . . G2 . . . . . . . C3 . . . . . . .']],
-    inconfidencia: [140, ['square', 0.05, 'E4 F4 E4 D#4 E4 F4 G4 F4 E4 F4 E4 D#4 E4 . B3 . E4 F4 E4 D#4 E4 F4 A4 G4 F4 E4 D#4 E4 . . . .'], ['triangle', 0.13, 'E2 . E2 . E2 . E2 . E2 . E2 . E2 . E2 . A2 . A2 . A2 . A2 . B2 . B2 . B2 . B2 .'], ['noise', 0.04, 'x . . . x . . . x . . . x . . . x . . . x . . . x . . . x . x .']],
-    depois: [66, ['triangle', 0.1, 'G4 . . . . . . . E4 . . . . . . . C4 . . . . . . . D4 . . . . . . .'], ['sine', 0.1, 'C3 . . . . . . . . . . . . . . . A2 . . . . . . . . . . . . . . .']],
-    renascimento: [100, ['triangle', 0.11, 'E5 . D5 E5 . C5 . A4 . . G4 A4 . C5 . . D5 . C5 D5 . B4 . G4 . . E4 G4 . A4 . .'], ['square', 0.04, 'A2 . . E3 . . A2 . D3 . . A3 . . D3 . G2 . . D3 . . G2 . C3 . . G3 . . C3 .'], ['noise', 0.025, '. . x . . x . . . . x . . x . . . . x . . x . . . . x . . x . .']],
-    cobrador: [168, ['square', 0.06, 'A4 A4 G#4 A4 . A4 G#4 A4 C5 C5 B4 C5 . C5 B4 C5 A4 A4 G#4 A4 . A4 G#4 A4 E5 D5 C5 B4 A4 . . .'], ['triangle', 0.14, 'A2 . A2 . A2 . A2 . A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . E2 . E2 . E2 . E2 .'], ['noise', 0.05, 'x . x . x . x . x . x . x . x . x . x . x . x . x . x . x x x x']],
-    mini: [140, ['triangle', 0.11, 'C5 E5 G5 E5 C5 E5 G5 E5 D5 F5 A5 F5 D5 F5 A5 F5 E5 G5 B5 G5 E5 G5 B5 G5 C5 E5 G5 C6 G5 E5 C5 .'], ['square', 0.04, 'C3 . G2 . C3 . G2 . D3 . A2 . D3 . A2 . E3 . B2 . E3 . B2 . C3 . G2 . C3 . . .'], ['noise', 0.04, 'x . . x x . . x x . . x x . . x x . . x x . . x x . x . x . x .']],
-    drone: [60, ['sine', 0.12, 'A2 . . . . . . . . . . . . . . . E2 . . . . . . . . . . . . . . .']],
-    tambor: [108, ['noise', 0.09, 'x . . . x . . . x . . . x . . . x . . . x . . . x . . . x . . .'], ['sine', 0.1, 'A1 . . . . . . . A1 . . . . . . . A1 . . . . . . . A1 . . . . . . .']],
-    cosmos: [50, ['sine', 0.1, 'A3 . . . . . . . E4 . . . . . . . D4 . . . . . . . C4 . . . . . . .'], ['triangle', 0.06, 'A1 . . . . . . . . . . . . . . . F1 . . . . . . . . . . . . . . .']],
-  };
-  let song = null, songStep = 0, songNext = 0;
-  function music(name) {
-    if ((song?.name || null) === (name || null)) return;
-    const s = SONGS[name];
-    song = s ? { name, bpm: s[0], parsed: s.slice(1).map(([w, v, n]) => [w, v, n.split(/\s+/)]) } : null;
-    songStep = 0; songNext = AC ? AC.currentTime + 0.05 : 0;
-  }
-  setInterval(() => {
-    if (!song || !AC) return;
-    const dt = 60 / song.bpm / 2;
-    if (songNext < AC.currentTime - 1) songNext = AC.currentTime;
-    while (songNext < AC.currentTime + 0.12) {
-      for (const [w, v, notes] of song.parsed) {
-        const n = notes[songStep % notes.length];
-        if (n === 'x') noise(songNext, 0.05, v);
-        else if (n !== '.') tone(freq(n), songNext, dt * 0.95, w, v);
-      }
-      songStep++; songNext += dt;
-    }
-  }, 25);
+  // Trilha única de fundo (audio/musica.mp3, livre de direitos), volume baixo; abaixa sob as narrações.
+  const BGM = new Audio('audio/musica.mp3'); BGM.loop = true; BGM.volume = 0.18;
+  const bgm = (v) => { BGM.volume = v; BGM.muted = muted; if (BGM.paused) BGM.play().catch(() => {}); };
+  function music() {} // as trilhas por era saíram: a música de fundo é uma só
+  // Efeitos gravados (ElevenLabs) substituem o chiptune quando carregados; senão fica o som sintetizado.
+  const BUF = {};
+  const loadSamples = () => ['sino', 'sinoP', 'sinos', 'portal', 'fall', 'card', 'coin', 'garimpo', 'apito', 'ondas', 'flash', 'moenda', 'cascos']
+    .forEach((n) => fetch(`audio/${n}.mp3`).then((r) => r.arrayBuffer()).then((b) => AC.decodeAudioData(b)).then((d) => { BUF[n] = d; }).catch(() => {}));
   const sndBtn = document.getElementById('snd');
-  const setMute = (m) => { muted = m; G.flags.muted = m; save(); if (MASTER) MASTER.gain.value = m ? 0 : 0.5; sndBtn.textContent = m ? '×' : '♪'; vid.muted = true; };
+  const setMute = (m) => { muted = m; G.flags.muted = m; save(); if (MASTER) MASTER.gain.value = m ? 0 : 0.5; sndBtn.textContent = m ? '×' : '♪'; vid.muted = m; BGM.muted = m; };
   sndBtn.onclick = () => { audio(); setMute(!muted); };
   setMute(muted);
 
@@ -843,15 +812,15 @@
     const next = () => {
       i++;
       if (i >= clips.length) return end();
-      vid.src = clips[i].src; vid.muted = true; vid.style.display = 'block';
-      vid.play().catch(() => next());
+      vid.src = clips[i].src; vid.muted = muted; vid.volume = 1; vid.style.display = 'block';
+      vid.play().catch(() => { vid.muted = true; vid.play().catch(() => next()); }); // celular sem permissão de som: segue mudo
     };
-    const end = () => { if (over) return; over = true; vid.pause(); vid.style.display = 'none'; vid.removeAttribute('src'); vid.load(); done(); };
+    const end = () => { if (over) return; over = true; bgm(0.18); vid.pause(); vid.style.display = 'none'; vid.removeAttribute('src'); vid.load(); done(); };
     vid.onended = () => next();
     vid.onerror = () => next();
     return {
       t: 0,
-      enter() { music(clips.music || null); next(); },
+      enter() { bgm(0.05); next(); },
       update(dt) { this.t += dt; },
       draw() {
         g.clearRect(0, 0, W, H);
@@ -1051,7 +1020,9 @@
     return {
       travel, S,
       enter() {
-        music(M.music || M.era);
+        // som de chegada: sinos na cidade, mar nas eras da costa
+        if (id === 'tiradentes') setTimeout(() => sfx('sinos'), 500);
+        if (id === 'mundo' || id === 'paubrasil') setTimeout(() => sfx('ondas'), 500);
         G.era = id;
         const first = !G.eras[M.era]?.visited;
         G.eras[M.era] = { ...(G.eras[M.era] || {}), visited: true };
@@ -1106,7 +1077,7 @@
           if (COB.state !== 'chase' && G.dust > 0 && COB.cool <= 0 && dist < 120) {
             const ang = Math.atan2(P.y - COB.y, P.x - COB.x), fa = Math.atan2(COB.dir[1], COB.dir[0]);
             let da = Math.abs(ang - fa); if (da > Math.PI) da = 2 * Math.PI - da;
-            if (da < 35 * Math.PI / 180 || dist < 40) { COB.state = 'chase'; COB.path = null; chase = true; music('cobrador'); floatTxt('O COBRADOR TE VIU!', '#ff6a5a'); }
+            if (da < 35 * Math.PI / 180 || dist < 40) { COB.state = 'chase'; COB.path = null; chase = true; sfx('apito'); floatTxt('O COBRADOR TE VIU!', '#ff6a5a'); }
           }
           let tx, ty, spd = 60;
           if (COB.state === 'chase') { tx = P.x; ty = P.y; spd = 95; if (G.dust <= 0 || dist > 260) { COB.state = 'patrol'; COB.path = null; chase = false; music(M.music || M.era); } }
@@ -1162,7 +1133,7 @@
           if (d > 40) near.portal = 0;
         }
         for (const [k, p] of Object.entries(K.pois)) {
-          if (k.startsWith('bateia') && d2(pt, p) < 18 && !(dustAt[k] > tt)) { dustAt[k] = tt + 25; G.dust += 5; save(); sfx('coin'); floatTxt('+5 pó de ouro ✨'); FLAMEPULSE = 0.5; }
+          if (k.startsWith('bateia') && d2(pt, p) < 18 && !(dustAt[k] > tt)) { dustAt[k] = tt + 25; G.dust += 5; save(); sfx('garimpo'); floatTxt('+5 pó de ouro ✨'); FLAMEPULSE = 0.5; }
           if (k === 'fundicao') {
             if (d2(pt, p) < 24 && !near.fund) {
               near.fund = 1; P.path = [];
@@ -1173,7 +1144,7 @@
           }
           if (k.startsWith('door_')) {
             const dest = M.doors?.[k];
-            if (dest && d2(pt, p) < 18 && !near[k]) { near[k] = 1; P.path = []; G.pos[id] = [Math.round(P.x), Math.round(P.y + 24)]; save(); go(() => OW(dest.map), dest.title); return; }
+            if (dest && d2(pt, p) < 18 && !near[k]) { near[k] = 1; P.path = []; G.pos[id] = [Math.round(P.x), Math.round(P.y + 24)]; save(); sfx('cascos'); go(() => OW(dest.map), dest.title); return; }
             if (d2(pt, p) > 40) near[k] = 0;
           }
         }
@@ -1188,6 +1159,7 @@
             }
             if (d > 40) near['h' + era] = 0;
           }
+          const dSj = d2(pt, [1505, 1360]); if (dSj < 70 && !near.sjdr) { near.sjdr = 1; sfx('sinos'); } else if (dSj > 140) near.sjdr = 0;
           if (finalOpen() && !G.flags.ending && d2(pt, K.pois.mirante) < 30 && !near.final) { near.final = 1; P.path = []; startEnding(); return; }
         }
         if (M.tour) for (const st of RAW.tour.stops) {

@@ -182,7 +182,7 @@ window.MINIS = (() => {
     const BEAT = 60 / 108 * 2, WIN = 0.18, TOTAL = 90;
     let stage = 'intro', t = 0, next = BEAT, jams = 0, streak = 0, flash = 0, ok = 0, rot = 0, hit = false;
     return {
-      enter() { A.music('tambor'); },
+      enter() { A.music('tambor'); A.sfx('moenda'); },
       update(dt) {
         if (stage !== 'play') return;
         t += dt; rot += dt * 3;
@@ -356,7 +356,7 @@ window.MINIS = (() => {
     let stage = 'intro', t = 60, P = { x: 200, y: 300, tx: 200, ty: 300, ph: 0 }, C = { x: 800, y: 130, i: 0 }, nug = [], got = 0, spawn = 0, hitCd = 0;
     const route = [[800, 130], [160, 130], [160, 470], [800, 470]];
     return {
-      enter() { A.music('ouro'); },
+      enter() { A.music('ouro'); A.sfx('garimpo'); },
       update(dt) {
         if (stage !== 'play') return;
         t -= dt; if (t <= 0) { stage = 'end'; A.sfx(got >= 15 ? 'win' : 'bad'); return; }
