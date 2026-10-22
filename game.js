@@ -62,15 +62,6 @@
   const needOf = (era) => { const gr = groundOf(era), qz = quizOf(era); return { cards: gr.length, got: gr.filter((id) => G.cards.includes(id)).length, quiz: qz.length, ok: qz.filter((id) => G.qok.includes(id)).length, mini: window.MAPS[era]?.needMini || null }; };
   const eraNeedMet = (era) => { const n = needOf(era); return n.got >= n.cards && n.ok >= n.quiz && (!n.mini || !!G.minis[n.mini]); };
   const finalOpen = () => SEQ.every(eraDone);
-  // Perdeu o minigame da era: a fase inteira volta do começo.
-  function resetEra(era) {
-    const qz = quizOf(era);
-    G.cards = G.cards.filter((id) => CARD[id]?.era !== era);
-    G.qok = G.qok.filter((id) => !qz.includes(id));
-    for (const mi of window.MAPS[era]?.minis || []) delete G.minis[mi.id];
-    G.eras[era] = { ...(G.eras[era] || {}), done: false };
-    delete G.pos[era]; save();
-  }
 
   // ================= tela: encaixe e rotação =================
   let ROT = false;
@@ -978,7 +969,7 @@
       if (mi.act != null && !actOpen(mi.act)) { say([[n?.id || 'mula', mi.locked || 'Ainda não é hora disso. Volte num Ato mais adiante.']]); return; }
       if (!isHoje && M.needMini === mi.id) {
         const k = needOf(M.era);
-        if (k.got < k.cards || k.ok < k.quiz) { say([[n?.id || 'mula', 'O desafio desta era só abre para quem já sabe a história.'], ['mula', `Falta: ${k.got < k.cards ? `${k.cards - k.got} relatório${k.cards - k.got > 1 ? 's' : ''}` : ''}${k.got < k.cards && k.ok < k.quiz ? ' e ' : ''}${k.ok < k.quiz ? `${k.quiz - k.ok} pergunta${k.quiz - k.ok > 1 ? 's' : ''} certa${k.quiz - k.ok > 1 ? 's' : ''}` : ''}. Se perder o desafio, o portal te joga para fora e a era recomeça.`]]); return; }
+        if (k.got < k.cards || k.ok < k.quiz) { say([[n?.id || 'mula', 'O desafio desta era só abre para quem já sabe a história.'], ['mula', `Falta: ${k.got < k.cards ? `${k.cards - k.got} relatório${k.cards - k.got > 1 ? 's' : ''}` : ''}${k.got < k.cards && k.ok < k.quiz ? ' e ' : ''}${k.ok < k.quiz ? `${k.quiz - k.ok} pergunta${k.quiz - k.ok > 1 ? 's' : ''} certa${k.quiz - k.ok > 1 ? 's' : ''}` : ''}. O desafio tem 3 tentativas.`]]); return; }
       }
       const done = G.minis[mi.id];
       const intro = asLines(n || { id: 'mula' }, n?.lines || mi.lines);
@@ -1380,16 +1371,12 @@
         else setTimeout(finish, reward.serio ? 900 : 1500);
       },
       quit: back,
-      // Perdeu: no desafio que fecha a era, o portal joga para fora e a era recomeça do zero.
-      // Nos desafios extras (ou já vencidos), só recomeça o minigame.
-      lose(msg) {
+      // Perdeu: 3 tentativas por partida. Esgotou (ou o minigame já conta vidas e mandou final), volta ao mapa e tenta quando quiser.
+      tries: 1,
+      lose(msg, final) {
         sfx('bad');
-        const M = window.MAPS[fromMap], hard = M?.needMini === mid && !G.minis[mid];
-        if (!hard) { say([['mula', `${msg} Tenta de novo.`]], () => go(() => f(api), null)); return; }
-        say([['narr', 'Você não conseguiu.'], ['narr', msg], ['mula', 'O portal te jogou para fora. A era recomeça do zero: relatórios, perguntas e o desafio.']], () => {
-          resetEra(M.era); const h = window.MAPS.hoje.holes[M.era];
-          go(() => OW('hoje', [h[0], h[1] + 30]), 'Brasil · Hoje');
-        });
+        if (!final && api.tries < 3) { api.tries++; say([['mula', `${msg} Tentativa ${api.tries} de 3.`]], () => go(() => f(api), null)); return; }
+        say([['narr', 'Você não conseguiu desta vez.'], ['narr', msg], ['mula', 'Volte ao desafio quando quiser e tente de novo.']], back);
       },
     };
     go(() => f(api), null);

@@ -1,6 +1,6 @@
 // Minigames do Relógio de Sol v2. Cada um é uma cena: MINIS[id](api) → { enter, update, draw, tap, down, drag, up, key }.
 // Regra comum: toque ou setas, a mecânica ensina (não o texto), vitória paga +10 de ouro.
-// Perder o desafio que fecha a era (A.lose) joga o jogador para fora do portal e a era recomeça.
+// Perder (A.lose) gasta uma de 3 tentativas; esgotou, volta ao mapa e tenta quando quiser. Minigame com vidas próprias manda lose(motivo, true).
 // api: g, W, H, txt, box, wrap, say, sfx, music, bg, dude, mula, PAL, CARD, G, win(prêmio), lose(motivo), quit().
 'use strict';
 window.MINIS = (() => {
@@ -70,7 +70,7 @@ window.MINIS = (() => {
         txt(k > 0.5 ? ':)' : ':(', 70, 300, 16, k > 0.5 ? '#9be36a' : '#ff5a5a', 'center'); txt(k < 0.5 ? ':)' : ':(', 890, 300, 16, k < 0.5 ? '#9be36a' : '#ff5a5a', 'center');
         head(A, 'A Régua dos Reis · 1494', stage === 'signed' ? 'Em 1494 ninguém sabia o que havia do outro lado da linha.' : 'Arraste a linha até 370 léguas a oeste de Cabo Verde. Depois, assine.');
         if (stage === 'play') q = btn(A, [W / 2 - 80, H - 66, 160, 44], 'ASSINAR');
-        if (stage === 'intro') intro(A, 'A Régua dos Reis', ['1494. Espanha e Portugal dividem o mundo com uma linha: 370 léguas a oeste de Cabo Verde.', 'A sombra verde é o Brasil. Em 1494 ninguém sabia que ele existia, mas aqui você aprende onde a linha caiu.', 'Arraste a linha vermelha até o lugar certo e assine. Se errar feio, o portal te joga para fora.']);
+        if (stage === 'intro') intro(A, 'A Régua dos Reis', ['1494. Espanha e Portugal dividem o mundo com uma linha: 370 léguas a oeste de Cabo Verde.', 'A sombra verde é o Brasil. Em 1494 ninguém sabia que ele existia, mas aqui você aprende onde a linha caiu.', 'Arraste a linha vermelha até o lugar certo e assine. Você tem 3 tentativas.']);
         quitBtn(A);
       },
       tap(px0, py0) {
@@ -117,7 +117,7 @@ window.MINIS = (() => {
       lives--; A.sfx('hit'); A.shake(0.25); dead = 0.8;
       if (carry) why += ` ${carry} toras perdidas.`;
       carry = 0;
-      if (lives <= 0) { stage = 'gone'; A.lose(`${why} Acabaram as 3 vidas.`); return; }
+      if (lives <= 0) { stage = 'gone'; A.lose(`${why} Acabaram as 3 vidas.`, true); return; }
       say(`${why} Restam ${lives} vida${lives > 1 ? 's' : ''}.`);
       P.r = 0; P.x = W / 2; carry = CARGA; // recomeça na mata, com toras novas
     }
@@ -142,7 +142,7 @@ window.MINIS = (() => {
         t += dt; if (msgT > 0) msgT -= dt; if (P.hop > 0) P.hop -= dt; if (dead > 0) dead -= dt;
         for (const L of Object.values(LANES)) L.off = (L.off + L.v * dt + L.n * L.span) % (L.n * L.span);
         if (stage !== 'walk' || dead > 0) return;
-        if ((left -= dt) <= 0) { stage = 'gone'; A.lose(`O tempo acabou com ${logs} de ${META} toras trocadas.`); return; }
+        if ((left -= dt) <= 0) { stage = 'gone'; A.lose(`O tempo acabou com ${logs} de ${META} toras trocadas.`, true); return; }
         const L = LANES[P.r]; if (!L) return;
         const on = xs(L).find((x) => P.x > x + 6 && P.x < x + L.w - 6);
         if (L.kind === 'land') { if (on != null) die(L.obj === 'onca' ? 'A onça cruzou a trilha.' : 'O bando de queixadas passou por cima.'); }
@@ -334,45 +334,85 @@ window.MINIS = (() => {
     };
   }
 
-  // ===================== 6. Fogueiras de Palmares (1694) — tom sério =====================
+  // ===================== 6. Fogueiras de Palmares (1694) — à moda do Doodle Jump, tom sério =====================
+  // O vigia sobe a Serra da Barriga pulando de pedra em pedra e acende as 4 fogueiras de aviso antes
+  // que a bandeira chegue. Cair (sair por baixo da tela) ou o tempo acabar gasta uma das 3 tentativas.
   function fogueiras(A) {
     const { g, W, H, txt } = A;
-    const HILLS = [[180, 170], [780, 170], [780, 400], [180, 400]];
-    let stage = 'intro', lit = 0, prog = 0, hold = -1, holdT = 0;
+    const TEMPO = 70, FOGOS = [700, 1500, 2400, 3400], GRAV = 1500, PULO = 760, VEL = 300; // ajuste fino
+    const TOPO = FOGOS[FOGOS.length - 1] + 200;
+    let stage = 'intro', P, plats, cam, left, lit, t = 0, dir = 0, hold = 0, best = 0;
+    function reset() {
+      P = { x: W / 2, y: 40, vy: 0, face: 2 }; cam = 0; left = TEMPO; lit = 0; best = 0; plats = [{ x: W / 2 - 60, y: 20, w: 120, kind: 'chao' }];
+      // altura cresce para cima (y em px de serra); vãos aumentam com a altura
+      let y = 20;
+      while (y < TOPO) {
+        y += 70 + Math.min(70, y / 60) + Math.random() * 30;
+        const r = Math.random(), hard = y / TOPO;
+        const kind = r < 0.18 + hard * 0.2 ? 'galho' : r < 0.3 + hard * 0.25 ? 'podre' : 'pedra';
+        plats.push({ x: 40 + Math.random() * (W - 200), y, w: kind === 'pedra' ? 96 : 84, kind, v: kind === 'galho' ? (Math.random() < 0.5 ? -1 : 1) * (60 + hard * 80) : 0, broken: false });
+      }
+      // cada fogueira fica numa pedra firme na altura marcada
+      for (const fy of FOGOS) { const p = plats.reduce((a, b) => (Math.abs(b.y - fy) < Math.abs(a.y - fy) ? b : a)); p.kind = 'pedra'; p.v = 0; p.fire = true; p.w = 110; }
+    }
+    reset();
+    const sy = (y) => H - 40 - (y - cam); // tela: y da serra vira y de tela
     return {
       enter() { A.music('palmares'); },
       update(dt) {
+        t += dt;
         if (stage !== 'play') return;
-        prog += dt * (0.022 + lit * 0.006);
-        if (hold === lit && hold < 4) { holdT += dt; if (holdT >= 2) { lit++; hold = -1; holdT = 0; A.sfx('ok'); } }
-        if (lit >= 4) { stage = 'won'; A.sfx('sino'); }
-        else if (prog >= 1) { stage = 'gone'; A.lose('O bandeirante chegou antes de o mocambo ser avisado.'); }
+        if ((left -= dt) <= 0) return this.fail('A bandeira chegou antes do aviso.');
+        const kx = (A.keys.ArrowRight || A.keys.d ? 1 : 0) - (A.keys.ArrowLeft || A.keys.a ? 1 : 0) || dir;
+        P.x += kx * VEL * dt; if (kx) P.face = kx > 0 ? 2 : -1;
+        if (P.x < -10) P.x = W + 10; if (P.x > W + 10) P.x = -10; // sai de um lado, entra do outro
+        const vy0 = P.vy; P.vy -= GRAV * dt; const y0 = P.y; P.y += P.vy * dt;
+        for (const p of plats) {
+          if (p.v) { p.x += p.v * dt; if (p.x < 10 || p.x + p.w > W - 10) p.v *= -1; }
+          if (vy0 <= 0 && !p.broken && y0 >= p.y && P.y <= p.y && P.x > p.x - 8 && P.x < p.x + p.w + 8) {
+            P.y = p.y; P.vy = PULO; A.sfx('hop');
+            if (p.kind === 'podre') { p.broken = true; A.sfx('hit'); }
+            if (p.fire && !p.lit) { p.lit = true; lit++; A.sfx('ok'); if (lit >= FOGOS.length) { stage = 'won'; A.sfx('sino'); } }
+          }
+        }
+        best = Math.max(best, P.y);
+        cam = Math.max(cam, P.y - (H - 80) * 0.45); // a câmera só sobe
+        if (sy(P.y) > H + 40) this.fail('Você caiu da serra.');
       },
+      fail(msg) { stage = 'gone'; A.lose(msg); },
       draw() {
-        g.fillStyle = '#2a4a2a'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#3a6a3a'; HILLS.forEach(([x, y]) => { g.beginPath(); g.moveTo(x - 90, y + 60); g.lineTo(x, y - 50); g.lineTo(x + 90, y + 60); g.fill(); });
-        g.strokeStyle = '#7a5532'; g.lineWidth = 8; g.strokeRect(W / 2 - 90, 230, 180, 120); txt('mocambo', W / 2, 284, 9, '#fff', 'center');
-        HILLS.forEach(([x, y], i) => { const on = i < lit, me = i === lit; g.fillStyle = '#5a3a1a'; g.fillRect(x - 12, y - 30, 24, 10); if (on) { for (let k = 0; k < 6; k++) { g.fillStyle = k % 2 ? '#ffd84a' : '#ff7a2a'; g.fillRect(x - 10 + (k * 7) % 20, y - 44 - (k * 5) % 16, 8, 14); } } if (me && stage === 'play') { g.strokeStyle = '#ffd84a'; g.lineWidth = 3; g.beginPath(); g.arc(x, y - 30, 30, 0, 7); g.stroke(); if (hold === i) { g.fillStyle = '#ffd84a'; g.fillRect(x - 30, y + 10, 60 * (holdT / 2), 8); } } txt(String(i + 1), x, y + 22, 10, '#fff', 'center'); });
-        // trilha do bandeirante, de baixo até a paliçada
-        g.strokeStyle = '#a8875a'; g.lineWidth = 6; g.beginPath(); g.moveTo(W / 2, H - 20); g.lineTo(W / 2, 350); g.stroke();
-        g.fillStyle = '#d33'; g.beginPath(); g.arc(W / 2, H - 20 - prog * (H - 370), 9, 0, 7); g.fill();
-        head(A, 'Fogueiras de Palmares · 1694', 'Segure o dedo na fogueira marcada por 2 s. Avise o mocambo antes que ele chegue.');
-        if (stage === 'intro') intro(A, 'Fogueiras de Palmares', ['Um bandeirante sobe a trilha.', 'Acenda as 4 fogueiras, em ordem, segurando o toque por 2 segundos. Quando a rede de vigias acende, o mocambo inteiro fica sabendo.', 'Não é luta: é avisar a tempo.']);
-        if (stage === 'lost') { g.fillStyle = 'rgba(0,0,0,.8)'; g.fillRect(0, 0, W, H); txt('toque para recomeçar', W / 2, H / 2, 10, '#888', 'center'); }
+        // céu do fim de tarde e a serra ao fundo (sobe devagar com a câmera)
+        const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#1a2a4a'); sky.addColorStop(1, '#6a5a4a'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+        g.fillStyle = '#2a3a2a'; g.beginPath(); g.moveTo(0, H); for (let x = 0; x <= W; x += 60) g.lineTo(x, H - 160 - Math.sin(x / 90 + cam / 400) * 40 + cam * 0.05 % 60); g.lineTo(W, H); g.fill();
+        for (const p of plats) {
+          const y = sy(p.y); if (y < -40 || y > H + 40) continue;
+          if (p.kind === 'chao') { g.fillStyle = '#3a5a2a'; g.fillRect(0, y, W, 40); continue; }
+          if (p.kind === 'pedra') { g.fillStyle = '#7a7a6a'; g.fillRect(p.x, y, p.w, 14); g.fillStyle = '#9a9a88'; g.fillRect(p.x + 4, y, p.w - 8, 4); }
+          else if (p.kind === 'galho') { g.fillStyle = '#6a4a2a'; g.fillRect(p.x, y, p.w, 10); g.fillStyle = '#3a6a2a'; g.fillRect(p.x + 6, y - 6, 16, 6); g.fillRect(p.x + p.w - 24, y - 6, 16, 6); }
+          else if (!p.broken) { g.fillStyle = '#8a6a4a'; g.fillRect(p.x, y, p.w, 10); g.strokeStyle = '#3a2a1a'; g.lineWidth = 2; g.beginPath(); g.moveTo(p.x + p.w / 2, y); g.lineTo(p.x + p.w / 2 - 6, y + 10); g.stroke(); }
+          if (p.fire) {
+            g.fillStyle = '#5a3a1a'; g.fillRect(p.x + p.w / 2 - 14, y - 8, 28, 8);
+            if (p.lit) for (let k = 0; k < 7; k++) { g.fillStyle = k % 2 ? '#ffd84a' : '#ff7a2a'; g.fillRect(p.x + p.w / 2 - 12 + (k * 7) % 24, y - 22 - ((k * 5 + t * 40) % 18), 7, 12); }
+            else { g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(p.x + p.w / 2 - 18, y - 30, 36, 30); }
+          }
+        }
+        A.dude(P.x, sy(P.y), A.PAL.vigia, t * 10, P.face, 2.4, true);
+        head(A, 'Fogueiras de Palmares · 1694', `Tentativa ${A.tries}/3 · Fogueiras acesas: ${lit}/${FOGOS.length}`, stage === 'play' ? left : null, TEMPO);
+        // régua lateral: altura e onde estão as fogueiras
+        g.fillStyle = 'rgba(0,0,0,.4)'; g.fillRect(W - 24, 80, 12, H - 140); for (const fy of FOGOS) { g.fillStyle = '#ffd84a'; g.fillRect(W - 28, 80 + (H - 140) * (1 - fy / TOPO) - 1, 20, 3); }
+        g.fillStyle = '#9be36a'; g.fillRect(W - 24, 80 + (H - 140) * (1 - Math.min(1, P.y / TOPO)) - 3, 12, 6);
+        if (stage === 'intro') intro(A, 'Fogueiras de Palmares', ['Uma bandeira sobe a serra. O vigia precisa acender as 4 fogueiras de aviso, cada uma mais alta que a outra.', 'Ele pula sozinho: você só guia para os lados (setas, ou segure o dedo à esquerda ou à direita). Galho balança; madeira rachada quebra depois de um pulo.', 'Não caia e chegue antes do tempo acabar. São 3 tentativas.']);
         if (stage === 'won') { g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(0, 0, W, H); txt('As quatro fogueiras estão acesas.', W / 2, 220, 14, '#ffd84a', 'center'); txt('toque para continuar', W / 2, 300, 10, '#ddd', 'center'); }
         quitBtn(A);
       },
       down(px, py) {
         if (inR(px, py, [W - 110, H - 46, 96, 34])) return A.quit();
-        if (stage === 'intro') { stage = 'play'; return; }
-        if (stage === 'lost') { stage = 'play'; lit = 0; prog = 0; return; }
+        if (stage === 'intro') { stage = 'play'; P.vy = PULO; return; }
         if (stage === 'won') { stage = 'done'; A.say([['vigia', 'O mocambo foi avisado. Organização é o que mantém Palmares de pé há tanto tempo.']], () => A.win({ card: 'C27', serio: true })); return; }
-        if (stage !== 'play') return;
-        const [x, y] = HILLS[lit] || []; if (x != null && Math.hypot(px - x, py - (y - 30)) < 50) { hold = lit; holdT = 0; }
+        if (stage === 'play') dir = px < W / 2 ? -1 : 1;
       },
-      up() { hold = -1; holdT = 0; },
-      key(k) { if (stage === 'intro') return this.down(0, 0); if (k === ' ') { hold = lit; } },
-      keyup(k) { if (k === ' ') { hold = -1; holdT = 0; } },
+      up() { dir = 0; },
+      key(k) { if (stage === 'intro' || stage === 'won') this.down(0, 0); },
     };
   }
 
