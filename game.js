@@ -4,7 +4,9 @@
 // Conteúdo histórico vem de content.data.js (gerado de data/*.json). Aqui só motor, roteiro e regras.
 'use strict';
 (() => {
-  const W = 960, H = 540, Z = 2;
+  const W = 960, H = 540;
+  let Z = 2; // zoom do mapa; o lampião abre a visão (1,6)
+  let BUFF = 0; // até quando (em T) dura a rapadura
   const FONT = '"Press Start 2P", monospace';
   const app = document.getElementById('app');
   const cv = document.getElementById('c');
@@ -305,8 +307,7 @@
   // ================= diálogo, escolha, faixa, transição, painéis =================
   let DLG = null, ASK = null, BANNER = null, TR = null, PANEL = null, SHAKE = 0;
   const PAGE = 4, CPS = 50;
-  // keep: ao fechar no X, o que vem depois (prêmio, próxima tela) acontece mesmo assim. false = fechar cancela.
-  function say(lines, done, keep = true) {
+  function say(lines, done) {
     const pages = [];
     for (const [who, text, pic] of lines) {
       const hasP = who && who !== 'narr' && who !== 'lum';
@@ -314,10 +315,9 @@
       for (let i = 0; i < ls.length; i += PAGE) pages.push({ who, lines: ls.slice(i, i + PAGE), pic });
     }
     if (!pages.length) { done?.(); return; }
-    DLG = { pages, i: 0, shown: 0, done, keep, bipAt: 0 };
+    DLG = { pages, i: 0, shown: 0, done, bipAt: 0 };
     if (pages[0].who === 'lum') sfx('lum');
   }
-  function closeDlg() { const d = DLG?.keep && DLG.done; DLG = null; sfx('tap'); if (d) d(); }
   function dlgTap() {
     const p = DLG.pages[DLG.i], total = p.lines.join('').length;
     if (DLG.shown < total) { DLG.shown = total; return; }
@@ -348,8 +348,7 @@
     if (isLum) tx = 90;
     let left = Math.floor(DLG.shown);
     p.lines.forEach((l, k) => { const s = l.slice(0, Math.max(0, left)); left -= l.length; txt(s, tx, y0 + (isLum ? 44 : 30) + k * 30, isLum ? 14 : 16, isLum ? '#f3e2a0' : '#fff'); });
-    // X redondo para fechar e botão "passar" pulsando quando a fala terminou
-    const xr = [W - 40, y0 - 2, 20]; DLG.xr = xr; xButton(...xr);
+    // botão "passar" pulsando quando a fala terminou
     if (DLG.shown >= total) {
       const pr = 1 + 0.1 * Math.sin(t * 6), bx = W - (isLum ? 104 : 70), by = y0 + 144, r = TOUCH ? 24 : 17;
       g.fillStyle = isLum ? '#e8c04a' : '#ffd84a'; g.beginPath(); g.arc(bx, by, r * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 2; g.stroke();
@@ -369,10 +368,6 @@
     g.fill();
     wrap(label, w - 30, 9).slice(0, 2).forEach((l, i) => txt(l, cx, y + h - 34 + i * 14, 9, '#fff', 'center'));
   }
-  function xButton(cx, cy, r) {
-    g.fillStyle = '#3a1020'; g.beginPath(); g.arc(cx, cy, r, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke();
-    g.beginPath(); g.moveTo(cx - r * 0.4, cy - r * 0.4); g.lineTo(cx + r * 0.4, cy + r * 0.4); g.moveTo(cx + r * 0.4, cy - r * 0.4); g.lineTo(cx - r * 0.4, cy + r * 0.4); g.stroke();
-  }
   function ask(q, opts, cb) { ASK = { q, opts, cb, rects: [], sel: 0 }; }
   function drawAsk() {
     const qs = wrap(ASK.q, W - 100, 14);
@@ -391,7 +386,6 @@
       ls.slice(0, 2).forEach((l, k) => txt(l, r[0] + 12, r[1] + (ls.length > 1 ? 8 : 15) + k * 15, 11, '#fff'));
       return r;
     });
-    ASK.xr = [W - 40, y0 - 2, 20]; xButton(...ASK.xr);
   }
   function askPick(i) { if (!ASK || i < 0 || i >= ASK.opts.length) return; const cb = ASK.cb; ASK = null; sfx('tap'); cb(i); }
   function banner(title) { BANNER = { title, t: 3 }; }
@@ -444,6 +438,43 @@
   // ---- Caderno do Buck: relatórios por era ----
   const ORDER = [...ERAS].filter((e) => e.id !== 'prologo').sort((a, b) => a.range[0] - b.range[0]).concat(ERAS.filter((e) => e.id === 'prologo'));
   const YEAR = { mundo: 1492, paubrasil: 1500, acucar: 1550, invasoes: 1630, palmares: 1650, ouro: 1700, apogeu: 1740, inconfidencia: 1789, depois: 1850, renascimento: 1972, prologo: 'HOJE' };
+  // ---- inventário do Buck: dinheiro e itens; dali se abre o caderno de relatórios ----
+  const ITEM_INFO = {
+    botas: ['👢', 'Botas de tropeiro', '+40% de velocidade, para sempre. O item que todo viajante quer.'],
+    lampiao: ['🏮', 'Lampião', 'Você enxerga mais longe: a vista do mapa se abre.'],
+    regua: ['📏', 'Régua dos Reis', 'Lembrança de Tordesilhas, 1494.'],
+    machado: ['🪓', 'Machado de ferro', 'O valor de uma coisa depende de quem precisa dela.'],
+  };
+  function invEntries() {
+    const L = [];
+    if ((G.rap || 0) > 0) L.push({ icon: '🍬', name: `Rapadura ×${G.rap}`, desc: 'Coma (botão A) para correr +80% por 40 s, o dobro da bota.', use: 'rap' });
+    for (const id of G.items) { const r = RAW.items.find((x) => x.id === id), inf = ITEM_INFO[id] || [r?.icon || '•', r?.name || id, r?.desc || '']; L.push({ icon: inf[0], name: inf[1], desc: inf[2] }); }
+    L.push({ icon: '📖', name: 'Caderno de relatórios', desc: `${G.cards.length} de ${RAW.cards.length} relatórios.`, use: 'book' });
+    return L;
+  }
+  function openInv() { PANEL = { kind: 'inv', sel: 0, rects: [] }; sfx('tap'); }
+  function invUse(i) {
+    const e = invEntries()[i]; if (!e) return;
+    if (e.use === 'rap') { G.rap--; save(); BUFF = T + 40; PANEL = null; sfx('coin'); floatTxt('rapadura! +80% de velocidade por 40 s', '#ffb060'); }
+    else if (e.use === 'book') openBook(G.era);
+  }
+  function drawInv() {
+    const P = PANEL, L = invEntries(); P.sel = Math.min(P.sel, L.length - 1);
+    box(110, 30, W - 220, H - 60, 0.97);
+    txt('INVENTÁRIO DO BUCK', W / 2, 48, 14, '#ffd84a', 'center');
+    g.fillStyle = 'rgba(255,216,74,.12)'; g.fillRect(140, 78, W - 280, 44);
+    txt(`$ ${G.gold}`, 160, 92, 16, '#ffd84a'); if (G.dust) txt(`✨ pó de ouro: ${G.dust}`, 360, 94, 11, '#fff');
+    if (T < BUFF) txt(`rapadura: ${Math.ceil(BUFF - T)} s`, W - 160, 94, 10, '#ffb060', 'right');
+    P.rects = L.map((e, i) => {
+      const r = [140, 134 + i * 50, W - 280, 44], on = i === P.sel;
+      g.fillStyle = on ? 'rgba(255,216,74,.22)' : 'rgba(255,255,255,.06)'; g.fillRect(...r); g.strokeStyle = on ? '#ffd84a' : '#5a6ab0'; g.lineWidth = on ? 3 : 1; g.strokeRect(...r);
+      txt(e.icon, r[0] + 12, r[1] + 12, 16, '#fff'); txt(e.name, r[0] + 50, r[1] + 8, 11, '#fff'); txt(e.desc, r[0] + 50, r[1] + 26, 8, '#cfd6ff');
+      return r;
+    });
+    const y = Math.min(H - 76, 134 + L.length * 50 + 6);
+    txt('Venda do Tropeiro: ★ Botas $200 · Lampião $150 · Rapadura $5', W / 2, y, 9, '#9be36a', 'center');
+    txt(TOUCH ? 'joystick escolhe · botão A usa · toque fora para fechar' : 'setas escolhem · Espaço usa · Esc fecha', W / 2, H - 52, 9, '#8a9ad8', 'center');
+  }
   function openBook(era) { const i = Math.max(0, ORDER.findIndex((e) => e.id === era)); PANEL = { kind: 'book', i, rects: [] }; sfx('tap'); }
   function drawBook() {
     box(30, 24, W - 60, H - 48, 0.97);
@@ -520,10 +551,12 @@
     if (PANEL.kind === 'card') drawCard();
     else if (PANEL.kind === 'book') drawBook();
     else if (PANEL.kind === 'timeline') drawTimelinePanel();
+    else if (PANEL.kind === 'inv') drawInv();
   }
   function panelTap(x, y) {
     const P = PANEL;
     if (P.kind === 'card') { PANEL = null; sfx('tap'); P.done?.(); return; }
+    if (P.kind === 'inv') { const i = P.rects.findIndex((r) => inR(x, y, r)); if (i < 0) { PANEL = null; sfx('tap'); } else { P.sel = i; invUse(i); } return; }
     if (P.kind === 'book') {
       if (inR(x, y, P.prev)) { P.i = (P.i + ORDER.length - 1) % ORDER.length; sfx('tap'); return; }
       if (inR(x, y, P.next)) { P.i = (P.i + 1) % ORDER.length; sfx('tap'); return; }
@@ -913,7 +946,7 @@
     if (G.flags.guia) npcs.forEach((n) => { if (n.afterGuia) n.lines = n.afterGuia; });
     const COB = M.cobrador && { x: K.pois[M.cobrador.patrol[0]][0], y: K.pois[M.cobrador.patrol[0]][1], i: 0, face: 0, ph: 0, state: 'patrol', cool: 0, dir: [1, 0], path: null, repath: 0 };
     const dustAt = {};
-    const cam = () => { camx = Math.max(0, Math.min(M.w - W / Z, P.x - W / Z / 2)); camy = Math.max(0, Math.min(M.h - H / Z, P.y - H / Z / 2)); };
+    const cam = () => { Z = G.items.includes('lampiao') ? 1.6 : 2; camx = Math.max(0, Math.min(M.w - W / Z, P.x - W / Z / 2)); camy = Math.max(0, Math.min(M.h - H / Z, P.y - H / Z / 2)); };
     cam();
     const busy = () => DLG || ASK || PANEL || TR;
     const d2 = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
@@ -967,7 +1000,7 @@
           }
         });
       };
-      say(lines, one, false);
+      say(lines, one);
     }
     function miniTalk(mi, n) {
       if (mi.act != null && !actOpen(mi.act)) { say([[n?.id || 'mula', mi.locked || 'Ainda não é hora disso. Volte num Ato mais adiante.']]); return; }
@@ -977,10 +1010,10 @@
       }
       const done = G.minis[mi.id];
       const intro = asLines(n || { id: 'mula' }, n?.lines || mi.lines);
-      say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }), false);
+      say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }));
     }
     function shop(n) {
-      const items = [['botas', 'Botas de tropeiro (+40% velocidade)', 200], ['lampiao', 'Lampião (revela mais névoa)', 150], ['rapadura', 'Rapadura (corre mais por 40 s)', 20]];
+      const items = [['botas', '★ Botas de tropeiro (+40% velocidade, para sempre)', 200], ['lampiao', 'Lampião (você enxerga mais longe)', 150], ['rapadura', 'Rapadura (+80% velocidade por 40 s)', 5]];
       say([[n.id, G.flags.guia ? 'Guia agora, é? Pra guia eu faço preço.' : 'Venda do Tropeiro. Tem de tudo que cabe numa mula.']], () => ask(`Seu ouro: $${G.gold}`, [...items.map(([, l, p]) => `${l} · $${p}`), 'Nada, obrigado'], (k) => {
         if (k >= items.length) return;
         const [it, , p] = items[k];
@@ -991,7 +1024,7 @@
         if (G.gold < p) { sfx('bad'); say([[n.id, 'Volta quando tiver ouro. Fiado, só pra quem tem mula com cabeça.']]); return; }
         if (it !== 'rapadura' && G.items.includes(it)) { say([[n.id, 'Você já tem isso.']]); return; }
         giveGold(-p);
-        if (it === 'rapadura') { S.buff = tt + 40; floatTxt('rapadura: +velocidade', '#ffb060'); } else { giveItem(it); floatTxt('comprado!', '#9be36a'); }
+        if (it === 'rapadura') { G.rap = (G.rap || 0) + 1; save(); floatTxt('rapadura no inventário', '#ffb060'); } else { giveItem(it); floatTxt('comprado!', '#9be36a'); }
         sfx('coin');
       }));
     }
@@ -1060,7 +1093,7 @@
       const k = needOf(M.era), falta = [k.got < k.cards && `${k.cards - k.got} relatório(s)`, k.ok < k.quiz && `${k.quiz - k.ok} pergunta(s)`, k.mini && !G.minis[k.mini] && 'o desafio'].filter(Boolean).join(', ');
       say([['mula', `A era ainda não está completa. Falta: ${falta}.`]], () => ask('Sair mesmo assim? (o próximo portal continua fechado)', ['Ficar', 'Sair'], (j) => {
         if (j === 1) { sfx('portal'); go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje'); }
-      }), false);
+      }));
     }
     function interactables() {
       const L = [], pt = [P.x, P.y];
@@ -1132,7 +1165,7 @@
         const kx = (KEYS.ArrowRight || KEYS.d ? 1 : 0) - (KEYS.ArrowLeft || KEYS.a ? 1 : 0);
         const ky = (KEYS.ArrowDown || KEYS.s ? 1 : 0) - (KEYS.ArrowUp || KEYS.w ? 1 : 0);
         let vx = 0, vy = 0;
-        const sp = 85 * (G.items.includes('botas') ? 1.4 : 1) * (S.buff > tt ? 1.35 : 1);
+        const sp = 85 * (T < BUFF ? 1.8 : G.items.includes('botas') ? 1.4 : 1); // bota +40%; rapadura +80% (o dobro)
         const jm = Math.hypot(JOY.x, JOY.y);
         if (!busy() && JOY.id != null && jm > 0.2) { const k = Math.min(1, jm) / jm; vx = JOY.x * k * sp; vy = JOY.y * k * sp; } // joystick analógico
         else if (!busy() && (kx || ky)) { const l = Math.hypot(kx, ky); vx = kx / l * sp; vy = ky / l * sp; }
@@ -1303,7 +1336,7 @@
         txt(`★ ${G.cards.length}/${RAW.cards.length}`, 24, H - 64, 10, '#ffd84a');
         txt(`$ ${G.gold}${G.dust ? `  ✨${G.dust}` : ''}`, 24, H - 46, 10, '#fff');
         txt(`☆ ${G.secrets.length}/10`, 24, H - 28, 9, '#cfd6ff');
-        hud.book = [W - 76, 178, 62, 54]; box(...hud.book, 0.85); txt('📖', hud.book[0] + 31, hud.book[1] + 16, 16, '#fff', 'center');
+        hud.book = [W - 76, 178, 62, 54]; box(...hud.book, 0.85); txt('🎒', hud.book[0] + 31, hud.book[1] + 16, 16, '#fff', 'center');
         if (items) { box(10, H - 116, 150, 38, 0.85); txt(items, 24, H - 104, 14, '#fff'); }
         hud.timeline = drawTimeline(M.era, tt);
       },
@@ -1313,12 +1346,13 @@
       action() { act(); },
       tap(x, y) { // só os botões do HUD respondem a toque; andar e agir são joystick e botão A
         if (inR(x, y, hud.timeline)) { openTimeline(); return; }
-        if (inR(x, y, hud.book)) { openBook(M.era); return; }
+        if (inR(x, y, hud.book)) { openInv(); return; }
         if (DEBUG) console.log('mundo', Math.round(camx + x / Z), Math.round(camy + y / Z));
       },
       key(k) {
         if (k === 't' || k === 'T') openTimeline();
         if (k === 'c' || k === 'C') openBook(M.era);
+        if (k === 'i' || k === 'I') openInv();
         KONAMI.push(k); if (KONAMI.length > 8) KONAMI.shift();
         if (isHoje && KONAMI.join(',') === 'ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight') { KONAMI.length = 0; eggSwap = 30; secret('konami', [['mula', 'Nem fala nada.']]); }
       },
@@ -1470,6 +1504,7 @@
   function action() {
     audio();
     if (TR) return;
+    if (PANEL?.kind === 'inv') { invUse(PANEL.sel); return; }
     if (PANEL) { const P = PANEL; PANEL = null; P.done?.(); return; }
     if (ASK) { askPick(ASK.sel); return; }
     if (DLG) { dlgTap(); return; }
@@ -1478,6 +1513,7 @@
   // uma "tecla" de direção (do teclado ou do joystick ao virar): navega perguntas, o caderno, ou vai para a cena
   function dirKey(k) {
     if (ASK) { const n = ASK.opts.length, two = n === 4; const step = { ArrowUp: two ? -2 : -1, ArrowDown: two ? 2 : 1, ArrowLeft: two ? -1 : 0, ArrowRight: two ? 1 : 0 }[k] || 0; ASK.sel = (ASK.sel + step + n) % n; sfx('bip'); return; }
+    if (PANEL?.kind === 'inv') { const n = invEntries().length; if (k === 'ArrowUp') PANEL.sel = (PANEL.sel + n - 1) % n; if (k === 'ArrowDown') PANEL.sel = (PANEL.sel + 1) % n; sfx('bip'); return; }
     if (PANEL) { if (PANEL.kind === 'book' && (k === 'ArrowLeft' || k === 'ArrowRight')) PANEL.i = (PANEL.i + (k === 'ArrowLeft' ? ORDER.length - 1 : 1)) % ORDER.length; return; }
     if (DLG) return;
     scene.key?.(k);
@@ -1501,8 +1537,6 @@
     const HB = hbRects();
     if (inR(x, y, HB.snd)) { setMute(!muted); return; }
     if (inR(x, y, HB.fs)) { toggleFS(); return; }
-    if (DLG?.xr && Math.hypot(x - DLG.xr[0], y - DLG.xr[1]) < DLG.xr[2] + 10) { closeDlg(); return; }
-    if (ASK?.xr && Math.hypot(x - ASK.xr[0], y - ASK.xr[1]) < ASK.xr[2] + 10) { ASK = null; sfx('tap'); return; }
     const ctl = TOUCH && scene.ctl;
     if (ctl && !DLG && !ASK && Math.hypot(x - BTN.x, y - BTN.y) < BTN.r + 16) { BTN.id = e.pointerId; BTN.t = 0.18; action(); return; }
     if (PANEL) { panelTap(x, y); return; }
@@ -1529,7 +1563,7 @@
     if (e.repeat && !ARROWS.includes(e.key)) return;
     KEYS[e.key] = true;
     if (e.key === 'm' || e.key === 'M') { audio(); setMute(!muted); return; }
-    if (e.key === 'Escape') { if (DLG) closeDlg(); else if (ASK) ASK = null; else if (PANEL) { const P = PANEL; PANEL = null; P.done?.(); } else scene.esc?.(); return; }
+    if (e.key === 'Escape') { if (DLG || ASK) return; if (PANEL) { const P = PANEL; PANEL = null; P.done?.(); } else scene.esc?.(); return; }
     if (e.key === ' ' || e.key === 'Enter' || e.key === 'e' || e.key === 'E') { action(); return; }
     const wasd = { w: 'ArrowUp', a: 'ArrowLeft', s: 'ArrowDown', d: 'ArrowRight' }[e.key];
     if (ARROWS.includes(e.key) || wasd) { if (!e.repeat) dirKey(e.key.startsWith('Arrow') ? e.key : wasd); return; }
