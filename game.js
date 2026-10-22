@@ -901,6 +901,11 @@
     const trail = [];
     let camx = 0, camy = 0, tt = 0, saveT = 0, fogT = 0, chase = false, eggSwap = 0, radarT = 0;
     const near = {}, hud = {};
+    // Quem nasce em cima de portal, buraco ou porta não dispara de novo: só depois de sair e voltar (evita o laço era ↔ Hoje).
+    const spawnIn = (p, r = 40) => p && Math.hypot(P.x - p[0], P.y - p[1]) < r;
+    if (spawnIn(K.pois.portal)) near.portal = 1;
+    for (const [era, h] of Object.entries(M.holes || {})) if (spawnIn(h)) near['h' + era] = 1;
+    for (const k of Object.keys(M.doors || {})) if (spawnIn(K.pois[k])) near[k] = 1;
     const mkNpc = (n) => { const home = K.pois[n.at] || n.xy; return { ...n, x: home[0], y: home[1], face: 0, away: 0, home, ph: Math.random() * 6 }; };
     const npcs = (M.npcs || []).filter((n) => !n.cond || G.minis[n.cond]).map(mkNpc);
     if (isHoje && curAct() >= 2 && !G.flags.guia) npcs.push(mkNpc({ id: 'cobrador', at: 'estrada', wander: 60, lines: ['Estrada Real, forasteiro. Tudo que passa aqui paga o Quinto. Até no século XXI, se eu deixar.'] }));
@@ -1236,6 +1241,11 @@
           g.fillStyle = ok ? `rgba(255,240,180,${0.5 + p * 0.4})` : 'rgba(180,200,255,.25)';
           g.beginPath(); g.ellipse(x, y - 16, ok ? 10 + p * 3 : 6, 22, 0, 0, 7); g.fill();
           g.fillStyle = ok ? '#fff' : 'rgba(255,255,255,.4)'; g.fillRect(x - 2, y - 36, 4, 40);
+          const by = y - 62 - Math.abs(Math.sin(tt * 3)) * 6;
+          g.font = `10px ${FONT}`; const w = g.measureText('PORTAL').width + 14;
+          g.fillStyle = ok ? 'rgba(120,60,10,.9)' : 'rgba(20,20,40,.8)'; g.fillRect(x - w / 2, by - 22, w, 18);
+          txt('PORTAL', x, by - 18, 10, ok ? '#ffd84a' : '#bfe3ff', 'center');
+          g.fillStyle = ok ? '#ffd84a' : '#bfe3ff'; g.beginPath(); g.moveTo(x - 7, by); g.lineTo(x + 7, by); g.lineTo(x, by + 8); g.fill();
         }
         for (const [k, p] of Object.entries(K.pois)) {
           if (!onS(p[0], p[1])) continue;
