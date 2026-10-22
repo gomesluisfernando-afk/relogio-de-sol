@@ -683,7 +683,7 @@ window.MINIS = (() => {
         if (stage === 'play' && cur) {
           A.box(60, 300, W - 120, 160, 0.95);
           if (phase === 'choose') {
-            txt(`Na cidade: ${cur.cena}. Qual toque? (joystick escolhe, A confirma)`, W / 2, 314, 10, '#ffd84a', 'center');
+            txt(`Na cidade: ${cur.cena}. Qual toque?`, W / 2, 314, 10, '#ffd84a', 'center'); txt('joystick escolhe · A confirma', W / 2, 444, 8, '#fff', 'center');
             TOQUES.forEach((tq, i) => btn(A, [90 + (i % 3) * 265, 340 + Math.floor(i / 3) * 54, 250, 44], tq.nome, i === sel ? '#ffd84a' : '#e8dcb0', '#1a1030', 9));
           } else txt(phase === 'listen' ? 'Escute o Sineiro...' : `Repita: joystick ◀ grande · ▶ pequeno   ${input.split('').join(' ')}`, W / 2, 360, 11, '#ffd84a', 'center');
         }

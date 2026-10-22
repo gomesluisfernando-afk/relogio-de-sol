@@ -24,6 +24,7 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 - Com diálogo, pergunta ou janela (relatório, caderno, dossiê, inventário) na tela, joystick e A somem.
 - Diálogo só avança no botão ▶ dele; janela só fecha no botão FECHAR. Tocar fora não passa nem fecha nada.
   No teclado: Espaço/Enter passa o diálogo, Esc fecha a janela.
+- Letra sem sombra em lugar nenhum (`txt` e `plain` só pintam a cor). No celular, toda letra fica 15% maior (`fnt` em `game.js`), menos a dos diálogos.
 - Teclado: setas/WASD + Espaço/Enter/E. Toque só em botões de interface (SAIR, opções, som, tela cheia, mochila).
 
 ## Diretriz dos minigames (`minis.js`)

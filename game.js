@@ -149,14 +149,16 @@
   setMute(muted);
 
   // ================= desenho básico =================
+  // letra: sem sombra em lugar nenhum; no celular tudo 15% maior, menos os diálogos (FS_OFF), que já estão no tamanho certo
+  let FS_OFF = false;
+  const fnt = (size) => `${TOUCH && !FS_OFF ? Math.round(size * 1.15) : size}px ${FONT}`;
   function txt(s, x, y, size = 16, col = '#fff', align = 'left') {
-    g.font = `${size}px ${FONT}`; g.textAlign = align; g.textBaseline = 'top';
-    g.fillStyle = '#000'; g.fillText(s, x + 2, y + 2);
+    g.font = fnt(size); g.textAlign = align; g.textBaseline = 'top';
     g.fillStyle = col; g.fillText(s, x, y);
   }
-  function plain(s, x, y, size = 16, col = '#fff', align = 'left') { g.font = `${size}px ${FONT}`; g.textAlign = align; g.textBaseline = 'top'; g.fillStyle = col; g.fillText(s, x, y); }
+  function plain(s, x, y, size = 16, col = '#fff', align = 'left') { g.font = fnt(size); g.textAlign = align; g.textBaseline = 'top'; g.fillStyle = col; g.fillText(s, x, y); }
   function wrap(s, maxW, size) {
-    g.font = `${size}px ${FONT}`;
+    g.font = fnt(size);
     const out = [];
     for (const para of String(s).split('\n')) {
       let line = '';
@@ -311,7 +313,7 @@
     const pages = [];
     for (const [who, text, pic] of lines) {
       const hasP = who && who !== 'narr' && who !== 'lum';
-      const ls = wrap(text, hasP ? W - 260 : W - 100, who === 'lum' ? 14 : 16);
+      FS_OFF = true; const ls = wrap(text, hasP ? W - 260 : W - 100, who === 'lum' ? 14 : 16); FS_OFF = false;
       for (let i = 0; i < ls.length; i += PAGE) pages.push({ who, lines: ls.slice(i, i + PAGE), pic });
     }
     if (!pages.length) { done?.(); return; }
@@ -324,7 +326,8 @@
     sfx('tap');
     if (++DLG.i >= DLG.pages.length) { const d = DLG.done; DLG = null; d?.(); } else { DLG.shown = 0; if (DLG.pages[DLG.i].who === 'lum') sfx('lum'); }
   }
-  function drawDlg(dt, t) {
+  function drawDlg(dt, t) { FS_OFF = true; try { drawDlg0(dt, t); } finally { FS_OFF = false; } }
+  function drawDlg0(dt, t) {
     const p = DLG.pages[DLG.i];
     const total = p.lines.join('').length;
     const isLum = p.who === 'lum';
@@ -341,7 +344,7 @@
       g.strokeStyle = '#fff'; g.lineWidth = 3; g.strokeRect(30, y0 + 22, 136, 136);
       tx = 190;
       const name = nm.length > 24 ? nm.split(' ').slice(0, 3).join(' ') : nm;
-      g.font = `12px ${FONT}`; const nw = g.measureText(name).width + 24;
+      g.font = fnt(12); const nw = g.measureText(name).width + 24;
       g.fillStyle = '#ffd84a'; g.fillRect(tx - 6, y0 - 14, nw, 26); g.strokeStyle = '#000'; g.lineWidth = 2; g.strokeRect(tx - 6, y0 - 14, nw, 26);
       g.fillStyle = '#1a1030'; g.textAlign = 'left'; g.textBaseline = 'top'; g.fillText(name, tx + 6, y0 - 7);
     }
@@ -396,7 +399,7 @@
     if (BANNER.t <= 0) { BANNER = null; return; }
     const a = Math.min(1, BANNER.t, 3 - BANNER.t + 0.3);
     g.globalAlpha = Math.max(0, a);
-    g.font = `18px ${FONT}`; const w = g.measureText(BANNER.title).width + 60;
+    g.font = fnt(18); const w = g.measureText(BANNER.title).width + 60;
     box(W / 2 - w / 2, 70, w, 56, 0.9); txt(BANNER.title, W / 2, 90, 18, '#ffd84a', 'center');
     g.globalAlpha = 1;
   }
@@ -1240,7 +1243,7 @@
         }
         for (const [lx, ly, s] of M.labels || []) {
           if (!onS(lx, ly, 120)) continue;
-          g.font = `10px ${FONT}`; const w = g.measureText(s).width + 14;
+          g.font = fnt(10); const w = g.measureText(s).width + 14;
           g.fillStyle = 'rgba(20,20,40,.8)'; g.fillRect(sx(lx) - w / 2, sy(ly) - 10, w, 20); txt(s, sx(lx), sy(ly) - 5, 10, '#fff', 'center');
         }
         if (isHoje) for (const [era, [hx, hy]] of Object.entries(M.holes)) {
@@ -1260,7 +1263,7 @@
           g.beginPath(); g.ellipse(x, y - 16, ok ? 10 + p * 3 : 6, 22, 0, 0, 7); g.fill();
           g.fillStyle = ok ? '#fff' : 'rgba(255,255,255,.4)'; g.fillRect(x - 2, y - 36, 4, 40);
           const by = y - 62 - Math.abs(Math.sin(tt * 3)) * 6;
-          g.font = `10px ${FONT}`; const w = g.measureText('PORTAL').width + 14;
+          g.font = fnt(10); const w = g.measureText('PORTAL').width + 14;
           g.fillStyle = ok ? 'rgba(120,60,10,.9)' : 'rgba(20,20,40,.8)'; g.fillRect(x - w / 2, by - 22, w, 18);
           txt('PORTAL', x, by - 18, 10, ok ? '#ffd84a' : '#bfe3ff', 'center');
           g.fillStyle = ok ? '#ffd84a' : '#bfe3ff'; g.beginPath(); g.moveTo(x - 7, by); g.lineTo(x + 7, by); g.lineTo(x, by + 8); g.fill();
@@ -1270,7 +1273,7 @@
           if (k.startsWith('bateia') && !(dustAt[k] > tt)) { g.fillStyle = '#ffd84a'; for (let i = 0; i < 4; i++) g.fillRect(sx(p[0]) - 8 + i * 5, sy(p[1]) - 3 + Math.sin(tt * 6 + i) * 2, 3, 3); }
           if (k.startsWith('door_')) { g.fillStyle = `rgba(255,216,74,${0.4 + 0.3 * Math.sin(tt * 4)})`; g.fillRect(sx(p[0]) - 10, sy(p[1]) - 4, 20, 8); }
         }
-        if (M.tour) for (const st of RAW.tour.stops) { const p = K.pois[st.id]; if (!p || !onS(p[0], p[1]) || (TGT?.label === st.name && !busy())) continue; const ok = G.flags.tour?.[st.id]; g.font = `8px ${FONT}`; const w = g.measureText(st.name).width + 12; g.fillStyle = ok ? '#3a7a3a' : '#2a3a8a'; g.fillRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); txt(st.name, sx(p[0]), sy(p[1]) - 36, 8, '#fff', 'center'); }
+        if (M.tour) for (const st of RAW.tour.stops) { const p = K.pois[st.id]; if (!p || !onS(p[0], p[1]) || (TGT?.label === st.name && !busy())) continue; const ok = G.flags.tour?.[st.id]; g.font = fnt(8); const w = g.measureText(st.name).width + 12; g.fillStyle = ok ? '#3a7a3a' : '#2a3a8a'; g.fillRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); txt(st.name, sx(p[0]), sy(p[1]) - 36, 8, '#fff', 'center'); }
         for (const mi of M.minis || []) {
           if (!mi.at) continue;
           const p = K.pois[mi.at]; if (!p || !onS(p[0], p[1])) continue;
@@ -1304,7 +1307,7 @@
         for (const sc of SECRETS) if ((sc.map === id || sc.map === '*') && sc.draw) sc.draw(S, sx, sy, tt);
         if (TGT && !busy()) {
           const lb = TGT.label, bx = sx(TGT.x), by = sy(TGT.y) - 58;
-          g.font = `9px ${FONT}`; const w = g.measureText(lb).width + 40;
+          g.font = fnt(9); const w = g.measureText(lb).width + 40;
           g.fillStyle = 'rgba(10,16,64,.9)'; g.fillRect(bx - w / 2, by - 12, w, 24); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(bx - w / 2, by - 12, w, 24);
           g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(bx - w / 2 + 13, by, 8, 0, 7); g.fill(); plain(TOUCH ? 'A' : '␣', bx - w / 2 + 13, by - 4, 8, '#1a1030', 'center');
           txt(lb, bx - w / 2 + 26, by - 4, 9, '#fff');
