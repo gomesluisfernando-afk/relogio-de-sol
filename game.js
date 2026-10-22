@@ -348,12 +348,14 @@
     if (isLum) tx = 90;
     let left = Math.floor(DLG.shown);
     p.lines.forEach((l, k) => { const s = l.slice(0, Math.max(0, left)); left -= l.length; txt(s, tx, y0 + (isLum ? 44 : 30) + k * 30, isLum ? 14 : 16, isLum ? '#f3e2a0' : '#fff'); });
-    // botão "passar" pulsando quando a fala terminou
-    if (DLG.shown >= total) {
-      const pr = 1 + 0.1 * Math.sin(t * 6), bx = W - (isLum ? 104 : 70), by = y0 + 144, r = TOUCH ? 24 : 17;
+    // botão "passar": o único jeito de avançar a fala no toque (apagado enquanto o texto corre, pulsa quando terminou)
+    {
+      const end = DLG.shown >= total, pr = end ? 1 + 0.1 * Math.sin(t * 6) : 1, bx = W - (isLum ? 104 : 70), by = y0 + 144, r = TOUCH ? 24 : 17;
+      DLG.btn = [bx, by, r + 18]; g.globalAlpha = end ? 1 : 0.5;
       g.fillStyle = isLum ? '#e8c04a' : '#ffd84a'; g.beginPath(); g.arc(bx, by, r * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 2; g.stroke();
       g.fillStyle = '#1a1030'; g.beginPath(); g.moveTo(bx - r * 0.3, by - r * 0.45); g.lineTo(bx + r * 0.45, by); g.lineTo(bx - r * 0.3, by + r * 0.45); g.closePath(); g.fill();
       if (!TOUCH) txt('Espaço', bx - 26, by - 6, 9, '#fff', 'right');
+      g.globalAlpha = 1;
     }
   }
   // Lugar da imagem de uma fala ('forma:legenda'): por enquanto, forma geométrica de place holder.
@@ -432,7 +434,6 @@
     for (const f of (c.facts || []).slice(0, 3)) { const ls = wrap('• ' + f, W - 560, 10).slice(0, 5); ls.forEach((l, i) => txt(l, 500, y + i * 16, 10, '#fff')); y += ls.length * 16 + 10; }
     if (c.imagine) { const ls = wrap(c.imagine, W - 580, 9).slice(0, 6); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(255,216,74,.12)'; g.fillRect(500, y, W - 560, hgt); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(500, y, W - 560, hgt); txt('Imagine…', 510, y + 8, 9, '#ffd84a'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#fff')); y += hgt + 10; }
     if (c.joke && !serio && y < H - 230) { const ls = wrap(c.joke, W - 580, 9).slice(0, 5); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(500, y, W - 560, hgt); txt('Dona Mula:', 510, y + 8, 9, '#4aa8ff'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#ddd')); }
-    g.fillStyle = '#ffd84a'; g.fillRect(W - 210, H - 84, 150, 40); plain('FECHAR', W - 135, H - 72, 14, '#1a1030', 'center');
   }
 
   // ---- Caderno do Buck: relatórios por era ----
@@ -473,7 +474,7 @@
     });
     const y = Math.min(H - 76, 134 + L.length * 50 + 6);
     txt('Venda do Tropeiro: ★ Botas $200 · Lampião $150 · Rapadura $5', W / 2, y, 9, '#9be36a', 'center');
-    txt(TOUCH ? 'joystick escolhe · botão A usa · toque fora para fechar' : 'setas escolhem · Espaço usa · Esc fecha', W / 2, H - 52, 9, '#8a9ad8', 'center');
+    txt(TOUCH ? 'toque num item para usar' : 'setas escolhem · Espaço usa · Esc fecha', W / 2, H - 52, 9, '#8a9ad8', 'center');
   }
   function openBook(era) { const i = Math.max(0, ORDER.findIndex((e) => e.id === era)); PANEL = { kind: 'book', i, rects: [] }; sfx('tap'); }
   function drawBook() {
@@ -493,7 +494,7 @@
       if (have) PANEL.rects.push([x, y, 128, 90, c.id]);
     });
     PANEL.prev = [40, 56, 140, 50]; PANEL.next = [W - 180, 56, 140, 50];
-    txt('toque fora para fechar · ◀ ▶ trocam a era', W / 2, H - 50, 9, '#8a9ad8', 'center');
+    txt('◀ ▶ trocam a era', W / 2, H - 50, 9, '#8a9ad8', 'center');
   }
 
   // ---- Faixa e painel do Dossiê (relógio de sol com 4 Atos) ----
@@ -545,28 +546,32 @@
       txt(`relatórios ${gotIn([e.id])}/${eraCards(e.id).length}${eraOpen(e.id) ? '' : ' · portal fechado'}`, 186, 396, 10, '#fff');
       if (G.eras[e.id]?.visited && e.id !== 'prologo' && G.era === 'hoje') txt('toque de novo: viagem rápida até o buraco', 186, 418, 9, '#9be36a');
     } else txt('Toque numa era para ver o relatório.', W / 2, 330, 10, '#8a9ad8', 'center');
-    txt('toque fora para fechar', W / 2, H - 50, 9, '#8a9ad8', 'center');
   }
   function drawPanel() {
     if (PANEL.kind === 'card') drawCard();
     else if (PANEL.kind === 'book') drawBook();
     else if (PANEL.kind === 'timeline') drawTimelinePanel();
     else if (PANEL.kind === 'inv') drawInv();
+    const c = closeRect(); g.fillStyle = '#ffd84a'; g.fillRect(...c); g.strokeStyle = '#000'; g.lineWidth = 2; g.strokeRect(...c); plain('FECHAR', c[0] + c[2] / 2, c[1] + 13, 14, '#1a1030', 'center');
   }
+  // janelas (relatório, caderno, dossiê, inventário): só o botão FECHAR fecha; tocar fora não faz nada
+  const closeRect = () => (PANEL?.kind === 'inv' ? [W - 290, H - 92, 150, 40] : [W - 210, H - 84, 150, 40]);
+  function closePanel() { const P = PANEL; PANEL = null; sfx('tap'); P?.done?.(); }
   function panelTap(x, y) {
     const P = PANEL;
-    if (P.kind === 'card') { PANEL = null; sfx('tap'); P.done?.(); return; }
-    if (P.kind === 'inv') { const i = P.rects.findIndex((r) => inR(x, y, r)); if (i < 0) { PANEL = null; sfx('tap'); } else { P.sel = i; invUse(i); } return; }
+    if (inR(x, y, closeRect())) { closePanel(); return; }
+    if (P.kind === 'card') return;
+    if (P.kind === 'inv') { const i = P.rects.findIndex((r) => inR(x, y, r)); if (i >= 0) { P.sel = i; invUse(i); } return; }
     if (P.kind === 'book') {
       if (inR(x, y, P.prev)) { P.i = (P.i + ORDER.length - 1) % ORDER.length; sfx('tap'); return; }
       if (inR(x, y, P.next)) { P.i = (P.i + 1) % ORDER.length; sfx('tap'); return; }
       const r = P.rects.find((q) => inR(x, y, q));
-      if (r) { const back = { ...P }; cardScreen(r[4], () => { PANEL = back; }); return; }
-      PANEL = null; sfx('tap'); return;
+      if (r) { const back = { ...P }; cardScreen(r[4], () => { PANEL = back; }); }
+      return;
     }
     if (P.kind === 'timeline') {
       const r = P.rects.find((q) => inR(x, y, q));
-      if (!r) { PANEL = null; sfx('tap'); return; }
+      if (!r) return;
       if (P.sel === r[4] && G.eras[r[4]]?.visited && r[4] !== 'prologo' && G.era === 'hoje' && scene.travel) { PANEL = null; scene.travel(r[4]); return; }
       P.sel = r[4]; sfx('tap');
     }
@@ -1505,7 +1510,7 @@
     audio();
     if (TR) return;
     if (PANEL?.kind === 'inv') { invUse(PANEL.sel); return; }
-    if (PANEL) { const P = PANEL; PANEL = null; P.done?.(); return; }
+    if (PANEL) { if (PANEL.kind === 'card') closePanel(); return; } // teclado: Espaço fecha o relatório; nas outras janelas, Esc
     if (ASK) { askPick(ASK.sel); return; }
     if (DLG) { dlgTap(); return; }
     if (scene.action) scene.action(); else scene.tap?.(W / 2, H / 2);
@@ -1538,10 +1543,10 @@
     if (inR(x, y, HB.snd)) { setMute(!muted); return; }
     if (inR(x, y, HB.fs)) { toggleFS(); return; }
     const ctl = TOUCH && scene.ctl;
-    if (ctl && !DLG && !ASK && Math.hypot(x - BTN.x, y - BTN.y) < BTN.r + 16) { BTN.id = e.pointerId; BTN.t = 0.18; action(); return; }
+    if (ctl && !DLG && !ASK && !PANEL && Math.hypot(x - BTN.x, y - BTN.y) < BTN.r + 16) { BTN.id = e.pointerId; BTN.t = 0.18; action(); return; }
     if (PANEL) { panelTap(x, y); return; }
     if (ASK) { const i = ASK.rects.findIndex((r) => inR(x, y, r)); if (i >= 0) askPick(i); return; }
-    if (DLG) { dlgTap(); return; }
+    if (DLG) { if (DLG.btn && Math.hypot(x - DLG.btn[0], y - DLG.btn[1]) < DLG.btn[2]) dlgTap(); return; }
     if (ctl && x < W * 0.55 && !scene.uiHit?.(x, y)) { JOY.id = e.pointerId; JOY.bx = x; JOY.by = y; joySet(x, y); return; }
     DOWN = true;
     scene.tap?.(x, y);
@@ -1563,7 +1568,7 @@
     if (e.repeat && !ARROWS.includes(e.key)) return;
     KEYS[e.key] = true;
     if (e.key === 'm' || e.key === 'M') { audio(); setMute(!muted); return; }
-    if (e.key === 'Escape') { if (DLG || ASK) return; if (PANEL) { const P = PANEL; PANEL = null; P.done?.(); } else scene.esc?.(); return; }
+    if (e.key === 'Escape') { if (DLG || ASK) return; if (PANEL) closePanel(); else scene.esc?.(); return; }
     if (e.key === ' ' || e.key === 'Enter' || e.key === 'e' || e.key === 'E') { action(); return; }
     const wasd = { w: 'ArrowUp', a: 'ArrowLeft', s: 'ArrowDown', d: 'ArrowRight' }[e.key];
     if (ARROWS.includes(e.key) || wasd) { if (!e.repeat) dirKey(e.key.startsWith('Arrow') ? e.key : wasd); return; }
@@ -1590,7 +1595,7 @@
     }
   }
   function drawCtl(dt) {
-    if (!TOUCH || !scene.ctl || DLG || ASK) return; // com diálogo na tela, só o botão de passar dele
+    if (!TOUCH || !scene.ctl || DLG || ASK || PANEL) return; // com diálogo ou janela na tela, só os botões dela (▶ ou FECHAR)
     const on = JOY.id != null, bx = on ? JOY.bx : 120, by = on ? JOY.by : H - 120;
     g.globalAlpha = on ? 0.55 : 0.28;
     g.fillStyle = '#0a1040'; g.beginPath(); g.arc(bx, by, JR, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke();
@@ -1598,12 +1603,12 @@
     g.beginPath(); g.arc(bx + JOY.x * JR, by + JOY.y * JR, 24, 0, 7); g.fillStyle = '#d8dcff'; g.fill();
     g.globalAlpha = 1;
     if (BTN.t > 0) BTN.t -= dt;
-    const live = DLG || ASK || PANEL || scene.actLabel?.();
+    const live = scene.actLabel?.();
     const pr = BTN.t > 0 ? 0.9 : live ? 1 + 0.06 * Math.sin(performance.now() / 160) : 1;
     g.globalAlpha = live ? 0.95 : 0.45;
     g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(BTN.x, BTN.y, BTN.r * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 4; g.stroke();
     plain('A', BTN.x, BTN.y - 18, 24, '#1a1030', 'center');
-    const lb = DLG ? 'passar' : ASK ? 'escolher' : PANEL ? 'fechar' : (scene.actLabel?.() || '');
+    const lb = scene.actLabel?.() || '';
     if (lb) plain(lb, BTN.x, BTN.y + 12, 8, '#1a1030', 'center');
     g.globalAlpha = 1;
   }
