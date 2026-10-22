@@ -476,7 +476,7 @@
       return r;
     });
     const y = Math.min(H - 76, 134 + L.length * 50 + 6);
-    txt('Venda do Tropeiro: ★ Botas $200 · Lampião $150 · Rapadura $5', W / 2, y, 9, '#9be36a', 'center');
+    txt(`Venda do Tropeiro: ★ Botas $${PRECO_BOTAS} · Lampião $150 · Rapadura $5`, W / 2, y, 9, '#9be36a', 'center');
     txt(TOUCH ? 'toque num item para usar' : 'setas escolhem · Espaço usa · Esc fecha', W / 2, H - 52, 9, '#8a9ad8', 'center');
   }
   function openBook(era) { const i = Math.max(0, ORDER.findIndex((e) => e.id === era)); PANEL = { kind: 'book', i, rects: [] }; sfx('tap'); }
@@ -582,6 +582,8 @@
 
   // ================= coletar relatório =================
   let FLAMEPULSE = 0;
+  // economia: cada relatório novo, aberto e lido, paga OURO_RELATORIO; a bota (PRECO_BOTAS) sai por volta do 3º/4º portal
+  const OURO_RELATORIO = 20, PRECO_BOTAS = 400;
   function giveCard(id, done) {
     if (!CARD[id] || G.cards.includes(id)) { done?.(); return; }
     const before = ACTS.map((_, i) => actOpen(i));
@@ -591,6 +593,7 @@
     if (CARD[id].tone !== 'serio') confetti(W / 2, H / 3, 50);
     if (curAct() >= 2) floatTxt('brilho +1', '#f3e2a0');
     cardScreen(id, () => {
+      giveGold(OURO_RELATORIO); floatTxt(`relatório lido +$${OURO_RELATORIO}`, '#ffd84a'); // paga ao fechar: aberto e lido
       const opened = ACTS.findIndex((_, i) => !before[i] && actOpen(i));
       if (opened > 0) { sfx('win'); banner(`ATO ${ACTS[opened].id} · ${ACTS[opened].name}`); say([['mula', `Relatórios suficientes. Abriu o Ato ${ACTS[opened].id}: ${ACTS[opened].name}. As lajes daqueles buracos caíram.`], ...(opened === 2 ? [['mula', 'E agora o Cobrador também anda pela Estrada Real de hoje. Pois é.']] : []), ...(opened === 3 ? [['lum', 'Acelere.']] : [])], done); }
       else done?.();
@@ -1021,7 +1024,7 @@
       say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }));
     }
     function shop(n) {
-      const items = [['botas', '★ Botas de tropeiro (+40% velocidade, para sempre)', 200], ['lampiao', 'Lampião (você enxerga mais longe)', 150], ['rapadura', 'Rapadura (+80% velocidade por 40 s)', 5]];
+      const items = [['botas', '★ Botas de tropeiro (+40% velocidade, para sempre)', PRECO_BOTAS], ['lampiao', 'Lampião (você enxerga mais longe)', 150], ['rapadura', 'Rapadura (+80% velocidade por 40 s)', 5]];
       say([[n.id, G.flags.guia ? 'Guia agora, é? Pra guia eu faço preço.' : 'Venda do Tropeiro. Tem de tudo que cabe numa mula.']], () => ask(`Seu ouro: $${G.gold}`, [...items.map(([, l, p]) => `${l} · $${p}`), 'Nada, obrigado'], (k) => {
         if (k >= items.length) return;
         const [it, , p] = items[k];
