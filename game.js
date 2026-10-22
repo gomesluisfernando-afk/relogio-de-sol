@@ -798,7 +798,7 @@
     },
     tap() {
       audio(); sfx('ok');
-      if (!G.flags.intro) { go(Intro); return; }
+      if (!G.flags.intro || /[?&]intro=1/.test(location.search)) { go(Intro); return; } // ?intro=1 revê a intro sem perder o progresso
       const m = window.MAPS[G.era] ? G.era : 'hoje';
       go(() => OW(m), m === 'hoje' ? 'Brasil · Hoje' : window.MAPS[m].title);
     },
