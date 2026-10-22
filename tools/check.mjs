@@ -27,7 +27,7 @@ const CARD = Object.fromEntries(RAW.cards.map((c) => [c.id, c]));
 // 3. mapas
 for (const f of readdirSync(new URL('maps/', root))) vm.runInContext(rd('maps/' + f), ctx);
 const MAPS = ctx.window.MAPS;
-const miniKeys = [...rd('minis.js').matchAll(/return \{ ([a-z, ]+) \};\n\}\)\(\);/g)][0]?.[1].split(',').map((s) => s.trim()) || [];
+const miniKeys = [...rd('minis.js').matchAll(/return \{ ([a-z, ]+) \};\r?\n\}\)\(\);/g)][0]?.[1].split(',').map((s) => s.trim()) || [];
 const QUESTS = new Set(RAW.quests.map((q) => q.id));
 const ERAS = new Set(RAW.eras.map((e) => e.id));
 for (const [id, M] of Object.entries(MAPS)) {

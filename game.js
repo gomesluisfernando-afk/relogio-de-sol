@@ -862,7 +862,7 @@
           if (isL) lumBox(100, H - hh - 36, W - 200, hh); else { g.fillStyle = 'rgba(0,0,0,.62)'; g.fillRect(100, H - hh - 36, W - 200, hh); }
           ls.forEach((l, k) => txt(l, W / 2, H - hh - 24 + k * 22, 13, isL ? '#f3e2a0' : '#fff', 'center'));
         }
-        if (c.title) { const a = Math.min(1, Math.max(0, tt - c.title[0])); g.globalAlpha = a; txt('Relógio de Sol', W / 2, H / 2 - 40, 40, '#ffd84a', 'center'); txt(c.title[1], W / 2, H / 2 + 20, 12, '#fff', 'center'); g.globalAlpha = 1; }
+        if (c.title) { const a = Math.min(1, Math.max(0, tt - c.title[0])); g.fillStyle = `rgba(0,0,0,${a * 0.75})`; g.fillRect(0, 0, W, H); g.globalAlpha = a; txt(c.title[2] || 'Relógio de Sol', W / 2, H / 2 - 40, 40, '#ffd84a', 'center'); txt(c.title[1], W / 2, H / 2 + 20, 12, '#fff', 'center'); g.globalAlpha = 1; }
         if (this.t > 1.5) txt('toque para pular ▶▶', W - 20, 16, 8, 'rgba(255,255,255,.7)', 'right');
       },
       tap() { if (this.t > 0.8) end(); },

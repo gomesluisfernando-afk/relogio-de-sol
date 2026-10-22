@@ -501,8 +501,13 @@ window.MINIS = (() => {
       draw() {
         A.bg('img/bg_torre.jpg', 3, 0.35, '#3a3048');
         const bell = (x, size, b) => { g.save(); g.translate(x, 150); g.rotate(Math.sin(performance.now() / 80) * 0.4 * swing[b]); g.fillStyle = '#c8a050'; g.beginPath(); g.moveTo(-size, size * 1.6); g.quadraticCurveTo(-size, 0, 0, 0); g.quadraticCurveTo(size, 0, size, size * 1.6); g.closePath(); g.fill(); g.fillStyle = '#7a5a2a'; g.fillRect(-4, size * 1.6 - 4, 8, 12); g.restore(); };
-        bell(W / 2 - 160, 60, 'G'); bell(W / 2 + 160, 36, 'P');
-        txt('GRANDE', W / 2 - 160, 270, 10, '#fff', 'center'); txt('pequeno', W / 2 + 160, 260, 10, '#fff', 'center');
+        if (A.img('img/bg_torre.jpg')) { // o fundo já tem os dois sinos pintados: só acende quando tocam
+          for (const [b, x, y, r] of [['G', 240, 300, 70], ['P', 800, 250, 44]]) if (swing[b] > 0) { g.strokeStyle = `rgba(255,216,74,${swing[b]})`; g.lineWidth = 6; g.beginPath(); g.arc(x, y, r + (1 - swing[b]) * 30, 0, 7); g.stroke(); }
+          txt('GRANDE', 240, 390, 10, '#fff', 'center'); txt('pequeno', 800, 320, 10, '#fff', 'center');
+        } else {
+          bell(W / 2 - 160, 60, 'G'); bell(W / 2 + 160, 36, 'P');
+          txt('GRANDE', W / 2 - 160, 270, 10, '#fff', 'center'); txt('pequeno', W / 2 + 160, 260, 10, '#fff', 'center');
+        }
         head(A, 'A Língua dos Sinos · São João del-Rei', `Toques certos: ${wins}/5 · toques simplificados para o jogo`);
         if (stage === 'play' && cur) {
           A.box(60, 300, W - 120, 150, 0.95);
