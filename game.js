@@ -87,6 +87,7 @@
 
   // ================= áudio (chiptune por WebAudio) =================
   let AC = null, MASTER = null, muted = !!G.flags.muted;
+  let TOUCH = matchMedia('(pointer: coarse)').matches || /[?&]touch=1/.test(location.search); // celular/tablet: joystick e botão A na tela
   function audio() {
     if (AC) { if (AC.state === 'suspended') AC.resume(); return AC; }
     try { AC = new (window.AudioContext || window.webkitAudioContext)(); MASTER = AC.createGain(); MASTER.gain.value = muted ? 0 : 0.5; MASTER.connect(AC.destination); loadSamples(); bgm(0.18); } catch { AC = null; }
@@ -305,7 +306,8 @@
   // ================= diálogo, escolha, faixa, transição, painéis =================
   let DLG = null, ASK = null, BANNER = null, TR = null, PANEL = null, SHAKE = 0;
   const PAGE = 4, CPS = 50;
-  function say(lines, done) {
+  // keep: ao fechar no X, o que vem depois (prêmio, próxima tela) acontece mesmo assim. false = fechar cancela.
+  function say(lines, done, keep = true) {
     const pages = [];
     for (const [who, text, pic] of lines) {
       const hasP = who && who !== 'narr' && who !== 'lum';
@@ -313,9 +315,10 @@
       for (let i = 0; i < ls.length; i += PAGE) pages.push({ who, lines: ls.slice(i, i + PAGE), pic });
     }
     if (!pages.length) { done?.(); return; }
-    DLG = { pages, i: 0, shown: 0, done, bipAt: 0 };
+    DLG = { pages, i: 0, shown: 0, done, keep, bipAt: 0 };
     if (pages[0].who === 'lum') sfx('lum');
   }
+  function closeDlg() { const d = DLG?.keep && DLG.done; DLG = null; sfx('tap'); if (d) d(); }
   function dlgTap() {
     const p = DLG.pages[DLG.i], total = p.lines.join('').length;
     if (DLG.shown < total) { DLG.shown = total; return; }
@@ -346,7 +349,14 @@
     if (isLum) tx = 90;
     let left = Math.floor(DLG.shown);
     p.lines.forEach((l, k) => { const s = l.slice(0, Math.max(0, left)); left -= l.length; txt(s, tx, y0 + (isLum ? 44 : 30) + k * 30, isLum ? 14 : 16, isLum ? '#f3e2a0' : '#fff'); });
-    if (DLG.shown >= total && Math.floor(t * 3) % 2) txt('▼', W - (isLum ? 90 : 60), y0 + 146, 14, isLum ? '#e8c04a' : '#ffd84a');
+    // X redondo para fechar e botão "passar" pulsando quando a fala terminou
+    const xr = [W - 40, y0 - 2, 20]; DLG.xr = xr; xButton(...xr);
+    if (DLG.shown >= total) {
+      const pr = 1 + 0.12 * Math.sin(t * 6), bx = TOUCH && scene.ctl ? W - 190 : W - (isLum ? 104 : 74), by = y0 + 150;
+      g.fillStyle = isLum ? '#e8c04a' : '#ffd84a'; g.beginPath(); g.arc(bx, by, 17 * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 2; g.stroke();
+      g.fillStyle = '#1a1030'; g.beginPath(); g.moveTo(bx - 5, by - 8); g.lineTo(bx + 8, by); g.lineTo(bx - 5, by + 8); g.closePath(); g.fill();
+      txt(TOUCH ? 'botão A' : 'Espaço', bx - 26, by - 6, 9, '#fff', 'right');
+    }
   }
   // Lugar da imagem de uma fala ('forma:legenda'): por enquanto, forma geométrica de place holder.
   function picHolder(pic, y0) {
@@ -360,7 +370,11 @@
     g.fill();
     wrap(label, w - 30, 9).slice(0, 2).forEach((l, i) => txt(l, cx, y + h - 34 + i * 14, 9, '#fff', 'center'));
   }
-  function ask(q, opts, cb) { ASK = { q, opts, cb, rects: [] }; }
+  function xButton(cx, cy, r) {
+    g.fillStyle = '#3a1020'; g.beginPath(); g.arc(cx, cy, r, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke();
+    g.beginPath(); g.moveTo(cx - r * 0.4, cy - r * 0.4); g.lineTo(cx + r * 0.4, cy + r * 0.4); g.moveTo(cx + r * 0.4, cy - r * 0.4); g.lineTo(cx - r * 0.4, cy + r * 0.4); g.stroke();
+  }
+  function ask(q, opts, cb) { ASK = { q, opts, cb, rects: [], sel: 0 }; }
   function drawAsk() {
     const qs = wrap(ASK.q, W - 100, 14);
     const two = ASK.opts.length === 4;
@@ -373,11 +387,12 @@
       const col = two ? i % 2 : 0, row = two ? Math.floor(i / 2) : i;
       const bw = two ? (W - 112) / 2 : W - 96;
       const r = [48 + col * (bw + 16), y0 + 30 + qs.length * 24 + row * 50, bw, 42];
-      g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(...r); g.strokeStyle = '#8a9ad8'; g.lineWidth = 2; g.strokeRect(...r);
+      const on = i === ASK.sel; g.fillStyle = on ? 'rgba(255,216,74,.25)' : 'rgba(255,255,255,.12)'; g.fillRect(...r); g.strokeStyle = on ? '#ffd84a' : '#8a9ad8'; g.lineWidth = on ? 3 : 2; g.strokeRect(...r);
       const ls = wrap(`${'ABCDEFGH'[i]}) ${o}`, bw - 24, 11);
       ls.slice(0, 2).forEach((l, k) => txt(l, r[0] + 12, r[1] + (ls.length > 1 ? 8 : 15) + k * 15, 11, '#fff'));
       return r;
     });
+    ASK.xr = [W - 40, y0 - 2, 20]; xButton(...ASK.xr);
   }
   function askPick(i) { if (!ASK || i < 0 || i >= ASK.opts.length) return; const cb = ASK.cb; ASK = null; sfx('tap'); cb(i); }
   function banner(title) { BANNER = { title, t: 3 }; }
@@ -888,16 +903,11 @@
     const K = loadMap(id), M = K.M, isHoje = id === 'hoje';
     const startPt = at || G.pos[id] || K.pois[M.start];
     const sf = nearestFree(K, startPt[0], startPt[1]);
-    const P = { x: (sf[0] + 0.5) * M.cell, y: (sf[1] + 0.5) * M.cell, path: [], face: 0, ph: 0, moving: false, still: 0, steps: 0 };
+    const P = { x: (sf[0] + 0.5) * M.cell, y: (sf[1] + 0.5) * M.cell, face: 0, ph: 0, moving: false, still: 0, steps: 0 };
     const mulaS = { x: P.x - 20, y: P.y + 4, dir: 1, ph: 0, moving: false };
     const trail = [];
     let camx = 0, camy = 0, tt = 0, saveT = 0, fogT = 0, chase = false, eggSwap = 0, radarT = 0;
     const near = {}, hud = {};
-    // Quem nasce em cima de portal, buraco ou porta não dispara de novo: só depois de sair e voltar (evita o laço era ↔ Hoje).
-    const spawnIn = (p, r = 40) => p && Math.hypot(P.x - p[0], P.y - p[1]) < r;
-    if (spawnIn(K.pois.portal)) near.portal = 1;
-    for (const [era, h] of Object.entries(M.holes || {})) if (spawnIn(h)) near['h' + era] = 1;
-    for (const k of Object.keys(M.doors || {})) if (spawnIn(K.pois[k])) near[k] = 1;
     const mkNpc = (n) => { const home = K.pois[n.at] || n.xy; return { ...n, x: home[0], y: home[1], face: 0, away: 0, home, ph: Math.random() * 6 }; };
     const npcs = (M.npcs || []).filter((n) => !n.cond || G.minis[n.cond]).map(mkNpc);
     if (isHoje && curAct() >= 2 && !G.flags.guia) npcs.push(mkNpc({ id: 'cobrador', at: 'estrada', wander: 60, lines: ['Estrada Real, forasteiro. Tudo que passa aqui paga o Quinto. Até no século XXI, se eu deixar.'] }));
@@ -926,11 +936,6 @@
       return { text: `Entre no portal ${eraTitle(era)}`, at: M.holes[era] };
     }
 
-    function walkTo(wx, wy) {
-      const s = nearestFree(K, P.x, P.y), t = nearestFree(K, wx, wy);
-      const p = astar(K, s[0], s[1], t[0], t[1]);
-      if (p) { P.path = p; sfx('tap'); }
-    }
     const asLines = (n, ls) => (ls || []).map((l) => (Array.isArray(l) ? l : [n.id, l]));
 
     // ---- conversa com NPC: contexto → pergunta → consequência no mundo ----
@@ -963,7 +968,7 @@
           }
         });
       };
-      say(lines, one);
+      say(lines, one, false);
     }
     function miniTalk(mi, n) {
       if (mi.act != null && !actOpen(mi.act)) { say([[n?.id || 'mula', mi.locked || 'Ainda não é hora disso. Volte num Ato mais adiante.']]); return; }
@@ -973,7 +978,7 @@
       }
       const done = G.minis[mi.id];
       const intro = asLines(n || { id: 'mula' }, n?.lines || mi.lines);
-      say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }));
+      say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }), false);
     }
     function shop(n) {
       const items = [['botas', 'Botas de tropeiro (+40% velocidade)', 200], ['lampiao', 'Lampião (revela mais névoa)', 150], ['rapadura', 'Rapadura (corre mais por 40 s)', 20]];
@@ -1025,7 +1030,7 @@
       const q = RAW.quests.find((x) => x.id === w.quest), st = G.quests[q.id];
       say([[w.id, q.witnesses[w.wi].text]], () => { if (!st.heard.includes(w.wi)) { st.heard.push(w.wi); save(); floatTxt(`testemunha ${st.heard.length}/${q.witnesses.length}`, '#9be36a'); } });
     }
-    function travel(era) { const h = M.holes?.[era]; if (!h) return; const [cx, cy] = nearestFree(K, h[0], h[1] + 30); P.x = (cx + 0.5) * M.cell; P.y = (cy + 0.5) * M.cell; P.path = []; mulaS.x = P.x - 16; mulaS.y = P.y; trail.length = 0; cam(); sfx('portal'); banner(ERA[era].name); }
+    function travel(era) { const h = M.holes?.[era]; if (!h) return; const [cx, cy] = nearestFree(K, h[0], h[1] + 30); P.x = (cx + 0.5) * M.cell; P.y = (cy + 0.5) * M.cell; mulaS.x = P.x - 16; mulaS.y = P.y; trail.length = 0; cam(); sfx('portal'); banner(ERA[era].name); }
     function fallInto(era) {
       sfx('fall'); SHAKE = 0.4;
       G.pos.hoje = [Math.round(P.x), Math.round(P.y + 30)];
@@ -1047,7 +1052,63 @@
       say([['cobrador', `Pó sem selo! Levo o Quinto: ${took}. Responda direito e talvez eu devolva metade.`]], () => one(0));
     }
 
-    Object.assign(S, { walkTo, talk, travel, mulaS, setSwap: (s) => { eggSwap = s; } });
+    // Tudo que se faz no mundo passa pelo botão A: o mais perto dentro do alcance vira o alvo.
+    let TGT = null;
+    function usePortal() {
+      if (M.exit) { go(() => OW(M.exit.map, M.exit.at && window.MAPS[M.exit.map].pois[M.exit.at]), M.exit.title); return; }
+      const hole = window.MAPS.hoje.holes[M.era];
+      if (eraNeedMet(M.era)) { G.eras[M.era].done = true; save(); sfx('portal'); SHAKE = 0.3; go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje'); return; }
+      const k = needOf(M.era), falta = [k.got < k.cards && `${k.cards - k.got} relatório(s)`, k.ok < k.quiz && `${k.quiz - k.ok} pergunta(s)`, k.mini && !G.minis[k.mini] && 'o desafio'].filter(Boolean).join(', ');
+      say([['mula', `A era ainda não está completa. Falta: ${falta}.`]], () => ask('Sair mesmo assim? (o próximo portal continua fechado)', ['Ficar', 'Sair'], (j) => {
+        if (j === 1) { sfx('portal'); go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje'); }
+      }), false);
+    }
+    function interactables() {
+      const L = [], pt = [P.x, P.y];
+      const add = (x, y, r, label, run) => { const d = d2(pt, [x, y]); if (d < r) L.push({ x, y, d, label, run }); };
+      for (const [cid, p] of Object.entries(K.cardPos)) if (!G.cards.includes(cid)) add(p[0], p[1], 34, 'pegar', () => giveCard(cid, () => {
+        if (isHoje && cid === 'C00' && !G.flags.tut1) { G.flags.tut1 = 1; save(); say([['mula', 'Isso. Cada papel desses é um relatório. Eu transmito. Pra quem? Depois.'], ['mula', 'E aquilo ali no chão, aquela cratera com luz azul... é o atalho.']]); }
+      }));
+      for (const n of npcs) if (!(n.away > tt)) add(n.x, n.y, 40, n.shop ? 'comprar' : n.lesson ? 'ouvir' : n.mini && !n.quiz ? 'desafio' : 'falar', () => talk(n));
+      for (const w of witnesses) if (!w.mule && G.quests[w.quest] && !G.quests[w.quest].done) add(w.x, w.y, 36, 'ouvir', () => witnessTalk(w));
+      const mw = witnesses.find((v) => v.mule && G.quests[v.quest] && !G.quests[v.quest].done && !G.quests[v.quest].heard.includes(v.wi));
+      if (mw) add(mulaS.x, mulaS.y, 40, 'Mula', () => witnessTalk(mw));
+      for (const mi of M.minis || []) if (mi.at) { const q = K.pois[mi.at]; add(q[0], q[1], 36, 'desafio', () => miniTalk(mi)); }
+      if (!isHoje && K.pois.portal) add(K.pois.portal[0], K.pois.portal[1], 34, M.exit ? 'sair' : 'portal', usePortal);
+      for (const [k, q] of Object.entries(K.pois)) {
+        if (k.startsWith('bateia') && !(dustAt[k] > tt)) add(q[0], q[1], 30, 'bateia', () => { dustAt[k] = tt + 25; G.dust += 5; save(); sfx('garimpo'); floatTxt('+5 pó de ouro ✨'); FLAMEPULSE = 0.5; });
+        if (k === 'fundicao') add(q[0], q[1], 36, 'fundição', () => {
+          if (G.dust > 0) { const n = G.dust; G.dust = 0; giveGold(n); if (chase && COB) { COB.state = 'patrol'; COB.path = null; chase = false; } say([['fundidor', `${n} de pó viraram barra com o selo do rei: +$${n}.`], ['mula', 'E o Cobrador perde o interesse. Pó sem selo é que dá cadeia.']]); }
+          else say([['fundidor', 'Casa de Fundição. Traga pó de ouro que eu derreto e carimbo. O Quinto sai aqui mesmo.']]);
+        });
+        const dest = k.startsWith('door_') && M.doors?.[k];
+        if (dest) add(q[0], q[1], 32, 'entrar', () => { G.pos[id] = [Math.round(P.x), Math.round(P.y + 24)]; save(); sfx('cascos'); go(() => OW(dest.map), dest.title); });
+      }
+      if (isHoje) {
+        for (const [era, h] of Object.entries(M.holes)) add(h[0], h[1], 32, eraOpen(era) ? 'entrar' : 'fechado', () => {
+          if (eraOpen(era)) fallInto(era); else say([['mula', `Portal fechado. A viagem no tempo é em ordem: o próximo é ${eraTitle(nextEra())}.`]]);
+        });
+        if (finalOpen() && !G.flags.ending) add(K.pois.mirante[0], K.pois.mirante[1], 40, 'final', () => startEnding());
+      }
+      if (M.tour) for (const st of RAW.tour.stops) {
+        const q = K.pois[st.id]; if (!q) continue;
+        add(q[0], q[1], 34, st.id, () => {
+          const seen = (G.flags.tour ||= {}); const novo = !seen[st.id]; seen[st.id] = 1; save();
+          const ls = [['sineiro', `${st.id} · ${st.name}. Olhe: ${st.lookAt}.`], ...(st.extras || []).slice(0, 2).map((x) => ['buck', x.joke])];
+          if (st.transition) ls.push(['buck', st.transition]);
+          say(ls, () => { if (novo) floatTxt(`parada ${Object.keys(seen).length}/${RAW.tour.stops.length}`, '#9be36a'); });
+        });
+      }
+      return L.sort((a, b) => a.d - b.d);
+    }
+    function act() {
+      const t = interactables()[0];
+      if (t) { t.run(); return; }
+      // segredos escondidos: A perto do chafariz, do cruzeiro etc. (o mesmo que tocar neles antes)
+      const near1 = Object.values(K.pois).reduce((a, q) => (d2([P.x, P.y], q) < (a ? d2([P.x, P.y], a) : 60) ? q : a), null);
+      if (near1) for (const sc of SECRETS) if ((sc.map === id || sc.map === '*') && sc.tap?.(S, near1[0], near1[1], tt)) return;
+    }
+    Object.assign(S, { talk, travel, mulaS, setSwap: (s) => { eggSwap = s; }, targets: () => interactables() });
 
     return {
       travel, S,
@@ -1061,7 +1122,7 @@
         save();
         if (isHoje && !G.flags.tut0) {
           G.flags.tut0 = 1; save();
-          setTimeout(() => say([['mula', 'Levanta. Você tem um trabalho.'], ['buck', 'I have a WHAT?'], ['mula', 'Observar. Anotar. Mandar. Toca em qualquer lugar e anda. Eu te sigo.']], () => {
+          setTimeout(() => say([['mula', 'Levanta. Você tem um trabalho.'], ['buck', 'I have a WHAT?'], ['mula', 'Observar. Anotar. Mandar. Ande com o joystick à esquerda (ou as setas). Chegou perto de algo? Aperte o botão A (ou Espaço). Eu te sigo.']], () => {
             if (G.flags.migratedN) say([['mula', `Ah: você trouxe ${G.flags.migratedN} relatórios de um caderno antigo. Já mandei.`]]);
           }), 600);
         } else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${ERA[M.era]?.name || M.title}.`]]), ['mula', `Para o portal abrir: ${k.cards} relatórios, ${k.quiz} pergunta${k.quiz === 1 ? '' : 's'} certa${k.quiz === 1 ? '' : 's'}${k.mini ? ' e vencer o desafio da era' : ''}.`]]); }, 700);
@@ -1073,16 +1134,14 @@
         const ky = (KEYS.ArrowDown || KEYS.s ? 1 : 0) - (KEYS.ArrowUp || KEYS.w ? 1 : 0);
         let vx = 0, vy = 0;
         const sp = 85 * (G.items.includes('botas') ? 1.4 : 1) * (S.buff > tt ? 1.35 : 1);
-        if (!busy() && (kx || ky)) { P.path = []; const l = Math.hypot(kx, ky); vx = kx / l * sp; vy = ky / l * sp; }
-        else if (!busy() && P.path.length) {
-          const [tx, ty] = P.path[0], dx = tx - P.x, dy = ty - P.y, d = Math.hypot(dx, dy);
-          if (d < 3) P.path.shift(); else { vx = dx / d * sp; vy = dy / d * sp; }
-        }
+        const jm = Math.hypot(JOY.x, JOY.y);
+        if (!busy() && JOY.id != null && jm > 0.2) { const k = Math.min(1, jm) / jm; vx = JOY.x * k * sp; vy = JOY.y * k * sp; } // joystick analógico
+        else if (!busy() && (kx || ky)) { const l = Math.hypot(kx, ky); vx = kx / l * sp; vy = ky / l * sp; }
         P.moving = !!(vx || vy);
         if (P.moving) {
           P.still = 0;
-          if (!blockedAt(K, P.x + vx * dt, P.y)) P.x += vx * dt; else P.path = [];
-          if (!blockedAt(K, P.x, P.y + vy * dt)) P.y += vy * dt; else P.path = [];
+          if (!blockedAt(K, P.x + vx * dt, P.y)) P.x += vx * dt;
+          if (!blockedAt(K, P.x, P.y + vy * dt)) P.y += vy * dt;
           P.face = Math.abs(vx) > Math.abs(vy) ? (vx < 0 ? -1 : 2) : (vy < 0 ? 1 : 0);
           const before = Math.floor(P.ph / Math.PI);
           P.ph += dt * 14;
@@ -1121,95 +1180,9 @@
           if (COB.state === 'chase' && dist < 16) caught();
         }
         if (busy()) return;
+        TGT = interactables()[0] || null;
         const pt = [P.x, P.y];
-        for (const [cid, p] of Object.entries(K.cardPos)) {
-          if (G.cards.includes(cid) || d2(pt, p) > 22) continue;
-          P.path = [];
-          giveCard(cid, () => {
-            if (isHoje && cid === 'C00' && !G.flags.tut1) { G.flags.tut1 = 1; save(); say([['mula', 'Isso. Cada papel desses é um relatório. Eu transmito. Pra quem? Depois.'], ['mula', 'E aquilo ali no chão, aquela cratera com luz azul... é o atalho.']]); }
-          });
-          return;
-        }
-        for (const n of npcs) {
-          if (n.away > tt) continue;
-          const d = d2(pt, [n.x, n.y]);
-          if (d < 26 && !near[n.id]) { near[n.id] = 1; P.path = []; talk(n); return; }
-          if (d > 44) near[n.id] = 0;
-        }
-        for (const w of witnesses) {
-          if (w.mule || !G.quests[w.quest] || G.quests[w.quest].done) continue;
-          const k = 'w' + w.quest + w.wi, d = d2(pt, [w.x, w.y]);
-          if (d < 24 && !near[k]) { near[k] = 1; P.path = []; witnessTalk(w); return; }
-          if (d > 44) near[k] = 0;
-        }
-        for (const mi of M.minis || []) {
-          if (!mi.at) continue;
-          const p = K.pois[mi.at], k = 'm' + mi.id, d = d2(pt, p);
-          if (d < 24 && !near[k]) { near[k] = 1; P.path = []; miniTalk(mi); return; }
-          if (d > 44) near[k] = 0;
-        }
-        if (!isHoje && K.pois.portal) {
-          const d = d2(pt, K.pois.portal);
-          if (d < 20 && !near.portal) {
-            near.portal = 1; P.path = [];
-            if (M.exit) { go(() => OW(M.exit.map, M.exit.at && window.MAPS[M.exit.map].pois[M.exit.at]), M.exit.title); return; }
-            if (eraNeedMet(M.era)) {
-              G.eras[M.era].done = true; save(); sfx('portal'); SHAKE = 0.3;
-              const hole = window.MAPS.hoje.holes[M.era];
-              go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje');
-              return;
-            }
-            const k = needOf(M.era), falta = [k.got < k.cards && `${k.cards - k.got} relatório(s)`, k.ok < k.quiz && `${k.quiz - k.ok} pergunta(s)`, k.mini && !G.minis[k.mini] && 'o desafio'].filter(Boolean).join(', ');
-            say([['mula', `A era ainda não está completa. Falta: ${falta}.`]], () => ask('Sair mesmo assim? (o próximo portal continua fechado)', ['Ficar', 'Sair'], (j) => {
-              if (j !== 1) return;
-              const hole = window.MAPS.hoje.holes[M.era]; sfx('portal');
-              go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje');
-            }));
-          }
-          if (d > 40) near.portal = 0;
-        }
-        for (const [k, p] of Object.entries(K.pois)) {
-          if (k.startsWith('bateia') && d2(pt, p) < 18 && !(dustAt[k] > tt)) { dustAt[k] = tt + 25; G.dust += 5; save(); sfx('garimpo'); floatTxt('+5 pó de ouro ✨'); FLAMEPULSE = 0.5; }
-          if (k === 'fundicao') {
-            if (d2(pt, p) < 24 && !near.fund) {
-              near.fund = 1; P.path = [];
-              if (G.dust > 0) { const n = G.dust; G.dust = 0; giveGold(n); if (chase && COB) { COB.state = 'patrol'; COB.path = null; chase = false; music(M.music || M.era); } say([['fundidor', `${n} de pó viraram barra com o selo do rei: +$${n}.`], ['mula', 'E o Cobrador perde o interesse. Pó sem selo é que dá cadeia.']]); }
-              else say([['fundidor', 'Casa de Fundição. Traga pó de ouro que eu derreto e carimbo. O Quinto sai aqui mesmo.']]);
-            }
-            if (d2(pt, p) > 44) near.fund = 0;
-          }
-          if (k.startsWith('door_')) {
-            const dest = M.doors?.[k];
-            if (dest && d2(pt, p) < 18 && !near[k]) { near[k] = 1; P.path = []; G.pos[id] = [Math.round(P.x), Math.round(P.y + 24)]; save(); sfx('cascos'); go(() => OW(dest.map), dest.title); return; }
-            if (d2(pt, p) > 40) near[k] = 0;
-          }
-        }
-        if (isHoje) {
-          for (const [era, h] of Object.entries(M.holes)) {
-            const d = d2(pt, h), open = eraOpen(era);
-            if (d < 16 && !near['h' + era]) {
-              near['h' + era] = 1; P.path = [];
-              if (open) { fallInto(era); return; }
-              say([['mula', `Portal fechado. A viagem no tempo é em ordem: o próximo é ${eraTitle(nextEra())}.`]]);
-            }
-            if (d > 40) near['h' + era] = 0;
-          }
-          const dSj = d2(pt, [1505, 1360]); if (dSj < 70 && !near.sjdr) { near.sjdr = 1; sfx('sinos'); } else if (dSj > 140) near.sjdr = 0;
-          if (finalOpen() && !G.flags.ending && d2(pt, K.pois.mirante) < 30 && !near.final) { near.final = 1; P.path = []; startEnding(); return; }
-        }
-        if (M.tour) for (const st of RAW.tour.stops) {
-          const p = K.pois[st.id]; if (!p) continue;
-          const d = d2(pt, p);
-          if (d < 22 && !near[st.id]) {
-            near[st.id] = 1; P.path = [];
-            const seen = (G.flags.tour ||= {}); const novo = !seen[st.id]; seen[st.id] = 1; save();
-            const ls = [['sineiro', `${st.id} · ${st.name}. Olhe: ${st.lookAt}.`], ...(st.extras || []).slice(0, 2).map((x) => ['buck', x.joke])];
-            if (st.transition) ls.push(['buck', st.transition]);
-            say(ls, () => { if (novo) floatTxt(`parada ${Object.keys(seen).length}/${RAW.tour.stops.length}`, '#9be36a'); });
-            return;
-          }
-          if (d > 44) near[st.id] = 0;
-        }
+        if (isHoje) { const dSj = d2(pt, [1505, 1360]); if (dSj < 70 && !near.sjdr) { near.sjdr = 1; sfx('sinos'); } else if (dSj > 140) near.sjdr = 0; } // sinos de São João ao passar perto
         for (const sc of SECRETS) if (sc.map === id || sc.map === '*') sc.check?.(S, dt, tt);
       },
       draw(dt) {
@@ -1292,6 +1265,13 @@
         } });
         ents.sort((a, b) => a.y - b.y).forEach((e) => e.d());
         for (const sc of SECRETS) if ((sc.map === id || sc.map === '*') && sc.draw) sc.draw(S, sx, sy, tt);
+        if (TGT && !busy()) {
+          const lb = TGT.label, bx = sx(TGT.x), by = sy(TGT.y) - 58;
+          g.font = `9px ${FONT}`; const w = g.measureText(lb).width + 40;
+          g.fillStyle = 'rgba(10,16,64,.9)'; g.fillRect(bx - w / 2, by - 12, w, 24); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(bx - w / 2, by - 12, w, 24);
+          g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(bx - w / 2 + 13, by, 8, 0, 7); g.fill(); txt(TOUCH ? 'A' : '␣', bx - w / 2 + 13, by - 4, 8, '#1a1030', 'center');
+          txt(lb, bx - w / 2 + 26, by - 4, 9, '#fff');
+        }
         const gl = goal(), tg = gl.at;
         if (tg) {
           const x = sx(tg[0]), y = sy(tg[1]) - 50 - Math.abs(Math.sin(tt * 4)) * 8;
@@ -1324,21 +1304,18 @@
         txt(`★ ${G.cards.length}/${RAW.cards.length}`, 24, H - 64, 10, '#ffd84a');
         txt(`$ ${G.gold}${G.dust ? `  ✨${G.dust}` : ''}`, 24, H - 46, 10, '#fff');
         txt(`☆ ${G.secrets.length}/10`, 24, H - 28, 9, '#cfd6ff');
-        hud.book = [W - 76, H - 64, 62, 54]; box(...hud.book, 0.85); txt('📖', hud.book[0] + 31, hud.book[1] + 16, 16, '#fff', 'center');
+        hud.book = [W - 76, 178, 62, 54]; box(...hud.book, 0.85); txt('📖', hud.book[0] + 31, hud.book[1] + 16, 16, '#fff', 'center');
         if (items) { box(10, H - 116, 150, 38, 0.85); txt(items, 24, H - 104, 14, '#fff'); }
         hud.timeline = drawTimeline(M.era, tt);
       },
-      tap(x, y) {
+      ctl: true,
+      uiHit: (x, y) => inR(x, y, hud.timeline) || inR(x, y, hud.book),
+      actLabel: () => TGT?.label || '',
+      action() { act(); },
+      tap(x, y) { // só os botões do HUD respondem a toque; andar e agir são joystick e botão A
         if (inR(x, y, hud.timeline)) { openTimeline(); return; }
         if (inR(x, y, hud.book)) { openBook(M.era); return; }
-        const wx = camx + x / Z, wy = camy + y / Z;
-        if (DEBUG) console.log('mundo', Math.round(wx), Math.round(wy));
-        for (const sc of SECRETS) if ((sc.map === id || sc.map === '*') && sc.tap?.(S, wx, wy, tt)) return;
-        if (Math.hypot(wx - mulaS.x, wy - (mulaS.y - 10)) < 18) {
-          const w = witnesses.find((v) => v.mule && G.quests[v.quest] && !G.quests[v.quest].done && !G.quests[v.quest].heard.includes(v.wi));
-          if (w) { witnessTalk(w); return; }
-        }
-        walkTo(wx, wy);
+        if (DEBUG) console.log('mundo', Math.round(camx + x / Z), Math.round(camy + y / Z));
       },
       key(k) {
         if (k === 't' || k === 'T') openTimeline();
@@ -1375,11 +1352,11 @@
       tries: 1,
       lose(msg, final) {
         sfx('bad');
-        if (!final && api.tries < 3) { api.tries++; say([['mula', `${msg} Tentativa ${api.tries} de 3.`]], () => go(() => f(api), null)); return; }
+        if (!final && api.tries < 3) { api.tries++; say([['mula', `${msg} Tentativa ${api.tries} de 3.`]], () => go(() => Object.assign(f(api), { ctl: true, esc: back }), null)); return; }
         say([['narr', 'Você não conseguiu desta vez.'], ['narr', msg], ['mula', 'Volte ao desafio quando quiser e tente de novo.']], back);
       },
     };
-    go(() => f(api), null);
+    go(() => Object.assign(f(api), { ctl: true, esc: back }), null);
   }
 
   // ================= segredos (easter eggs) =================
@@ -1483,32 +1460,102 @@
     if (!ROT) return [(e.clientX - r.left) / r.width * W, (e.clientY - r.top) / r.height * H];
     return [(e.clientY - r.top) / r.height * W, (r.right - e.clientX) / r.width * H];
   }
+  // Celular: nada de tocar no mundo. Polegar esquerdo = joystick (arrasta), polegar direito = botão A (faz o que
+  // estiver perto: falar, entrar, pegar, passar o diálogo). No teclado: setas/WASD e Espaço, Enter ou E.
+  // Cenas com scene.ctl usam esse esquema; telas simples (título, créditos) seguem com toque.
   let DOWN = false;
+  const JOY = { id: null, bx: 0, by: 0, x: 0, y: 0 }, JR = 60;
+  const BTN = { x: W - 100, y: H - 104, r: 56, id: null, t: 0 };
+  const ARROWS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+  let JDIR = '';
+  function action() {
+    audio();
+    if (TR) return;
+    if (PANEL) { const P = PANEL; PANEL = null; P.done?.(); return; }
+    if (ASK) { askPick(ASK.sel); return; }
+    if (DLG) { dlgTap(); return; }
+    if (scene.action) scene.action(); else scene.tap?.(W / 2, H / 2);
+  }
+  // uma "tecla" de direção (do teclado ou do joystick ao virar): navega perguntas, o caderno, ou vai para a cena
+  function dirKey(k) {
+    if (ASK) { const n = ASK.opts.length, two = n === 4; const step = { ArrowUp: two ? -2 : -1, ArrowDown: two ? 2 : 1, ArrowLeft: two ? -1 : 0, ArrowRight: two ? 1 : 0 }[k] || 0; ASK.sel = (ASK.sel + step + n) % n; sfx('bip'); return; }
+    if (PANEL) { if (PANEL.kind === 'book' && (k === 'ArrowLeft' || k === 'ArrowRight')) PANEL.i = (PANEL.i + (k === 'ArrowLeft' ? ORDER.length - 1 : 1)) % ORDER.length; return; }
+    if (DLG) return;
+    scene.key?.(k);
+  }
+  function joySet(x, y) {
+    const dx = x - JOY.bx, dy = y - JOY.by, d = Math.hypot(dx, dy), k = d > JR ? JR / d : 1;
+    JOY.x = dx * k / JR; JOY.y = dy * k / JR;
+    const m = Math.hypot(JOY.x, JOY.y) >= 0.4;
+    KEYS.ArrowLeft = m && JOY.x < -0.38; KEYS.ArrowRight = m && JOY.x > 0.38; KEYS.ArrowUp = m && JOY.y < -0.38; KEYS.ArrowDown = m && JOY.y > 0.38;
+    const dir = !m ? '' : Math.abs(JOY.x) > Math.abs(JOY.y) ? (JOY.x > 0 ? 'ArrowRight' : 'ArrowLeft') : (JOY.y > 0 ? 'ArrowDown' : 'ArrowUp');
+    if (dir && dir !== JDIR) dirKey(dir);
+    JDIR = dir;
+  }
+  function joyEnd() { JOY.id = null; JOY.x = JOY.y = 0; JDIR = ''; for (const k of ARROWS) KEYS[k] = false; }
   cv.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     audio();
+    if (e.pointerType === 'touch') TOUCH = true;
     if (TR) return;
     const [x, y] = toLogical(e);
+    if (DLG?.xr && Math.hypot(x - DLG.xr[0], y - DLG.xr[1]) < DLG.xr[2] + 10) { closeDlg(); return; }
+    if (ASK?.xr && Math.hypot(x - ASK.xr[0], y - ASK.xr[1]) < ASK.xr[2] + 10) { ASK = null; sfx('tap'); return; }
+    const ctl = TOUCH && scene.ctl;
+    if (ctl && Math.hypot(x - BTN.x, y - BTN.y) < BTN.r + 16) { BTN.id = e.pointerId; BTN.t = 0.18; action(); return; }
     if (PANEL) { panelTap(x, y); return; }
     if (ASK) { const i = ASK.rects.findIndex((r) => inR(x, y, r)); if (i >= 0) askPick(i); return; }
     if (DLG) { dlgTap(); return; }
+    if (ctl && x < W * 0.55 && !scene.uiHit?.(x, y)) { JOY.id = e.pointerId; JOY.bx = x; JOY.by = y; joySet(x, y); return; }
     DOWN = true;
     scene.tap?.(x, y);
     scene.down?.(x, y);
   });
-  cv.addEventListener('pointermove', (e) => { if (!DOWN || !scene.drag) return; const [x, y] = toLogical(e); scene.drag(x, y); });
-  addEventListener('pointerup', (e) => { if (!DOWN) return; DOWN = false; const [x, y] = toLogical(e); scene.up?.(x, y); });
+  cv.addEventListener('pointermove', (e) => {
+    if (e.pointerId === JOY.id) { const [x, y] = toLogical(e); joySet(x, y); return; }
+    if (!DOWN || !scene.drag) return; const [x, y] = toLogical(e); scene.drag(x, y);
+  });
+  const lift = (e) => {
+    if (e.pointerId === JOY.id) { joyEnd(); return; }
+    if (e.pointerId === BTN.id) { BTN.id = null; scene.actionUp?.(); return; }
+    if (!DOWN) return; DOWN = false; const [x, y] = toLogical(e); scene.up?.(x, y);
+  };
+  addEventListener('pointerup', lift);
+  addEventListener('pointercancel', lift);
   addEventListener('keydown', (e) => {
-    KEYS[e.key] = true;
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+    if (e.repeat && !ARROWS.includes(e.key)) return;
+    KEYS[e.key] = true;
     if (e.key === 'm' || e.key === 'M') { audio(); setMute(!muted); return; }
-    if (PANEL) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') { const P = PANEL; PANEL = null; P.done?.(); } else if (PANEL.kind === 'book' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) PANEL.i = (PANEL.i + (e.key === 'ArrowLeft' ? ORDER.length - 1 : 1)) % ORDER.length; return; }
+    if (e.key === 'Escape') { if (DLG) closeDlg(); else if (ASK) ASK = null; else if (PANEL) { const P = PANEL; PANEL = null; P.done?.(); } else scene.esc?.(); return; }
+    if (e.key === ' ' || e.key === 'Enter' || e.key === 'e' || e.key === 'E') { action(); return; }
+    const wasd = { w: 'ArrowUp', a: 'ArrowLeft', s: 'ArrowDown', d: 'ArrowRight' }[e.key];
+    if (ARROWS.includes(e.key) || wasd) { if (!e.repeat) dirKey(e.key.startsWith('Arrow') ? e.key : wasd); return; }
     if (ASK) { const n = '123456789'.indexOf(e.key), l = 'abcd'.indexOf(e.key.toLowerCase()); askPick(n >= 0 ? n : l); return; }
-    if (DLG) { if (e.key === 'Enter' || e.key === ' ') dlgTap(); return; }
+    if (DLG || PANEL) return;
     scene.key?.(e.key);
   });
-  addEventListener('keyup', (e) => { KEYS[e.key] = false; scene.keyup?.(e.key); });
-  addEventListener('blur', () => { for (const k in KEYS) KEYS[k] = false; });
+  addEventListener('keyup', (e) => { KEYS[e.key] = false; if (e.key === ' ' || e.key === 'Enter' || e.key === 'e') scene.actionUp?.(); scene.keyup?.(e.key); });
+  addEventListener('blur', () => { for (const k in KEYS) KEYS[k] = false; joyEnd(); });
+  // desenho dos controles de toque (por cima de tudo, menos da transição)
+  function drawCtl(dt) {
+    if (!TOUCH || !scene.ctl) return;
+    const on = JOY.id != null, bx = on ? JOY.bx : 120, by = on ? JOY.by : H - 120;
+    g.globalAlpha = on ? 0.55 : 0.28;
+    g.fillStyle = '#0a1040'; g.beginPath(); g.arc(bx, by, JR, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke();
+    g.fillStyle = '#fff'; for (const [ax, ay, r] of [[0, -1, 0], [0, 1, Math.PI], [-1, 0, -Math.PI / 2], [1, 0, Math.PI / 2]]) { g.save(); g.translate(bx + ax * 44, by + ay * 44); g.rotate(r); g.beginPath(); g.moveTo(0, -7); g.lineTo(7, 5); g.lineTo(-7, 5); g.closePath(); g.fill(); g.restore(); }
+    g.beginPath(); g.arc(bx + JOY.x * JR, by + JOY.y * JR, 24, 0, 7); g.fillStyle = '#d8dcff'; g.fill();
+    g.globalAlpha = 1;
+    if (BTN.t > 0) BTN.t -= dt;
+    const live = DLG || ASK || PANEL || scene.actLabel?.();
+    const pr = BTN.t > 0 ? 0.9 : live ? 1 + 0.06 * Math.sin(performance.now() / 160) : 1;
+    g.globalAlpha = live ? 0.95 : 0.45;
+    g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(BTN.x, BTN.y, BTN.r * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 4; g.stroke();
+    txt('A', BTN.x, BTN.y - 18, 24, '#1a1030', 'center');
+    const lb = DLG ? 'passar' : ASK ? 'escolher' : PANEL ? 'fechar' : (scene.actLabel?.() || '');
+    if (lb) txt(lb, BTN.x, BTN.y + 12, 8, '#1a1030', 'center');
+    g.globalAlpha = 1;
+  }
 
   // ================= laço =================
   let last = performance.now(), T = 0;
@@ -1524,6 +1571,7 @@
       if (PANEL) drawPanel();
       if (ASK) drawAsk();
       if (DLG) drawDlg(dt, T);
+      drawCtl(dt);
       if (BANNER) drawBanner(dt);
       if (TR) drawTR(dt);
     } catch (err) { if (frame.errs !== String(err)) console.error(err); frame.errs = String(err); }
