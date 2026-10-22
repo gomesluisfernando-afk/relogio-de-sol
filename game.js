@@ -73,7 +73,7 @@
   }
   addEventListener('resize', fit);
   fit();
-  document.getElementById('fs').onclick = () => {
+  const toggleFS = () => {
     const el = document.documentElement;
     (document.fullscreenElement ? document.exitFullscreen() : el.requestFullscreen?.())?.then?.(() => screen.orientation?.lock?.('landscape').catch(() => {})).catch(() => {});
   };
@@ -143,9 +143,7 @@
   const BUF = {};
   const loadSamples = () => ['sino', 'sinoP', 'sinos', 'portal', 'fall', 'card', 'coin', 'garimpo', 'apito', 'ondas', 'flash', 'moenda', 'cascos']
     .forEach((n) => fetch(`audio/${n}.mp3`).then((r) => r.arrayBuffer()).then((b) => AC.decodeAudioData(b)).then((d) => { BUF[n] = d; }).catch(() => {}));
-  const sndBtn = document.getElementById('snd');
-  const setMute = (m) => { muted = m; G.flags.muted = m; save(); if (MASTER) MASTER.gain.value = m ? 0 : 0.5; sndBtn.textContent = m ? '×' : '♪'; vid.muted = m; BGM.muted = m; };
-  sndBtn.onclick = () => { audio(); setMute(!muted); };
+  const setMute = (m) => { muted = m; G.flags.muted = m; save(); if (MASTER) MASTER.gain.value = m ? 0 : 0.5; vid.muted = m; BGM.muted = m; };
   setMute(muted);
 
   // ================= desenho básico =================
@@ -154,6 +152,7 @@
     g.fillStyle = '#000'; g.fillText(s, x + 2, y + 2);
     g.fillStyle = col; g.fillText(s, x, y);
   }
+  function plain(s, x, y, size = 16, col = '#fff', align = 'left') { g.font = `${size}px ${FONT}`; g.textAlign = align; g.textBaseline = 'top'; g.fillStyle = col; g.fillText(s, x, y); }
   function wrap(s, maxW, size) {
     g.font = `${size}px ${FONT}`;
     const out = [];
@@ -352,10 +351,10 @@
     // X redondo para fechar e botão "passar" pulsando quando a fala terminou
     const xr = [W - 40, y0 - 2, 20]; DLG.xr = xr; xButton(...xr);
     if (DLG.shown >= total) {
-      const pr = 1 + 0.12 * Math.sin(t * 6), bx = TOUCH && scene.ctl ? W - 190 : W - (isLum ? 104 : 74), by = y0 + 150;
-      g.fillStyle = isLum ? '#e8c04a' : '#ffd84a'; g.beginPath(); g.arc(bx, by, 17 * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 2; g.stroke();
-      g.fillStyle = '#1a1030'; g.beginPath(); g.moveTo(bx - 5, by - 8); g.lineTo(bx + 8, by); g.lineTo(bx - 5, by + 8); g.closePath(); g.fill();
-      txt(TOUCH ? 'botão A' : 'Espaço', bx - 26, by - 6, 9, '#fff', 'right');
+      const pr = 1 + 0.1 * Math.sin(t * 6), bx = W - (isLum ? 104 : 70), by = y0 + 144, r = TOUCH ? 24 : 17;
+      g.fillStyle = isLum ? '#e8c04a' : '#ffd84a'; g.beginPath(); g.arc(bx, by, r * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 2; g.stroke();
+      g.fillStyle = '#1a1030'; g.beginPath(); g.moveTo(bx - r * 0.3, by - r * 0.45); g.lineTo(bx + r * 0.45, by); g.lineTo(bx - r * 0.3, by + r * 0.45); g.closePath(); g.fill();
+      if (!TOUCH) txt('Espaço', bx - 26, by - 6, 9, '#fff', 'right');
     }
   }
   // Lugar da imagem de uma fala ('forma:legenda'): por enquanto, forma geométrica de place holder.
@@ -439,7 +438,7 @@
     for (const f of (c.facts || []).slice(0, 3)) { const ls = wrap('• ' + f, W - 560, 10).slice(0, 5); ls.forEach((l, i) => txt(l, 500, y + i * 16, 10, '#fff')); y += ls.length * 16 + 10; }
     if (c.imagine) { const ls = wrap(c.imagine, W - 580, 9).slice(0, 6); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(255,216,74,.12)'; g.fillRect(500, y, W - 560, hgt); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(500, y, W - 560, hgt); txt('Imagine…', 510, y + 8, 9, '#ffd84a'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#fff')); y += hgt + 10; }
     if (c.joke && !serio && y < H - 230) { const ls = wrap(c.joke, W - 580, 9).slice(0, 5); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(500, y, W - 560, hgt); txt('Dona Mula:', 510, y + 8, 9, '#4aa8ff'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#ddd')); }
-    g.fillStyle = '#ffd84a'; g.fillRect(W - 210, H - 84, 150, 40); txt('FECHAR', W - 135, H - 72, 14, '#1a1030', 'center');
+    g.fillStyle = '#ffd84a'; g.fillRect(W - 210, H - 84, 150, 40); plain('FECHAR', W - 135, H - 72, 14, '#1a1030', 'center');
   }
 
   // ---- Caderno do Buck: relatórios por era ----
@@ -1269,7 +1268,7 @@
           const lb = TGT.label, bx = sx(TGT.x), by = sy(TGT.y) - 58;
           g.font = `9px ${FONT}`; const w = g.measureText(lb).width + 40;
           g.fillStyle = 'rgba(10,16,64,.9)'; g.fillRect(bx - w / 2, by - 12, w, 24); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(bx - w / 2, by - 12, w, 24);
-          g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(bx - w / 2 + 13, by, 8, 0, 7); g.fill(); txt(TOUCH ? 'A' : '␣', bx - w / 2 + 13, by - 4, 8, '#1a1030', 'center');
+          g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(bx - w / 2 + 13, by, 8, 0, 7); g.fill(); plain(TOUCH ? 'A' : '␣', bx - w / 2 + 13, by - 4, 8, '#1a1030', 'center');
           txt(lb, bx - w / 2 + 26, by - 4, 9, '#fff');
         }
         const gl = goal(), tg = gl.at;
@@ -1333,7 +1332,7 @@
     if (!f) { say([['mula', 'Esse desafio ainda está sendo construído.']]); return; }
     const back = () => go(() => OW(fromMap), null);
     const api = {
-      W, H, g, txt, box, wrap, say, ask, sfx, music, confetti, firework, img, bg, pixelImage, dude, mula, PAL, lum, lumBox, CARD, RAW, G, save, floatTxt, inR,
+      W, H, g, txt, plain, box, wrap, say, ask, sfx, music, confetti, firework, img, bg, pixelImage, dude, mula, PAL, lum, lumBox, CARD, RAW, G, save, floatTxt, inR,
       won: !!G.minis[mid], keys: KEYS,
       shake: (s) => { SHAKE = s; },
       win(reward = {}) {
@@ -1499,10 +1498,13 @@
     if (e.pointerType === 'touch') TOUCH = true;
     if (TR) return;
     const [x, y] = toLogical(e);
+    const HB = hbRects();
+    if (inR(x, y, HB.snd)) { setMute(!muted); return; }
+    if (inR(x, y, HB.fs)) { toggleFS(); return; }
     if (DLG?.xr && Math.hypot(x - DLG.xr[0], y - DLG.xr[1]) < DLG.xr[2] + 10) { closeDlg(); return; }
     if (ASK?.xr && Math.hypot(x - ASK.xr[0], y - ASK.xr[1]) < ASK.xr[2] + 10) { ASK = null; sfx('tap'); return; }
     const ctl = TOUCH && scene.ctl;
-    if (ctl && Math.hypot(x - BTN.x, y - BTN.y) < BTN.r + 16) { BTN.id = e.pointerId; BTN.t = 0.18; action(); return; }
+    if (ctl && !DLG && !ASK && Math.hypot(x - BTN.x, y - BTN.y) < BTN.r + 16) { BTN.id = e.pointerId; BTN.t = 0.18; action(); return; }
     if (PANEL) { panelTap(x, y); return; }
     if (ASK) { const i = ASK.rects.findIndex((r) => inR(x, y, r)); if (i >= 0) askPick(i); return; }
     if (DLG) { dlgTap(); return; }
@@ -1538,8 +1540,23 @@
   addEventListener('keyup', (e) => { KEYS[e.key] = false; if (e.key === ' ' || e.key === 'Enter' || e.key === 'e') scene.actionUp?.(); scene.keyup?.(e.key); });
   addEventListener('blur', () => { for (const k in KEYS) KEYS[k] = false; joyEnd(); });
   // desenho dos controles de toque (por cima de tudo, menos da transição)
+  // som e tela cheia: ao lado do minimapa no mundo, ao lado do SAIR nos minigames, no alto nas outras telas
+  function hbRects() {
+    const r = scene.S ? [W - 222, 12, 40, 40] : scene.ctl ? [W - 158, 72, 40, 30] : [W - 56, 12, 40, 40];
+    return { fs: r, snd: [r[0] - 46, r[1], r[2], r[3]] };
+  }
+  function drawHB() {
+    const R = hbRects();
+    for (const [k, r] of Object.entries(R)) {
+      g.fillStyle = 'rgba(26,42,138,.85)'; g.fillRect(...r); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(...r);
+      const cx = r[0] + r[2] / 2, cy = r[1] + r[3] / 2;
+      g.strokeStyle = '#fff'; g.fillStyle = '#fff'; g.lineWidth = 2;
+      if (k === 'fs') { for (const [sx2, sy2] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) { g.beginPath(); g.moveTo(cx + sx2 * 10, cy + sy2 * 4); g.lineTo(cx + sx2 * 10, cy + sy2 * 10); g.lineTo(cx + sx2 * 4, cy + sy2 * 10); g.stroke(); } }
+      else { g.fillRect(cx - 9, cy - 4, 6, 8); g.beginPath(); g.moveTo(cx - 3, cy - 4); g.lineTo(cx + 4, cy - 10); g.lineTo(cx + 4, cy + 10); g.lineTo(cx - 3, cy + 4); g.closePath(); g.fill(); if (muted) { g.strokeStyle = '#ff5a5a'; g.lineWidth = 3; g.beginPath(); g.moveTo(cx - 12, cy - 12); g.lineTo(cx + 12, cy + 12); g.stroke(); } else { g.beginPath(); g.arc(cx + 5, cy, 7, -0.8, 0.8); g.stroke(); } }
+    }
+  }
   function drawCtl(dt) {
-    if (!TOUCH || !scene.ctl) return;
+    if (!TOUCH || !scene.ctl || DLG || ASK) return; // com diálogo na tela, só o botão de passar dele
     const on = JOY.id != null, bx = on ? JOY.bx : 120, by = on ? JOY.by : H - 120;
     g.globalAlpha = on ? 0.55 : 0.28;
     g.fillStyle = '#0a1040'; g.beginPath(); g.arc(bx, by, JR, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke();
@@ -1551,9 +1568,9 @@
     const pr = BTN.t > 0 ? 0.9 : live ? 1 + 0.06 * Math.sin(performance.now() / 160) : 1;
     g.globalAlpha = live ? 0.95 : 0.45;
     g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(BTN.x, BTN.y, BTN.r * pr, 0, 7); g.fill(); g.strokeStyle = '#000'; g.lineWidth = 4; g.stroke();
-    txt('A', BTN.x, BTN.y - 18, 24, '#1a1030', 'center');
+    plain('A', BTN.x, BTN.y - 18, 24, '#1a1030', 'center');
     const lb = DLG ? 'passar' : ASK ? 'escolher' : PANEL ? 'fechar' : (scene.actLabel?.() || '');
-    if (lb) txt(lb, BTN.x, BTN.y + 12, 8, '#1a1030', 'center');
+    if (lb) plain(lb, BTN.x, BTN.y + 12, 8, '#1a1030', 'center');
     g.globalAlpha = 1;
   }
 
@@ -1572,6 +1589,7 @@
       if (ASK) drawAsk();
       if (DLG) drawDlg(dt, T);
       drawCtl(dt);
+      drawHB();
       if (BANNER) drawBanner(dt);
       if (TR) drawTR(dt);
     } catch (err) { if (frame.errs !== String(err)) console.error(err); frame.errs = String(err); }

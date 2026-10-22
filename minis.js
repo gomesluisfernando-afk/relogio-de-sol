@@ -8,9 +8,9 @@ window.MINIS = (() => {
   const inR = (x, y, r) => r && x >= r[0] && y >= r[1] && x <= r[0] + r[2] && y <= r[1] + r[3];
   // botão simples desenhado no canvas; devolve o retângulo para teste de toque
   function btn(A, r, label, col = '#ffd84a', fg = '#1a1030', size = 12) {
-    const { g, txt } = A;
+    const { g, plain } = A;
     g.fillStyle = col; g.fillRect(...r); g.strokeStyle = '#000'; g.lineWidth = 3; g.strokeRect(...r);
-    txt(label, r[0] + r[2] / 2, r[1] + r[3] / 2 - size / 2, size, fg, 'center');
+    plain(label, r[0] + r[2] / 2, r[1] + r[3] / 2 - size / 2, size, fg, 'center'); // sem sombra: letra escura em botão claro
     return r;
   }
   function head(A, title, sub, timeLeft, total) {
