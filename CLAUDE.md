@@ -33,7 +33,12 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 ## Diretriz dos minigames (`minis.js`)
 - Cada um é a releitura de um clássico de fliperama/Atari (referência: games.wotai.co), com o tema da era:
   Escambo = Frogger, Fogueiras = Doodle Jump, Carta = Snake, Ponte = Tetris, Turmalina = Space Invaders,
-  Garimpo = Pac-Man, Balança = Kaboom!, Sinos = Simon; Régua, Moenda e Profetas com mecânica própria.
+  Moenda = Space Invaders (cana e pães de açúcar, fagulhas, bagaço), Garimpo = Pac-Man, Balança = Kaboom!,
+  Sinos = Simon; Régua e Profetas com mecânica própria.
+- Tempo calibrado com um robô que joga (`dbg()` do minigame expõe o estado): o tempo-limite fica ~10% acima da
+  mediana do robô (Moenda: robô 88–135 s, mediana 108 s → TEMPO 120).
+- No canto de cima à direita ficam som, tela cheia e SAIR (y 62–104, x > W−230): avisos e caixas não entram ali.
+  Embaixo ficam joystick (esquerda) e A (direita): caixas de escolha entre x 190 e W−190.
 - Jogados só com joystick e A: usar `action()` para o A e `key(seta)` / `A.keys` para direção.
 - Dificuldade média/difícil, meta "consiga X" e constantes de ajuste (TEMPO, META...) no topo de cada um.
 - Perdeu: `A.lose(motivo)` gasta uma de 3 tentativas; esgotou, volta ao mapa (sem expulsão nem reinício da era).

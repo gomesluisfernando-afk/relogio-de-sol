@@ -25,11 +25,14 @@ window.MINIS = (() => {
   // tela de início: explica em uma linha e espera um toque
   function intro(A, title, lines) {
     const { g, W, H, txt, box, wrap } = A;
-    box(120, 110, W - 240, 300, 0.95);
-    txt(title, W / 2, 140, 16, '#ffd84a', 'center');
-    let y = 186;
-    for (const l of lines) { for (const s of wrap(l, W - 320, 11)) { txt(s, W / 2, y, 11, '#fff', 'center'); y += 20; } y += 8; }
-    txt('botão A (ou Espaço) para começar', W / 2, 372, 11, '#9be36a', 'center');
+    const ls = lines.map((l) => wrap(l, W - 320, 11)), end = 186 + ls.reduce((a, l) => a + l.length * 20 + 8, 0); // a caixa cresce com o texto
+    const bot = Math.max(372, end + 6), top = Math.max(70, Math.min(110, H - 40 - (bot - 110 + 38)));
+    const dy = top - 110;
+    box(120, top, W - 240, bot - 110 + 38, 0.95);
+    txt(title, W / 2, 140 + dy, 16, '#ffd84a', 'center');
+    let y = 186 + dy;
+    for (const l of ls) { for (const s of l) { txt(s, W / 2, y, 11, '#fff', 'center'); y += 20; } y += 8; }
+    txt('botão A (ou Espaço) para começar', W / 2, bot + dy, 11, '#9be36a', 'center');
   }
 
   // ===================== 1. A Régua dos Reis (Tordesilhas, 1494) =====================
@@ -170,7 +173,7 @@ window.MINIS = (() => {
           for (let i = 0; i < carry; i++) { g.fillStyle = '#9a3a22'; g.fillRect(P.x - 16, by - 50 - i * 6, 32, 5); }
         }
         head(A, 'Escambo · 1502', `Vidas: ${lives} · Toras: ${logs}/${META} · Utilidade: ${avg()}% (meta 70%)`, stage === 'intro' ? null : left, TEMPO);
-        if (msgT > 0) { A.box(W / 2 - 260, 68, 520, 28, 0.85); txt(msg, W / 2, 76, 9, '#fff', 'center'); }
+        if (msgT > 0) { A.box(20, 68, W - 260, 28, 0.85); txt(msg, 20 + (W - 260) / 2, 76, 9, '#fff', 'center'); } // à esquerda dos botões do canto
         if (stage === 'offer') {
           A.box(220, 150, 520, 260, 0.96); txt(`O português oferece, por ${carry} toras (o relógio parou):`, W / 2, 175, 10, '#ffd84a', 'center');
           rects = OFFERS.map(([l], i) => btn(A, [250 + (i % 2) * 240, 210 + Math.floor(i / 2) * 80, 220, 60], l, i === sel ? '#ffd84a' : '#e8dcb0', '#1a1030', 12)); txt('joystick escolhe · A confirma', W / 2, 380, 9, '#fff', 'center');
@@ -244,44 +247,119 @@ window.MINIS = (() => {
     };
   }
 
-  // ===================== 4. A Moenda (engenho, 1570) — tom sério =====================
+  // ===================== 4. A Moenda (engenho, 1570) — à moda do Space Invaders =====================
+  // Safra: feixes de cana e pães de açúcar descem em formação, de lado a lado, cada vez mais rápido.
+  // A moenda corre no trilho (joystick) e puxa a cana com o gancho (A, um por vez). Fagulhas da fornalha caem:
+  // as pilhas de bagaço protegem, mas se desfazem. Carro de boi lá no alto vale tempo extra.
+  // Perde a tentativa: fôlego acaba, a formação chega à moenda ou o tempo acaba (cana cortada azeda).
   function moenda(A) {
     const { g, W, H, txt } = A;
-    const BEAT = 60 / 108 * 2, WIN = 0.18, TOTAL = 90;
-    let stage = 'intro', t = 0, next = BEAT, jams = 0, streak = 0, flash = 0, ok = 0, rot = 0, hit = false;
+    const TEMPO = 120, ONDAS = 2, COLS = 7, ROWS = 3, FOLEGO = 3, PASSO = 10, DESCE = 16;
+    const ONDA = [{ passo: 0.6, fag: 1.25, vfag: 190, max: 2 }, { passo: 0.42, fag: 0.85, vfag: 235, max: 3 }]; // ritmo, intervalo e velocidade das fagulhas
+    const Y0 = 128, DX = 64, DY = 44, LINHA = H - 104, PY = H - 64;
+    let stage = 'intro', t = 0, left = TEMPO, onda = 0, ens = [], ox = 0, oy = 0, dir = 1, stepT = 0, frame = 0;
+    let P = { x: W / 2 }, shot = null, cd = 0, sparks = [], fagT = 1.5, folego = FOLEGO, hurt = 0, moidos = 0, carro = null, carroT = 14, rot = 0, msg = '', msgT = 0;
+    let bunkers = [];
+    const say = (m, c = '#fff') => { msg = m; msgT = 2; A.floatTxt(m, c); };
+    function wave() {
+      ens = []; ox = (W - (COLS - 1) * DX) / 2; oy = Y0 + onda * 16; dir = 1; stepT = 0; sparks = []; shot = null; fagT = 1.5;
+      for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) ens.push({ r, c, acucar: r === 0, alive: true });
+      bunkers = [0, 1, 2].map((i) => { const bx = W / 2 - 250 + i * 250 - 35, by = H - 172, cells = []; for (let yy = 0; yy < 4; yy++) for (let xx = 0; xx < 7; xx++) if (!(yy === 3 && xx >= 2 && xx <= 4) && !(yy === 0 && (xx === 0 || xx === 6))) cells.push([bx + xx * 10, by + yy * 10]); return cells; });
+    }
+    wave();
+    const pos = (e) => [ox + e.c * DX, oy + e.r * DY];
+    const live = () => ens.filter((e) => e.alive);
+    function hitBunker(x, y) { for (const b of bunkers) { const i = b.findIndex(([cx, cy]) => x >= cx - 2 && x <= cx + 12 && y >= cy - 2 && y <= cy + 12); if (i >= 0) { b.splice(i, 1); return true; } } return false; }
+    function cana(x, y, k) { // feixe de cana amarrado, balança entre dois quadros
+      const sw = k ? 2 : -2;
+      for (let i = -2; i <= 2; i++) { g.fillStyle = i % 2 ? '#a8c050' : '#c8d070'; g.fillRect(x + i * 5 - 2 + (i === 0 ? 0 : sw * Math.sign(i) * 0.5), y - 16, 4, 32); g.fillStyle = '#6a8a30'; g.fillRect(x + i * 5 - 2, y - 6, 4, 2); g.fillRect(x + i * 5 - 2, y + 6, 4, 2); }
+      g.fillStyle = '#4a7a2a'; g.beginPath(); g.moveTo(x - 4, y - 16); g.lineTo(x - 12 + sw, y - 24); g.lineTo(x, y - 18); g.lineTo(x + 12 + sw, y - 24); g.lineTo(x + 4, y - 16); g.fill();
+      g.fillStyle = '#8a5a2a'; g.fillRect(x - 14, y - 1, 28, 3);
+    }
+    function pao(x, y, k) { // pão de açúcar: cone branco na forma de barro
+      g.fillStyle = '#9a5a3a'; g.beginPath(); g.moveTo(x - 15, y + 14); g.lineTo(x + 15, y + 14); g.lineTo(x + 11, y + 20); g.lineTo(x - 11, y + 20); g.fill();
+      g.fillStyle = k ? '#fffaf0' : '#f2ead8'; g.beginPath(); g.moveTo(x, y - 18); g.lineTo(x + 14, y + 14); g.lineTo(x - 14, y + 14); g.closePath(); g.fill();
+      g.fillStyle = '#d8c8a0'; g.fillRect(x - 2, y - 8, 4, 18);
+    }
+    function moendaSprite(x, y) {
+      g.fillStyle = '#5a3a1a'; g.fillRect(x - 36, y - 8, 72, 26); g.fillStyle = '#3a2410'; g.fillRect(x - 40, y + 16, 80, 6);
+      for (let i = -1; i <= 1; i++) { const cx = x + i * 22, cy = y - 14; g.fillStyle = '#8a6a3a'; g.beginPath(); g.arc(cx, cy, 11, 0, 7); g.fill(); g.strokeStyle = '#2a1a0a'; g.lineWidth = 2; g.beginPath(); g.moveTo(cx + Math.cos(rot + i) * 10, cy + Math.sin(rot + i) * 10); g.lineTo(cx - Math.cos(rot + i) * 10, cy - Math.sin(rot + i) * 10); g.stroke(); }
+      g.fillStyle = '#c8d070'; g.fillRect(x - 2, y - 34, 4, 10); // gancho pronto
+    }
+    function fail(m) { stage = 'gone'; A.music(null); A.lose(m); }
     return {
       enter() { A.music('tambor'); A.sfx('moenda'); },
+      dbg: () => ({ moidos, stage, P: P.x, shot: !!shot, ens: live().map((e) => pos(e)), sparks: sparks.map((f) => [f.x, f.y]), left, onda, folego, carro: carro && carro.x }),
       update(dt) {
+        t += dt; if (msgT > 0) msgT -= dt; if (hurt > 0) hurt -= dt; if (cd > 0) cd -= dt;
         if (stage !== 'play') return;
-        t += dt; rot += dt * 3;
-        if (t > next + WIN) { if (!hit) { jams++; streak++; flash = 0.4; A.sfx('hit'); A.shake(0.15); } hit = false; next += BEAT; }
-        if (streak >= 3) { stage = 'gone'; A.lose('Três entaladas seguidas. A moenda parou.'); return; }
-        if (flash > 0) flash -= dt;
-        if (t >= TOTAL) { stage = 'end'; A.music(null); A.sfx('sino'); }
+        if ((left -= dt) <= 0) return fail('A cana cortada azedou antes de ser moída.');
+        const mv = (A.keys.ArrowRight ? 1 : 0) - (A.keys.ArrowLeft ? 1 : 0); P.x = Math.max(48, Math.min(W - 48, P.x + mv * 300 * dt)); if (mv) rot += dt * 8 * mv;
+        const L = live(), cfg = ONDA[onda];
+        // passo da formação: quanto menos cana, mais rápido (como no clássico)
+        if ((stepT -= dt) <= 0) {
+          stepT = 0.06 + cfg.passo * (L.length / ens.length); frame ^= 1;
+          const xs = L.map((e) => pos(e)[0]);
+          if ((dir > 0 && Math.max(...xs) + PASSO > W - 40) || (dir < 0 && Math.min(...xs) - PASSO < 40)) { dir *= -1; oy += DESCE; } else ox += dir * PASSO;
+          for (const e of L) { const [x, y] = pos(e); for (const b of bunkers) for (let i = b.length - 1; i >= 0; i--) if (Math.abs(b[i][0] + 5 - x) < 20 && Math.abs(b[i][1] + 5 - y) < 22) b.splice(i, 1); }
+          if (L.some((e) => pos(e)[1] + 18 >= LINHA)) return fail('A formação chegou à moenda e ela engasgou.');
+        }
+        // gancho (um por vez)
+        if (shot) {
+          shot.y -= 700 * dt;
+          if (shot.y < 70 || hitBunker(shot.x, shot.y)) shot = null;
+          else if (carro && Math.abs(shot.x - carro.x) < 30 && Math.abs(shot.y - 98) < 16) { shot = null; carro = null; left = Math.min(TEMPO, left + 8); A.sfx('coin'); say('Carro de boi: +8 s'); }
+          else for (const e of L) { const [x, y] = pos(e); if (Math.abs(shot.x - x) < 18 && Math.abs(shot.y - y) < 20) { e.alive = false; shot = null; moidos++; A.sfx('stone'); break; } }
+        }
+        // fagulhas da fornalha: caem da cana mais baixa de uma coluna
+        if ((fagT -= dt) <= 0 && sparks.length < cfg.max && L.length) {
+          fagT = cfg.fag * (0.7 + Math.random() * 0.6);
+          const cols = [...new Set(L.map((e) => e.c))], c = cols[Math.floor(Math.random() * cols.length)];
+          const low = L.filter((e) => e.c === c).sort((a, b) => b.r - a.r)[0], [x, y] = pos(low);
+          sparks.push({ x, y: y + 20, ph: Math.random() * 6 });
+        }
+        sparks = sparks.filter((f) => {
+          f.y += cfg.vfag * dt; f.ph += dt * 12;
+          if (hitBunker(f.x, f.y)) return false;
+          if (hurt <= 0 && Math.abs(f.x - P.x) < 26 && f.y > PY - 26 && f.y < PY + 18) {
+            folego--; hurt = 1.2; A.sfx('hit'); A.shake(0.25);
+            if (folego <= 0) { fail('Sem fôlego: as fagulhas pegaram três vezes.'); return false; }
+            say(`Fagulha! Fôlego ${folego}/${FOLEGO}`, '#ff8a5a'); return false;
+          }
+          return f.y < H;
+        });
+        // carro de boi atravessa lá em cima de vez em quando
+        if (carro) { carro.x += carro.v * dt; if (carro.x < -60 || carro.x > W + 60) carro = null; }
+        else if ((carroT -= dt) <= 0) { carroT = 16 + Math.random() * 8; const v = Math.random() < 0.5 ? 1 : -1; carro = { x: v > 0 ? -50 : W + 50, v: v * 120 }; }
+        if (!live().length) {
+          if (++onda >= ONDAS) {
+            stage = 'done'; A.music(null);
+            A.say([['narr', 'Na safra, a moenda quase não parava: girava dia e noite, por meses.'], ['narr', 'Quem cortava, carregava e alimentava a moenda eram pessoas escravizadas. O açúcar que ia para a Europa saía desse trabalho.']], () => A.win({ card: 'C12', serio: true }));
+            return;
+          }
+          A.sfx('sino'); say('Segunda leva da safra: mais rápida.', '#ffd84a'); wave();
+        }
       },
       draw() {
-        A.bg('img/bg_moenda.jpg', 3, 0.55, '#3a2a1a');
-        if (!A.img('img/bg_moenda.jpg')) A.bg('assets/img/scenes/engenho.webp', 3, 0.55, '#3a2a1a');
-        for (let i = 0; i < 3; i++) { const x = W / 2 - 110 + i * 110, y = 270; g.fillStyle = '#5a4a3a'; g.beginPath(); g.arc(x, y, 50, 0, 7); g.fill(); g.strokeStyle = '#2a1a0a'; g.lineWidth = 4; for (let k = 0; k < 4; k++) { const an = rot * (i % 2 ? -1 : 1) + k * Math.PI / 2; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(an) * 48, y + Math.sin(an) * 48); g.stroke(); } }
-        // cana chegando no tempo da batida
-        const ph = 1 - Math.max(0, (next - t)) / BEAT;
-        g.fillStyle = flash > 0 ? '#ff5a5a' : '#c8d070'; g.fillRect(80 + ph * (W / 2 - 220), 262, 120, 16);
-        g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(W / 2 - 170, 250, 40, 40);
-        // mãos: um par a cada 30 s
-        const hands = Math.min(6, 1 + Math.floor(t / 30) * 2 - (t < 30 ? 0 : 0));
-        for (let i = 0; i < hands; i++) { g.fillStyle = '#5a3a28'; g.fillRect(140 + i * 110, 400, 34, 22); g.fillRect(150 + i * 110, 390, 14, 12); }
-        head(A, 'A Moenda · 1570', `Aperte A quando a cana chega no quadrado · Tentativa ${A.tries}/3`, stage === 'play' ? TOTAL - t : null, TOTAL);
-        txt(`mãos: ${hands}`, 30, H - 40, 10, '#ddd');
-        if (stage === 'intro') intro(A, 'A Moenda', ['Aperte A no ritmo para empurrar a cana entre os cilindros.', 'Três entaladas seguidas e você perde.', 'Aguente 90 segundos.']);
-        if (stage === 'end') { g.fillStyle = 'rgba(0,0,0,.75)'; g.fillRect(0, 0, W, H); const c = A.CARD.C12; A.wrap(c.title, W - 200, 16).forEach((l, i) => txt(l, W / 2, 200 + i * 28, 16, '#fff', 'center')); txt('botão A para continuar', W / 2, 400, 10, '#aaa', 'center'); }
+        A.bg('img/bg_moenda.jpg', 3, 0.62, '#3a2a1a');
+        if (!A.img('img/bg_moenda.jpg')) A.bg('assets/img/scenes/engenho.webp', 3, 0.62, '#3a2a1a');
+        g.fillStyle = 'rgba(255,120,40,.18)'; g.fillRect(0, 62, W, 10); // brilho da fornalha
+        g.fillStyle = 'rgba(255,216,74,.35)'; g.fillRect(0, LINHA, W, 2); // linha da moenda
+        if (carro) { const x = carro.x, y = 98; g.fillStyle = '#7a5a3a'; g.fillRect(x - 26, y - 8, 40, 12); g.fillStyle = '#c8d070'; g.fillRect(x - 24, y - 16, 36, 8); g.fillStyle = '#3a2410'; g.beginPath(); g.arc(x - 16, y + 6, 6, 0, 7); g.arc(x + 6, y + 6, 6, 0, 7); g.fill(); g.fillStyle = '#8a6a4a'; g.fillRect(x + (carro.v > 0 ? 16 : -46), y - 10, 26, 14); }
+        for (const b of bunkers) { g.fillStyle = '#c8b070'; for (const [x, y] of b) g.fillRect(x, y, 10, 10); g.fillStyle = 'rgba(120,90,40,.5)'; for (const [x, y] of b) g.fillRect(x, y + 7, 10, 3); }
+        for (const e of live()) { const [x, y] = pos(e); if (e.acucar) pao(x, y, frame); else cana(x, y, frame); }
+        for (const f of sparks) { const wob = Math.sin(f.ph) * 4; g.fillStyle = '#ffb040'; g.fillRect(f.x - 3 + wob, f.y - 6, 6, 6); g.fillStyle = '#ff5a20'; g.fillRect(f.x - 2 - wob, f.y, 4, 4); }
+        if (shot) { g.fillStyle = '#e8d8a0'; g.fillRect(shot.x - 2, shot.y, 4, 16); g.fillRect(shot.x - 2, shot.y, 8, 4); }
+        if (!(hurt > 0 && Math.floor(t * 10) % 2)) moendaSprite(P.x, PY);
+        head(A, `A Moenda · 1570 · ${onda + 1}ª leva de ${ONDAS}`, `Moídos: ${moidos} · Fôlego: ${Math.max(0, folego)}/${FOLEGO} · Tentativa ${A.tries}/3`, stage === 'play' ? left : null, TEMPO);
+        if (msgT > 0) { A.box(W / 2 - 220, LINHA + 8, 440, 26, 0.85); txt(msg, W / 2, LINHA + 15, 9, '#ffd84a', 'center'); }
+        if (stage === 'intro') intro(A, 'A Moenda', ['Safra no engenho: a cana desce em fileiras. Joystick move a moenda, botão A puxa a cana (um gancho por vez).', 'Desvie das fagulhas da fornalha; o bagaço protege. Três fagulhas, ou a cana na moenda, gastam uma tentativa.', `Moa ${ONDAS} levas em ${TEMPO} s. Carro de boi lá no alto: +8 s.`]);
         quitBtn(A);
       },
       tap(px, py) { if (inR(px, py, QUIT(A))) A.quit(); },
       action() {
-        if (stage === 'intro') { stage = 'play'; t = 0; next = BEAT; return; }
-        if (stage === 'end') { stage = 'done'; A.win({ card: 'C12', serio: true }); return; }
-        if (stage !== 'play') return;
-        if (Math.abs(t - next) <= WIN && !hit) { hit = true; streak = 0; ok++; A.sfx('stone'); } else { jams++; streak++; flash = 0.4; A.sfx('hit'); }
+        if (stage === 'intro') { stage = 'play'; return; }
+        if (stage === 'play' && !shot && cd <= 0) { shot = { x: P.x, y: PY - 36 }; cd = 0.12; A.sfx('tap'); }
       },
     };
   }
@@ -634,7 +712,7 @@ window.MINIS = (() => {
         });
         A.dude(B.x, B.y, A.PAL.buck, B.ph, B.face, 2.4, B.mv);
         const p = order[cur];
-        if (stage === 'play' && p != null) { A.box(140, 76, W - 280, 52, 0.95); txt(`O aprendiz: "${P12[p][1]}"`, W / 2, 86, 10, '#fff', 'center'); txt('Vá até o pedestal dele e aperte A.', W / 2, 106, 9, '#ffd84a', 'center'); }
+        if (stage === 'play' && p != null) { A.box(20, 70, W - 260, 52, 0.95); txt(`O aprendiz: "${P12[p][1]}"`, 20 + (W - 260) / 2, 80, 10, '#fff', 'center'); txt('Vá até o pedestal dele e aperte A.', 20 + (W - 260) / 2, 100, 9, '#ffd84a', 'center'); }
         head(A, 'Os Doze Profetas · Congonhas', `${placed.size}/12 · Tentativa ${A.tries}/3`, stage === 'play' ? t : null, TEMPO);
         if (msgT > 0) { A.box(W / 2 - 220, H - 40, 440, 26, 0.85); txt(msg, W / 2, H - 33, 9, '#ffd84a', 'center'); }
         if (stage === 'intro') intro(A, 'Os Doze Profetas', ['O mestre Aleijadinho esculpiu doze profetas em pedra-sabão, já depois do auge do ouro.', 'O aprendiz dá uma pista. Ande pelo adro com o joystick e aperte A no pedestal certo.', 'O vento troca as plaquinhas de lugar de vez em quando. Erro tira 3 segundos.']);
@@ -681,11 +759,11 @@ window.MINIS = (() => {
         txt('◀ GRANDE', 240, 390, 10, '#fff', 'center'); txt('pequeno ▶', 800, 320, 10, '#fff', 'center');
         head(A, 'A Língua dos Sinos · São João del-Rei', `Toques certos: ${wins}/5 · Erros: ${erros}/3 · toques simplificados para o jogo`);
         if (stage === 'play' && cur) {
-          A.box(60, 300, W - 120, 160, 0.95);
+          A.box(190, 336, W - 380, 170, 0.95); // entre o joystick e o botão A, abaixo dos rótulos dos sinos
           if (phase === 'choose') {
-            txt(`Na cidade: ${cur.cena}. Qual toque?`, W / 2, 314, 10, '#ffd84a', 'center'); txt('joystick escolhe · A confirma', W / 2, 444, 8, '#fff', 'center');
-            TOQUES.forEach((tq, i) => btn(A, [90 + (i % 3) * 265, 340 + Math.floor(i / 3) * 54, 250, 44], tq.nome, i === sel ? '#ffd84a' : '#e8dcb0', '#1a1030', 9));
-          } else txt(phase === 'listen' ? 'Escute o Sineiro...' : `Repita: joystick ◀ grande · ▶ pequeno   ${input.split('').join(' ')}`, W / 2, 360, 11, '#ffd84a', 'center');
+            txt(`Na cidade: ${cur.cena}. Qual toque?`, W / 2, 350, 9, '#ffd84a', 'center'); txt('joystick escolhe · A confirma', W / 2, 480, 8, '#fff', 'center');
+            TOQUES.forEach((tq, i) => btn(A, [204 + (i % 3) * 186, 374 + Math.floor(i / 3) * 52, 176, 44], tq.nome, i === sel ? '#ffd84a' : '#e8dcb0', '#1a1030', 8));
+          } else txt(phase === 'listen' ? 'Escute o Sineiro...' : `Repita: joystick ◀ grande · ▶ pequeno   ${input.split('').join(' ')}`, W / 2, 400, 9, '#ffd84a', 'center');
         }
         if (stage === 'intro') intro(A, 'A Língua dos Sinos', ['Em São João del-Rei os sinos falam, e a cidade entende.', 'Veja o que acontece na cidade e escolha o toque certo. Depois repita as badaladas do Sineiro: joystick para a esquerda toca o sino grande, para a direita o pequeno.', 'Cinco toques certos. Três erros gastam uma tentativa.']);
         quitBtn(A);

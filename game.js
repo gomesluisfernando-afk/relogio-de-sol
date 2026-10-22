@@ -307,7 +307,7 @@
   }
 
   // ================= diálogo, escolha, faixa, transição, painéis =================
-  let DLG = null, ASK = null, BANNER = null, TR = null, PANEL = null, SHAKE = 0;
+  let DLG = null, ASK = null, BANNER = null, TR = null, PANEL = null, SHAKE = 0, UPDATE = false;
   const PAGE = 4, CPS = 50;
   function say(lines, done) {
     const pages = [];
@@ -408,7 +408,7 @@
   function drawTR(dt) {
     TR.t += dt;
     const k = TR.t < 0.4 ? TR.t / 0.4 : Math.max(0, 1 - (TR.t - 0.4) / 0.3);
-    if (TR.t >= 0.4 && !TR.swapped) { TR.swapped = true; setScene(typeof TR.next === 'function' ? TR.next() : TR.next); if (TR.title) banner(TR.title); }
+    if (TR.t >= 0.4 && !TR.swapped) { if (UPDATE) { location.reload(); return; } TR.swapped = true; setScene(typeof TR.next === 'function' ? TR.next() : TR.next); if (TR.title) banner(TR.title); }
     if (k > 0) {
       const f = 1 + Math.floor(k * 24);
       mos.width = Math.ceil(W / f); mos.height = Math.ceil(H / f);
@@ -865,6 +865,7 @@
   function setScene(s) { scene = s; s.enter?.(); }
 
   const Title = () => ({
+    isTitle: true,
     t: 0,
     enter() { music('title'); },
     update(dt) { this.t += dt; },
@@ -1647,7 +1648,13 @@
     } catch (err) { if (frame.errs !== String(err)) console.error(err); frame.errs = String(err); }
   }
   window.ENG = { scene: () => scene, dlg: () => DLG, askOpen: () => ASK, panel: () => PANEL, dlgTap: () => DLG && dlgTap(), askPick: (i) => askPick(i), panelClose: () => { const P = PANEL; PANEL = null; P?.done?.(); }, G, go, say, confetti, firework, loadMap, OW: (id, at) => OW(id, at), giveCard, giveGold, giveItem, startMini, secret, ACTS, actOpen, curAct, sfx, floatTxt, setScene };
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !TEST) navigator.serviceWorker.register('sw.js').catch(() => {});
+  // Versão nova publicada: o service worker baixa por trás e, quando assume, o jogo recarrega sozinho na próxima
+  // troca de tela (o progresso já está salvo), ou na hora, se estiver no título. Ao voltar do segundo plano, procura versão nova.
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !TEST) {
+    const hadSW = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (!hadSW) return; UPDATE = true; if (scene.isTitle) location.reload(); });
+    navigator.serviceWorker.register('sw.js').then((reg) => addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); })).catch(() => {});
+  }
   (document.fonts?.load(`16px ${FONT}`) || Promise.resolve()).catch(() => {}).finally(() => {
     const q = /[?&]era=(\w+)/.exec(location.search), mq = /[?&]mini=(\w+)/.exec(location.search);
     if (q || mq) { G.flags.intro = 1; G.flags.tut0 = 1; G.flags.tut1 = 1; }
