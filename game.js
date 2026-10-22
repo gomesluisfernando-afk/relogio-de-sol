@@ -993,24 +993,31 @@
         if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) return miniTalk(mi, n); }
         say(lines.length ? lines : [[n.id, CHARS[n.id]?.catchphrase || 'Bom dia, forasteiro.']]); return;
       }
-      // uma pergunta atrás da outra, sem ir e voltar: acertou +5 de ouro, errou -5
-      const one = () => {
-        const left = pool(); if (!left.length) { say([[n.id, 'Você respondeu tudo o que eu sabia perguntar.']], () => { if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) miniTalk(mi, n); } }); return; }
-        const q = left[hash(n.id + G.qok.length + Math.floor(G.played)) % left.length];
-        const opts = q.type === 'multiple' ? q.options.map((t, i) => ({ t, ok: i === q.answer })) : [{ t: 'É fato', ok: q.answer === 'fato' }, { t: 'É lenda', ok: q.answer === 'lenda' }];
-        const order = opts.map((o, i) => [hash(q.id + i), o]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
-        const again = () => { const k = needOf(M.era); ask(`Perguntas desta era: ${k.ok}/${k.quiz}. Quer outra pergunta? (acertou +5, errou -5)`, ['Quero', 'Agora não'], (j) => { if (j === 0) one(); }); };
-        ask(q.prompt, order.map((o) => o.t), (k) => {
+      // Sabatina da era: todas as perguntas, em ordem cronológica, uma atrás da outra (sem "quer outra?").
+      // Errou: −5 e o quiz volta para a primeira. Na volta, as que já acertou são respondidas de novo
+      // (para firmar as datas), mas só as ainda não acertadas valem ouro: +5 certa, −5 errada.
+      const all = RAW.quizzes.filter((q) => CARD[q.cardId]?.era === M.era).sort((a, b) => (CARD[a.cardId].year || 0) - (CARD[b.cardId].year || 0) || a.id.localeCompare(b.id));
+      const run = (i) => {
+        if (i >= all.length) { sfx('win'); confetti(); say([[n.id, 'Sabatina completa. Agora essas datas são suas.']], () => { if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) miniTalk(mi, n); } }); return; }
+        const q = all[i], novo = !G.qok.includes(q.id), tries = (G.flags.qtry ||= {})[M.era] || 0;
+        const opts = q.type === 'multiple' ? q.options.map((t, j) => ({ t, ok: j === q.answer })) : [{ t: 'É fato', ok: q.answer === 'fato' }, { t: 'É lenda', ok: q.answer === 'lenda' }];
+        const order = q.type === 'multiple' ? opts.map((o, j) => [hash(q.id + j + tries), o]).sort((a, b) => a[0] - b[0]).map((x) => x[1]) : opts; // a cada volta, as opções mudam de lugar
+        ask(`Pergunta ${i + 1}/${all.length}${novo ? ' (vale $5)' : ' (já acertada: sem ouro)'} · ${q.prompt}`, order.map((o) => o.t), (k) => {
           if (order[k].ok) {
-            sfx('ok'); G.qok.push(q.id); giveGold(5); save();
+            sfx('ok');
+            if (!novo) { run(i + 1); return; }
+            G.qok.push(q.id); giveGold(5); save();
             const rew = q.cardId && !G.cards.includes(q.cardId) && CARD[q.cardId].era === M.era && !REWARD.has(q.cardId);
-            say([[n.id, n.right || 'Isso mesmo.'], ['narr', `${q.explain} (+5 de ouro${rew ? ' e um relatório' : ''})`]], () => (rew ? giveCard(q.cardId, again) : again()));
+            say([[n.id, n.right || 'Isso mesmo.'], ['narr', `${q.explain} (+5 de ouro${rew ? ' e um relatório' : ''})`]], () => (rew ? giveCard(q.cardId, () => run(i + 1)) : run(i + 1)));
           } else {
-            sfx('bad'); SHAKE = 0.3; giveGold(-5);
-            say([[n.id, n.wrong || 'Não foi bem assim...'], [CARD[q.cardId]?.tone === 'serio' ? 'narr' : 'mula', `Dica: ${q.explain} (-5 de ouro)`]], again);
+            sfx('bad'); SHAKE = 0.3; if (novo) giveGold(-5);
+            G.flags.qtry[M.era] = tries + 1; save();
+            say([[n.id, n.wrong || 'Não foi bem assim...'], [CARD[q.cardId]?.tone === 'serio' ? 'narr' : 'mula', `Dica: ${q.explain}${novo ? ' (-5 de ouro)' : ''}`], ['mula', 'Errou, volta para a primeira. As que você já acertou não valem ouro de novo.']],
+              () => ask('Recomeçar a sabatina?', ['Recomeçar agora', 'Volto depois'], (j) => { if (j === 0) run(0); }));
           }
         });
       };
+      const one = () => run(0);
       say(lines, one);
     }
     function miniTalk(mi, n) {

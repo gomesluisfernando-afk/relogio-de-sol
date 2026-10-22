@@ -14,7 +14,9 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 ## Regras de jogo já decididas
 - Eras em ordem cronológica: um portal só abre quando o anterior foi concluído. Dá para sair de uma era incompleta.
 - Concluir uma era = todos os relatórios do chão → todas as perguntas da era → vencer o minigame da era.
-- Perguntas em sequência ("Quer outra pergunta?"): acertou +5 de ouro, errou −5. Minigame vencido: +10.
+- Sabatina da era (NPC de perguntas): todas as perguntas em ordem cronológica, sem "quer outra?". Errou: −5 e volta para a
+  primeira (pode recomeçar já ou depois). Na volta, as já acertadas são respondidas de novo, mas só as novas valem ouro
+  (+5 certa, −5 errada). As opções mudam de lugar a cada volta. Minigame vencido: +10.
 - Cada relatório novo paga +20 de ouro ao ser fechado (aberto e lido); reler no caderno não paga. Constantes `OURO_RELATORIO` e `PRECO_BOTAS` em `game.js`.
 - Loja (Venda do Tropeiro): ★ Botas $400 (+40% velocidade, item principal; meta: comprar por volta do 3º/4º portal), Lampião $150 (abre a vista do mapa),
   Rapadura $5 (vai para o inventário; ao comer, +80% por 40 s). Inventário na mochila do HUD (tecla I).
