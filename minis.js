@@ -91,60 +91,114 @@ window.MINIS = (() => {
     };
   }
 
-  // ===================== 2. Escambo (feitoria, 1502) =====================
+  // ===================== 2. Escambo (feitoria, 1502) — à moda do Frogger =====================
+  // Buck pula de faixa em faixa: trilha com bichos, praia, e o mar com canoas, toras e jangadas
+  // (cair na água ou ser pego custa uma vida). Leva 4 toras até a feitoria, troca e volta para buscar mais.
   function escambo(A) {
     const { g, W, H, txt } = A;
     const OFFERS = [['Machado', 100], ['Faca', 85], ['Miçangas', 25], ['Espelho', 10]];
-    const TEMPO = 30, VEL = 260; // ajuste fino: segundos para as 12 toras e velocidade do Buck
-    let stage = 'intro', bx = 140, tx = 140, carry = 0, logs = 0, util = [], waves = [], tw = 0.75, rects = [], msg = '', t = 0, left = TEMPO;
+    const TEMPO = 100, VIDAS = 3, CARGA = 4, META = 12, DIF = 1; // ajuste fino: segundos, vidas, toras por viagem, meta, velocidade das faixas
+    const CELL = 46, TOP = 74, ROWS = 9, ry = (r) => TOP + (ROWS - 1 - r) * CELL; // linha 0 = mata (embaixo), 8 = feitoria (em cima)
+    // faixas: kind land = bicho que atropela; water = plataforma que carrega (fora dela, água)
+    const LANES = {
+      1: { kind: 'land', obj: 'queixada', v: 70, w: 64, gap: 190 },
+      2: { kind: 'land', obj: 'onca', v: -150, w: 56, gap: 330 },
+      3: { kind: 'land', obj: 'queixada', v: 100, w: 104, gap: 230 },
+      5: { kind: 'water', obj: 'canoa', v: -65, w: 140, gap: 120 },
+      6: { kind: 'water', obj: 'tora', v: 95, w: 104, gap: 150 },
+      7: { kind: 'water', obj: 'jangada', v: -75, w: 150, gap: 150 },
+    };
+    for (const L of Object.values(LANES)) { L.v *= DIF; L.span = L.w + L.gap; L.n = Math.ceil((W + L.span) / L.span) + 1; L.off = Math.random() * L.span; }
+    const xs = (L) => Array.from({ length: L.n }, (_, i) => ((i * L.span + L.off) % (L.n * L.span)) - L.span);
+    let stage = 'intro', P = { x: W / 2, r: 0, hop: 0, face: 2 }, carry = 0, logs = 0, util = [], lives = VIDAS, left = TEMPO, rects = [], msg = '', msgT = 0, t = 0, dead = 0;
     const avg = () => (util.length ? Math.round(util.reduce((a, b) => a + b, 0) / util.length) : 0);
+    const say = (m) => { msg = m; msgT = 2.5; };
+    function die(why) {
+      lives--; A.sfx('hit'); A.shake(0.25); dead = 0.8;
+      if (carry) why += ` ${carry} toras perdidas.`;
+      carry = 0;
+      if (lives <= 0) { stage = 'gone'; A.lose(`${why} Acabaram as 3 vidas.`); return; }
+      say(`${why} Restam ${lives} vida${lives > 1 ? 's' : ''}.`);
+      P.r = 0; P.x = W / 2; carry = CARGA; // recomeça na mata, com toras novas
+    }
+    function hop(dx, dy) {
+      if (stage !== 'walk' || dead > 0) return;
+      P.r = Math.max(0, Math.min(ROWS - 1, P.r + dy)); P.x = Math.max(24, Math.min(W - 24, P.x + dx * CELL)); P.hop = 0.15; A.sfx('hop');
+      if (dx) P.face = dx > 0 ? 2 : -1;
+      if (P.r === 0 && carry === 0) { carry = CARGA; say(`${CARGA} toras nas costas. Atravesse até a feitoria.`); }
+      if (P.r === ROWS - 1 && carry > 0) { stage = 'offer'; A.sfx('coin'); }
+    }
+    function drawObj(o, x, y, w, v) {
+      if (v < 0 && (o === 'onca' || o === 'queixada')) { g.save(); g.translate(2 * x + w, 0); g.scale(-1, 1); drawObj(o, x, y, w, 1); g.restore(); return; } // bicho olha para onde corre
+      if (o === 'queixada') { for (let k = 0; k + 50 <= w + 4; k += 52) { g.fillStyle = '#3a2a22'; g.fillRect(x + k + 4, y - 12, 44, 22); g.fillRect(x + k + 40, y - 8, 12, 14); g.fillStyle = '#f2efe6'; g.fillRect(x + k + 48, y + 2, 4, 3); g.fillStyle = '#1a1210'; g.fillRect(x + k + 8, y + 10, 6, 6); g.fillRect(x + k + 34, y + 10, 6, 6); } }
+      else if (o === 'onca') { g.fillStyle = '#e0a830'; g.fillRect(x, y - 10, w, 20); g.fillRect(x + w - 12, y - 16, 14, 14); g.fillStyle = '#3a2a10'; for (let k = 6; k < w - 8; k += 11) g.fillRect(x + k, y - 6 + (k % 2) * 6, 5, 5); g.fillRect(x - 10, y - 4, 12, 4); }
+      else if (o === 'canoa') { g.fillStyle = '#6a3a1a'; g.beginPath(); g.moveTo(x, y - 8); g.lineTo(x + w, y - 8); g.lineTo(x + w - 16, y + 12); g.lineTo(x + 16, y + 12); g.closePath(); g.fill(); g.fillStyle = '#8a5a32'; g.fillRect(x + 10, y - 8, w - 20, 5); g.fillStyle = '#b07a52'; g.fillRect(x + w / 2 - 4, y - 22, 8, 14); }
+      else if (o === 'tora') { g.fillStyle = '#9a3a22'; g.fillRect(x, y - 12, w, 24); g.fillStyle = '#c86a4a'; g.fillRect(x, y - 12, 10, 24); g.fillStyle = '#7a2a18'; for (let k = 18; k < w; k += 22) g.fillRect(x + k, y - 12, 3, 24); }
+      else if (o === 'jangada') { g.fillStyle = '#d8b878'; for (let k = 0; k < w; k += 16) g.fillRect(x + k, y - 14, 14, 28); g.fillStyle = '#8a6a3a'; g.fillRect(x, y - 2, w, 4); g.fillStyle = '#f2efe6'; g.fillRect(x + w / 2, y - 34, 3, 24); g.beginPath(); g.moveTo(x + w / 2 + 3, y - 34); g.lineTo(x + w / 2 + 26, y - 14); g.lineTo(x + w / 2 + 3, y - 14); g.fill(); }
+    }
     return {
       enter() { A.music('paubrasil'); },
       update(dt) {
-        t += dt;
-        if (stage !== 'walk') return;
-        if ((left -= dt) <= 0) { stage = 'gone'; A.lose('O tempo acabou antes de 12 toras bem trocadas.'); return; }
-        const sp = VEL * dt, kx = (A.keys.ArrowRight || A.keys.d ? 1 : 0) - (A.keys.ArrowLeft || A.keys.a ? 1 : 0);
-        if (kx) tx = bx + kx * 40;
-        if (Math.abs(tx - bx) > 2) bx += Math.sign(tx - bx) * Math.min(sp, Math.abs(tx - bx));
-        if (bx < 200 && carry < 3) { carry = 3; A.sfx('hop'); msg = 'Três toras nas costas. Atravesse a praia.'; }
-        if (bx > 780 && carry > 0) { stage = 'offer'; A.sfx('coin'); }
-        if ((tw -= dt) <= 0) { tw = 0.6 + Math.random() * 0.7; const wx = 260 + Math.random() * 460; waves.push({ x: wx, y: H, warn: 0.9 }); }
-        waves = waves.filter((w) => { if (w.warn > 0) { w.warn -= dt; return true; } w.y -= 720 * dt; if (Math.abs(w.y - 360) < 14 && Math.abs(w.x - bx) < 46 && carry > 0 && !w.hit) { w.hit = 1; carry--; A.sfx('hit'); A.shake(0.2); msg = 'A onda levou uma tora!'; } return w.y > 180; });
+        t += dt; if (msgT > 0) msgT -= dt; if (P.hop > 0) P.hop -= dt; if (dead > 0) dead -= dt;
+        for (const L of Object.values(LANES)) L.off = (L.off + L.v * dt + L.n * L.span) % (L.n * L.span);
+        if (stage !== 'walk' || dead > 0) return;
+        if ((left -= dt) <= 0) { stage = 'gone'; A.lose(`O tempo acabou com ${logs} de ${META} toras trocadas.`); return; }
+        const L = LANES[P.r]; if (!L) return;
+        const on = xs(L).find((x) => P.x > x + 6 && P.x < x + L.w - 6);
+        if (L.kind === 'land') { if (on != null) die(L.obj === 'onca' ? 'A onça cruzou a trilha.' : 'O bando de queixadas passou por cima.'); }
+        else if (on == null) die('Caiu na água.');
+        else { P.x += L.v * dt; if (P.x < 8 || P.x > W - 8) die('A correnteza levou você para longe.'); }
       },
       draw() {
-        g.fillStyle = '#5a8a3a'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#2f6a2a'; g.fillRect(0, 70, 200, H); for (let i = 0; i < 12; i++) { g.fillStyle = '#7a3a2a'; g.fillRect(30 + (i % 3) * 55, 120 + Math.floor(i / 3) * 90, 10, 40); g.fillStyle = '#2a5a24'; g.beginPath(); g.arc(35 + (i % 3) * 55, 120 + Math.floor(i / 3) * 90, 22, 0, 7); g.fill(); }
-        g.fillStyle = '#e8d8a0'; g.fillRect(200, 70, 580, H); g.fillStyle = '#2a6fb0'; g.fillRect(200, 430, 580, H);
-        g.fillStyle = '#8a5a3a'; g.fillRect(780, 70, W - 780, H); txt('FEITORIA', 870, 120, 12, '#fff', 'center');
-        for (const w of waves) { if (w.warn > 0) { g.fillStyle = `rgba(255,255,255,${0.4 + 0.4 * Math.sin(t * 20)})`; g.fillRect(w.x - 40, 420, 80, 8); } else { g.fillStyle = 'rgba(160,210,255,.85)'; g.fillRect(w.x - 46, w.y - 10, 92, 24); g.fillStyle = '#fff'; g.fillRect(w.x - 46, w.y - 12, 92, 4); } }
-        A.dude(bx, 380, A.PAL.buck, t * 14, tx > bx ? 2 : -1, 3, Math.abs(tx - bx) > 2);
-        for (let i = 0; i < carry; i++) { g.fillStyle = '#9a3a22'; g.fillRect(bx - 20, 300 - i * 9, 40, 8); }
-        head(A, 'Escambo · 1502', `Toras: ${logs}/12 · Utilidade: ${avg()}%`, stage === 'intro' ? null : left, TEMPO);
-        if (msg) A.txt(msg, W / 2, 80, 10, '#fff', 'center');
-        // medidor de utilidade
-        g.fillStyle = '#0a1040'; g.fillRect(W / 2 - 150, 460, 300, 14); g.fillStyle = avg() >= 70 ? '#9be36a' : '#ffb04a'; g.fillRect(W / 2 - 150, 460, 3 * avg(), 14); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(W / 2 - 150, 460, 300, 14); g.fillStyle = '#fff'; g.fillRect(W / 2 - 150 + 210, 456, 2, 22);
+        // faixas
+        for (let r = 0; r < ROWS; r++) {
+          const y = ry(r), L = LANES[r];
+          g.fillStyle = r === 0 ? '#2f6a2a' : r === ROWS - 1 ? '#8a5a3a' : r === 4 ? '#e8d8a0' : L.kind === 'water' ? (r % 2 ? '#2a6fb0' : '#2a64a0') : (r % 2 ? '#6a8a3a' : '#5e7e34');
+          g.fillRect(0, y, W, CELL);
+          if (L?.kind === 'water') { g.fillStyle = 'rgba(255,255,255,.15)'; for (let k = 0; k < 14; k++) g.fillRect(((k * 97 + t * 30 * Math.sign(L.v)) % W + W) % W, y + 10 + (k % 3) * 12, 26, 2); }
+          if (L?.kind === 'land') { g.fillStyle = 'rgba(0,0,0,.12)'; g.fillRect(0, y + CELL / 2 - 1, W, 2); }
+        }
+        g.fillStyle = '#2a5a24'; for (let k = 0; k < 16; k++) { g.beginPath(); g.arc(20 + k * 62, ry(0) + 10, 16, 0, 7); g.fill(); }
+        g.fillStyle = '#9a3a22'; for (let k = 0; k < 3; k++) g.fillRect(W / 2 - 60 + k * 6, ry(0) + 28 - k * 6, 120 - k * 12, 6);
+        txt('MATA · PAU-BRASIL', 24, ry(0) + 30, 8, '#fff');
+        g.fillStyle = '#6a3a1a'; g.fillRect(W / 2 - 70, ry(ROWS - 1) + 4, 140, 38); txt('FEITORIA', W / 2, ry(ROWS - 1) + 16, 11, '#ffd84a', 'center');
+        txt('PRAIA', 24, ry(4) + 18, 8, '#7a6a3a');
+        // bichos e plataformas
+        for (const [r, L] of Object.entries(LANES)) for (const x of xs(L)) drawObj(L.obj, x, ry(+r) + CELL / 2, L.w, L.v);
+        // Buck
+        const by = ry(P.r) + CELL - 4 - (P.hop > 0 ? 8 : 0);
+        if (!(dead > 0 && Math.floor(t * 12) % 2)) {
+          A.dude(P.x, by, A.PAL.buck, t * 10, P.face, 2.4, P.hop > 0);
+          for (let i = 0; i < carry; i++) { g.fillStyle = '#9a3a22'; g.fillRect(P.x - 16, by - 50 - i * 6, 32, 5); }
+        }
+        head(A, 'Escambo · 1502', `Vidas: ${lives} · Toras: ${logs}/${META} · Utilidade: ${avg()}% (meta 70%)`, stage === 'intro' ? null : left, TEMPO);
+        if (msgT > 0) { A.box(W / 2 - 260, 68, 520, 28, 0.85); txt(msg, W / 2, 76, 9, '#fff', 'center'); }
         if (stage === 'offer') {
-          A.box(220, 150, 520, 260, 0.96); A.txt(`O português oferece, por ${carry} toras:`, W / 2, 175, 11, '#ffd84a', 'center');
+          A.box(220, 150, 520, 260, 0.96); txt(`O português oferece, por ${carry} toras (o relógio parou):`, W / 2, 175, 10, '#ffd84a', 'center');
           rects = OFFERS.map(([l], i) => btn(A, [250 + (i % 2) * 240, 210 + Math.floor(i / 2) * 80, 220, 60], l, '#e8dcb0', '#1a1030', 12));
         }
-        if (stage === 'intro') intro(A, 'Escambo', ['Busque toras de pau-brasil na mata (esquerda) e leve até a feitoria (direita).', 'As ondas levam toras. Escolha bem o que aceitar em troca: o medidor só sobe com o que serve para quem derruba árvore com pedra.', 'Meta: 12 toras com utilidade de 70% ou mais em 30 segundos. O relógio para enquanto você escolhe a troca.']);
+        if (stage === 'intro') intro(A, 'Escambo', ['Atravesse a trilha (cuidado com onças e queixadas) e o mar pulando nas canoas, toras e jangadas. Na água, fora delas, você cai.', `Leve ${CARGA} toras até a feitoria, escolha a troca e volte para buscar mais. Meta: ${META} toras com utilidade de 70%. Você tem ${VIDAS} vidas.`, 'Setas ou toque acima, abaixo ou do lado do Buck para pular.']);
         quitBtn(A);
       },
       tap(px, py) {
         if (inR(px, py, [W - 110, H - 46, 96, 34])) return A.quit();
-        if (stage === 'intro') { stage = 'walk'; return; }
-        if (stage === 'walk') { tx = Math.max(60, Math.min(W - 60, px)); return; }
+        if (stage === 'intro') { stage = 'walk'; carry = CARGA; return; }
+        if (stage === 'walk') { const dx = px - P.x, dy = py - (ry(P.r) + CELL / 2); if (Math.abs(dy) > Math.abs(dx)) hop(0, dy < 0 ? 1 : -1); else hop(dx > 0 ? 1 : -1, 0); return; }
         if (stage === 'offer') {
           const i = rects.findIndex((r) => inR(px, py, r)); if (i < 0) return;
           logs += carry; for (let k = 0; k < carry; k++) util.push(OFFERS[i][1]); carry = 0; A.sfx(OFFERS[i][1] > 50 ? 'ok' : 'tap');
-          msg = OFFERS[i][1] > 50 ? `${OFFERS[i][0]}: isso muda a vida de quem corta árvore.` : `${OFFERS[i][0]}: bonito, mas não corta nada.`;
-          if (logs >= 12 && avg() >= 70) { stage = 'done'; A.say([['caramuru', 'Agora você entendeu. O valor de uma coisa depende de quem precisa dela.'], ['mula', 'Machado de ferro para quem só tinha pedra: isso valia uma floresta. Literalmente.']], () => A.win({ card: 'C06', item: 'machado' })); return; }
-          if (logs >= 12) msg = 'Muitas toras, pouca utilidade. Continue trocando melhor.';
-          stage = 'walk'; tx = 140;
+          say(OFFERS[i][1] > 50 ? `${OFFERS[i][0]}: isso muda a vida de quem corta árvore. Volte à mata.` : `${OFFERS[i][0]}: bonito, mas não corta nada. Volte à mata.`);
+          if (logs >= META && avg() >= 70) { stage = 'done'; A.say([['caramuru', 'Agora você entendeu. O valor de uma coisa depende de quem precisa dela.'], ['mula', 'Machado de ferro para quem só tinha pedra: isso valia uma floresta. Literalmente.']], () => A.win({ card: 'C06', item: 'machado' })); return; }
+          if (logs >= META) say('Muitas toras, pouca utilidade. Traga mais e troque melhor.');
+          stage = 'walk';
         }
       },
-      key(k) { if (stage === 'intro') this.tap(0, 0); else if (stage === 'offer' && '1234'.includes(k)) this.tap(...rects[+k - 1].slice(0, 2).map((v) => v + 5)); },
+      key(k) {
+        if (stage === 'intro') return this.tap(0, 0);
+        if (stage === 'offer' && '1234'.includes(k)) return this.tap(...rects[+k - 1].slice(0, 2).map((v) => v + 5));
+        const d = { ArrowUp: [0, 1], w: [0, 1], ArrowDown: [0, -1], s: [0, -1], ArrowLeft: [-1, 0], a: [-1, 0], ArrowRight: [1, 0], d: [1, 0] }[k];
+        if (d) hop(...d);
+      },
     };
   }
 
