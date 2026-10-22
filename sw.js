@@ -1,8 +1,8 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v2-18';
+const CACHE = 'relogio-v2-19';
 const FILES = [
-  './', 'index.html', 'manifest.webmanifest', 'game.js', 'cutscenes.js', 'minis.js', 'content.data.js', 'maps/hoje.js', 'maps/eras.js',
+  './', 'index.html', 'manifest.webmanifest', 'game.js', 'cutscenes.js', 'minis.js', 'content.data.js', 'maps/hoje.js', 'maps/eras.js', 'world.js',
   'assets/fonts/pressstart2p-latin.woff2', 'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
   'img/p_buck.png', 'img/p_mula.png', 'img/p_cobrador.png', 'img/p_sineiro.png', 'img/p_caramuru.png', 'img/p_quitandeira.png',
   'img/p_tropeiro.png', 'img/p_antonil.png', 'img/p_tiradentes.png', 'img/p_silverio.png',

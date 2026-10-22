@@ -6,7 +6,7 @@
 (() => {
   const W = 960, H = 540;
   let Z = 2; // zoom do mapa; o lampião abre a visão (1,6)
-  let BUFF = 0; // até quando (em T) dura a rapadura
+  let BUFF = null, REDE = 0; // comida ativa { id, until, speed, stealth, radar }; quando a rede pode ser usada de novo
   const FONT = '"Press Start 2P", monospace';
   const app = document.getElementById('app');
   const cv = document.getElementById('c');
@@ -19,11 +19,13 @@
   const RAW = window.CONTENT_RAW;
   const CARD = Object.fromEntries(RAW.cards.map((c) => [c.id, c]));
   const CHARS = Object.fromEntries(RAW.chars.map((c) => [c.id, c]));
+  // mundo aberto (world.js): NPCs de curiosidade, folclore, itens, comidas, pousos, missões paralelas, coleções, eventos
+  const WD = window.WORLD || { items: {}, npcs: {}, attach: {}, side: {}, folk: [], sets: [], pousos: [], names: {}, pal: {}, rarity: {}, event: () => null, luaCheia: () => false };
   const ERAS = RAW.eras;
   const ERA = Object.fromEntries(ERAS.map((e) => [e.id, e]));
   // Personagens novos (só do v2): nome da plaquinha; retrato em img/p_<id>.png quando existir.
   const EXTRA = { paraguacu: 'Paraguaçu', nassau: 'Maurício de Nassau', fernao: 'Fernão Dias', vigia: 'O vigia', zumbi: 'Zumbi', yves: 'Yves Alves', louie: 'Louie', aprendiz: 'O aprendiz', caminha: 'Pero Vaz de Caminha', fundidor: 'O fundidor', turista: 'Turista', colombo: 'Colombo', cortesao: 'O cortesão', feitor: 'O feitor', frans: 'Frans Post', capitao: 'Capitão holandês', velho: 'Um velho morador', guia: 'Guia' };
-  const nameOf = (id) => CHARS[id]?.name || EXTRA[id] || (id && id.includes(' ') ? id : ''); // testemunhas sem ficha: o nome é o próprio id
+  const nameOf = (id) => CHARS[id]?.name || EXTRA[id] || WD.names[id] || (id && id.includes(' ') ? id : ''); // testemunhas sem ficha: o nome é o próprio id
   // Atos do Dossiê: liberdade dentro do Ato; o seguinte abre com relatórios suficientes deste.
   const ACTS = [
     { id: 'I', name: 'A Régua', eras: ['mundo', 'paubrasil'], need: 4 },
@@ -37,7 +39,9 @@
 
   // ================= save =================
   const SAVE = 'relogio-v2';
-  const NEW = () => ({ v: 2, era: 'hoje', pos: {}, gold: 0, dust: 0, cards: [], items: [], eras: { prologo: { visited: true } }, quests: {}, secrets: [], minis: {}, flags: {}, fog: {}, qok: [], played: 0 });
+  const NEW = () => ({ v: 2, era: 'hoje', pos: {}, gold: 0, dust: 0, cards: [], items: [], eras: { prologo: { visited: true } }, quests: {}, secrets: [], minis: {}, flags: {}, fog: {}, qok: [], played: 0,
+    // mundo aberto: brilho (✦), comidas (quantidade), missões paralelas, coleções, títulos, chapéus, revisão espaçada, sequência de dias
+    brilho: 0, inv: {}, side: {}, tupi: [], bestiario: ['mula'], pousos: [], provou: [], ouviu: [], sets: {}, titulos: [], titulo: '', chapeu: 'stetson', chapeus: ['stetson'], qerr: {}, doado: 0, dia: '', streak: 0 });
   let G;
   try { G = { ...NEW(), ...JSON.parse(localStorage[SAVE] || '{}') }; } catch { G = NEW(); }
   // Migração do v1: as pistas vistas no caderno antigo viram relatórios.
@@ -45,7 +49,10 @@
     G.flags.migrated = 1;
     try { const v1 = JSON.parse(localStorage['relogio-de-sol'] || '{}'); const seen = (v1.seen || []).filter((id) => CARD[id]); if (seen.length) { G.cards = [...new Set([...G.cards, ...seen])]; G.flags.migratedN = seen.length; } } catch { /* sem v1 */ }
   }
+  if (G.rap) { G.inv.rapadura = (G.inv.rapadura || 0) + G.rap; G.rap = 0; } // a rapadura agora mora no inventário de comidas
   const save = () => { try { localStorage[SAVE] = JSON.stringify(G); } catch { /* sem armazenamento: joga sem salvar */ } };
+  const dateKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const addDias = (key, n) => { const d = new Date(`${key}T12:00:00`); d.setDate(d.getDate() + n); return dateKey(d); };
 
   // ================= regras do Dossiê =================
   const eraCards = (era) => RAW.cards.filter((c) => c.era === era);
@@ -224,6 +231,9 @@
     colombo: { skin: '#f0d0b0', hair: '#d8d0c0', shirt: '#6a1a2a', buttons: '#e8c04a', pants: '#2a2a2a', boots: '#111', long: 1 },
     cortesao: { skin: '#f0d0b0', hair: '#2a1a0a', shirt: '#2a3a8a', buttons: '#e8c04a', pants: '#1a1a2a', boots: '#111', mustache: '#2a1a0a' },
   };
+  Object.assign(PAL, WD.pal);
+  const FOLK = new Set(WD.folk.map((f) => f.id));
+  const buckPal = () => { const h = ITEM(G.chapeu || 'stetson'); return h.hat ? { ...PAL.buck, hat: h.hat, hatc: h.hatc } : PAL.buck; };
   function dude(x, y, P, ph, face, u = 2, moving = true, extra = {}) {
     const R = (dx, dy, w, h, c) => { if (c) { g.fillStyle = c; g.fillRect(Math.round(x + dx * u), Math.round(y + dy * u), Math.ceil(w * u), Math.ceil(h * u)); } };
     const sw = moving ? Math.sin(ph) : 0;
@@ -270,6 +280,7 @@
     if (P.hat === 'tricorne') { R(-5, -22, 10, 1.5, P.hatc); R(-3, -23.5, 6, 1.5, P.hatc); }
     if (P.hat === 'leather') { R(-5, -21.5, 10, 1.2, P.hatc); R(-2.5, -23.5, 5, 2, P.hatc); }
     if (P.hat === 'barrete') R(-3, -23, 6, 2, P.hatc);
+    if (P.hat === 'palha') { R(-6, -21.5, 12, 1.5, P.hatc); R(-3, -23.5, 6, 2, P.hatc); R(-3, -22, 6, 0.6, '#c0392b'); }
     if (P.cocar) { R(-3, -23, 1, 2, '#e33'); R(-1, -24, 1, 3, '#fc3'); R(1, -23, 1, 2, '#3a3'); }
   }
   // Dona Mula: a antena. A chama azul cresce com o Ato e pulsa ao transmitir um relatório.
@@ -340,7 +351,7 @@
     if (nm) {
       const im = img(`img/p_${p.who}.png`);
       g.fillStyle = '#0a1040'; g.fillRect(30, y0 + 22, 136, 136);
-      if (im) { g.imageSmoothingEnabled = false; g.drawImage(im, 30, y0 + 22, 136, 136); } else dude(98, y0 + 150, PAL[p.who] || PAL.turista, 0, 0, 5, false);
+      if (im) { g.imageSmoothingEnabled = false; g.drawImage(im, 30, y0 + 22, 136, 136); } else if (FOLK.has(p.who)) { g.save(); g.translate(98, y0 + 140); g.scale(2.2, 2.2); WD.drawFolk(g, p.who, 0, 0, T); g.restore(); } else dude(98, y0 + 150, PAL[p.who] || PAL.turista, 0, 0, 5, false);
       g.strokeStyle = '#fff'; g.lineWidth = 3; g.strokeRect(30, y0 + 22, 136, 136);
       tx = 190;
       const name = nm.length > 24 ? nm.split(' ').slice(0, 3).join(' ') : nm;
@@ -376,8 +387,8 @@
   function ask(q, opts, cb) { ASK = { q, opts, cb, rects: [], sel: 0 }; }
   function drawAsk() {
     const qs = wrap(ASK.q, W - 100, 14);
-    const two = ASK.opts.length === 4;
-    const rows = two ? 2 : ASK.opts.length;
+    const two = ASK.opts.length >= 4;
+    const rows = two ? Math.ceil(ASK.opts.length / 2) : ASK.opts.length;
     const h = 40 + qs.length * 24 + rows * 50 + 20;
     const y0 = Math.max(8, H - h - 16);
     box(16, y0, W - 32, h);
@@ -442,42 +453,70 @@
   // ---- Caderno do Buck: relatórios por era ----
   const ORDER = [...ERAS].filter((e) => e.id !== 'prologo').sort((a, b) => a.range[0] - b.range[0]).concat(ERAS.filter((e) => e.id === 'prologo'));
   const YEAR = { mundo: 1492, paubrasil: 1500, acucar: 1550, invasoes: 1630, palmares: 1650, ouro: 1700, apogeu: 1740, inconfidencia: 1789, depois: 1850, renascimento: 1972, prologo: 'HOJE' };
-  // ---- inventário do Buck: dinheiro e itens; dali se abre o caderno de relatórios ----
-  const ITEM_INFO = {
-    botas: ['👢', 'Botas de tropeiro', '+40% de velocidade, para sempre. O item que todo viajante quer.'],
-    lampiao: ['🏮', 'Lampião', 'Você enxerga mais longe: a vista do mapa se abre.'],
-    regua: ['📏', 'Régua dos Reis', 'Lembrança de Tordesilhas, 1494.'],
-    machado: ['🪓', 'Machado de ferro', 'O valor de uma coisa depende de quem precisa dela.'],
-  };
-  function invEntries() {
+  // ---- inventário do Buck: abas Bolsa (úteis e comidas), Coleção (relíquias, antiguidades, chapéus) e Saber ----
+  const TABS = ['Bolsa', 'Coleção', 'Saber'], PER = 6;
+  const RAR = (r) => WD.rarity[r] || { name: '', col: '#fff' };
+  function setProg(st) {
+    if (st.id === 'tupi') return G.tupi.length;
+    if (st.id === 'bestiario') return G.bestiario.length;
+    if (st.id === 'pousos') return G.pousos.length;
+    if (st.id === 'ouvinte') return G.ouviu.length;
+    if (st.id === 'paladar') return st.list.filter((i) => G.provou.includes(i)).length;
+    return st.list.filter((i) => G.items.includes(i)).length;
+  }
+  const setNeed = (st) => st.need || st.list.length;
+  function invEntries(tab = PANEL?.tab || 0) {
     const L = [];
-    if ((G.rap || 0) > 0) L.push({ icon: '🍬', name: `Rapadura ×${G.rap}`, desc: 'Coma (botão A) para correr +80% por 40 s, o dobro da bota.', use: 'rap' });
-    for (const id of G.items) { const r = RAW.items.find((x) => x.id === id), inf = ITEM_INFO[id] || [r?.icon || '•', r?.name || id, r?.desc || '']; L.push({ icon: inf[0], name: inf[1], desc: inf[2] }); }
-    L.push({ icon: '📖', name: 'Caderno de relatórios', desc: `${G.cards.length} de ${RAW.cards.length} relatórios.`, use: 'book' });
+    if (tab === 0) {
+      for (const id of G.items) { const it = ITEM(id); if (it.kind === 'util') L.push({ id, ...it, use: id === 'rede' ? 'rede' : null }); }
+      for (const [id, n] of Object.entries(G.inv)) if (n > 0) { const it = ITEM(id); L.push({ id, ...it, name: `${it.name} ×${n}`, use: 'eat' }); }
+      L.push({ icon: '📖', name: 'Caderno de relatórios', rarity: 'documento', desc: `${G.cards.length} de ${RAW.cards.length} relatórios.`, use: 'book' });
+    } else if (tab === 1) {
+      for (const id of G.items) { const it = ITEM(id); if (it.kind !== 'util') L.push({ id, ...it }); }
+      for (const id of G.chapeus) { const it = ITEM(id); L.push({ id, ...it, name: `${it.name}${G.chapeu === id ? ' (usando)' : ''}`, use: 'hat' }); }
+    } else {
+      L.push({ icon: '✦', name: `Brilho: ${G.brilho}`, rarity: 'brilho', desc: 'Vem de olhar, aprender, ajudar e doar. Ouro não compra.' });
+      if (G.titulos.length) L.push({ icon: '🏅', name: `Títulos: ${G.titulos.length}`, rarity: 'reliquia', desc: G.titulos.join(' · ') });
+      L.push({ icon: '🗣️', name: `Palavras tupis ${G.tupi.length}/6`, rarity: 'achado', desc: G.tupi.join(', ') || 'Paraguaçu ensina, em Porto Seguro.' });
+      L.push({ icon: '👹', name: `Bestiário ${G.bestiario.length}/9`, rarity: 'documento', desc: G.bestiario.map((b) => WD.names[b] || 'Dona Mula').join(', ') });
+      for (const st of WD.sets) if (st.id !== 'tupi' && st.id !== 'bestiario') L.push({ icon: G.sets[st.id] ? '🏆' : '▫', name: `${st.name} ${Math.min(setProg(st), setNeed(st))}/${setNeed(st)}`, rarity: G.sets[st.id] ? 'reliquia' : 'comum', desc: G.sets[st.id] ? 'Exposta no Museu Padre Toledo.' : 'Complete e leve ao Museu Padre Toledo, em Tiradentes.' });
+    }
     return L;
   }
-  function openInv() { PANEL = { kind: 'inv', sel: 0, rects: [] }; sfx('tap'); }
+  function openInv() { PANEL = { kind: 'inv', sel: 0, rects: [], tab: 0, page: 0 }; sfx('tap'); }
   function invUse(i) {
-    const e = invEntries()[i]; if (!e) return;
-    if (e.use === 'rap') { G.rap--; save(); BUFF = T + 40; PANEL = null; sfx('coin'); floatTxt('rapadura! +80% de velocidade por 40 s', '#ffb060'); }
+    const P = PANEL, e = invEntries()[P.page * PER + i]; if (!e?.use) return;
+    if (e.use === 'eat') { eat(e.id); PANEL = null; }
     else if (e.use === 'book') openBook(G.era);
+    else if (e.use === 'hat') { G.chapeu = e.id; save(); sfx('tap'); }
+    else if (e.use === 'rede') {
+      if (T < REDE) { floatTxt(`A rede ainda balança: ${Math.ceil(REDE - T)} s`, '#ffb060'); return; }
+      REDE = T + 300; BUFF = { id: 'rede', until: T + 150, speed: 0.25 }; PANEL = null; sfx('hop'); floatTxt('Descansou na rede: +25% por 150 s', '#ffb060');
+    }
   }
   function drawInv() {
-    const P = PANEL, L = invEntries(); P.sel = Math.min(P.sel, L.length - 1);
-    box(110, 30, W - 220, H - 60, 0.97);
-    txt('INVENTÁRIO DO BUCK', W / 2, 48, 14, '#ffd84a', 'center');
-    g.fillStyle = 'rgba(255,216,74,.12)'; g.fillRect(140, 78, W - 280, 44);
-    txt(`$ ${G.gold}`, 160, 92, 16, '#ffd84a'); if (G.dust) txt(`✨ pó de ouro: ${G.dust}`, 360, 94, 11, '#fff');
-    if (T < BUFF) txt(`rapadura: ${Math.ceil(BUFF - T)} s`, W - 160, 94, 10, '#ffb060', 'right');
-    P.rects = L.map((e, i) => {
-      const r = [140, 134 + i * 50, W - 280, 44], on = i === P.sel;
-      g.fillStyle = on ? 'rgba(255,216,74,.22)' : 'rgba(255,255,255,.06)'; g.fillRect(...r); g.strokeStyle = on ? '#ffd84a' : '#5a6ab0'; g.lineWidth = on ? 3 : 1; g.strokeRect(...r);
-      txt(e.icon, r[0] + 12, r[1] + 12, 16, '#fff'); txt(e.name, r[0] + 50, r[1] + 8, 11, '#fff'); txt(e.desc, r[0] + 50, r[1] + 26, 8, '#cfd6ff');
+    const P = PANEL, L = invEntries(), pages = Math.max(1, Math.ceil(L.length / PER));
+    P.page = Math.min(P.page, pages - 1);
+    const view = L.slice(P.page * PER, P.page * PER + PER); P.sel = Math.max(0, Math.min(P.sel, view.length - 1));
+    box(110, 24, W - 220, H - 48, 0.97);
+    txt(`INVENTÁRIO · Buck${G.titulo ? `, ${G.titulo}` : ''}`, W / 2, 38, 12, '#ffd84a', 'center');
+    P.tabs = TABS.map((t, i) => {
+      const r = [140 + i * ((W - 280) / 3), 58, (W - 280) / 3 - 8, 30];
+      g.fillStyle = i === P.tab ? '#ffd84a' : 'rgba(255,255,255,.1)'; g.fillRect(...r); plain(t, r[0] + r[2] / 2, r[1] + 9, 11, i === P.tab ? '#1a1030' : '#fff', 'center');
       return r;
     });
-    const y = Math.min(H - 76, 134 + L.length * 50 + 6);
-    txt(`Venda do Tropeiro: ★ Botas $${PRECO_BOTAS} · Lampião $150 · Rapadura $5`, W / 2, y, 9, '#9be36a', 'center');
-    txt(TOUCH ? 'toque num item para usar' : 'setas escolhem · Espaço usa · Esc fecha', W / 2, H - 52, 9, '#8a9ad8', 'center');
+    txt(`$ ${G.gold}`, 150, 100, 12, '#ffd84a'); txt(`✦ ${G.brilho}`, 300, 100, 12, '#ffb030'); if (G.dust) txt(`✨ pó ${G.dust}`, 430, 100, 10, '#fff');
+    if (BUFF && T < BUFF.until) txt(`${ITEM(BUFF.id).icon || '🪢'} ${Math.ceil(BUFF.until - T)} s`, W - 150, 100, 10, '#ffb060', 'right');
+    P.rects = view.map((e, i) => {
+      const r = [140, 122 + i * 48, W - 280, 42], on = i === P.sel, rc = RAR(e.rarity).col;
+      g.fillStyle = on ? 'rgba(255,216,74,.18)' : 'rgba(255,255,255,.05)'; g.fillRect(...r); g.strokeStyle = on ? '#ffd84a' : rc; g.lineWidth = on ? 3 : 2; g.strokeRect(...r);
+      txt(e.icon || '•', r[0] + 12, r[1] + 11, 16, '#fff'); txt(e.name, r[0] + 50, r[1] + 7, 11, rc); const dl = wrap(e.desc || '', r[2] - 130, 8); txt((dl[0] || '') + (dl.length > 1 ? '…' : ''), r[0] + 50, r[1] + 26, 8, '#cfd6ff');
+      if (e.use) txt({ eat: 'comer', hat: 'usar', rede: 'deitar', book: 'abrir' }[e.use], r[0] + r[2] - 10, r[1] + 15, 8, '#9be36a', 'right');
+      return r;
+    });
+    P.prev = pages > 1 ? [140, H - 92, 64, 40] : null; P.next = pages > 1 ? [212, H - 92, 64, 40] : null;
+    if (pages > 1) { for (const [r, a] of [[P.prev, '◀'], [P.next, '▶']]) { g.fillStyle = 'rgba(255,255,255,.15)'; g.fillRect(...r); txt(a, r[0] + r[2] / 2, r[1] + 13, 12, '#fff', 'center'); } txt(`${P.page + 1}/${pages}`, 288, H - 78, 9, '#cfd6ff'); }
+    txt(TOUCH ? 'toque num item para usar' : '◀ ▶ abas · ▲ ▼ escolhe · Espaço usa · Esc fecha', W / 2 - 40, H - 44, 8, '#8a9ad8', 'center');
   }
   function openBook(era) { const i = Math.max(0, ORDER.findIndex((e) => e.id === era)); PANEL = { kind: 'book', i, rects: [] }; sfx('tap'); }
   function drawBook() {
@@ -564,7 +603,12 @@
     const P = PANEL;
     if (inR(x, y, closeRect())) { closePanel(); return; }
     if (P.kind === 'card') return;
-    if (P.kind === 'inv') { const i = P.rects.findIndex((r) => inR(x, y, r)); if (i >= 0) { P.sel = i; invUse(i); } return; }
+    if (P.kind === 'inv') {
+      const ti = (P.tabs || []).findIndex((r) => inR(x, y, r)); if (ti >= 0) { P.tab = ti; P.sel = 0; P.page = 0; sfx('tap'); return; }
+      if (inR(x, y, P.prev)) { P.page = Math.max(0, P.page - 1); sfx('tap'); return; }
+      if (inR(x, y, P.next)) { P.page++; sfx('tap'); return; }
+      const i = P.rects.findIndex((r) => inR(x, y, r)); if (i >= 0) { P.sel = i; invUse(i); } return;
+    }
     if (P.kind === 'book') {
       if (inR(x, y, P.prev)) { P.i = (P.i + ORDER.length - 1) % ORDER.length; sfx('tap'); return; }
       if (inR(x, y, P.next)) { P.i = (P.i + 1) % ORDER.length; sfx('tap'); return; }
@@ -591,16 +635,38 @@
     sfx('coin'); setTimeout(() => sfx('sinoP'), 200);
     FLAMEPULSE = 2;
     if (CARD[id].tone !== 'serio') confetti(W / 2, H / 3, 50);
-    if (curAct() >= 2) floatTxt('brilho +1', '#f3e2a0');
     cardScreen(id, () => {
-      giveGold(OURO_RELATORIO); floatTxt(`relatório lido +$${OURO_RELATORIO}`, '#ffd84a'); // paga ao fechar: aberto e lido
+      giveGold(OURO_RELATORIO); floatTxt(`relatório lido +$${OURO_RELATORIO}`, '#ffd84a'); giveBrilho(1); // paga ao fechar: aberto e lido; ler dá brilho
       const opened = ACTS.findIndex((_, i) => !before[i] && actOpen(i));
       if (opened > 0) { sfx('win'); banner(`ATO ${ACTS[opened].id} · ${ACTS[opened].name}`); say([['mula', `Relatórios suficientes. Abriu o Ato ${ACTS[opened].id}: ${ACTS[opened].name}. As lajes daqueles buracos caíram.`], ...(opened === 2 ? [['mula', 'E agora o Cobrador também anda pela Estrada Real de hoje. Pois é.']] : []), ...(opened === 3 ? [['lum', 'Acelere.']] : [])], done); }
       else done?.();
     });
   }
   const giveGold = (n) => { G.gold = Math.max(0, G.gold + n); save(); if (n > 0) sfx('coin'); };
-  const giveItem = (id) => { if (!G.items.includes(id)) { G.items.push(id); save(); } };
+  // ================= mundo aberto: brilho, itens, comidas, títulos =================
+  // Duas moedas: ouro compra coisas; brilho (✦) vem de olhar, aprender, ajudar e doar, e ouro nenhum compra.
+  const BRILHO_FINAL = 150; // brilho para o final verdadeiro
+  function giveBrilho(n, why) { if (!n) return; if (WD.event(new Date())?.brilho2) n *= 2; G.brilho = (G.brilho || 0) + n; save(); FLAMEPULSE = 1.2; floatTxt(`✦ +${n}${why ? ` ${why}` : ''}`, '#ffb030'); }
+  const RAWRAR = { santo: 'reliquia', turmalina: 'reliquia', 'livro-antonil': 'documento', 'carta-tj': 'documento' };
+  const ITEM = (id) => WD.items[id] || (() => { const r = RAW.items.find((x) => x.id === id); return r ? { name: r.name, icon: r.icon, kind: 'colecao', rarity: RAWRAR[id] || 'documento', desc: r.desc } : { name: id, icon: '•', kind: 'colecao', rarity: 'comum', desc: '' }; })();
+  const priceOf = (id) => (id === 'botas' ? PRECO_BOTAS : ITEM(id).price || 0);
+  const has = (id) => G.items.includes(id) || G.chapeus.includes(id) || (G.inv[id] || 0) > 0;
+  function addItem(id, n = 1) {
+    const it = ITEM(id);
+    if (it.kind === 'comida') G.inv[id] = (G.inv[id] || 0) + n;
+    else if (it.kind === 'chapeu') { if (!G.chapeus.includes(id)) G.chapeus.push(id); }
+    else if (!G.items.includes(id)) G.items.push(id);
+    save();
+  }
+  const giveItem = (id) => addItem(id);
+  const buffOn = (k) => BUFF && T < BUFF.until && BUFF[k];
+  function eat(id) {
+    const it = ITEM(id); if (!(G.inv[id] > 0) || !it.buff) return;
+    G.inv[id]--; if (!G.provou.includes(id)) G.provou.push(id);
+    BUFF = { id, until: T + it.buff.secs, ...it.buff }; save(); sfx('coin');
+    floatTxt(`${it.icon} ${it.desc.split('.')[0]}`, '#ffb060');
+  }
+  function addTitle(t) { if (G.titulos.includes(t)) return; G.titulos.push(t); G.titulo = t; save(); banner(`Título: Buck, ${t}`); }
   function secret(id, lines, done) {
     if (G.secrets.includes(id)) { if (lines) say(lines, done); else done?.(); return; }
     const after = () => { G.secrets.push(id); save(); sfx('win'); firework(W / 2, 160); floatTxt(`★ ${G.secrets.length}/10 segredo`, '#ffd84a'); done?.(); };
@@ -952,11 +1018,19 @@
     const trail = [];
     let camx = 0, camy = 0, tt = 0, saveT = 0, fogT = 0, chase = false, eggSwap = 0, radarT = 0;
     const near = {}, hud = {};
-    const mkNpc = (n) => { const home = K.pois[n.at] || n.xy; return { ...n, x: home[0], y: home[1], face: 0, away: 0, home, ph: Math.random() * 6 }; };
-    const npcs = (M.npcs || []).filter((n) => !n.cond || G.minis[n.cond]).map(mkNpc);
+    const free = (xy) => { const c = nearestFree(K, xy[0], xy[1]); return [(c[0] + 0.5) * M.cell, (c[1] + 0.5) * M.cell]; };
+    const mkNpc = (n) => { const home = K.pois[n.at] || free(n.xy); return { ...n, x: home[0], y: home[1], face: 0, away: 0, home, ph: Math.random() * 6 }; };
+    const npcs = [...(M.npcs || []).filter((n) => !n.cond || G.minis[n.cond]).map((n) => ({ ...n, ...(WD.attach[`${id}:${n.id}`] || {}) })), ...(WD.npcs[id] || [])].map(mkNpc);
+    // folclore deste mapa (algumas criaturas só de noite, na lua cheia, num mapa sorteado por dia ou com muito pó)
+    const agora = new Date(), hora = agora.getHours(), EV = WD.event(agora);
+    const folk = WD.folk.filter((f) => f.maps.includes(id) && (EV?.folkAll || (f.id === 'saci' && EV?.saciAll) ||
+      (f.when === 'noite' ? hora >= 18 || hora < 6 : f.when === 'lua' ? WD.luaCheia(agora) : f.when === 'dia' ? f.maps[hash(dateKey(agora)) % f.maps.length] === id : true)))
+      .map((f) => { const [x, y] = free(Array.isArray(f.xy) ? f.xy : f.xy[id]); return { ...f, x, y }; });
+    const folkHere = () => folk.filter((f) => f.when !== 'pó' || G.dust >= 20);
+    const pousoXY = {}; if (isHoje) for (const p of WD.pousos) pousoXY[p.id] = free(p.xy);
     if (isHoje && curAct() >= 2 && !G.flags.guia) npcs.push(mkNpc({ id: 'cobrador', at: 'estrada', wander: 60, lines: ['Estrada Real, forasteiro. Tudo que passa aqui paga o Quinto. Até no século XXI, se eu deixar.'] }));
     if (G.flags.guia) npcs.forEach((n) => { if (n.afterGuia) n.lines = n.afterGuia; });
-    const COB = M.cobrador && { x: K.pois[M.cobrador.patrol[0]][0], y: K.pois[M.cobrador.patrol[0]][1], i: 0, face: 0, ph: 0, state: 'patrol', cool: 0, dir: [1, 0], path: null, repath: 0 };
+    const COB = M.cobrador && { x: K.pois[M.cobrador.patrol[0]][0], y: K.pois[M.cobrador.patrol[0]][1], i: 0, face: 0, ph: 0, state: 'patrol', cool: 0, dir: [1, 0], path: null, repath: 0, nap: 0, napT: 40 + Math.random() * 30 };
     const dustAt = {};
     const cam = () => { Z = G.items.includes('lampiao') ? 1.6 : 2; camx = Math.max(0, Math.min(M.w - W / Z, P.x - W / Z / 2)); camy = Math.max(0, Math.min(M.h - H / Z, P.y - H / Z / 2)); };
     cam();
@@ -985,21 +1059,39 @@
     // ---- conversa com NPC: contexto → pergunta → consequência no mundo ----
     function talk(n) {
       if (n.egg) return n.egg(S, n, window.ENG);
-      if (n.quest) return questTalk(n);
-      if (n.shop) return shop(n);
-      if (n.lesson) return say(n.lesson);
+      if (n.quest && !(G.quests[n.quest]?.done && sideFor(n))) return questTalk(n);
+      if (n.shop) return vendor(n, true);
+      const lk = `lsn_${id}_${n.id}`;
+      if (n.lesson && !G.flags[lk]) { G.flags[lk] = 1; save(); return say(n.lesson, () => { if (sideFor(n)) sideTalk(n); }); }
       const lines = asLines(n, n.lines);
       const pool = () => RAW.quizzes.filter((q) => CARD[q.cardId]?.era === M.era && !G.qok.includes(q.id));
       if (!n.quiz || !pool().length || G.flags.guia) {
+        if (sideFor(n)) return sideTalk(n);
+        if (n.special === 'museum') return museum(n);
+        if (n.special === 'antique') return antique(n);
+        if (n.special === 'hats') return hats(n);
+        if (n.talk || n.vendor) return worldTalk(n);
         if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) return miniTalk(mi, n); }
+        if (n.lesson) return say(n.lesson);
         say(lines.length ? lines : [[n.id, CHARS[n.id]?.catchphrase || 'Bom dia, forasteiro.']]); return;
       }
       // Sabatina da era: todas as perguntas, em ordem cronológica, uma atrás da outra (sem "quer outra?").
       // Errou: −5 e o quiz volta para a primeira. Na volta, as que já acertou são respondidas de novo
       // (para firmar as datas), mas só as ainda não acertadas valem ouro: +5 certa, −5 errada.
       const all = RAW.quizzes.filter((q) => CARD[q.cardId]?.era === M.era).sort((a, b) => (CARD[a.cardId].year || 0) - (CARD[b.cardId].year || 0) || a.id.localeCompare(b.id));
+      let erros = 0;
       const run = (i) => {
-        if (i >= all.length) { sfx('win'); confetti(); say([[n.id, 'Sabatina completa. Agora essas datas são suas.']], () => { if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) miniTalk(mi, n); } }); return; }
+        if (i >= all.length) {
+          const perf = !erros && !G.flags[`perf_${M.era}`];
+          if (perf) { G.flags[`perf_${M.era}`] = 1; save(); }
+          sfx('win'); confetti();
+          say([[n.id, 'Sabatina completa. Agora essas datas são suas.']], () => {
+            if (perf) { giveBrilho(5, 'sabatina sem erro'); addTitle('de cor e salteado'); }
+            if (sideFor(n)) return sideTalk(n);
+            if (n.mini) { const mi = (M.minis || []).find((x) => x.id === n.mini); if (mi) miniTalk(mi, n); }
+          });
+          return;
+        }
         const q = all[i], novo = !G.qok.includes(q.id), tries = (G.flags.qtry ||= {})[M.era] || 0;
         const opts = q.type === 'multiple' ? q.options.map((t, j) => ({ t, ok: j === q.answer })) : [{ t: 'É fato', ok: q.answer === 'fato' }, { t: 'É lenda', ok: q.answer === 'lenda' }];
         const order = q.type === 'multiple' ? opts.map((o, j) => [hash(q.id + j + tries), o]).sort((a, b) => a[0] - b[0]).map((x) => x[1]) : opts; // a cada volta, as opções mudam de lugar
@@ -1011,8 +1103,8 @@
             const rew = q.cardId && !G.cards.includes(q.cardId) && CARD[q.cardId].era === M.era && !REWARD.has(q.cardId);
             say([[n.id, n.right || 'Isso mesmo.'], ['narr', `${q.explain} (+5 de ouro${rew ? ' e um relatório' : ''})`]], () => (rew ? giveCard(q.cardId, () => run(i + 1)) : run(i + 1)));
           } else {
-            sfx('bad'); SHAKE = 0.3; if (novo) giveGold(-5);
-            G.flags.qtry[M.era] = tries + 1; save();
+            sfx('bad'); SHAKE = 0.3; if (novo) giveGold(-5); erros++;
+            G.flags.qtry[M.era] = tries + 1; G.qerr[q.id] = { b: 0, due: addDias(dateKey(new Date()), 1) }; save(); // volta amanhã na Pergunta do Sineiro
             say([[n.id, n.wrong || 'Não foi bem assim...'], [CARD[q.cardId]?.tone === 'serio' ? 'narr' : 'mula', `Dica: ${q.explain}${novo ? ' (-5 de ouro)' : ''}`], ['mula', 'Errou, volta para a primeira. As que você já acertou não valem ouro de novo.']],
               () => ask('Recomeçar a sabatina?', ['Recomeçar agora', 'Volto depois'], (j) => { if (j === 0) run(0); }));
           }
@@ -1031,21 +1123,178 @@
       const intro = asLines(n || { id: 'mula' }, n?.lines || mi.lines);
       say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }));
     }
-    function shop(n) {
-      const items = [['botas', '★ Botas de tropeiro (+40% velocidade, para sempre)', PRECO_BOTAS], ['lampiao', 'Lampião (você enxerga mais longe)', 150], ['rapadura', 'Rapadura (+80% velocidade por 40 s)', 5]];
-      say([[n.id, G.flags.guia ? 'Guia agora, é? Pra guia eu faço preço.' : 'Venda do Tropeiro. Tem de tudo que cabe numa mula.']], () => ask(`Seu ouro: $${G.gold}`, [...items.map(([, l, p]) => `${l} · $${p}`), 'Nada, obrigado'], (k) => {
-        if (k >= items.length) return;
-        const [it, , p] = items[k];
-        if (it === 'rapadura') {
-          G.flags.rapN = (G.flags.rapN || 0) + 1; save();
-          if (G.flags.rapN === 5) { secret('nashville', [[n.id, 'Rapadura acabou. Mas tenho uísque de milho, coisa fina.'], ['buck', 'No sir. Last time I drank something from a stranger I woke up 150 years late.'], ['mula', 'Foi água de chafariz, cowboy. Mas tudo bem.']]); return; }
-        }
-        if (G.gold < p) { sfx('bad'); say([[n.id, 'Volta quando tiver ouro. Fiado, só pra quem tem mula com cabeça.']]); return; }
-        if (it !== 'rapadura' && G.items.includes(it)) { say([[n.id, 'Você já tem isso.']]); return; }
-        giveGold(-p);
-        if (it === 'rapadura') { G.rap = (G.rap || 0) + 1; save(); floatTxt('rapadura no inventário', '#ffb060'); } else { giveItem(it); floatTxt('comprado!', '#9be36a'); }
-        sfx('coin');
+    // ---- vendedores, curiosidades, doação, museu, antiquário, chapeleiro (world.js) ----
+    const vendorOpen = (n) => n.vendor && (!n.vendorAfter || G.side[n.vendorAfter]?.done);
+    function markHeard(n) { const k = `${id}:${n.id}`; if (G.ouviu.includes(k)) return; G.ouviu.push(k); save(); giveBrilho(2, 'você ouviu'); }
+    function buy(n, it) {
+      if (it === 'rapadura') {
+        G.flags.rapN = (G.flags.rapN || 0) + 1; save();
+        if (G.flags.rapN === 5) { secret('nashville', [[n.id, 'Rapadura acabou. Mas tenho uísque de milho, coisa fina.'], ['buck', 'No sir. Last time I drank something from a stranger I woke up 150 years late.'], ['mula', 'Foi água de chafariz, cowboy. Mas tudo bem.']]); return; }
+      }
+      const p = priceOf(it);
+      if (G.gold < p) { sfx('bad'); say([[n.id, 'Volta quando tiver ouro. Fiado, só pra quem tem mula com cabeça.']]); return; }
+      giveGold(-p); addItem(it); sfx('coin'); floatTxt(`${ITEM(it).icon} ${ITEM(it).name}: na mochila`, '#9be36a');
+    }
+    function vendor(n, isShop) {
+      const list = (n.vendor || []).filter((it) => ITEM(it).kind === 'comida' || !has(it));
+      const story = !isShop && (n.talk || n.lesson);
+      const greet = isShop ? (G.flags.guia ? 'Guia agora, é? Pra guia eu faço preço.' : 'Venda do Tropeiro. Tem de tudo que cabe numa mula.') : 'O que vai ser?';
+      say([[n.id, greet]], () => ask(`Seu ouro: $${G.gold}`, [...list.map((it) => `${ITEM(it).icon} ${ITEM(it).name} · $${priceOf(it)}`), ...(story ? ['Ouvir a história de novo'] : []), 'Nada, obrigado'], (k) => {
+        if (k < list.length) return buy(n, list[k]);
+        if (story && k === list.length) say(n.talk || n.lesson);
       }));
+    }
+    function worldTalk(n) {
+      const first = !G.ouviu.includes(`${id}:${n.id}`), more = n.donate || vendorOpen(n);
+      const next = () => { if (n.donate) donate(n); else if (vendorOpen(n)) vendor(n); };
+      if (!n.talk) return next();
+      if (!first && more) return next();
+      say(n.talk, () => { markHeard(n); next(); });
+    }
+    function donate(n) {
+      const alvo = n.donate === 'matriz' ? 'o restauro da Matriz' : 'a Irmandade do Rosário', vals = [20, 50, 100].filter((v) => v <= G.gold);
+      if (!vals.length) { say([[n.id, 'Quando sobrar ouro, lembre: aqui ele vira brilho.']]); return; }
+      ask(`Doar para ${alvo}? Cada $10 vira ✦1. Seu ouro: $${G.gold}`, [...vals.map((v) => `Doar $${v}`), 'Ouvir a história', 'Agora não'], (k) => {
+        if (k === vals.length) return say(n.talk);
+        if (k > vals.length) return;
+        const v = vals[k]; giveGold(-v); G.doado = (G.doado || 0) + v; save(); sfx('sino');
+        say([[n.id, v >= 100 ? 'Que Deus lhe pague. E paga: em brilho.' : 'Obrigado. Cada telha conta.']], () => giveBrilho(v / 10, 'doação'));
+      });
+    }
+    function museum(n) {
+      const ready = WD.sets.filter((st) => !G.sets[st.id] && setProg(st) >= setNeed(st));
+      say([...n.talk, [n.id, ready.length ? `Você tem ${ready.length} coleção completa para expor!` : 'Nenhuma coleção completa ainda. O progresso está na mochila, aba Saber.']], () => {
+        markHeard(n);
+        if (!ready.length) return;
+        for (const st of ready) G.sets[st.id] = 1;
+        save(); sfx('win'); confetti();
+        say([[n.id, `Exposto, com o seu nome na plaquinha: ${ready.map((st) => st.name).join(', ')}.`]], () => { for (const st of ready) { giveBrilho(st.brilho, st.name); addTitle(st.title); } });
+      });
+    }
+    const ANTIQ = Object.keys(WD.items).filter((k) => WD.items[k].kind === 'antiguidade');
+    function antique(n) {
+      say(n.talk, () => { markHeard(n); ask('Antiquário', ['Comprar', 'Vender', 'Nada'], (k) => {
+        if (k === 0) {
+          const list = ANTIQ.filter((i) => !G.items.includes(i));
+          if (!list.length) return say([[n.id, 'Você já tem tudo o que eu tenho. Volte mês que vem.']]);
+          ask(`Seu ouro: $${G.gold}`, [...list.map((i) => `${ITEM(i).icon} ${ITEM(i).name} · $${priceOf(i)}`), 'Nada'], (j) => { if (j < list.length && G.gold >= priceOf(list[j])) { buy(n, list[j]); say([[n.id, ITEM(list[j]).desc]]); } else if (j < list.length) buy(n, list[j]); });
+        }
+        if (k === 1) {
+          const list = G.items.filter((i) => ITEM(i).kind === 'antiguidade');
+          if (!list.length) return say([[n.id, 'Você não tem nada que eu queira. Ainda.']]);
+          ask('Vender pela metade do preço:', [...list.map((i) => `${ITEM(i).name} · $${Math.floor(priceOf(i) / 2)}`), 'Nada'], (j) => {
+            if (j >= list.length) return;
+            const i = list[j]; G.items = G.items.filter((x) => x !== i); giveGold(Math.floor(priceOf(i) / 2)); G.flags.vendas = (G.flags.vendas || 0) + 1; save();
+            if (G.flags.vendas >= 3 && !G.items.includes('pirita')) { addItem('pirita'); say([[n.id, 'Compra, vende, compra, vende... Toma, um presente da casa.'], ['narr', 'Você ganhou Pirita: o ouro de tolo. Brilha, mas não vale nada.'], ['lum', 'Observador. Brilho detectado: falso.']]); }
+            else say([[n.id, 'Negócio fechado.']]);
+          });
+        }
+      }); });
+    }
+    function hats(n) {
+      const list = Object.keys(WD.items).filter((k) => WD.items[k].kind === 'chapeu');
+      say(n.talk, () => { markHeard(n); ask(`Seu ouro: $${G.gold}`, [...list.map((h) => `${ITEM(h).name} · ${G.chapeus.includes(h) ? (G.chapeu === h ? 'usando' : 'usar') : `$${priceOf(h)}`}`), 'Nada'], (k) => {
+        if (k >= list.length) return;
+        const h = list[k];
+        if (!G.chapeus.includes(h)) { if (G.gold < priceOf(h)) { sfx('bad'); return say([[n.id, 'Chapéu bom custa. Volta com ouro.']]); } giveGold(-priceOf(h)); addItem(h); }
+        G.chapeu = h; save(); sfx('tap'); say([[n.id, 'Ficou ótimo. Parece até gente daqui.']]);
+      }); });
+    }
+    // ---- missões paralelas (world.js): passos fetch / route / count / ask; no fim, volta ao NPC para a recompensa ----
+    const SQ = (q) => WD.side[q];
+    const sqReady = (q) => { const d = SQ(q); return !!d && (!d.after || G.side[d.after]?.done) && (!d.afterQuest || G.quests[d.afterQuest]?.done) && (!d.afterMini || G.minis[d.afterMini]) && (!d.afterQuiz || quizOf(M.era).every((qid) => G.qok.includes(qid))); };
+    const sideFor = (n) => (n.side || []).find((q) => (G.side[q] && !G.side[q].done) || (!G.side[q] && sqReady(q)));
+    const DL = {}; // prazos das rotas com tempo (valem só nesta visita ao mapa)
+    const sqCount = (step) => (step.what === 'pousos' ? G.pousos.length : 0);
+    function sideTalk(n) {
+      const q = sideFor(n), d = SQ(q); let st = G.side[q];
+      if (!st) { G.side[q] = st = { s: 0, got: [] }; save(); sfx('ok'); return say(d.start, () => { floatTxt(`Missão extra: ${d.title}`, '#9be36a'); beginStep(q, n); }); }
+      const step = d.steps[st.s];
+      if (!step) return finishSide(q, n);
+      if (step.kind === 'count') { if (sqCount(step) >= step.need) { st.s++; save(); return finishSide(q, n); } return say([[n.id, `${step.text}: ${sqCount(step)}/${step.need}.`]]); }
+      if (step.kind === 'ask') return beginStep(q, n);
+      if (step.kind === 'route' && step.secs && !(DL[q] > T)) { st.got = []; save(); return say([[n.id, 'Vamos de novo? O tempo começa agora.']], () => beginStep(q, n)); }
+      say([[n.id, `${step.text}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : ''}.`]]);
+    }
+    function beginStep(q, n) {
+      const d = SQ(q), st = G.side[q], step = d.steps[st.s];
+      if (!step) return finishSide(q, n);
+      if (step.kind === 'route' && step.secs) { DL[q] = T + step.secs; floatTxt(`${step.secs} segundos!`, '#ffd84a'); }
+      if (step.kind === 'ask') ask(step.q, step.opts, (k) => { if (k === step.ok) { st.s++; save(); sfx('ok'); finishSide(q, n); } else { sfx('bad'); say([[n.id, 'Não foi bem assim. Pensa mais e volta aqui.']]); } });
+    }
+    function finishSide(q, n) {
+      const d = SQ(q), r = d.reward || {};
+      G.side[q].done = 1; save();
+      if (d.serio) sfx('sino'); else { sfx('win'); confetti(); }
+      say(d.done, () => {
+        if (r.gold) giveGold(r.gold);
+        for (const [it, k] of Object.entries(r.items || {})) addItem(it, k);
+        if (r.brilho) giveBrilho(r.brilho, d.title);
+        if (r.title) addTitle(r.title);
+        const its = Object.entries(r.items || {}).map(([it, k]) => `${ITEM(it).icon} ${ITEM(it).name}${k > 1 ? ` ×${k}` : ''}`);
+        say([['narr', `Missão cumprida: ${d.title}. ${[r.gold && `+$${r.gold}`, ...its, r.brilho && `✦ ${r.brilho}`].filter(Boolean).join(' · ')}`]]);
+      });
+    }
+    const PICKC = {};
+    function sidePicks() { // pontos ativos das missões neste mapa
+      const L = [];
+      for (const [q, st] of Object.entries(G.side)) {
+        const d = SQ(q); if (!d || st.done || d.map !== id) continue;
+        const step = d.steps[st.s]; if (!step?.pts) continue;
+        if (step.kind === 'fetch') step.pts.forEach((p, i) => { if (!st.got.includes(i)) L.push({ q, i, p, step }); });
+        if (step.kind === 'route' && (!step.secs || DL[q] > T)) { const i = st.got.length; if (step.pts[i]) L.push({ q, i, p: step.pts[i], step }); }
+      }
+      return L.map((o) => { const k = `${o.q}:${o.i}`; const [x, y] = PICKC[k] ||= free(o.p); return { ...o, x, y }; });
+    }
+    function pick(o) {
+      const d = SQ(o.q), st = G.side[o.q], step = o.step, total = step.pts.length;
+      st.got.push(o.i); sfx('coin');
+      if (step.words) { if (!G.tupi.includes(o.p[2])) G.tupi.push(o.p[2]); say([['paraguacu', o.p[3]]]); }
+      if (st.got.length >= total) { st.s++; st.got = []; delete DL[o.q]; floatTxt(`Pronto! Volte a ${nameOf(d.giver) || 'quem pediu'}`, '#9be36a'); }
+      else floatTxt(`${o.p[2] || step.label || ''} ${st.got.length}/${total}`.trim(), '#9be36a');
+      save();
+    }
+    function sideTrack() { // a missão extra deste mapa, para o quadro MISSÃO
+      for (const [q, st] of Object.entries(G.side)) {
+        const d = SQ(q); if (!d || st.done || d.map !== id) continue;
+        const step = d.steps[st.s];
+        if (!step) return `Volte a ${nameOf(d.giver)}`;
+        if (step.kind === 'route' && step.secs) return DL[q] > T ? `${step.text} · ${Math.ceil(DL[q] - T)} s` : `Fale com ${nameOf(d.giver)} para tentar de novo`;
+        return `${step.text}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : step.kind === 'count' ? ` (${sqCount(step)}/${step.need})` : ''}`;
+      }
+      return '';
+    }
+    // ---- folclore, pousos e o cochilo do Cobrador ----
+    function folkTalk(f) {
+      const novo = !G.bestiario.includes(f.id);
+      const after = () => { if (!novo) return; G.bestiario.push(f.id); save(); giveBrilho(3, 'bestiário'); floatTxt(`Bestiário ${G.bestiario.length}/9`, '#c070ff'); };
+      if (f.offer) return say(f.lines, () => ask('A Mãe-do-Ouro espera.', ['Ofertar 10 de pó', 'Seguir a bola de fogo'], (k) => {
+        if (k === 0) { G.dust -= 10; save(); sfx('sino'); say([['narr', 'A bola de fogo gira e some no chão. Quem larga um pouco do ouro, ganha outra coisa.']], () => { after(); giveBrilho(5, 'desapego'); }); }
+        else say([['narr', 'Você corre atrás dela até o mato fechar. Quem segue o ouro, perde o rumo.']], after);
+      }));
+      say(novo ? f.lines : [[f.id, f.lines[0][1]], ['mula', 'De novo esse aí. Já está no bestiário.']], after);
+    }
+    function pousoTalk(p) {
+      if (!G.pousos.includes(p.id)) { G.pousos.push(p.id); save(); sfx('cascos'); floatTxt(`Pouso de ${p.name} liberado (${G.pousos.length}/${WD.pousos.length})`, '#9be36a'); giveBrilho(1, 'pouso novo'); }
+      const here = pousoXY[p.id], dest = WD.pousos.filter((o) => o.id !== p.id && G.pousos.includes(o.id));
+      const cost = (o) => { const c = Math.max(10, Math.min(40, Math.round(d2(here, pousoXY[o.id]) / 40))); return G.items.includes('ferradura') ? Math.ceil(c / 2) : c; };
+      ask(`Pouso de ${p.name}. Seu ouro: $${G.gold}`, [...dest.map((o) => `Ir para ${o.name} · $${cost(o)}`), `${ITEM('angu').icon} Comer angu · $${priceOf('angu')}`, 'Ficar'], (k) => {
+        if (k < dest.length) {
+          const o = dest[k];
+          if (o.need && !G.items.includes(o.need)) { say([['tropeiro', `Para ${o.name}, só de canoa. Fale com o monçoeiro, no sertão.`]]); return; }
+          if (G.gold < cost(o)) { sfx('bad'); say([['tropeiro', 'Sem ouro, sem tropa.']]); return; }
+          const alvo = [Math.round(pousoXY[o.id][0]), Math.round(pousoXY[o.id][1] + 24)]; // guardado à parte: o salvamento automático regrava G.pos durante a transição
+          giveGold(-cost(o)); G.pos.hoje = alvo; save(); sfx('cascos');
+          go(() => OW('hoje', alvo), `Pouso de ${o.name}`); return;
+        }
+        if (k === dest.length) { if (G.gold < priceOf('angu')) { sfx('bad'); return; } giveGold(-priceOf('angu')); addItem('angu'); eat('angu'); }
+      });
+    }
+    function napTalk() {
+      COB.nap = 0; COB.cool = 6;
+      const deve = G.flags.cobDeve || 0;
+      if (deve > 0) { G.dust += deve; G.flags.cobDeve = 0; save(); sfx('coin'); say([['narr', `Você surrupia de volta ${deve} de pó do bolso do Cobrador.`], ['cobrador', 'Hm?! Quem... Ninguém. Eu só estava fechando os olhos para pensar na Coroa.'], ['mula', 'Imposto devolvido. Uma vez na história.']]); }
+      else say([['cobrador', 'Hm?! Eu não estava dormindo. Estava fiscalizando por dentro.']]);
     }
     // ---- quests detetive: cliente abre, testemunhas espalhadas falam, volta e acusa ----
     function questTalk(n) {
@@ -1091,12 +1340,12 @@
     function caught() {
       COB.state = 'patrol'; COB.cool = 12; chase = false; music(M.music || M.era); COB.path = null;
       if (G.items.includes('santo')) { G.items = G.items.filter((i) => i !== 'santo'); save(); say([['cobrador', 'Vamos ver esse santo aí...'], ['narr', 'Ele revista o santo. Vazio.'], ['mula', 'Santo do pau oco: lenda que vira mecânica. Usou o seu.']]); return; }
-      const took = Math.ceil(G.dust * 0.2); G.dust -= took; save(); sfx('bad'); SHAKE = 0.3;
+      const took = Math.ceil(G.dust * (G.items.includes('guia') ? 0.1 : 0.2)); G.dust -= took; G.flags.cobDeve = (G.flags.cobDeve || 0) + took; save(); sfx('bad'); SHAKE = 0.3;
       const pool = RAW.quizzes.filter((q) => ['C43', 'C45', 'C46', 'C51', 'C53', 'C55'].includes(q.cardId));
       const k0 = hash(String(Math.round(G.played))), qa = [pool[k0 % pool.length], pool[(k0 + 1) % pool.length]];
       let back = 0;
       const one = (i) => {
-        if (i >= qa.length) { if (back) { G.dust += back; save(); } say([['cobrador', back ? `Hmpf. Sabe das leis da Coroa. Devolvo ${back} de pó.` : `Levei ${took} de pó. O Quinto é da Coroa.`]]); return; }
+        if (i >= qa.length) { if (back) { G.dust += back; G.flags.cobDeve = Math.max(0, (G.flags.cobDeve || 0) - back); save(); } say([['cobrador', back ? `Hmpf. Sabe das leis da Coroa. Devolvo ${back} de pó.` : `Levei ${took} de pó. O Quinto é da Coroa.`]]); return; }
         const q = qa[i], opts = q.type === 'multiple' ? q.options.map((t, j) => ({ t, ok: j === q.answer })) : [{ t: 'É fato', ok: q.answer === 'fato' }, { t: 'É lenda', ok: q.answer === 'lenda' }];
         ask(q.prompt, opts.map((o) => o.t), (k) => { if (opts[k].ok) { sfx('ok'); back += Math.ceil(took / 4); } else sfx('bad'); one(i + 1); });
       };
@@ -1116,11 +1365,15 @@
     }
     function interactables() {
       const L = [], pt = [P.x, P.y];
-      const add = (x, y, r, label, run) => { const d = d2(pt, [x, y]); if (d < r) L.push({ x, y, d, label, run }); };
+      const add = (x, y, r, label, run, bias = 0) => { const d = d2(pt, [x, y]); if (d < r) L.push({ x, y, d: d - bias, label, run }); }; // bias: ganha o empate de quem está no mesmo ponto
       for (const [cid, p] of Object.entries(K.cardPos)) if (!G.cards.includes(cid)) add(p[0], p[1], 34, 'pegar', () => giveCard(cid, () => {
         if (isHoje && cid === 'C00' && !G.flags.tut1) { G.flags.tut1 = 1; save(); say([['mula', 'Isso. Cada papel desses é um relatório. Eu transmito. Pra quem? Depois.'], ['mula', 'E aquilo ali no chão, aquela cratera com luz azul... é o atalho.']]); }
       }));
       for (const n of npcs) if (!(n.away > tt)) add(n.x, n.y, 40, n.shop ? 'comprar' : n.lesson ? 'ouvir' : n.mini && !n.quiz ? 'desafio' : 'falar', () => talk(n));
+      for (const o of sidePicks()) add(o.x, o.y, 30, o.p[2] || o.step.label || 'pegar', () => pick(o));
+      for (const f of folkHere()) add(f.x, f.y, 44, 'olhar', () => folkTalk(f));
+      if (isHoje) for (const p of WD.pousos) add(pousoXY[p.id][0], pousoXY[p.id][1], 36, `pouso ${p.name}`, () => pousoTalk(p));
+      if (COB && COB.nap > 0) add(COB.x, COB.y, 40, G.flags.cobDeve > 0 ? 'recuperar o pó' : 'cutucar', napTalk);
       for (const w of witnesses) if (!w.mule && G.quests[w.quest] && !G.quests[w.quest].done) add(w.x, w.y, 36, 'ouvir', () => witnessTalk(w));
       const mw = witnesses.find((v) => v.mule && G.quests[v.quest] && !G.quests[v.quest].done && !G.quests[v.quest].heard.includes(v.wi));
       if (mw) add(mulaS.x, mulaS.y, 40, 'Mula', () => witnessTalk(mw));
@@ -1129,9 +1382,9 @@
       for (const [k, q] of Object.entries(K.pois)) {
         if (k.startsWith('bateia') && !(dustAt[k] > tt)) add(q[0], q[1], 30, 'bateia', () => { dustAt[k] = tt + 25; G.dust += 5; save(); sfx('garimpo'); floatTxt('+5 pó de ouro ✨'); FLAMEPULSE = 0.5; });
         if (k === 'fundicao') add(q[0], q[1], 36, 'fundição', () => {
-          if (G.dust > 0) { const n = G.dust; G.dust = 0; giveGold(n); if (chase && COB) { COB.state = 'patrol'; COB.path = null; chase = false; } say([['fundidor', `${n} de pó viraram barra com o selo do rei: +$${n}.`], ['mula', 'E o Cobrador perde o interesse. Pó sem selo é que dá cadeia.']]); }
+          if (G.dust > 0) { const n = Math.round(G.dust * (G.items.includes('pedra') ? 1.25 : 1)); G.dust = 0; giveGold(n); if (chase && COB) { COB.state = 'patrol'; COB.path = null; chase = false; } say([['fundidor', `${n} de pó viraram barra com o selo do rei: +$${n}.`], ['mula', 'E o Cobrador perde o interesse. Pó sem selo é que dá cadeia.']]); }
           else say([['fundidor', 'Casa de Fundição. Traga pó de ouro que eu derreto e carimbo. O Quinto sai aqui mesmo.']]);
-        });
+        }, G.dust > 0 ? 8 : 0); // com pó na mão, a Fundição vem antes do fundidor (estão no mesmo lugar em Minas)
         const dest = k.startsWith('door_') && M.doors?.[k];
         if (dest) add(q[0], q[1], 32, 'entrar', () => { G.pos[id] = [Math.round(P.x), Math.round(P.y + 24)]; save(); sfx('cascos'); go(() => OW(dest.map), dest.title); });
       }
@@ -1147,7 +1400,7 @@
           const seen = (G.flags.tour ||= {}); const novo = !seen[st.id]; seen[st.id] = 1; save();
           const ls = [['sineiro', `${st.name}. Olhe: ${st.lookAt}.`], ...(st.extras || []).slice(0, 2).map((x) => ['buck', x.joke])];
           if (st.transition) ls.push(['buck', st.transition]);
-          say(ls, () => { if (novo) floatTxt(`parada ${Object.keys(seen).length}/${RAW.tour.stops.length}`, '#9be36a'); });
+          say(ls, () => { if (novo) { floatTxt(`parada ${Object.keys(seen).length}/${RAW.tour.stops.length}`, '#9be36a'); giveBrilho(1, 'você olhou'); } });
         });
       }
       return L.sort((a, b) => a.d - b.d);
@@ -1159,7 +1412,7 @@
       const near1 = Object.values(K.pois).reduce((a, q) => (d2([P.x, P.y], q) < (a ? d2([P.x, P.y], a) : 60) ? q : a), null);
       if (near1) for (const sc of SECRETS) if ((sc.map === id || sc.map === '*') && sc.tap?.(S, near1[0], near1[1], tt)) return;
     }
-    Object.assign(S, { talk, travel, mulaS, setSwap: (s) => { eggSwap = s; }, targets: () => interactables() });
+    Object.assign(S, { cob: COB, picks: () => sidePicks(), folk: () => folkHere(), pousos: pousoXY, talk, travel, mulaS, setSwap: (s) => { eggSwap = s; }, targets: () => interactables() });
 
     return {
       travel, S,
@@ -1176,7 +1429,8 @@
           setTimeout(() => say([['mula', 'Levanta. Você tem um trabalho.'], ['buck', 'I have a WHAT?'], ['mula', 'Observar. Anotar. Mandar. Ande com o joystick à esquerda (ou as setas). Chegou perto de algo? Aperte o botão A (ou Espaço). Eu te sigo.']], () => {
             if (G.flags.migratedN) say([['mula', `Ah: você trouxe ${G.flags.migratedN} relatórios de um caderno antigo. Já mandei.`]]);
           }), 600);
-        } else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${ERA[M.era]?.name || M.title}.`]]), ['mula', `Para o portal abrir: ${k.cards} relatórios, ${k.quiz} pergunta${k.quiz === 1 ? '' : 's'} certa${k.quiz === 1 ? '' : 's'}${k.mini ? ' e vencer o desafio da era' : ''}.`]]); }, 700);
+        } else if (isHoje && G.flags.tut1) setTimeout(daily, 900);
+        else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${ERA[M.era]?.name || M.title}.`]]), ['mula', `Para o portal abrir: ${k.cards} relatórios, ${k.quiz} pergunta${k.quiz === 1 ? '' : 's'} certa${k.quiz === 1 ? '' : 's'}${k.mini ? ' e vencer o desafio da era' : ''}.`]]); }, 700);
       },
       update(dt) {
         tt += dt; G.played += dt;
@@ -1184,7 +1438,7 @@
         const kx = (KEYS.ArrowRight || KEYS.d ? 1 : 0) - (KEYS.ArrowLeft || KEYS.a ? 1 : 0);
         const ky = (KEYS.ArrowDown || KEYS.s ? 1 : 0) - (KEYS.ArrowUp || KEYS.w ? 1 : 0);
         let vx = 0, vy = 0;
-        const sp = 85 * (T < BUFF ? 1.8 : G.items.includes('botas') ? 1.4 : 1); // bota +40%; rapadura +80% (o dobro)
+        const sp = 85 * (1 + (G.items.includes('botas') ? 0.4 : 0) + (buffOn('speed') || 0)); // bota +40%; comida soma (rapadura +80%)
         const jm = Math.hypot(JOY.x, JOY.y);
         if (!busy() && JOY.id != null && jm > 0.2) { const k = Math.min(1, jm) / jm; vx = JOY.x * k * sp; vy = JOY.y * k * sp; } // joystick analógico
         else if (!busy() && (kx || ky)) { const l = Math.hypot(kx, ky); vx = kx / l * sp; vy = ky / l * sp; }
@@ -1213,10 +1467,11 @@
         // radar sonoro do Sineiro (prêmio dos sinos): sino toca com relatório a 200 px
         if (G.minis.sinos && (radarT -= dt) <= 0) { radarT = 3; if (Object.entries(K.cardPos).some(([cid, p]) => !G.cards.includes(cid) && d2([P.x, P.y], p) < 200)) sfx('sinoP'); }
         for (const n of npcs) if (n.wander && !busy()) { n.ph += dt; const nx = n.home[0] + Math.sin(n.ph * 0.5) * n.wander; n.face = Math.cos(n.ph * 0.5) > 0 ? 2 : -1; if (!blockedAt(K, nx, n.y)) n.x = nx; }
-        if (COB && !busy()) {
+        if (COB && !busy()) { if (COB.nap > 0) COB.nap -= dt; else if (COB.state !== 'chase' && (COB.napT -= dt) <= 0) { COB.nap = 15; COB.napT = 50 + Math.random() * 40; COB.path = null; } }
+        if (COB && !busy() && !(COB.nap > 0)) {
           COB.cool -= dt;
           const pt = [P.x, P.y], cp = [COB.x, COB.y], dist = d2(pt, cp);
-          if (COB.state !== 'chase' && G.dust > 0 && COB.cool <= 0 && dist < 120) {
+          if (COB.state !== 'chase' && G.dust > 0 && COB.cool <= 0 && dist < 120 && !buffOn('stealth')) {
             const ang = Math.atan2(P.y - COB.y, P.x - COB.x), fa = Math.atan2(COB.dir[1], COB.dir[0]);
             let da = Math.abs(ang - fa); if (da > Math.PI) da = 2 * Math.PI - da;
             if (da < 35 * Math.PI / 180 || dist < 40) { COB.state = 'chase'; COB.path = null; chase = true; sfx('apito'); floatTxt('O COBRADOR TE VIU!', '#ff6a5a'); }
@@ -1230,6 +1485,7 @@
           if (nx) { const dx = nx[0] - COB.x, dy = nx[1] - COB.y, d = Math.hypot(dx, dy); if (d < 3) COB.path.shift(); else { COB.x += dx / d * spd * dt; COB.y += dy / d * spd * dt; COB.dir = [dx / d, dy / d]; COB.face = Math.abs(dx) > Math.abs(dy) ? (dx < 0 ? -1 : 2) : (dy < 0 ? 1 : 0); COB.ph += dt * 12; } }
           if (COB.state === 'chase' && dist < 16) caught();
         }
+        for (const q of Object.keys(DL)) if (T > DL[q]) { delete DL[q]; const st = G.side[q]; if (st && !st.done) { st.got = []; save(); sfx('bad'); floatTxt(`O tempo acabou! Fale com ${nameOf(WD.side[q].giver)}`, '#ff6a5a'); } }
         if (busy()) return;
         TGT = interactables()[0] || null;
         const pt = [P.x, P.y];
@@ -1285,6 +1541,19 @@
           if (k.startsWith('door_')) { g.fillStyle = `rgba(255,216,74,${0.4 + 0.3 * Math.sin(tt * 4)})`; g.fillRect(sx(p[0]) - 10, sy(p[1]) - 4, 20, 8); }
         }
         if (M.tour) for (const st of RAW.tour.stops) { const p = K.pois[st.id]; if (!p || !onS(p[0], p[1]) || (TGT?.label === st.name && !busy())) continue; const ok = G.flags.tour?.[st.id]; g.font = fnt(8); const w = g.measureText(st.name).width + 12; g.fillStyle = ok ? '#3a7a3a' : '#2a3a8a'; g.fillRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(sx(p[0]) - w / 2, sy(p[1]) - 40, w, 16); txt(st.name, sx(p[0]), sy(p[1]) - 36, 8, '#fff', 'center'); }
+        if (isHoje) for (const p of WD.pousos) {
+          const [px, py] = pousoXY[p.id]; if (!onS(px, py)) continue;
+          const x = sx(px), y = sy(py), ok = G.pousos.includes(p.id);
+          g.fillStyle = '#7a5532'; g.fillRect(x - 14, y - 14, 28, 14); g.fillStyle = ok ? '#c8a050' : '#8a7a5a'; g.beginPath(); g.moveTo(x - 18, y - 14); g.lineTo(x, y - 26); g.lineTo(x + 18, y - 14); g.fill();
+          g.fillStyle = '#3a2a1a'; g.fillRect(x - 3, y - 8, 6, 8);
+          if (TGT?.label !== `pouso ${p.name}`) txt(ok ? 'POUSO' : 'POUSO ?', x, y - 40, 8, ok ? '#ffd84a' : '#cfd6ff', 'center');
+        }
+        for (const o of sidePicks()) {
+          if (!onS(o.x, o.y)) continue;
+          const x = sx(o.x), y = sy(o.y) - 6 + Math.sin(tt * 4 + o.i) * 3;
+          g.fillStyle = 'rgba(155,227,106,.35)'; g.beginPath(); g.arc(x, y, 14 + Math.sin(tt * 3) * 2, 0, 7); g.fill();
+          txt(o.step.icon || (o.step.kind === 'route' ? '📍' : '✳'), x, y - 9, 14, '#fff', 'center');
+        }
         for (const mi of M.minis || []) {
           if (!mi.at) continue;
           const p = K.pois[mi.at]; if (!p || !onS(p[0], p[1])) continue;
@@ -1300,18 +1569,21 @@
           g.fillStyle = '#8a6a3a'; g.fillRect(x - 5, y - 5, 10, 2); g.fillRect(x - 5, y, 10, 2);
         }
         const ents = [
-          { y: P.y, d: () => dude(sx(P.x), sy(P.y), PAL.buck, P.ph, P.face, 2, P.moving, { badge: G.flags.guia, flame: eggSwap > 0, t: tt }) },
+          { y: P.y, d: () => dude(sx(P.x), sy(P.y), buckPal(), P.ph, P.face, 2, P.moving, { badge: G.flags.guia, flame: eggSwap > 0, t: tt }) },
           { y: mulaS.y, d: () => mula(sx(mulaS.x), sy(mulaS.y), mulaS.ph, mulaS.dir, 2, mulaS.moving, tt, { flame: (0.4 + 0.15 * curAct()) + (FLAMEPULSE > 0 ? 0.7 : 0), flicker: curAct() >= 3 && !G.flags.guia, hat: G.flags.guia, stetson: eggSwap > 0 }) },
           ...npcs.filter((n) => n.away <= tt && onS(n.x, n.y)).map((n) => ({ y: n.y, d: () => {
             dude(sx(n.x), sy(n.y), PAL[n.pal || n.id] || PAL.turista, n.ph * 14, n.face, 2, !!n.wander, { noHat: n.noHat });
-            const mk = (n.quest && !G.quests[n.quest]?.done) || (n.quiz && !G.flags.guia && quizOf(M.era).some((qid) => !G.qok.includes(qid))) ? '?' : n.lesson ? 'i' : n.mini && !G.minis[n.mini] && !(((M.minis || []).find((x) => x.id === n.mini) || {}).act != null && !actOpen(((M.minis || []).find((x) => x.id === n.mini)).act)) ? '!' : n.shop ? '$' : '';
+            const sq = sideFor(n);
+            const mk = (n.quest && !G.quests[n.quest]?.done) || (n.quiz && !G.flags.guia && quizOf(M.era).some((qid) => !G.qok.includes(qid))) ? '?' : sq ? (G.side[sq] ? '…' : '!') : n.lesson && !G.flags[`lsn_${id}_${n.id}`] ? 'i' : n.mini && !G.minis[n.mini] && !(((M.minis || []).find((x) => x.id === n.mini) || {}).act != null && !actOpen(((M.minis || []).find((x) => x.id === n.mini)).act)) ? '!' : n.talk && !G.ouviu.includes(`${id}:${n.id}`) ? 'i' : n.shop || vendorOpen(n) ? '$' : n.donate ? '✦' : '';
             if (mk) txt(mk, sx(n.x), sy(n.y) - 66 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#ffd84a', 'center');
           } })),
+          ...folkHere().filter((f) => onS(f.x, f.y)).map((f) => ({ y: f.y, d: () => { WD.drawFolk(g, f.id, sx(f.x), sy(f.y), tt); if (!G.bestiario.includes(f.id)) txt('?', sx(f.x), sy(f.y) - 70 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#c070ff', 'center'); } })),
           ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), PAL[w.id] || PAL.turista, 0, 0, 2, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 70, 12, '#fff', 'center'); } })),
         ];
         if (COB) ents.push({ y: COB.y, d: () => {
           dude(sx(COB.x), sy(COB.y), PAL.cobrador, COB.ph, COB.face, 2, true);
-          if (G.dust > 0 && COB.state !== 'chase') { const fa = Math.atan2(COB.dir[1], COB.dir[0]); g.fillStyle = 'rgba(255,80,60,.14)'; g.beginPath(); g.moveTo(sx(COB.x), sy(COB.y) - 20); g.arc(sx(COB.x), sy(COB.y) - 20, 240, fa - 0.61, fa + 0.61); g.closePath(); g.fill(); }
+          if (COB.nap > 0) txt('Zz', sx(COB.x) + 10, sy(COB.y) - 66 - Math.sin(tt * 2) * 4, 12, '#cfd6ff', 'center');
+          else if (G.dust > 0 && COB.state !== 'chase') { const fa = Math.atan2(COB.dir[1], COB.dir[0]); g.fillStyle = 'rgba(255,80,60,.14)'; g.beginPath(); g.moveTo(sx(COB.x), sy(COB.y) - 20); g.arc(sx(COB.x), sy(COB.y) - 20, 240, fa - 0.61, fa + 0.61); g.closePath(); g.fill(); }
           if (COB.state === 'chase') txt('!', sx(COB.x), sy(COB.y) - 64, 14, '#ff4a4a', 'center');
         } });
         ents.sort((a, b) => a.y - b.y).forEach((e) => e.d());
@@ -1340,23 +1612,32 @@
         g.restore();
         if (isHoje && curAct() >= 3 && !G.flags.guia) { g.fillStyle = 'rgba(232,192,74,.08)'; g.fillRect(0, 0, W, H); lum(30, 140, 18, tt, 0.4); lum(W - 30, 300, 14, tt + 2, 0.35); }
         if (isHoje && G.flags.lumStay) lum(W - 210, 40, 16, tt, 0.6);
-        const ls = wrap(gl.text, 360, 10);
-        box(10, 10, 400, 34 + ls.length * 16, 0.85); txt('MISSÃO', 26, 22, 10, '#ffd84a'); ls.forEach((l, i) => txt(l, 26, 38 + i * 16, 10, '#fff'));
+        const ls = wrap(gl.text, 360, 10), ex = sideTrack(), le = ex ? wrap(`Extra: ${ex}`, 360, 9) : [];
+        box(10, 10, 400, 34 + ls.length * 16 + le.length * 14 + (le.length ? 4 : 0), 0.85); txt('MISSÃO', 26, 22, 10, '#ffd84a'); ls.forEach((l, i) => txt(l, 26, 38 + i * 16, 10, '#fff'));
+        le.forEach((l, i) => txt(l, 26, 42 + ls.length * 16 + i * 14, 9, '#9be36a'));
         const mw = K.mini.width, mh = K.mini.height, mx = W - mw - 14, my = 12;
         g.fillStyle = '#000'; g.fillRect(mx - 4, my - 4, mw + 8, mh + 8);
         g.imageSmoothingEnabled = true; g.drawImage(K.mini, mx, my); g.drawImage(K.fog, mx, my); g.imageSmoothingEnabled = false;
         g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(mx - 3, my - 3, mw + 6, mh + 6);
         const ms = mw / M.w;
         if (tg && Math.floor(tt * 3) % 2) { g.fillStyle = '#ffd84a'; g.fillRect(mx + tg[0] * ms - 3, my + tg[1] * ms - 3, 6, 6); }
+        if (G.items.includes('luneta')) {
+          for (const n of npcs) if (sideFor(n) || (n.talk && !G.ouviu.includes(`${id}:${n.id}`))) { g.fillStyle = sideFor(n) ? '#ffd84a' : '#9ad8ff'; g.fillRect(mx + n.x * ms - 2, my + n.y * ms - 2, 4, 4); }
+          for (const o of sidePicks()) { g.fillStyle = '#9be36a'; g.fillRect(mx + o.x * ms - 2, my + o.y * ms - 2, 4, 4); }
+          for (const f of folkHere()) if (!G.bestiario.includes(f.id)) { g.fillStyle = '#c070ff'; g.fillRect(mx + f.x * ms - 2, my + f.y * ms - 2, 4, 4); }
+        }
+        if (buffOn('radar') && Math.floor(tt * 4) % 2) for (const [cid, p] of Object.entries(K.cardPos)) if (!G.cards.includes(cid)) { g.fillStyle = '#fff2a0'; g.fillRect(mx + p[0] * ms - 2, my + p[1] * ms - 2, 5, 5); }
         g.fillStyle = '#ff4a4a'; g.fillRect(mx + P.x * ms - 2, my + P.y * ms - 2, 5, 5);
         if (!isHoje) txt(M.title || '', mx + mw / 2, my + mh + 8, 8, '#fff', 'center');
-        const items = G.items.map((i) => ({ botas: '👢', lampiao: '🏮', regua: '📏', machado: '🪓' })[i] || RAW.items.find((x) => x.id === i)?.icon || '').join('');
-        box(10, H - 76, 150, 66, 0.85);
-        txt(`★ ${G.cards.length}/${RAW.cards.length}`, 24, H - 64, 10, '#ffd84a');
-        txt(`$ ${G.gold}${G.dust ? `  ✨${G.dust}` : ''}`, 24, H - 46, 10, '#fff');
+        const items = G.items.filter((i) => ITEM(i).kind === 'util').map((i) => ITEM(i).icon).join('');
+        box(10, H - 94, 150, 84, 0.85);
+        txt(`★ ${G.cards.length}/${RAW.cards.length}`, 24, H - 82, 10, '#ffd84a');
+        txt(`$ ${G.gold}${G.dust ? `  ✨${G.dust}` : ''}`, 24, H - 64, 10, '#fff');
+        txt(`✦ ${G.brilho}`, 24, H - 46, 10, '#ffb030');
         txt(`☆ ${G.secrets.length}/10`, 24, H - 28, 9, '#cfd6ff');
+        if (BUFF && T < BUFF.until) txt(`${ITEM(BUFF.id).icon || '🪢'} ${Math.ceil(BUFF.until - T)} s`, 24, items ? H - 154 : H - 114, 10, '#ffb060');
         hud.book = [W - 76, 178, 62, 54]; box(...hud.book, 0.85); txt('🎒', hud.book[0] + 31, hud.book[1] + 16, 16, '#fff', 'center');
-        if (items) { box(10, H - 116, 150, 38, 0.85); txt(items, 24, H - 104, 14, '#fff'); }
+        if (items) { box(10, H - 134, 150, 38, 0.85); txt(items, 24, H - 122, 14, '#fff'); }
         hud.timeline = drawTimeline(M.era, tt);
       },
       ctl: true,
@@ -1409,6 +1690,36 @@
       },
     };
     go(() => Object.assign(f(api), { ctl: true, esc: back }), null);
+  }
+
+  // ================= o dia: sequência, eventos do calendário e Pergunta do Sineiro (revisão espaçada) =================
+  // Pergunta errada na sabatina volta no dia seguinte; acertou, volta em 3 e depois em 7 dias; três acertos e ela é sua.
+  function daily(tries = 0) {
+    if (DLG || ASK || PANEL || TR) { if (tries < 6) setTimeout(() => daily(tries + 1), 1500); return; }
+    const hoje = dateKey(new Date()), L = [];
+    if (G.dia !== hoje) {
+      G.streak = G.dia === addDias(hoje, -1) ? (G.streak || 0) + 1 : 1; G.dia = hoje; save();
+      const ev = WD.event(new Date()); if (ev) { banner(ev.name); L.push([ev.serio ? 'narr' : 'sineiro', ev.text]); }
+      if (G.streak === 3) { addItem('rapadura', 2); L.push(['sineiro', 'Três dias seguidos por aqui! Toma duas rapaduras.']); }
+      if (G.streak === 7 && !G.chapeus.includes('palha')) { addItem('palha'); L.push(['sineiro', 'Uma semana inteira! Ganhou um chapéu de palha: está na mochila.']); }
+    }
+    const due = Object.entries(G.qerr).filter(([, v]) => v.due <= hoje).map(([k]) => k);
+    const q = G.flags.revDia !== hoje && due.length ? RAW.quizzes.find((x) => x.id === due[0]) : null;
+    const next = () => { if (q) review(q, hoje); };
+    if (L.length) say(L, next); else next();
+  }
+  function review(q, hoje) {
+    G.flags.revDia = hoje; save();
+    const opts = q.type === 'multiple' ? q.options.map((t, j) => ({ t, ok: j === q.answer })) : [{ t: 'É fato', ok: q.answer === 'fato' }, { t: 'É lenda', ok: q.answer === 'lenda' }];
+    const order = q.type === 'multiple' ? opts.map((o, j) => [hash(q.id + j + hoje), o]).sort((a, b) => a[0] - b[0]).map((x) => x[1]) : opts;
+    sfx('sino');
+    say([['sineiro', 'Dlém! Pergunta do Sineiro: uma que você errou. Quem lembra no dia seguinte, lembra para sempre.']], () => ask(q.prompt, order.map((o) => o.t), (k) => {
+      const r = G.qerr[q.id] || { b: 0 };
+      if (order[k].ok) {
+        r.b = (r.b || 0) + 1; if (r.b >= 3) delete G.qerr[q.id]; else { r.due = addDias(hoje, [1, 3, 7][r.b]); G.qerr[q.id] = r; } save(); sfx('ok');
+        say([['sineiro', r.b >= 3 ? 'Isso! Essa agora é sua para sempre.' : 'Isso! Daqui a uns dias eu pergunto de novo.']], () => { giveGold(10); giveBrilho(3, 'memória'); });
+      } else { r.b = 0; r.due = addDias(hoje, 1); G.qerr[q.id] = r; save(); sfx('bad'); say([['sineiro', `Ainda não. ${q.explain}`], ['sineiro', 'Amanhã eu pergunto de novo.']]); }
+    }));
   }
 
   // ================= segredos (easter eggs) =================
@@ -1478,7 +1789,12 @@
   function startEnding() {
     say([['sineiro', 'Chegou a hora do seu relatório final, forasteiro. Olha pra baixo.']], () => {
       sfx('sino');
-      const after = () => { G.flags.ending = 1; G.flags.guia = 1; save(); setScene(Credits()); };
+      const fim = () => setScene(Credits());
+      const after = () => {
+        G.flags.ending = 1; G.flags.guia = 1; save();
+        if ((G.brilho || 0) >= BRILHO_FINAL) say([['lum', 'Observador. Medição final.'], ['lum', `Ouro reunido: ${G.gold + (G.doado || 0)}. Brilho: ${G.brilho}.`], ['lum', 'O ouro é puro porque não se mistura com nada. Você brilhou porque se misturou com tudo.'], ['buck', 'That\'s the nicest thing a hexagon ever said to me.']], fim);
+        else say([['lum', `Observador. Ouro reunido: ${G.gold + (G.doado || 0)}. Brilho: ${G.brilho}.`], ['lum', 'Medição incompleta.'], ['mula', 'Dá para continuar olhando, sabe. O Modo Guia fica aberto, e o brilho também.']], fim);
+      };
       if (window.END_CLIPS) go(() => Cutscene(window.END_CLIPS, after), null);
       else go(() => EndingB(after), null);
     });
@@ -1531,8 +1847,14 @@
   }
   // uma "tecla" de direção (do teclado ou do joystick ao virar): navega perguntas, o caderno, ou vai para a cena
   function dirKey(k) {
-    if (ASK) { const n = ASK.opts.length, two = n === 4; const step = { ArrowUp: two ? -2 : -1, ArrowDown: two ? 2 : 1, ArrowLeft: two ? -1 : 0, ArrowRight: two ? 1 : 0 }[k] || 0; ASK.sel = (ASK.sel + step + n) % n; sfx('bip'); return; }
-    if (PANEL?.kind === 'inv') { const n = invEntries().length; if (k === 'ArrowUp') PANEL.sel = (PANEL.sel + n - 1) % n; if (k === 'ArrowDown') PANEL.sel = (PANEL.sel + 1) % n; sfx('bip'); return; }
+    if (ASK) { const n = ASK.opts.length, two = n >= 4; const step = { ArrowUp: two ? -2 : -1, ArrowDown: two ? 2 : 1, ArrowLeft: two ? -1 : 0, ArrowRight: two ? 1 : 0 }[k] || 0; ASK.sel = (ASK.sel + step + n) % n; sfx('bip'); return; }
+    if (PANEL?.kind === 'inv') {
+      const P = PANEL, n = P.rects.length || 1, pages = Math.ceil(invEntries().length / PER);
+      if (k === 'ArrowLeft' || k === 'ArrowRight') { P.tab = (P.tab + (k === 'ArrowLeft' ? 2 : 1)) % 3; P.sel = 0; P.page = 0; }
+      if (k === 'ArrowUp') { if (P.sel === 0 && P.page > 0) { P.page--; P.sel = PER - 1; } else P.sel = (P.sel + n - 1) % n; }
+      if (k === 'ArrowDown') { if (P.sel === n - 1 && P.page < pages - 1) { P.page++; P.sel = 0; } else P.sel = (P.sel + 1) % n; }
+      sfx('bip'); return;
+    }
     if (PANEL) { if (PANEL.kind === 'book' && (k === 'ArrowLeft' || k === 'ArrowRight')) PANEL.i = (PANEL.i + (k === 'ArrowLeft' ? ORDER.length - 1 : 1)) % ORDER.length; return; }
     if (DLG) return;
     scene.key?.(k);
@@ -1643,7 +1965,7 @@
       if (DLG) drawDlg(dt, T);
       drawCtl(dt);
       drawHB();
-      if (BANNER) drawBanner(dt);
+      if (BANNER && !PANEL) drawBanner(dt);
       if (TR) drawTR(dt);
     } catch (err) { if (frame.errs !== String(err)) console.error(err); frame.errs = String(err); }
   }

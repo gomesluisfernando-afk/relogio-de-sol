@@ -4,7 +4,9 @@ Jogo educativo em pixel art sobre a história do Brasil (do pau-brasil à Inconf
 para um guia de turismo de Tiradentes (MG) aprender e usar a história no celular. Responder sempre em português.
 
 ## Como o projeto funciona
-- Sem build: `index.html` carrega `content.data.js`, `cutscenes.js`, `maps/hoje.js`, `maps/eras.js`, `game.js`, `minis.js`.
+- Sem build: `index.html` carrega `content.data.js`, `maps/hoje.js`, `maps/eras.js`, `cutscenes.js`, `world.js`, `game.js`, `minis.js`.
+- `world.js` = conteúdo do mundo aberto (só dados e desenhos): NPCs de curiosidade, folclore, itens, comidas, pousos,
+  missões paralelas, coleções e eventos. O verificador confere tudo e lista os `conferir` dele.
 - Conteúdo histórico fica em `data/*.json` (cards = "relatórios", quizzes, eras, quests). Depois de editar: `node tools/build_content.mjs`.
 - Verificador: `node tools/check.mjs` (tem que terminar em "tudo ok").
 - Publicação: push no `main` → GitHub Pages (https://gomesluisfernando-afk.github.io/relogio-de-sol/). O branch `v2-arthur` anda junto com o `main`.
@@ -21,6 +23,22 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 - Loja (Venda do Tropeiro): ★ Botas $400 (+40% velocidade, item principal; meta: comprar por volta do 3º/4º portal), Lampião $150 (abre a vista do mapa),
   Rapadura $5 (vai para o inventário; ao comer, +80% por 40 s). Inventário na mochila do HUD (tecla I).
 - Diálogos não têm X: tem que passar por todos.
+
+## Mundo aberto (world.js + game.js)
+- Duas moedas: **ouro ($)** compra; **brilho (✦)** vem de olhar, aprender, ajudar e doar, e nunca se compra.
+  Ganha ✦: relatório lido +1, parada do tour +1, NPC de curiosidade ouvido +2, bestiário +3, sabatina sem erro +5,
+  Pergunta do Sineiro +3, missões extras, coleções no museu, doação ($10 = ✦1 na Matriz de Tiradentes e no Rosário de Vila Rica).
+  Final verdadeiro com ✦ ≥ 150 (`BRILHO_FINAL`). Ouro só vira brilho doando; brilho nunca vira ouro.
+- NPCs de curiosidade: 3–4 falas com formas no lugar da imagem e a última sempre "➜ Isso viria a ser: …" (ligação com hoje).
+- Itens com raridade (Coisa, Achado, Documento, Relíquia, Brilho) e tipo: util, comida (efeito por tempo), colecao,
+  antiguidade, chapeu. Inventário com abas Bolsa / Coleção / Saber.
+- Missões extras em passos: fetch (pegar N coisas), route (pontos em ordem, com prazo opcional), count, ask. No fim, volta ao NPC.
+- Regra ética: engenho, senzala e Palmares não dão item nem piada; dão Memória e brilho. Nada de cocar como chapéu.
+- Folclore: Curupira, Saci (um mapa por dia), Iara, Boitatá (à noite), Lobisomem (lua cheia), Boto, Mapinguari,
+  Mãe-do-Ouro (com 20+ de pó) e a Dona Mula. 22/8 aparecem todos; 31/10 o Saci aparece em todo canto.
+- Pousos de tropeiro no Hoje: visitar libera; viajar custa $10–40 (ferradura dourada: metade). Amazônia pede a canoa.
+- Pergunta do Sineiro: erros da sabatina voltam em 1, 3 e 7 dias. Sequência de dias: 3 dias = 2 rapaduras, 7 = chapéu de palha.
+- Parceiros reais (ex.: Sorveteria do Amado) têm `partner: true`. Usar nome, rosto ou marca só com autorização por escrito.
 
 ## Controles (nada de tocar no mundo)
 - Celular: joystick virtual à esquerda + botão A à direita. A faz o que estiver perto (falar, pegar, entrar).
