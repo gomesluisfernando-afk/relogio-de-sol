@@ -51,7 +51,7 @@ def main():
     if fundo: im = tira_fundo(im)
     if size == 'guia':
         base = nome.replace('_top', '').replace('_colisao', '')
-        g = json.load(open(f'docs/guias/{base}.json')); size = (round(g['mundo'][0] * g['escala']), round(g['mundo'][1] * g['escala']))
+        g = json.load(open(f'docs/guias/{base}.json', encoding='utf-8')); size = (round(g['mundo'][0] * g['escala']), round(g['mundo'][1] * g['escala']))
         im = im.convert('L' if tipo == 'colisao' else 'RGBA').resize(size, Image.LANCZOS)
         if tipo == 'colisao': im = im.point(lambda v: 255 if v > 128 else 0)
         if tipo == 'mapa': im = im.convert('RGB')
