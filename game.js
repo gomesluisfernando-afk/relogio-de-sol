@@ -20,6 +20,7 @@
   // Todo texto passa por tr() na hora de desenhar (draw/wrap); trf('Modelo {0}', x) para texto montado no código.
   const I18 = window.I18N || { L: (s) => s, T: (s, ...a) => s.replace(/\{(\d)\}/g, (_, n) => a[n]), set() {}, chosen: () => true, LANGS: [], lang: 'pt' };
   const tr = I18.L, trf = I18.T;
+  const nRel = (n) => trf(n === 1 ? '{0} relatório' : '{0} relatórios', n), nPerg = (n) => trf(n === 1 ? '{0} pergunta certa' : '{0} perguntas certas', n); // plural por língua
   if (/[?&]test=1/.test(location.search)) window.I18N_MISS = new Set(); // o que apareceu na tela sem tradução
   { const q = /[?&]lang=(pt|en|es)/.exec(location.search); if (q) I18.set(q[1]); }
 
@@ -435,7 +436,7 @@
     }
     if (isLum) tx = 90;
     let left = Math.floor(DLG.shown);
-    p.lines.forEach((l, k) => { const s = l.slice(0, Math.max(0, left)); left -= l.length; txt(s, tx, y0 + (isLum ? 44 : 30) + k * 30, isLum ? 14 : 16, isLum ? '#f3e2a0' : '#fff'); });
+    p.lines.forEach((l, k) => { const s = I18.keep(l.slice(0, Math.max(0, left))); left -= l.length; txt(s, tx, y0 + (isLum ? 44 : 30) + k * 30, isLum ? 14 : 16, isLum ? '#f3e2a0' : '#fff'); });
     // botão "passar": o único jeito de avançar a fala no toque (apagado enquanto o texto corre, pulsa quando terminou)
     {
       const end = DLG.shown >= total, pr = end ? 1 + 0.1 * Math.sin(t * 6) : 1, bx = W - (isLum ? 104 : 70), by = y0 + 144, r = TOUCH ? 24 : 17;
@@ -551,8 +552,8 @@
     } else {
       L.push({ icon: '✦', name: `Brilho: ${G.brilho}`, rarity: 'brilho', desc: 'Vem de olhar, aprender, ajudar e doar. Ouro não compra.' });
       if (G.titulos.length) L.push({ icon: '🏅', name: `Títulos: ${G.titulos.length}`, rarity: 'reliquia', desc: G.titulos.join(' · ') });
-      L.push({ icon: '🗣️', name: `Palavras tupis ${G.tupi.length}/6`, rarity: 'achado', desc: G.tupi.join(', ') || 'Paraguaçu ensina, em Porto Seguro.' });
-      L.push({ icon: '👹', name: `Bestiário ${G.bestiario.length}/9`, rarity: 'documento', desc: G.bestiario.map((b) => WD.names[b] || 'Dona Mula').join(', ') });
+      L.push({ icon: '🗣️', name: `Palavras tupis ${G.tupi.length}/6`, rarity: 'achado', desc: G.tupi.map(tr).join(', ') || 'Paraguaçu ensina, em Porto Seguro.' });
+      L.push({ icon: '👹', name: `Bestiário ${G.bestiario.length}/9`, rarity: 'documento', desc: G.bestiario.map((b) => tr(WD.names[b] || 'Dona Mula')).join(', ') });
       for (const st of WD.sets) if (st.id !== 'tupi' && st.id !== 'bestiario') L.push({ icon: G.sets[st.id] ? '🏆' : '▫', name: `${tr(st.name)} ${Math.min(setProg(st), setNeed(st))}/${setNeed(st)}`, rarity: G.sets[st.id] ? 'reliquia' : 'comum', desc: G.sets[st.id] ? 'Exposta no Museu Padre Toledo.' : 'Complete e leve ao Museu Padre Toledo, em Tiradentes.' });
     }
     return L;
@@ -573,7 +574,7 @@
     P.page = Math.min(P.page, pages - 1);
     const view = L.slice(P.page * PER, P.page * PER + PER); P.sel = Math.max(0, Math.min(P.sel, view.length - 1));
     box(110, 24, W - 220, H - 48, 0.97);
-    ttl(`INVENTÁRIO · Buck${G.titulo ? `, ${G.titulo}` : ''}`, W / 2, 36, 13, '#ffd84a', 'center');
+    ttl(trf('INVENTÁRIO · Buck{0}', G.titulo ? `, ${tr(G.titulo)}` : ''), W / 2, 36, 13, '#ffd84a', 'center');
     P.tabs = TABS.map((t, i) => {
       const r = [140 + i * ((W - 280) / 3), 58, (W - 280) / 3 - 8, 30];
       if (i === P.tab) pill(r, '#ffd84a', t, '#2a1a08', 11); else { g.fillStyle = 'rgba(255,255,255,.1)'; rr(...r, 14); g.fill(); plain(t, r[0] + r[2] / 2, r[1] + 8, 11, '#dfe6ff', 'center'); }
@@ -721,7 +722,7 @@
   // ================= mundo aberto: brilho, itens, comidas, títulos =================
   // Duas moedas: ouro compra coisas; brilho (✦) vem de olhar, aprender, ajudar e doar, e ouro nenhum compra.
   const BRILHO_FINAL = 150; // brilho para o final verdadeiro
-  function giveBrilho(n, why) { if (!n) return; if (WD.event(new Date())?.brilho2) n *= 2; G.brilho = (G.brilho || 0) + n; save(); FLAMEPULSE = 1.2; fly('brilho', n * 5); floatTxt(`✦ +${n}${why ? ` ${why}` : ''}`, '#ffb030'); }
+  function giveBrilho(n, why) { if (!n) return; if (WD.event(new Date())?.brilho2) n *= 2; G.brilho = (G.brilho || 0) + n; save(); FLAMEPULSE = 1.2; fly('brilho', n * 5); floatTxt(`✦ +${n}${why ? ` ${tr(why)}` : ''}`, '#ffb030'); }
   const RAWRAR = { santo: 'reliquia', turmalina: 'reliquia', 'livro-antonil': 'documento', 'carta-tj': 'documento' };
   const ITEM = (id) => WD.items[id] || (() => { const r = RAW.items.find((x) => x.id === id); return r ? { name: r.name, icon: r.icon, kind: 'colecao', rarity: RAWRAR[id] || 'documento', desc: r.desc } : { name: id, icon: '•', kind: 'colecao', rarity: 'comum', desc: '' }; })();
   const priceOf = (id) => (id === 'botas' ? PRECO_BOTAS : ITEM(id).price || 0);
@@ -1248,7 +1249,7 @@
       if (mi.act != null && !actOpen(mi.act)) { say([[n?.id || 'mula', mi.locked || 'Ainda não é hora disso. Volte num Ato mais adiante.']]); return; }
       if (!isHoje && M.needMini === mi.id) {
         const k = needOf(M.era);
-        if (k.got < k.cards || k.ok < k.quiz) { say([[n?.id || 'mula', 'O desafio desta era só abre para quem já sabe a história.'], ['mula', `Falta: ${k.got < k.cards ? `${k.cards - k.got} relatório${k.cards - k.got > 1 ? 's' : ''}` : ''}${k.got < k.cards && k.ok < k.quiz ? ' e ' : ''}${k.ok < k.quiz ? `${k.quiz - k.ok} pergunta${k.quiz - k.ok > 1 ? 's' : ''} certa${k.quiz - k.ok > 1 ? 's' : ''}` : ''}. O desafio tem 3 tentativas.`]]); return; }
+        if (k.got < k.cards || k.ok < k.quiz) { say([[n?.id || 'mula', 'O desafio desta era só abre para quem já sabe a história.'], ['mula', trf('Falta: {0}. O desafio tem 3 tentativas.', [k.got < k.cards && nRel(k.cards - k.got), k.ok < k.quiz && nPerg(k.quiz - k.ok)].filter(Boolean).join(tr(' e ')))]]); return; }
       }
       const done = G.minis[mi.id];
       const intro = asLines(n || { id: 'mula' }, n?.lines || mi.lines);
@@ -1299,7 +1300,7 @@
         if (!ready.length) return;
         for (const st of ready) G.sets[st.id] = 1;
         save(); sfx('win'); confetti();
-        say([[n.id, `Exposto, com o seu nome na plaquinha: ${ready.map((st) => st.name).join(', ')}.`]], () => { for (const st of ready) { giveBrilho(st.brilho, st.name); addTitle(st.title); } });
+        say([[n.id, trf('Exposto, com o seu nome na plaquinha: {0}.', ready.map((st) => tr(st.name)).join(', '))]], () => { for (const st of ready) { giveBrilho(st.brilho, st.name); addTitle(st.title); } });
       });
     }
     const ANTIQ = Object.keys(WD.items).filter((k) => WD.items[k].kind === 'antiguidade');
@@ -1324,7 +1325,7 @@
     }
     function hats(n) {
       const list = Object.keys(WD.items).filter((k) => WD.items[k].kind === 'chapeu');
-      say(n.talk, () => { markHeard(n); ask(`Seu ouro: $${G.gold}`, [...list.map((h) => `${ITEM(h).name} · ${G.chapeus.includes(h) ? (G.chapeu === h ? 'usando' : 'usar') : `$${priceOf(h)}`}`), 'Nada'], (k) => {
+      say(n.talk, () => { markHeard(n); ask(`Seu ouro: $${G.gold}`, [...list.map((h) => `${tr(ITEM(h).name)} · ${G.chapeus.includes(h) ? tr(G.chapeu === h ? 'usando' : 'usar') : `$${priceOf(h)}`}`), 'Nada'], (k) => {
         if (k >= list.length) return;
         const h = list[k];
         if (!G.chapeus.includes(h)) { if (G.gold < priceOf(h)) { sfx('bad'); return say([[n.id, 'Chapéu bom custa. Volta com ouro.']]); } giveGold(-priceOf(h)); addItem(h); }
@@ -1345,7 +1346,7 @@
       if (step.kind === 'count') { if (sqCount(step) >= step.need) { st.s++; save(); return finishSide(q, n); } return say([[n.id, `${tr(step.text)}: ${sqCount(step)}/${step.need}.`]]); }
       if (step.kind === 'ask') return beginStep(q, n);
       if (step.kind === 'route' && step.secs && !(DL[q] > T)) { st.got = []; save(); return say([[n.id, 'Vamos de novo? O tempo começa agora.']], () => beginStep(q, n)); }
-      say([[n.id, `${step.text}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : ''}.`]]);
+      say([[n.id, `${tr(step.text)}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : ''}.`]]);
     }
     function beginStep(q, n) {
       const d = SQ(q), st = G.side[q], step = d.steps[st.s];
@@ -1397,7 +1398,7 @@
         const step = d.steps[st.s];
         if (!step) return `Volte a ${nameOf(d.giver)}`;
         if (step.kind === 'route' && step.secs) return DL[q] > T ? `${tr(step.text)} · ${Math.ceil(DL[q] - T)} s` : `Fale com ${nameOf(d.giver)} para tentar de novo`;
-        return `${step.text}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : step.kind === 'count' ? ` (${sqCount(step)}/${step.need})` : ''}`;
+        return `${tr(step.text)}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : step.kind === 'count' ? ` (${sqCount(step)}/${step.need})` : ''}`;
       }
       return '';
     }
@@ -1495,7 +1496,7 @@
       if (M.exit) { go(() => OW(M.exit.map, M.exit.at && window.MAPS[M.exit.map].pois[M.exit.at]), M.exit.title); return; }
       const hole = window.MAPS.hoje.holes[M.era];
       if (eraNeedMet(M.era)) { G.eras[M.era].done = true; save(); sfx('portal'); SHAKE = 0.3; go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje'); return; }
-      const k = needOf(M.era), falta = [k.got < k.cards && `${k.cards - k.got} relatório(s)`, k.ok < k.quiz && `${k.quiz - k.ok} pergunta(s)`, k.mini && !G.minis[k.mini] && 'o desafio'].filter(Boolean).join(', ');
+      const k = needOf(M.era), falta = [k.got < k.cards && nRel(k.cards - k.got), k.ok < k.quiz && nPerg(k.quiz - k.ok), k.mini && !G.minis[k.mini] && tr('o desafio')].filter(Boolean).join(', ');
       say([['mula', `A era ainda não está completa. Falta: ${falta}.`]], () => ask('Sair mesmo assim? (o próximo portal continua fechado)', ['Ficar', 'Sair'], (j) => {
         if (j === 1) { sfx('portal'); go(() => OW('hoje', [hole[0], hole[1] + 30]), 'Brasil · Hoje'); }
       }));
@@ -1567,7 +1568,7 @@
             if (G.flags.migratedN) say([['mula', `Ah: você trouxe ${G.flags.migratedN} relatórios de um caderno antigo. Já mandei.`]]);
           }), 600);
         } else if (isHoje && G.flags.tut1) setTimeout(daily, 900);
-        else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${tr(ERA[M.era]?.name || M.title)}.`]]), ['mula', `Para o portal abrir: ${k.cards} relatórios, ${k.quiz} pergunta${k.quiz === 1 ? '' : 's'} certa${k.quiz === 1 ? '' : 's'}${k.mini ? ' e vencer o desafio da era' : ''}.`]]); }, 700);
+        else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${tr(ERA[M.era]?.name || M.title)}.`]]), ['mula', k.mini ? trf('Para o portal abrir: {0}, {1} e vencer o desafio da era.', nRel(k.cards), nPerg(k.quiz)) : trf('Para o portal abrir: {0} e {1}.', nRel(k.cards), nPerg(k.quiz))]]); }, 700);
       },
       update(dt) {
         tt += dt; G.played += dt;

@@ -121,7 +121,7 @@ window.MINIS = (() => {
       if (carry) why += ` ${carry} toras perdidas.`;
       carry = 0;
       if (lives <= 0) { stage = 'gone'; A.lose(`${why} Acabaram as 3 vidas.`, true); return; }
-      say(`${why} Restam ${lives} vida${lives > 1 ? 's' : ''}.`);
+      say(lives > 1 ? A.trf('{0} Restam {1} vidas.', why, lives) : A.trf('{0} Resta 1 vida.', why));
       P.r = 0; P.x = W / 2; carry = CARGA; // recomeça na mata, com toras novas
     }
     function hop(dx, dy) {

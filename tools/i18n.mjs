@@ -14,12 +14,16 @@ const JS = ['game.js', 'minis.js', 'world.js', 'cutscenes.js', 'maps/eras.js', '
 const SHAPES = /^(circle|square|triangle|diamond|rect):/;
 export function isText(s) {
   s = s.trim();
+  if (SHAPES.test(s)) return isText(s.replace(SHAPES, '')); // 'forma:legenda' da fala
   if (!/\p{L}/u.test(s)) return false; // sem letra: número, emoji, símbolo
   if (/^#[0-9a-f]{3,8}$/i.test(s) || /^rgba?\(/.test(s) || /^hsla?\(/.test(s)) return false;
   if (/^[a-z0-9_\-.\/:]+$/.test(s)) return false; // id, chave, arquivo, nome de som
   if (/^[\w\-.\/]+\.(png|webp|jpg|mp3|mp4|js|json|woff2?)$/i.test(s)) return false;
   if (/^(\d+ )?\d*px |^\d+px$|sans-serif|^800 /.test(s)) return false; // fonte
   if (/^[a-z]+[A-Z]\w*$/.test(s)) return false; // camelCase
+  if (/^(Arrow\w+|Enter|Escape|Backspace|Tab|Shift)$/.test(s)) return false; // nomes de tecla
+  if (s === 'use strict' || /^\(?[a-z-]+[(:]/.test(s) || /^[A-G]#$/.test(s) || s === 'ABCDEFGH' || s === 'NFD' || s.startsWith('ArrowUp,') || s === 'Arrow' || /^[a-z]+\.[a-z]+: /.test(s) || /^[#o.\s]+$/.test(s) || /^[PG]+$/.test(s) || /^\{\d\}T\d/.test(s)) return false; // CSS, notas musicais, letras de opção
+  if (/^[A-Z]{1,4}\d+$/.test(s) || /^[A-Z]{2,}-[\w-]+$/.test(s)) return false; // id de card, pergunta, missão (C08, Q12, SQ-quitanda)
   return true;
 }
 
@@ -109,12 +113,12 @@ export function sync({ quiet } = {}) {
   for (const l of LANGS) {
     const old = loadLang(l), next = {};
     for (const k of keys.keys()) next[k] = old[k] ?? '';
-    for (const [k, v] of Object.entries(old)) if (!(k in next) && k.startsWith('+')) next[k] = v; // "+texto": entrada à mão (texto montado em tempo de jogo)
+    for (const [k, v] of Object.entries(old)) if (!(k in next) && k.startsWith('@ ')) next[k] = v; // "@ texto": entrada à mão (texto que só existe em tempo de jogo)
     const gone = Object.keys(old).filter((k) => !(k in next));
     writeFileSync(file(l), JSON.stringify(next, null, 1) + '\n');
-    const used = Object.fromEntries(Object.entries(next).filter(([, v]) => v).map(([k, v]) => [k.replace(/^\+/, ''), v]));
+    const used = Object.fromEntries(Object.entries(next).filter(([, v]) => v).map(([k, v]) => [k.replace(/^@ /, ''), v]));
     data[l] = used;
-    report.push({ l, total: keys.size, feitos: Object.keys(used).length, gone });
+    report.push({ l, total: Object.keys(next).length, feitos: Object.keys(used).length, gone });
   }
   writeFileSync(new URL('lang.data.js', ROOT), `// GERADO por tools/i18n.mjs — não editar à mão; edite i18n/<língua>.json.\nwindow.LANG_DATA = ${JSON.stringify(data)};\n`);
   if (!quiet) for (const r of report) console.log(`${r.l}: ${r.feitos} de ${r.total} traduzidos${r.gone.length ? ` · ${r.gone.length} textos antigos removidos` : ''}`);

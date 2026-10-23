@@ -126,7 +126,7 @@ if (has('assets/manifest.json')) {
       if (!v) continue;
       const ph = (x) => (x.match(/\{\d\}/g) || []).sort().join();
       if (ph(k) !== ph(v)) err(`i18n/${l}.json: "${k.slice(0, 50)}" com {n} diferentes na tradução`);
-      if (lc.window.LANG_DATA?.[l]?.[k.replace(/^\+/, '')] !== v) { err('lang.data.js desatualizado: rode node tools/i18n.mjs'); break; }
+      if (lc.window.LANG_DATA?.[l]?.[k.replace(/^@ /, '')] !== v) { err('lang.data.js desatualizado: rode node tools/i18n.mjs'); break; }
     }
     const feitos = Object.values(d).filter(Boolean).length;
     if (l !== 'pt') console.log(`língua ${l}: ${feitos} de ${Object.keys(d).length} textos traduzidos`);

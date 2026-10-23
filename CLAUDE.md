@@ -21,7 +21,7 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
   Texto montado com variável: modelo `` `Missão extra: ${x}` `` funciona sozinho (vira "Missão extra: {0}"); quando a frase é só
   pontuação em volta de dado (`` `“${c.hook}”` ``, `'• ' + f`), traduza o pedaço: `tr(c.hook)`. Para modelo explícito: `trf('… {0}', x)`.
 - Depois de mudar qualquer texto: `node tools/i18n.mjs` (acrescenta os novos, tira os sumidos, gera `lang.data.js`);
-  `--falta en` lista o que falta. Entradas à mão para textos que só existem em tempo de jogo: chave com `+` na frente.
+  `--falta en` lista o que falta. Entradas à mão para textos que só existem em tempo de jogo: chave com `@ ` na frente.
 - Áudios e vídeos ainda só em português; as legendas (desenhadas no canvas) já passam pelo tradutor.
 
 ## Regras de jogo já decididas
