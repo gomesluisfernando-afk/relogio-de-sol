@@ -149,3 +149,8 @@ Molde: "Animate the attached image into ONE short video clip (only 1 generation,
 ## Mapa do Tempo (Nano Banana, 2026-10-21)
 - Terrenos (7 quadrados 1:1, sem emendas, vistos de cima): "game map terrain tiles for a top-down 2D strategy map, painted 1990s JRPG style (like Heroes of Might and Magic 3 adventure map but softer), seamless texture that tiles edge to edge…" → campo, mata, morro, serra, rio, estrada (+ estrada_h girada 90°), ponte. 192 px WebP em assets/img/map/.
 - Peças (9 medalhões no estilo dos ícones de era: "round medallion with a dark navy background and a worn gold rim"): vila, fundicao, registro, mina, ouro, portal, buraco, item, bandeirante (retrato do rival).
+
+## Retratos que faltavam + fundo da Moenda (2026-10-23, Nano Banana no Flow)
+Texto-base (6 prompts de 8, SQUARE 1:1): "painted digital illustration game portrait, head and shoulders, front view, centered, clean dark outlines, plain dark navy-blue background, warm afternoon light, no text" + descrição de docs/imagens_faltando.md.
+Folclore: "full creature centered and facing front, dark background". bg_moenda: "WIDE 16:9, dark interior of a sugar mill grinding house in 1570 Brazil, three large vertical wooden rollers, furnace glowing in the background, steam; serious tone".
+Saída: img/p_<id>.png 136×136 (redução direta da imagem de 512 px), img/bg_moenda.jpg 960×540. p_amado fica de fora até autorização por escrito.
