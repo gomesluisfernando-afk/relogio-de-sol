@@ -164,8 +164,8 @@ window.MINIS = (() => {
           if (L?.kind === 'land') { g.fillStyle = 'rgba(0,0,0,.12)'; g.fillRect(0, y + CELL / 2 - 1, W, 2); }
           g.globalAlpha = 1;
         }
-        g.fillStyle = '#2a5a24'; for (let k = 0; k < 16; k++) { g.beginPath(); g.arc(20 + k * 62, ry(0) + 10, 16, 0, 7); g.fill(); }
-        g.fillStyle = '#9a3a22'; for (let k = 0; k < 3; k++) g.fillRect(W / 2 - 60 + k * 6, ry(0) + 28 - k * 6, 120 - k * 12, 6);
+        if (!A.has?.('fundo')) { g.fillStyle = '#2a5a24'; for (let k = 0; k < 16; k++) { g.beginPath(); g.arc(20 + k * 62, ry(0) + 10, 16, 0, 7); g.fill(); } } // copas antigas: o fundo pintado já tem a mata
+        if (!A.spr?.('tora', W / 2, ry(0) + CELL / 2, 110, CELL - 4)) { g.fillStyle = '#9a3a22'; for (let k = 0; k < 3; k++) g.fillRect(W / 2 - 60 + k * 6, ry(0) + 28 - k * 6, 120 - k * 12, 6); }
         txt('MATA · PAU-BRASIL', 24, ry(0) + 30, 8, '#fff');
         if (!A.spr?.('feitoria', W / 2, ry(ROWS - 1) + CELL / 2, 160, CELL)) g.fillStyle = '#6a3a1a', g.fillRect(W / 2 - 70, ry(ROWS - 1) + 4, 140, 38); txt('FEITORIA', W / 2, ry(ROWS - 1) + 16, 11, '#ffd84a', 'center');
         txt('PRAIA', 24, ry(4) + 18, 8, '#7a6a3a');
@@ -486,7 +486,7 @@ window.MINIS = (() => {
           const y = sy(p.y); if (y < -40 || y > H + 40) continue;
           if (p.kind === 'chao') { g.fillStyle = '#3a5a2a'; g.fillRect(0, y, W, 40); continue; }
           const art = p.kind === 'pedra' ? 'pedra' : p.kind === 'galho' ? 'galho' : 'tabua';
-          if ((p.kind !== 'tabua' || !p.broken) && p.kind !== 'chao' && A.spr?.(art, p.x + p.w / 2, y + 6, p.w, 20)) { /* arte nova */ }
+          if ((p.kind !== 'tabua' || !p.broken) && p.kind !== 'chao' && A.spr?.(art, p.x + p.w / 2, y + p.w * 0.2, p.w * 1.1, p.w * 0.62)) { /* arte nova */ }
           else if (p.kind === 'pedra') { g.fillStyle = '#7a7a6a'; g.fillRect(p.x, y, p.w, 14); g.fillStyle = '#9a9a88'; g.fillRect(p.x + 4, y, p.w - 8, 4); }
           else if (p.kind === 'galho') { g.fillStyle = '#6a4a2a'; g.fillRect(p.x, y, p.w, 10); g.fillStyle = '#3a6a2a'; g.fillRect(p.x + 6, y - 6, 16, 6); g.fillRect(p.x + p.w - 24, y - 6, 16, 6); }
           else if (!p.broken) { g.fillStyle = '#8a6a4a'; g.fillRect(p.x, y, p.w, 10); g.strokeStyle = '#3a2a1a'; g.lineWidth = 2; g.beginPath(); g.moveTo(p.x + p.w / 2, y); g.lineTo(p.x + p.w / 2 - 6, y + 10); g.stroke(); }

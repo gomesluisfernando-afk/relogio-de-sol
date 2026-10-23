@@ -7,6 +7,7 @@
   const W = 960, H = 540;
   let Z = 1.25; // zoom do mapa (escolhido nos botões ＋/－ do HUD); o lampião libera o nível mais aberto
   const ZOOMS = [0.85, 1, 1.25, 1.6, 2];
+  const BONECO = 1.5; // escala dos bonecos sobre os mapas pintados (as casas da arte nova são maiores que o rascunho)
   let DPR = 1; // pixels reais por pixel lógico: o jogo pensa em 960×540, mas o canvas tem a resolução da tela
   let BUFF = null, REDE = 0; // comida ativa { id, until, speed, stealth, radar }; quando a rede pode ser usada de novo
   const app = document.getElementById('app');
@@ -171,6 +172,19 @@
   const setMute = (m) => { muted = m; G.flags.muted = m; save(); if (MASTER) MASTER.gain.value = m ? 0 : 0.5; vid.muted = m; BGM.muted = m; };
   setMute(muted);
 
+  // parte visível de uma imagem com fundo transparente (calculada uma vez por imagem)
+  const TRIM = new WeakMap();
+  function trimBox(im) {
+    if (TRIM.has(im)) return TRIM.get(im);
+    let box = [0, 0, im.width, im.height];
+    try {
+      const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; const cc = c.getContext('2d', { willReadFrequently: true }); cc.drawImage(im, 0, 0);
+      const d = cc.getImageData(0, 0, im.width, im.height).data; let x0 = im.width, y0 = im.height, x1 = -1, y1 = -1;
+      for (let y = 0; y < im.height; y++) for (let x = 0; x < im.width; x++) if (d[(y * im.width + x) * 4 + 3] > 24) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      if (x1 >= x0) box = [x0, y0, x1 - x0 + 1, y1 - y0 + 1];
+    } catch (e) {}
+    TRIM.set(im, box); return box;
+  }
   // ================= desenho básico: a "roupa" da interface =================
   // Fontes de celular: Lilita One nos títulos e botões (ttl, plain), Nunito grossa nos textos (txt).
   // Letra sem sombra em lugar nenhum. No celular tudo 15% maior, menos os diálogos (FS_OFF), que já estão no tamanho certo.
@@ -272,6 +286,7 @@
   };
   Object.assign(PAL, WD.pal);
   for (const k of Object.keys(PAL)) PAL[k].sprite ||= k; // nome da folha de sprite de cada um (assets/sprites/<id>.webp)
+  for (const k of Object.keys(PAL)) if (!ASSET.has(`assets/sprites/${PAL[k].sprite}.webp`) && ASSET.has('assets/sprites/gen_cidadao.webp')) PAL[k].sprite = 'gen_cidadao'; // sem folha própria (ex.: parceiro sem autorização): figurante genérico
   WD.sprite = (id) => ART(`assets/sprites/${id}.webp`);
   const FOLK = new Set(WD.folk.map((f) => f.id));
   // testemunhas sem ficha ("Um marinheiro de Palos"…): um de 4 tipos genéricos, cada um com sprite e retrato próprios quando existirem
@@ -1718,30 +1733,31 @@
           g.fillStyle = '#f2e6c0'; g.fillRect(x - 8, y - 10, 16, 20); g.fillStyle = '#c8b080'; g.fillRect(x - 10, y - 12, 20, 4); g.fillRect(x - 10, y + 8, 20, 4);
           g.fillStyle = '#8a6a3a'; g.fillRect(x - 5, y - 5, 10, 2); g.fillRect(x - 5, y, 10, 2); g.restore(); }
         }
+        const UZ = Z * (ART(M.image) ? BONECO : 1); // no mapa pintado o boneco cresce, para combinar com as casas
         const ents = [
-          { y: P.y, d: () => dude(sx(P.x), sy(P.y), buckPal(), P.ph, P.face, Z, P.moving, { badge: G.flags.guia, flame: eggSwap > 0, t: tt }) },
-          { y: mulaS.y, d: () => mula(sx(mulaS.x), sy(mulaS.y), mulaS.ph, mulaS.dir, Z, mulaS.moving, tt, { flame: (0.4 + 0.15 * curAct()) + (FLAMEPULSE > 0 ? 0.7 : 0), flicker: curAct() >= 3 && !G.flags.guia, hat: G.flags.guia, stetson: eggSwap > 0 }) },
+          { y: P.y, d: () => dude(sx(P.x), sy(P.y), buckPal(), P.ph, P.face, UZ, P.moving, { badge: G.flags.guia, flame: eggSwap > 0, t: tt }) },
+          { y: mulaS.y, d: () => mula(sx(mulaS.x), sy(mulaS.y), mulaS.ph, mulaS.dir, UZ, mulaS.moving, tt, { flame: (0.4 + 0.15 * curAct()) + (FLAMEPULSE > 0 ? 0.7 : 0), flicker: curAct() >= 3 && !G.flags.guia, hat: G.flags.guia, stetson: eggSwap > 0 }) },
           ...npcs.filter((n) => n.away <= tt && onS(n.x, n.y)).map((n) => ({ y: n.y, d: () => {
-            dude(sx(n.x), sy(n.y), PAL[n.pal || n.id] || PAL.turista, n.ph * 14, n.face, Z, !!n.wander, { noHat: n.noHat });
+            dude(sx(n.x), sy(n.y), PAL[n.pal || n.id] || PAL.turista, n.ph * 14, n.face, UZ, !!n.wander, { noHat: n.noHat });
             const sq = sideFor(n);
             const mk = (n.quest && !G.quests[n.quest]?.done) || (n.quiz && !G.flags.guia && quizOf(M.era).some((qid) => !G.qok.includes(qid))) ? '?' : sq ? (G.side[sq] ? '…' : '!') : n.lesson && !G.flags[`lsn_${id}_${n.id}`] ? 'i' : n.mini && !G.minis[n.mini] && !(((M.minis || []).find((x) => x.id === n.mini) || {}).act != null && !actOpen(((M.minis || []).find((x) => x.id === n.mini)).act)) ? '!' : n.talk && !G.ouviu.includes(`${id}:${n.id}`) ? 'i' : n.shop || vendorOpen(n) ? '$' : n.donate ? '✦' : '';
-            if (mk) txt(mk, sx(n.x), sy(n.y) - 33 * Z - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#ffd84a', 'center');
+            if (mk) txt(mk, sx(n.x), sy(n.y) - 33 * UZ - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#ffd84a', 'center');
           } })),
-          ...folkHere().filter((f) => onS(f.x, f.y)).map((f) => ({ y: f.y, d: () => { WD.drawFolk(g, f.id, sx(f.x), sy(f.y), tt, Z); if (!G.bestiario.includes(f.id)) txt('?', sx(f.x), sy(f.y) - 35 * Z - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#c070ff', 'center'); } })),
-          ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), palOf(w.id), 0, 0, Z, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 35 * Z - 16, 12, '#fff', 'center'); } })),
+          ...folkHere().filter((f) => onS(f.x, f.y)).map((f) => ({ y: f.y, d: () => { WD.drawFolk(g, f.id, sx(f.x), sy(f.y), tt, UZ); if (!G.bestiario.includes(f.id)) txt('?', sx(f.x), sy(f.y) - 35 * UZ - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#c070ff', 'center'); } })),
+          ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), palOf(w.id), 0, 0, UZ, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 35 * UZ - 16, 12, '#fff', 'center'); } })),
         ];
         if (COB) ents.push({ y: COB.y, d: () => {
-          dude(sx(COB.x), sy(COB.y), PAL.cobrador, COB.ph, COB.face, Z, true);
-          if (COB.nap > 0) txt('Zz', sx(COB.x) + 10, sy(COB.y) - 33 * Z - 14 - Math.sin(tt * 2) * 4, 12, '#cfd6ff', 'center');
+          dude(sx(COB.x), sy(COB.y), PAL.cobrador, COB.ph, COB.face, UZ, true);
+          if (COB.nap > 0) txt('Zz', sx(COB.x) + 10, sy(COB.y) - 33 * UZ - 14 - Math.sin(tt * 2) * 4, 12, '#cfd6ff', 'center');
           else if (G.dust > 0 && COB.state !== 'chase') { const fa = Math.atan2(COB.dir[1], COB.dir[0]); g.fillStyle = 'rgba(255,80,60,.14)'; g.beginPath(); g.moveTo(sx(COB.x), sy(COB.y) - 10 * Z); g.arc(sx(COB.x), sy(COB.y) - 10 * Z, 120 * Z, fa - 0.61, fa + 0.61); g.closePath(); g.fill(); }
-          if (COB.state === 'chase') txt('!', sx(COB.x), sy(COB.y) - 32 * Z - 14, 14, '#ff4a4a', 'center');
+          if (COB.state === 'chase') txt('!', sx(COB.x), sy(COB.y) - 32 * UZ - 14, 14, '#ff4a4a', 'center');
         } });
         ents.sort((a, b) => a.y - b.y).forEach((e) => e.d());
         const MT = ART(M.imageTop); // camada de cima do mapa pintado (telhados, copas): o Buck passa por baixo
         if (MT) g.drawImage(MT, camx * MT.width / M.w, camy * MT.height / M.h, (W / Z) * MT.width / M.w, (H / Z) * MT.height / M.h, 0, 0, W, H);
         for (const sc of SECRETS) if ((sc.map === id || sc.map === '*') && sc.draw) sc.draw(S, sx, sy, tt);
         if (TGT && !busy()) {
-          const lb = TGT.label, bx = sx(TGT.x), by = sy(TGT.y) - 29 * Z - 12;
+          const lb = TGT.label, bx = sx(TGT.x), by = sy(TGT.y) - 29 * Z * (ART(M.image) ? BONECO : 1) - 12;
           g.font = fnt(9); const w = g.measureText(tr(lb)).width + 40;
           g.fillStyle = 'rgba(14,20,64,.92)'; rr(bx - w / 2, by - 14, w, 28, 14); g.fill(); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; rr(bx - w / 2, by - 14, w, 28, 14); g.stroke();
           g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(bx - w / 2 + 14, by, 9, 0, 7); g.fill(); plain(TOUCH ? 'A' : '␣', bx - w / 2 + 14, by - 6, 8, '#4a2a00', 'center');
@@ -1849,7 +1865,11 @@
     };
     // arte do minigame (assets/minis/<mini>_<nome>.webp): spr desenha um objeto centrado; fundo troca o fundo. Sem arquivo, devolve false.
     const MA = (n) => ART(`assets/minis/${mid}_${n}.webp`);
-    api.spr = (n, cx, cy, w, h, flip) => { const im = MA(n); if (!im) return false; const k = Math.min(w / im.width, h / im.height), dw = im.width * k, dh = im.height * k; g.save(); g.translate(cx, cy); if (flip) g.scale(-1, 1); g.imageSmoothingEnabled = true; g.drawImage(im, -dw / 2, -dh / 2, dw, dh); g.restore(); return true; }; // cabe na caixa sem deformar
+    api.spr = (n, cx, cy, w, h, flip) => { // cabe na caixa sem deformar, ignorando a margem transparente da imagem
+      const im = MA(n); if (!im) return false;
+      const [bx, by, bw, bh] = trimBox(im), k = Math.min(w / bw, h / bh), dw = bw * k, dh = bh * k;
+      g.save(); g.translate(cx, cy); if (flip) g.scale(-1, 1); g.imageSmoothingEnabled = true; g.drawImage(im, bx, by, bw, bh, -dw / 2, -dh / 2, dw, dh); g.restore(); return true;
+    };
     api.has = (n) => !!MA(n);
     api.arte = (n) => MA(n); // a imagem crua (texturas: pergaminho, bagaço, serra…)
     api.fundo = (dark = 0) => { const im = MA('fundo'); if (!im) return false; pixelImage(im, 3, dark); return true; };

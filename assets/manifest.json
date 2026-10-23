@@ -18,28 +18,28 @@
      "tipo": "ref",
      "tamanho": "1600x900",
      "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. A colonial street of Tiradentes with cobblestones, white houses with colored windows, the Matriz church in the background, top-down 3/4 view.",
-     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. A colonial street of Tiradentes with cobblestones, white houses with colored windows, the Matriz church in the background, top-down 3/4 view."
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. A colonial street of Tiradentes with cobblestones, white houses with colored windows, the Matriz church in the background, top-down 3/4 view."
     },
     {
      "arquivo": "assets/estilo/ref_personagem.webp",
      "tipo": "ref",
      "tamanho": "1024x1024",
      "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character turnaround of Buck Calhoun, a friendly American cowboy guide: brown stetson hat, red plaid shirt, brown vest, blue bandana, jeans, canteen: front, left, right, back, full body, plain white background.",
-     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character turnaround of Buck Calhoun, a friendly American cowboy guide: brown stetson hat, red plaid shirt, brown vest, blue bandana, jeans, canteen: front, left, right, back, full body, plain white background."
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character turnaround of Buck Calhoun, a friendly American cowboy guide: brown stetson hat, red plaid shirt, brown vest, blue bandana, jeans, canteen: front, left, right, back, full body, plain white background."
     },
     {
      "arquivo": "assets/estilo/ref_interface.webp",
      "tipo": "ref",
      "tamanho": "1600x900",
      "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game interface mockup: a dialog panel, two pill buttons (gold and blue), a coin counter and a backpack button, azulejo-blue panels with golden trim. No text.",
-     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game interface mockup: a dialog panel, two pill buttons (gold and blue), a coin counter and a backpack button, azulejo-blue panels with golden trim. No text."
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game interface mockup: a dialog panel, two pill buttons (gold and blue), a coin counter and a backpack button, azulejo-blue panels with golden trim. No text."
     },
     {
      "arquivo": "assets/estilo/ref_objetos.webp",
      "tipo": "ref",
      "tamanho": "1600x900",
      "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Sheet of 6 game objects on white: a glowing time portal in the ground, a wooden muleteer rest stop, a rolled paper report, boots, a lantern, a rapadura sweet.",
-     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Sheet of 6 game objects on white: a glowing time portal in the ground, a wooden muleteer rest stop, a rolled paper report, boots, a lantern, a rapadura sweet."
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Sheet of 6 game objects on white: a glowing time portal in the ground, a wooden muleteer rest stop, a rolled paper report, boots, a lantern, a rapadura sweet."
     }
    ]
   },
@@ -648,6 +648,14 @@
      "tamanho": "256x256",
      "desc": "A rolled parchment report lying on the ground, glowing softly.",
      "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single map object, centered, top-down 3/4 view, plain white background. A rolled parchment report lying on the ground, glowing softly."
+    },
+    {
+     "arquivo": "assets/maps/hoje_colisao.png",
+     "tipo": "colisao",
+     "tamanho": "2400x1800",
+     "desc": "Máscara de colisão do mapa do Brasil (Hoje): branco = não se anda (mar, serras, rios), preto = chão e estradas.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Black-and-white mask of the painted map, same framing: WHITE where the character cannot walk (buildings, walls, water, dense trees, cliffs), BLACK where it can (streets, squares, grass, bridges). No grey. Collision mask of the painted Brasil (Hoje) map.",
+     "guia": "assets/maps/hoje.webp"
     }
    ]
   },
