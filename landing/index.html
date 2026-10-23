@@ -258,8 +258,7 @@ function setLang(l) {
 }
 let lang = 'pt';
 try { lang = localStorage.getItem('vm-lang') || ''; } catch (e) {}
-if (!T[lang]) lang = (navigator.language || 'pt').slice(0, 2).toLowerCase();
-if (!T[lang]) lang = 'en';
+if (!T[lang]) lang = 'pt'; // padrão: português (a pessoa troca nos botões PT/EN/ES)
 document.querySelectorAll('.langs button').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.l)));
 setLang(lang);
 

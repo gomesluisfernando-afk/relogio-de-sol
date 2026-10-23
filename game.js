@@ -2190,7 +2190,7 @@
     const q = /[?&]era=(\w+)/.exec(location.search), mq = /[?&]mini=(\w+)/.exec(location.search);
     if (q || mq) { G.flags.intro = 1; G.flags.tut0 = 1; G.flags.tut1 = 1; }
     if (mq) { setScene(OW(q?.[1] || 'hoje')); setTimeout(() => startMini(mq[1], q?.[1] || 'hoje'), 200); }
-    else setScene(q && window.MAPS[q[1]] ? OW(q[1]) : ((TEST || /[?&]lang=/.test(location.search)) && !/[?&]flags=1/.test(location.search)) ? Title() : Lang()); // as bandeiras abrem o jogo (?test=1 ou ?lang= da landing pulam, &flags=1 mostra)
+    else setScene(q && window.MAPS[q[1]] ? OW(q[1]) : (TEST && !/[?&]flags=1/.test(location.search)) ? Title() : Lang()); // as bandeiras sempre abrem o jogo (?lang= da landing só deixa a bandeira já marcada; ?test=1 pula, &flags=1 mostra)
     if (TEST) setInterval(() => frame(performance.now()), 16); else requestAnimationFrame(frame);
   });
 })();

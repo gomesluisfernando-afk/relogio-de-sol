@@ -16,7 +16,7 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 ## Landing (visitminas.com)
 - `landing/` = página de entrada (3 telas, estilo fliperama, PT/EN/ES, Open Graph em `og.jpg`, favicon de esmeralda).
 - `python tools/landing_zip.py saida.zip` monta o pacote do servidor: landing na raiz e o jogo em `jogo/`. O JOGAR abre `jogo/?lang=xx`
-  (com `?lang=` o jogo pula as bandeiras). As tags `og:url`/`og:image` apontam para https://visitminas.com/: trocar se o domínio mudar.
+  (o jogo sempre mostra as bandeiras; `?lang=` só deixa a da landing já marcada). A landing abre em português. As tags `og:url`/`og:image` apontam para https://visitminas.com/: trocar se o domínio mudar.
 
 ## Línguas (português, inglês e espanhol)
 - O jogo abre nas bandeiras (Brasil, EUA, Espanha); a escolha fica guardada. `?test=1` pula (`&flags=1` mostra), `&lang=en` força.
