@@ -1,0 +1,92 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   580,
+   860
+  ],
+  "portal": [
+   524,
+   884
+  ],
+  "chafariz": [
+   588,
+   500
+  ],
+  "casafundicao": [
+   612,
+   252
+  ],
+  "mercado": [
+   804,
+   452
+  ],
+  "fundicao": [
+   564,
+   252
+  ]
+ },
+ "rotulos": [
+  [
+   610,
+   125,
+   "Casa de Fundição"
+  ],
+  [
+   585,
+   385,
+   "Largo"
+  ],
+  [
+   175,
+   85,
+   "Carmo"
+  ],
+  [
+   985,
+   85,
+   "São Francisco"
+  ],
+  [
+   175,
+   625,
+   "Rosário"
+  ],
+  [
+   985,
+   625,
+   "Matriz"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "tropeiro",
+   "at": "mercado"
+  },
+  {
+   "id": "quitandeira",
+   "at": "chafariz"
+  },
+  {
+   "id": "musico",
+   "xy": [
+    400,
+    400
+   ]
+  },
+  {
+   "id": "irmao",
+   "xy": [
+    210,
+    700
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

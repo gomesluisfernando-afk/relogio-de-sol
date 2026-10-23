@@ -1,0 +1,73 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   140,
+   788
+  ],
+  "portal": [
+   84,
+   828
+  ],
+  "mesa": [
+   212,
+   308
+  ],
+  "doca": [
+   532,
+   652
+  ],
+  "palacio": [
+   268,
+   300
+  ]
+ },
+ "rotulos": [
+  [
+   210,
+   135,
+   "Tordesilhas"
+  ],
+  [
+   380,
+   560,
+   "Palos"
+  ],
+  [
+   850,
+   160,
+   "Mar Oceano"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "colombo",
+   "at": "doca"
+  },
+  {
+   "id": "cortesao",
+   "at": "palacio"
+  },
+  {
+   "id": "cartografo",
+   "xy": [
+    380,
+    380
+   ]
+  },
+  {
+   "id": "marinheiro",
+   "xy": [
+    470,
+    700
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

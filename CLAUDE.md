@@ -59,6 +59,8 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
   `_top` e `_colisao`). O jogo só carrega o que está em `assets.data.js` (`node tools/build_assets.mjs`); sem arquivo,
   vale o desenho antigo. Tratar imagens com `python tools/arte.py <tipo> <arquivo> <nome> [--fundo]`.
 - Mapas pintados partem dos guias em `docs/guias/` (planta, colisão e anotado), para o caminho bater com a colisão.
+- Minigames: `A.spr(nome, cx, cy, w, h, flip)` e `A.fundo()` usam `assets/minis/<mini>_<nome>.webp` quando existe;
+  senão desenham como antes. Lotes: L0–L1 prontos e aprovados; L2–L8 com a sessão local (188 imagens no manifesto).
 
 ## Diretriz dos minigames (`minis.js`)
 - Cada um é a releitura de um clássico de fliperama/Atari (referência: games.wotai.co), com o tema da era:

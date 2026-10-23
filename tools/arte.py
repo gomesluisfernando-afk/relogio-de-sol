@@ -1,6 +1,6 @@
 """Trata as imagens geradas no Nano Banana / Flow e coloca cada uma no lugar e no tamanho certos.
 Uso:  python tools/arte.py <tipo> <arquivo_gerado> <nome> [--fundo]
-  tipo:   ui | icone | sprite | mula | folk | prop | mapa | topo | colisao
+  tipo:   ui | icone | sprite | mula | folk | prop | mapa | topo | colisao | minifundo | miniobj
   nome:   o nome do arquivo final, sem extensão (ex.: panel, rapadura, buck, pouso, tiradentes)
   --fundo tira o fundo liso (branco ou de cor única) a partir das bordas, deixando transparente
 Depois de tratar tudo: node tools/build_assets.mjs  e  node tools/check.mjs
@@ -19,6 +19,8 @@ SPEC = {  # tipo: (pasta, tamanho final ou None, formato)
     'mapa': ('assets/maps', 'guia', 'webp'),
     'topo': ('assets/maps', 'guia', 'webp'),
     'colisao': ('assets/maps', 'guia', 'png'),
+    'minifundo': ('assets/minis', (1920, 1080), 'webp'),  # nome: <mini>_fundo (ex.: escambo_fundo)
+    'miniobj': ('assets/minis', 256, 'webp'),             # nome: <mini>_<objeto> (ex.: ponte_prancha_longa); mantém a proporção
 }
 
 def tira_fundo(im, tol=38):
@@ -51,6 +53,11 @@ def main():
         im = im.convert('L' if tipo == 'colisao' else 'RGBA').resize(size, Image.LANCZOS)
         if tipo == 'colisao': im = im.point(lambda v: 255 if v > 128 else 0)
         if tipo == 'mapa': im = im.convert('RGB')
+    elif tipo == 'miniobj':
+        im = im.convert('RGBA'); im = im.crop(im.getbbox() or (0, 0, im.width, im.height)); k = size / max(im.size); im = im.resize((max(1, round(im.width * k)), max(1, round(im.height * k))), Image.LANCZOS)
+    elif tipo == 'minifundo':
+        im = im.convert('RGB'); k = max(size[0] / im.width, size[1] / im.height); im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+        im = im.crop(((im.width - size[0]) // 2, (im.height - size[1]) // 2, (im.width + size[0]) // 2, (im.height + size[1]) // 2))
     elif size: im = cabe(im, size) if tipo in ('icone', 'folk', 'prop') else im.convert('RGBA').resize(size, Image.LANCZOS)
     else: im = im.convert('RGBA')
     sufixo = {'topo': '_top', 'colisao': '_colisao'}.get(tipo, '')

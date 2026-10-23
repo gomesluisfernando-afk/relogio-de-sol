@@ -1,0 +1,122 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   148,
+   852
+  ],
+  "portal": [
+   92,
+   876
+  ],
+  "fundicao": [
+   236,
+   268
+  ],
+  "registro": [
+   612,
+   340
+  ],
+  "mina": [
+   924,
+   268
+  ],
+  "rio": [
+   420,
+   484
+  ],
+  "acampamento": [
+   940,
+   740
+  ],
+  "capela": [
+   524,
+   212
+  ],
+  "barracos": [
+   380,
+   612
+  ],
+  "ponte": [
+   604,
+   500
+  ],
+  "bateia1": [
+   300,
+   420
+  ],
+  "bateia2": [
+   804,
+   476
+  ],
+  "bateia3": [
+   1028,
+   420
+  ]
+ },
+ "rotulos": [
+  [
+   235,
+   155,
+   "Casa de Fundição"
+  ],
+  [
+   925,
+   165,
+   "Mina"
+  ],
+  [
+   600,
+   360,
+   "Registro"
+  ],
+  [
+   380,
+   765,
+   "Arraial"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "antonil",
+   "at": "capela"
+  },
+  {
+   "id": "quitandeira",
+   "at": "barracos"
+  },
+  {
+   "id": "fundidor",
+   "at": "fundicao"
+  },
+  {
+   "id": "fernao",
+   "at": "acampamento"
+  },
+  {
+   "id": "tropeiro",
+   "at": "ponte"
+  },
+  {
+   "id": "faiscador",
+   "xy": [
+    700,
+    600
+   ]
+  },
+  {
+   "id": "contador",
+   "xy": [
+    300,
+    560
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

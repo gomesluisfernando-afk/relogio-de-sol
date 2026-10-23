@@ -207,7 +207,7 @@
   }
   function pill(r, col = '#ffd84a', label, fg = '#2a1a08', size = 13) { // botão com relevo
     const [x, y, w, h] = r, rad = Math.min(14, h / 2), im = ART(`assets/ui/btn_${col === '#ffd84a' ? 'ouro' : 'azul'}.webp`);
-    if (im) nine(im, x, y, w, h, Math.min(18, h / 2));
+    if (im) { const sc = im.height / 2, dc = Math.min(h / 2, w / 2); g.drawImage(im, 0, 0, sc, im.height, x, y, dc, h); g.drawImage(im, sc, 0, im.width - 2 * sc, im.height, x + dc, y, w - 2 * dc, h); g.drawImage(im, im.width - sc, 0, sc, im.height, x + w - dc, y, dc, h); } // botão: ponta, meio esticado, ponta
     else {
       g.fillStyle = shade(col, 0.62); rr(x, y + 3, w, h, rad); g.fill();
       const gr = g.createLinearGradient(0, y, 0, y + h); gr.addColorStop(0, shade(col, 1.12)); gr.addColorStop(1, shade(col, 0.88));
@@ -357,6 +357,21 @@
   }
   function firework(x, y) { for (let i = 0; i < 50; i++) { const a = Math.random() * 7, v = 80 + Math.random() * 160; PARTS.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, c: ['#ffd84a', '#fff', '#ff9a4a', '#9ad8ff'][i % 4], life: 1.2 + Math.random(), sz: 4, light: 1 }); } }
   function floatTxt(s, col = '#ffd84a') { FLOAT.push({ s, col, t: 2 }); }
+  // moedas e brilhos que voam até o contador do HUD (só no mapa, onde o HUD existe)
+  let FLY = [];
+  function fly(kind, n) {
+    if (!scene?.S) return;
+    const to = kind === 'ouro' ? [31, H - 57] : [31, H - 39];
+    for (let i = 0; i < Math.min(8, Math.max(1, Math.round(n / 5))); i++) FLY.push({ kind, x: W / 2 + (Math.random() - 0.5) * 80, y: H / 2 + (Math.random() - 0.5) * 50, to, t: -i * 0.07 });
+  }
+  function drawFly(dt) {
+    FLY = FLY.filter((f) => (f.t += dt) < 0.75);
+    for (const f of FLY) {
+      if (f.t < 0) continue;
+      const k = f.t / 0.75, e = k * k * (3 - 2 * k), x = f.x + (f.to[0] - f.x) * e, y = f.y + (f.to[1] - f.y) * e - Math.sin(k * Math.PI) * 60, sz = 22 - 8 * k;
+      icon(f.kind === 'ouro' ? 'hud_ouro' : 'hud_brilho', f.kind === 'ouro' ? '🪙' : '✨', x, y, sz);
+    }
+  }
   function drawParts(dt) {
     PARTS = PARTS.filter((p) => (p.life -= dt) > 0);
     for (const p of PARTS) { p.vy += (p.light ? 120 : 600) * dt; p.x += p.vx * dt; p.y += p.vy * dt; g.fillStyle = p.c; g.fillRect(p.x, p.y, p.sz, p.sz); }
@@ -689,11 +704,11 @@
       else done?.();
     });
   }
-  const giveGold = (n) => { G.gold = Math.max(0, G.gold + n); save(); if (n > 0) sfx('coin'); };
+  const giveGold = (n) => { G.gold = Math.max(0, G.gold + n); save(); if (n > 0) { sfx('coin'); fly('ouro', n); } };
   // ================= mundo aberto: brilho, itens, comidas, títulos =================
   // Duas moedas: ouro compra coisas; brilho (✦) vem de olhar, aprender, ajudar e doar, e ouro nenhum compra.
   const BRILHO_FINAL = 150; // brilho para o final verdadeiro
-  function giveBrilho(n, why) { if (!n) return; if (WD.event(new Date())?.brilho2) n *= 2; G.brilho = (G.brilho || 0) + n; save(); FLAMEPULSE = 1.2; floatTxt(`✦ +${n}${why ? ` ${why}` : ''}`, '#ffb030'); }
+  function giveBrilho(n, why) { if (!n) return; if (WD.event(new Date())?.brilho2) n *= 2; G.brilho = (G.brilho || 0) + n; save(); FLAMEPULSE = 1.2; fly('brilho', n * 5); floatTxt(`✦ +${n}${why ? ` ${why}` : ''}`, '#ffb030'); }
   const RAWRAR = { santo: 'reliquia', turmalina: 'reliquia', 'livro-antonil': 'documento', 'carta-tj': 'documento' };
   const ITEM = (id) => WD.items[id] || (() => { const r = RAW.items.find((x) => x.id === id); return r ? { name: r.name, icon: r.icon, kind: 'colecao', rarity: RAWRAR[id] || 'documento', desc: r.desc } : { name: id, icon: '•', kind: 'colecao', rarity: 'comum', desc: '' }; })();
   const priceOf = (id) => (id === 'botas' ? PRECO_BOTAS : ITEM(id).price || 0);
@@ -1766,6 +1781,12 @@
         say([['narr', 'Você não conseguiu desta vez.'], ['narr', msg], ['mula', 'Volte ao desafio quando quiser e tente de novo.']], back);
       },
     };
+    // arte do minigame (assets/minis/<mini>_<nome>.webp): spr desenha um objeto centrado; fundo troca o fundo. Sem arquivo, devolve false.
+    const MA = (n) => ART(`assets/minis/${mid}_${n}.webp`);
+    api.spr = (n, cx, cy, w, h, flip) => { const im = MA(n); if (!im) return false; const k = Math.min(w / im.width, h / im.height), dw = im.width * k, dh = im.height * k; g.save(); g.translate(cx, cy); if (flip) g.scale(-1, 1); g.imageSmoothingEnabled = true; g.drawImage(im, -dw / 2, -dh / 2, dw, dh); g.restore(); return true; }; // cabe na caixa sem deformar
+    api.has = (n) => !!MA(n);
+    api.fundo = (dark = 0) => { const im = MA('fundo'); if (!im) return false; pixelImage(im, 3, dark); return true; };
+    api.bg = (src, k, dark, col) => { if (!api.fundo(dark)) bg(src, k, dark, col); };
     go(() => Object.assign(f(api), { ctl: true, esc: back }), null);
   }
 
@@ -2039,6 +2060,7 @@
       scene.update?.(dt);
       scene.draw(dt);
       drawParts(dt);
+      drawFly(dt);
       drawFlash(dt);
       if (PANEL) drawPanel();
       if (ASK) drawAsk();

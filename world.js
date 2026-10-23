@@ -42,6 +42,10 @@ window.WORLD = (() => {
     antiquario: { skin: '#e8c8a8', hair: '#bbb', shirt: '#5a3a2a', plaid: '#3a2a1a', pants: '#3a2a1a', boots: '#111', glasses: 1, mustache: '#bbb' },
     chapeleiro: { skin: '#c89070', hair: '#3a2a1a', shirt: '#e8dcc0', pants: '#5a4a3a', boots: '#3a2212', hat: 'tricorne', hatc: '#7a1f14' },
     queijeira: { skin: '#e8c8a8', hair: '#8a5a3a', shirt: '#f2c84a', pants: '#8a3a2a', boots: null, robe: 1, apron: '#fff' },
+    feitor: { skin: '#e8c8a8', hair: '#3a2a1a', shirt: '#2a3a8a', buttons: '#e8c04a', pants: '#1a1a2a', boots: '#111', hat: 'leather', hatc: '#1a1a2a', mustache: '#3a2a1a' },
+    frans: { skin: '#f0d8c0', hair: '#e0c890', shirt: '#2a2a2a', buttons: '#fff', pants: '#3a3a3a', boots: '#111', hat: 'barrete', hatc: '#2a2a2a' },
+    capitao: { skin: '#f0d8c0', hair: '#c8a878', shirt: '#e07a20', buttons: '#fff', pants: '#1a1a2a', boots: '#111', hat: 'tricorne', hatc: '#1a1a1a', mustache: '#8a6a3a' },
+    velho: { skin: '#c89a74', hair: '#eee', shirt: '#e8e0c8', pants: '#5a5a4a', boots: '#3a2a1a', beard: '#eee' },
     guia: { skin: '#e2b48c', hair: '#3a2a1a', shirt: '#2a6a3a', pants: '#3a3a3a', boots: '#3a2212', hat: 'leather', hatc: '#5a3a1a', badgeColor: '#ffd84a' },
   };
   W.names = {
