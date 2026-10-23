@@ -823,6 +823,76 @@
      "desc": "Collision mask of the painted Tiradentes, 1972 map.",
      "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Black-and-white mask of the painted map, same framing: WHITE where the character cannot walk (buildings, walls, water, dense trees, cliffs), BLACK where it can (streets, squares, grass, bridges). No grey. Collision mask of the painted Tiradentes, 1972 map.",
      "guia": "assets/maps/renascimento.webp"
+    },
+    {
+     "arquivo": "assets/maps/acucar_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/apogeu_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/depois_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/inconfidencia_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/invasoes_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/mundo_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/ouro_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/palmares_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/paubrasil_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
+    },
+    {
+     "arquivo": "assets/maps/renascimento_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "Camada de cima (telhados, copas e serras) recortada do mapa pintado por tools/topo.py: o Buck passa por trás. Feita na nuvem; rodar de novo se o mapa for repintado.",
+     "prompt": "(gerado por código: python tools/topo.py <id>)"
     }
    ]
   },

@@ -80,6 +80,11 @@ python tools/arte.py <tipo> <arquivo_gerado> <nome> [--fundo]
 - Fontes novas (Lilita One e Nunito), painéis e botões arredondados.
 - Guias: `docs/guias/` (rascunho, colisão e anotado de Tiradentes e do mapa do Brasil, mais o `.json` com as coordenadas).
 
+## 6b. Feito na nuvem depois do L9
+- Camadas `_top` de todos os mapas recortadas por `python tools/topo.py todos` (não precisa gerar no Flow). Repintou um mapa? Rode de novo.
+- Mapa Hoje: vilazinhas de Tiradentes, São João e Vila Rica coladas a partir das vilas da própria pintura (etiquetas e porta de Tiradentes movidas para cima delas).
+- Bonecos 1,5× maiores nos mapas pintados (`BONECO` em `game.js`).
+
 ## 7. Recado da sessão local (2026-10-23): L0 a L9 gerados
 - **212 de 215** prontos. Faltam só: `amado` (parceiro real, espera autorização por escrito) e as camadas opcionais `tiradentes_top` / `hoje_top` (telhados e copas recortados do mapa pintado; não dá para gerar alinhado no Flow, melhor recortar a partir do próprio `assets/maps/<id>.webp` com uma máscara).
 - **Colisão:** usei a máscara dos guias (`docs/guias/<id>_colisao.png`); os mapas pintados foram conferidos por sobreposição com o `_anotado` e caíram no lugar. Vale andar por cada era e ajustar onde a arte nova pôs casa/árvore fora da máscara.

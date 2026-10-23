@@ -70,6 +70,8 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
   `_top` e `_colisao`). O jogo só carrega o que está em `assets.data.js` (`node tools/build_assets.mjs`); sem arquivo,
   vale o desenho antigo. Tratar imagens com `python tools/arte.py <tipo> <arquivo> <nome> [--fundo]`.
 - Mapas pintados partem dos guias em `docs/guias/` (planta, colisão e anotado), para o caminho bater com a colisão.
+- Telhados: `python tools/topo.py <id>|todos` recorta a metade de cima de cada casa/serra do mapa pintado para `<id>_top.webp`
+  (o Buck passa por trás) e deixa a colisão só na base. A colisão original do PC fica em `docs/colisao_pc/`; rodar de novo depois de repintar um mapa.
 - Minigames: `A.spr(nome, cx, cy, w, h, flip)` e `A.fundo()` usam `assets/minis/<mini>_<nome>.webp` quando existe;
   senão desenham como antes; `A.arte(nome)` dá a textura crua. Lotes: L0–L2 prontos e aprovados; L3–L9 com a sessão local.
 - Testemunhas sem ficha usam 4 tipos genéricos (`gen_marinheiro`, `gen_soldado`, `gen_sertanejo`, `gen_cidadao`), com sprite e retrato.

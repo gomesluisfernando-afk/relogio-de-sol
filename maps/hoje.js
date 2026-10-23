@@ -38,7 +38,7 @@ window.MAPS.hoje = {
   },
   pois: {
     chafariz: [1418, 1428], mirante: [1398, 1478], sineiro: [1512, 1392], tropeiro: [1600, 1430], estrada: [1660, 1455],
-    estatua: [1452, 1408], door_tiradentes: [1466, 1440],
+    estatua: [1452, 1408], door_tiradentes: [1408, 1378],
   },
   doors: { door_tiradentes: { map: 'tiradentes', title: 'Tiradentes · Hoje' } },
   cards: { C00: [1478, 1428] },
@@ -48,7 +48,7 @@ window.MAPS.hoje = {
   ],
   minis: [{ id: 'sinos', act: 3, label: 'A Língua dos Sinos', locked: 'Os sinos ainda não confiam em você. Volte quando o Ato IV abrir.' }],
   labels: [
-    [1440, 1395, 'Tiradentes'], [1505, 1342, 'São João del-Rei'], [1705, 1200, 'Vila Rica'], [1775, 1445, 'Rio de Janeiro'],
+    [1392, 1300, 'Tiradentes'], [1600, 1325, 'São João del-Rei'], [1785, 1145, 'Vila Rica'], [1775, 1445, 'Rio de Janeiro'],
     [2005, 1172, 'Porto Seguro'], [2215, 695, 'Recife'], [2140, 760, 'Serra da Barriga'], [800, 560, 'Amazônia'], [1640, 1462, 'Estrada Real'],
   ],
   // buraco → era (px do mundo)
