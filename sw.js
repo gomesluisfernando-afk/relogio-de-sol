@@ -1,9 +1,9 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v2-20';
+const CACHE = 'relogio-v2-21';
 const FILES = [
-  './', 'index.html', 'manifest.webmanifest', 'game.js', 'cutscenes.js', 'minis.js', 'content.data.js', 'maps/hoje.js', 'maps/eras.js', 'world.js',
-  'assets/fonts/pressstart2p-latin.woff2', 'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
+  './', 'index.html', 'manifest.webmanifest', 'game.js', 'cutscenes.js', 'minis.js', 'content.data.js', 'assets.data.js', 'maps/hoje.js', 'maps/eras.js', 'world.js',
+  'assets/fonts/lilita-one.woff2', 'assets/fonts/nunito-800.woff2', 'assets/fonts/nunito-900.woff2', 'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
   'img/p_buck.png', 'img/p_mula.png', 'img/p_cobrador.png', 'img/p_sineiro.png', 'img/p_caramuru.png', 'img/p_quitandeira.png',
   'img/p_tropeiro.png', 'img/p_antonil.png', 'img/p_tiradentes.png', 'img/p_silverio.png',
   'assets/img/scenes/mirante.webp', 'assets/img/scenes/chafariz.webp', 'assets/img/scenes/porto_seguro.webp', 'assets/img/scenes/engenho.webp', 'assets/img/scenes/sinos.webp',
@@ -12,6 +12,7 @@ const FILES = [
 const OPTIONAL = ['img/p_nassau.png', 'img/p_fernao.png', 'img/p_vigia.png', 'img/p_zumbi.png', 'img/p_yves.png', 'img/p_louie.png', 'img/p_aprendiz.png', 'img/p_fundidor.png', 'img/p_caminha.png', 'img/p_colombo.png', 'img/p_cortesao.png',
   'img/lum.png', 'img/bg_tordesilhas.jpg', 'img/bg_moenda.jpg', 'img/bg_capibaribe.jpg', 'img/bg_congonhas.jpg', 'img/bg_torre.jpg',
   ...['musica', 'sino', 'sinoP', 'sinos', 'portal', 'fall', 'card', 'coin', 'garimpo', 'apito', 'ondas', 'flash', 'moenda', 'cascos'].map((n) => `audio/${n}.mp3`)];
+const artList = async () => { try { const t = await (await fetch('assets.data.js', { cache: 'reload' })).text(); return JSON.parse(t.slice(t.indexOf('['), t.lastIndexOf(']') + 1)); } catch { return []; } };
 const imagesFrom = async (file) => (await (await fetch(file, { cache: 'reload' })).json())
   .map((x) => x.image || x.iconImg).filter(Boolean).map((p) => 'assets/img/' + p);
 
@@ -34,6 +35,7 @@ self.addEventListener('install', (e) => {
     // O essencial precisa entrar inteiro; opcionais e vídeos (cutscenes) vêm quando der.
     await fill(c, FILES);
     await fill(c, [...new Set([...await imagesFrom('data/cards_fase1.json'), ...await imagesFrom('data/eras.json')])]);
+    await Promise.allSettled((await artList()).map((v) => fill(c, [v]))); // arte nova (kit de UI, ícones, sprites, props, mapas)
     await Promise.allSettled(OPTIONAL.map((v) => fill(c, [v])));
     await self.skipWaiting();
   })());

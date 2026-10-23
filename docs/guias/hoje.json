@@ -1,0 +1,274 @@
+{
+ "escala": 1,
+ "mundo": [
+  2400,
+  2000
+ ],
+ "pois": {
+  "chafariz": [
+   1420,
+   1428
+  ],
+  "mirante": [
+   1396,
+   1476
+  ],
+  "sineiro": [
+   1516,
+   1396
+  ],
+  "tropeiro": [
+   1604,
+   1428
+  ],
+  "estrada": [
+   1660,
+   1452
+  ],
+  "estatua": [
+   1452,
+   1412
+  ],
+  "door_tiradentes": [
+   1476,
+   1436
+  ]
+ },
+ "rotulos": [
+  [
+   1440,
+   1395,
+   "Tiradentes"
+  ],
+  [
+   1505,
+   1342,
+   "São João del-Rei"
+  ],
+  [
+   1705,
+   1200,
+   "Vila Rica"
+  ],
+  [
+   1775,
+   1445,
+   "Rio de Janeiro"
+  ],
+  [
+   2005,
+   1172,
+   "Porto Seguro"
+  ],
+  [
+   2215,
+   695,
+   "Recife"
+  ],
+  [
+   2140,
+   760,
+   "Serra da Barriga"
+  ],
+  [
+   800,
+   560,
+   "Amazônia"
+  ],
+  [
+   1640,
+   1462,
+   "Estrada Real"
+  ]
+ ],
+ "portais": {
+  "ouro": [
+   1548,
+   1332
+  ],
+  "apogeu": [
+   1604,
+   1300
+  ],
+  "inconfidencia": [
+   1692,
+   1260
+  ],
+  "depois": [
+   1748,
+   1252
+  ],
+  "renascimento": [
+   1388,
+   1460
+  ],
+  "mundo": [
+   1732,
+   1516
+  ],
+  "paubrasil": [
+   2004,
+   1196
+  ],
+  "acucar": [
+   2148,
+   764
+  ],
+  "invasoes": [
+   2252,
+   652
+  ],
+  "palmares": [
+   2140,
+   804
+  ]
+ },
+ "npcs": [
+  {
+   "id": "sineiro",
+   "at": "sineiro"
+  },
+  {
+   "id": "tropeiro",
+   "at": "tropeiro"
+  },
+  {
+   "id": "carioca",
+   "xy": [
+    1790,
+    1455
+   ]
+  },
+  {
+   "id": "pescador",
+   "xy": [
+    2020,
+    1182
+   ]
+  },
+  {
+   "id": "frevo",
+   "xy": [
+    2228,
+    702
+   ]
+  },
+  {
+   "id": "ribeirinha",
+   "xy": [
+    760,
+    585
+   ]
+  },
+  {
+   "id": "guardia",
+   "xy": [
+    2108,
+    832
+   ]
+  },
+  {
+   "id": "ouropreto",
+   "xy": [
+    1688,
+    1212
+   ]
+  },
+  {
+   "id": "maquinista",
+   "xy": [
+    1527,
+    1352
+   ]
+  },
+  {
+   "id": "vaqueiro",
+   "xy": [
+    1290,
+    1080
+   ]
+  },
+  {
+   "id": "arrieiro",
+   "xy": [
+    1588,
+    1452
+   ]
+  },
+  {
+   "id": "moncoeiro",
+   "xy": [
+    1350,
+    1100
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": [
+  {
+   "id": "tiradentes",
+   "name": "Tiradentes",
+   "xy": [
+    1380,
+    1425
+   ]
+  },
+  {
+   "id": "sjdr",
+   "name": "São João del-Rei",
+   "xy": [
+    1470,
+    1392
+   ]
+  },
+  {
+   "id": "vilarica",
+   "name": "Vila Rica (Ouro Preto)",
+   "xy": [
+    1720,
+    1215
+   ]
+  },
+  {
+   "id": "rio",
+   "name": "Rio de Janeiro",
+   "xy": [
+    1765,
+    1470
+   ]
+  },
+  {
+   "id": "portoseguro",
+   "name": "Porto Seguro",
+   "xy": [
+    1975,
+    1190
+   ]
+  },
+  {
+   "id": "recife",
+   "name": "Recife",
+   "xy": [
+    2205,
+    735
+   ]
+  },
+  {
+   "id": "sertao",
+   "name": "Sertão do São Francisco",
+   "xy": [
+    1310,
+    1110
+   ]
+  },
+  {
+   "id": "amazonia",
+   "name": "Amazônia",
+   "xy": [
+    720,
+    610
+   ],
+   "need": "canoa"
+  }
+ ]
+}

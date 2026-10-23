@@ -1,0 +1,199 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   164,
+   780
+  ],
+  "portal": [
+   60,
+   860
+  ],
+  "T0": [
+   132,
+   140
+  ],
+  "T1": [
+   268,
+   212
+  ],
+  "T2": [
+   436,
+   372
+  ],
+  "T3": [
+   532,
+   420
+  ],
+  "T4": [
+   564,
+   492
+  ],
+  "T5": [
+   484,
+   580
+  ],
+  "T6": [
+   380,
+   652
+  ],
+  "T7": [
+   300,
+   612
+  ],
+  "T8": [
+   652,
+   804
+  ],
+  "T9": [
+   324,
+   572
+  ],
+  "T10": [
+   844,
+   692
+  ],
+  "T11": [
+   908,
+   268
+  ],
+  "T12": [
+   788,
+   228
+  ],
+  "T13": [
+   964,
+   500
+  ],
+  "T14": [
+   884,
+   604
+  ],
+  "T15": [
+   172,
+   860
+  ]
+ },
+ "rotulos": [],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "louie",
+   "at": "T3"
+  },
+  {
+   "id": "curadora",
+   "at": "T7"
+  },
+  {
+   "id": "zelador",
+   "at": "T12"
+  },
+  {
+   "id": "amado",
+   "xy": [
+    560,
+    455
+   ]
+  },
+  {
+   "id": "antiquario",
+   "xy": [
+    880,
+    640
+   ]
+  },
+  {
+   "id": "chapeleiro",
+   "xy": [
+    400,
+    520
+   ]
+  },
+  {
+   "id": "queijeira",
+   "xy": [
+    720,
+    560
+   ]
+  },
+  {
+   "id": "guia",
+   "xy": [
+    230,
+    820
+   ]
+  }
+ ],
+ "paradas": [
+  [
+   "T0",
+   "Mirante / Alto São Francisco"
+  ],
+  [
+   "T1",
+   "Largo das Mercês / Estrada Real"
+  ],
+  [
+   "T2",
+   "Ponte de pedra"
+  ],
+  [
+   "T3",
+   "Largo das Forras"
+  ],
+  [
+   "T4",
+   "Subida “passinho de procissão”"
+  ],
+  [
+   "T5",
+   "Beco da Pedreira"
+  ],
+  [
+   "T6",
+   "Vista da serra (perto do Gourmeco)"
+  ],
+  [
+   "T7",
+   "Museu Padre Toledo"
+  ],
+  [
+   "T8",
+   "Estátua de Tiradentes"
+  ],
+  [
+   "T9",
+   "Igreja de São João Evangelista"
+  ],
+  [
+   "T10",
+   "Beco da Matriz"
+  ],
+  [
+   "T11",
+   "Poço da Matriz"
+  ],
+  [
+   "T12",
+   "Matriz de Santo Antônio"
+  ],
+  [
+   "T13",
+   "Beco do Rosário / Largo do Rosário"
+  ],
+  [
+   "T14",
+   "Rua Direita / Quatro Cantos"
+  ],
+  [
+   "T15",
+   "Chafariz de São José"
+  ]
+ ],
+ "pousos": []
+}

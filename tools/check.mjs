@@ -3,6 +3,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
+import { listArt } from './build_assets.mjs';
 
 const root = new URL('../', import.meta.url);
 const rd = (f) => readFileSync(new URL(f, root), 'utf8');
@@ -11,7 +12,7 @@ const errors = [], warns = [];
 const err = (m) => errors.push(m), warn = (m) => warns.push(m);
 
 // 1. sintaxe de todo o JS do jogo
-for (const f of ['game.js', 'minis.js', 'world.js', 'sw.js', 'content.data.js', ...readdirSync(new URL('maps/', root)).map((m) => 'maps/' + m)]) {
+for (const f of ['game.js', 'minis.js', 'world.js', 'sw.js', 'content.data.js', 'assets.data.js', ...readdirSync(new URL('maps/', root)).map((m) => 'maps/' + m)]) {
   try { execFileSync(process.execPath, ['--check', new URL(f, root).pathname.replace(/^\/([A-Z]:)/, '$1')], { stdio: 'pipe' }); } catch (e) { err(`${f}: erro de sintaxe\n${e.stderr}`); }
 }
 
@@ -59,7 +60,7 @@ for (const m of rd('minis.js').matchAll(/'(img\/bg_[^']+)'/g)) if (!has(m[1])) w
 
 // 5. cache offline cobre o essencial
 const sw = rd('sw.js');
-for (const f of ['index.html', 'game.js', 'minis.js', 'world.js', 'content.data.js', 'maps/hoje.js', 'maps/eras.js']) if (!sw.includes(`'${f}'`)) err(`sw.js não guarda ${f}`);
+for (const f of ['index.html', 'game.js', 'minis.js', 'world.js', 'content.data.js', 'assets.data.js', 'maps/hoje.js', 'maps/eras.js']) if (!sw.includes(`'${f}'`)) err(`sw.js não guarda ${f}`);
 
 // 6. critérios do motor: tempo real, conteúdo histórico nos dados
 const code = rd('game.js') + rd('minis.js');
@@ -103,6 +104,17 @@ for (const f of WD.folk) { for (const m of f.maps) { if (!MAPS[m]) err(`world: f
 for (const st of WD.sets) for (const it of st.list || []) if (!ITEMS.has(it)) err(`world: coleção ${st.id} pede item inexistente ${it}`);
 for (const [id, it] of Object.entries(WD.items)) if (!WD.rarity[it.rarity]) err(`world: item ${id} com raridade desconhecida`);
 for (const c of WD.conferir || []) warn(`conferir: world ${c}`);
+
+// 8. arte nova: a lista do jogo (assets.data.js) tem que bater com as pastas
+vm.runInContext(rd('assets.data.js'), ctx);
+if (JSON.stringify(ctx.window.ASSETS) !== JSON.stringify(listArt())) err('assets.data.js desatualizado: rode node tools/build_assets.mjs');
+if (has('assets/manifest.json')) {
+  const man = JSON.parse(rd('assets/manifest.json')), all = man.lotes.flatMap((l) => l.itens.map((i) => ({ ...i, lote: l.id })));
+  const ok = all.filter((i) => has(i.arquivo)).length;
+  console.log(`arte nova: ${ok} de ${all.length} imagens do manifesto prontas`);
+  for (const l of man.lotes) { const n = l.itens.filter((i) => has(i.arquivo)).length; if (n && n < l.itens.length) warn(`arte: lote ${l.id} pela metade (${n}/${l.itens.length})`); }
+  for (const f of listArt()) if (!all.some((i) => i.arquivo === f)) warn(`arte: ${f} não está no manifesto`);
+}
 console.log(`${RAW.cards.length} cards · ${Object.keys(MAPS).length} mapas · ${miniKeys.length} minigames · ${RAW.quests.length} quests`);
 for (const w of warns) console.log('aviso:', w);
 if (errors.length) { for (const e of errors) console.log('ERRO:', e); process.exit(1); }

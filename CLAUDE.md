@@ -4,7 +4,7 @@ Jogo educativo em pixel art sobre a história do Brasil (do pau-brasil à Inconf
 para um guia de turismo de Tiradentes (MG) aprender e usar a história no celular. Responder sempre em português.
 
 ## Como o projeto funciona
-- Sem build: `index.html` carrega `content.data.js`, `maps/hoje.js`, `maps/eras.js`, `cutscenes.js`, `world.js`, `game.js`, `minis.js`.
+- Sem build: `index.html` carrega `content.data.js`, `assets.data.js`, `maps/hoje.js`, `maps/eras.js`, `cutscenes.js`, `world.js`, `game.js`, `minis.js`.
 - `world.js` = conteúdo do mundo aberto (só dados e desenhos): NPCs de curiosidade, folclore, itens, comidas, pousos,
   missões paralelas, coleções e eventos. O verificador confere tudo e lista os `conferir` dele.
 - Conteúdo histórico fica em `data/*.json` (cards = "relatórios", quizzes, eras, quests). Depois de editar: `node tools/build_content.mjs`.
@@ -45,8 +45,20 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 - Com diálogo, pergunta ou janela (relatório, caderno, dossiê, inventário) na tela, joystick e A somem.
 - Diálogo só avança no botão ▶ dele; janela só fecha no botão FECHAR. Tocar fora não passa nem fecha nada.
   No teclado: Espaço/Enter passa o diálogo, Esc fecha a janela.
-- Letra sem sombra em lugar nenhum (`txt` e `plain` só pintam a cor). No celular, toda letra fica 15% maior (`fnt` em `game.js`), menos a dos diálogos.
+- Visual de celular moderno (não mais 16 bits): fontes Lilita One (títulos e botões: `ttl`, `plain`) e Nunito 800
+  (textos: `txt`), offline em `assets/fonts/`. Tamanhos seguem a escala antiga; `FK` converte. Letra sem sombra.
+  No celular, toda letra 15% maior, menos nos diálogos. Caixas `box()` arredondadas; botões `pill()`; `rr()` para cantos.
+- Tela HD: o canvas acompanha os pixels reais (`DPR`), o jogo pensa em 960×540. Zoom do mundo com ＋/－ no HUD
+  (`ZOOMS`, padrão 1,25; o nível mais aberto só com lampião). Bonecos e objetos do mundo escalam com `Z`.
 - Teclado: setas/WASD + Espaço/Enter/E. Toque só em botões de interface (SAIR, opções, som, tela cheia, mochila).
+
+## Arte nova (estratégia em `docs/ESTRATEGIA_GRAFICA.md`, lotes em `docs/LOTES_ARTE.md`)
+- Nuvem = código e encaixe; local = gerar no Nano Banana / Flow. Lista oficial: `assets/manifest.json` (85 imagens, lotes L0–L5).
+- Pastas: `assets/ui` (painel 9 fatias, botões), `assets/icons` (itens e HUD), `assets/sprites` (folhas 3×4 dos
+  personagens, Dona Mula, folclore), `assets/props` (portais, pouso, relatório), `assets/maps` (mapa pintado,
+  `_top` e `_colisao`). O jogo só carrega o que está em `assets.data.js` (`node tools/build_assets.mjs`); sem arquivo,
+  vale o desenho antigo. Tratar imagens com `python tools/arte.py <tipo> <arquivo> <nome> [--fundo]`.
+- Mapas pintados partem dos guias em `docs/guias/` (planta, colisão e anotado), para o caminho bater com a colisão.
 
 ## Diretriz dos minigames (`minis.js`)
 - Cada um é a releitura de um clássico de fliperama/Atari (referência: games.wotai.co), com o tema da era:

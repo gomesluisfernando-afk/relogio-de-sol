@@ -1,0 +1,655 @@
+{
+ "versao": 1,
+ "estilo": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.",
+ "regras": [
+  "Sempre anexar as imagens aprovadas do lote L0 como referência de estilo.",
+  "Sem texto dentro das imagens.",
+  "Fundo branco liso para itens, personagens e objetos (o tools/arte.py tira o fundo).",
+  "Personagens reais (parceiro: true) só com autorização por escrito."
+ ],
+ "lotes": [
+  {
+   "id": "L0",
+   "nome": "Bíblia de estilo (aprovar antes de tudo)",
+   "pasta": "assets/estilo",
+   "itens": [
+    {
+     "arquivo": "assets/estilo/ref_rua.webp",
+     "tipo": "ref",
+     "tamanho": "1600x900",
+     "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. A colonial street of Tiradentes with cobblestones, white houses with colored windows, the Matriz church in the background, top-down 3/4 view.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. A colonial street of Tiradentes with cobblestones, white houses with colored windows, the Matriz church in the background, top-down 3/4 view."
+    },
+    {
+     "arquivo": "assets/estilo/ref_personagem.webp",
+     "tipo": "ref",
+     "tamanho": "1024x1024",
+     "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character turnaround of Buck Calhoun, a friendly American cowboy guide: brown stetson hat, red plaid shirt, brown vest, blue bandana, jeans, canteen: front, left, right, back, full body, plain white background.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character turnaround of Buck Calhoun, a friendly American cowboy guide: brown stetson hat, red plaid shirt, brown vest, blue bandana, jeans, canteen: front, left, right, back, full body, plain white background."
+    },
+    {
+     "arquivo": "assets/estilo/ref_interface.webp",
+     "tipo": "ref",
+     "tamanho": "1600x900",
+     "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game interface mockup: a dialog panel, two pill buttons (gold and blue), a coin counter and a backpack button, azulejo-blue panels with golden trim. No text.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game interface mockup: a dialog panel, two pill buttons (gold and blue), a coin counter and a backpack button, azulejo-blue panels with golden trim. No text."
+    },
+    {
+     "arquivo": "assets/estilo/ref_objetos.webp",
+     "tipo": "ref",
+     "tamanho": "1600x900",
+     "desc": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Sheet of 6 game objects on white: a glowing time portal in the ground, a wooden muleteer rest stop, a rolled paper report, boots, a lantern, a rapadura sweet.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Sheet of 6 game objects on white: a glowing time portal in the ground, a wooden muleteer rest stop, a rolled paper report, boots, a lantern, a rapadura sweet."
+    }
+   ]
+  },
+  {
+   "id": "L1",
+   "nome": "Kit de interface",
+   "pasta": "assets/ui + assets/icons",
+   "itens": [
+    {
+     "arquivo": "assets/ui/panel.webp",
+     "tipo": "ui",
+     "tamanho": "192x192",
+     "desc": "Square panel frame for 9-slice scaling: rounded corners, dark azulejo-blue center, thin golden trim; corners must fit inside the outer 48 px.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game UI element, front view, glossy, Portuguese azulejo-blue with thin golden baroque trim, transparent background. Square panel frame for 9-slice scaling: rounded corners, dark azulejo-blue center, thin golden trim; corners must fit inside the outer 48 px."
+    },
+    {
+     "arquivo": "assets/ui/btn_ouro.webp",
+     "tipo": "ui",
+     "tamanho": "192x96",
+     "desc": "Gold pill button, empty (no text), 3D with darker bottom edge.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game UI element, front view, glossy, Portuguese azulejo-blue with thin golden baroque trim, transparent background. Gold pill button, empty (no text), 3D with darker bottom edge."
+    },
+    {
+     "arquivo": "assets/ui/btn_azul.webp",
+     "tipo": "ui",
+     "tamanho": "192x96",
+     "desc": "Blue pill button, empty (no text), 3D with darker bottom edge.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Mobile game UI element, front view, glossy, Portuguese azulejo-blue with thin golden baroque trim, transparent background. Blue pill button, empty (no text), 3D with darker bottom edge."
+    },
+    {
+     "arquivo": "assets/icons/hud_ouro.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "A gold coin with a small cross, shiny.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. A gold coin with a small cross, shiny."
+    },
+    {
+     "arquivo": "assets/icons/hud_brilho.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "A four-pointed amber sparkle of light.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. A four-pointed amber sparkle of light."
+    },
+    {
+     "arquivo": "assets/icons/hud_relatorio.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "A rolled parchment report with a red seal.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. A rolled parchment report with a red seal."
+    },
+    {
+     "arquivo": "assets/icons/hud_segredo.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "A small golden star with a keyhole.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. A small golden star with a keyhole."
+    },
+    {
+     "arquivo": "assets/icons/hud_mochila.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "A leather traveller backpack.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. A leather traveller backpack."
+    }
+   ]
+  },
+  {
+   "id": "L2",
+   "nome": "Ícones dos itens",
+   "pasta": "assets/icons",
+   "itens": [
+    {
+     "arquivo": "assets/icons/botas.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Botas de tropeiro: +40% de velocidade, para sempre. O item que todo viajante quer.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Botas de tropeiro: +40% de velocidade, para sempre. O item que todo viajante quer."
+    },
+    {
+     "arquivo": "assets/icons/lampiao.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Lampião: Você enxerga mais longe: a vista do mapa se abre.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Lampião: Você enxerga mais longe: a vista do mapa se abre."
+    },
+    {
+     "arquivo": "assets/icons/luneta.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Luneta holandesa: Mostra no minimapa quem tem algo para contar ou pedir.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Luneta holandesa: Mostra no minimapa quem tem algo para contar ou pedir."
+    },
+    {
+     "arquivo": "assets/icons/pedra.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Pedra de toque: Mede a pureza do ouro: a Fundição paga 25% a mais pelo seu pó.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Pedra de toque: Mede a pureza do ouro: a Fundição paga 25% a mais pelo seu pó."
+    },
+    {
+     "arquivo": "assets/icons/guia.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Guia de trânsito: Papel em dia: o Cobrador leva só 10% do pó, e não 20%.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Guia de trânsito: Papel em dia: o Cobrador leva só 10% do pó, e não 20%."
+    },
+    {
+     "arquivo": "assets/icons/canoa.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Canoa de monção: Libera o pouso da Amazônia: rio é estrada.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Canoa de monção: Libera o pouso da Amazônia: rio é estrada."
+    },
+    {
+     "arquivo": "assets/icons/rede.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Rede de dormir: Presente de Paraguaçu. Use para descansar: +25% de velocidade por 150 s.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Rede de dormir: Presente de Paraguaçu. Use para descansar: +25% de velocidade por 150 s."
+    },
+    {
+     "arquivo": "assets/icons/ferradura.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Ferradura dourada: Dos tropeiros: viagem nos pousos pela metade do preço.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Ferradura dourada: Dos tropeiros: viagem nos pousos pela metade do preço."
+    },
+    {
+     "arquivo": "assets/icons/rapadura.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Rapadura: +80% de velocidade por 40 s. Açúcar que aguenta viagem.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Rapadura: +80% de velocidade por 40 s. Açúcar que aguenta viagem."
+    },
+    {
+     "arquivo": "assets/icons/farinha.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Farinha de mandioca: +25% por 3 min. Aprendida com os povos indígenas, sustentou a colônia.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Farinha de mandioca: +25% por 3 min. Aprendida com os povos indígenas, sustentou a colônia."
+    },
+    {
+     "arquivo": "assets/icons/pacoca.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Paçoca de pilão: +35% por 2 min. Carne-seca socada com farinha: comida de tropa.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Paçoca de pilão: +35% por 2 min. Carne-seca socada com farinha: comida de tropa."
+    },
+    {
+     "arquivo": "assets/icons/angu.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Prato de angu: +20% por 10 min. Fubá, água e paciência: comida de pouso.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Prato de angu: +20% por 10 min. Fubá, água e paciência: comida de pouso."
+    },
+    {
+     "arquivo": "assets/icons/quitanda.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Quitanda: Por 90 s, os relatórios piscam no minimapa. Quitandeira sabe de tudo.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Quitanda: Por 90 s, os relatórios piscam no minimapa. Quitandeira sabe de tudo."
+    },
+    {
+     "arquivo": "assets/icons/paodequeijo.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Pão de queijo: Por 60 s o Cobrador não te vê: fica distraído com o cheiro.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Pão de queijo: Por 60 s o Cobrador não te vê: fica distraído com o cheiro."
+    },
+    {
+     "arquivo": "assets/icons/sorvete.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Sorvete do Amado: +50% por 90 s. Refresca até cowboy.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Sorvete do Amado: +50% por 90 s. Refresca até cowboy."
+    },
+    {
+     "arquivo": "assets/icons/regua.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Régua dos Reis: Lembrança de Tordesilhas, 1494.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Régua dos Reis: Lembrança de Tordesilhas, 1494."
+    },
+    {
+     "arquivo": "assets/icons/machado.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Machado de ferro: O valor de uma coisa depende de quem precisa dela.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Machado de ferro: O valor de uma coisa depende de quem precisa dela."
+    },
+    {
+     "arquivo": "assets/icons/boticao.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Boticão do Tiradentes: A ferramenta do dentista prático que virou herói.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Boticão do Tiradentes: A ferramenta do dentista prático que virou herói."
+    },
+    {
+     "arquivo": "assets/icons/formao.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Formão do mestre: Pedra-sabão, Congonhas. As mãos doíam; o formão não parava.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Formão do mestre: Pedra-sabão, Congonhas. As mãos doíam; o formão não parava."
+    },
+    {
+     "arquivo": "assets/icons/gravura.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Gravura do parque de Nassau: Plantas e bichos do Brasil desenhados para a Europa.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Gravura do parque de Nassau: Plantas e bichos do Brasil desenhados para a Europa."
+    },
+    {
+     "arquivo": "assets/icons/pirita.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Pirita (ouro de tolo): Brilha, mas não é ouro. Prêmio de quem vende e compra só pelo lucro.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Pirita (ouro de tolo): Brilha, mas não é ouro. Prêmio de quem vende e compra só pelo lucro."
+    },
+    {
+     "arquivo": "assets/icons/oratorio.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Oratório de viagem: Tropeiros levavam um oratório pequeno, de abrir, para rezar na estrada.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Oratório de viagem: Tropeiros levavam um oratório pequeno, de abrir, para rezar na estrada."
+    },
+    {
+     "arquivo": "assets/icons/bateia.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Bateia antiga: A bacia de madeira do garimpo. Muito da técnica veio de africanos que já mineravam na África.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Bateia antiga: A bacia de madeira do garimpo. Muito da técnica veio de africanos que já mineravam na África."
+    },
+    {
+     "arquivo": "assets/icons/ferro.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Ferro de brasa: Ferro de passar com brasa dentro. Passar roupa era trabalho pesado e quente.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Ferro de brasa: Ferro de passar com brasa dentro. Passar roupa era trabalho pesado e quente."
+    },
+    {
+     "arquivo": "assets/icons/estanho.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Prato de estanho: São João del-Rei é conhecida pelo artesanato em estanho.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Prato de estanho: São João del-Rei é conhecida pelo artesanato em estanho."
+    },
+    {
+     "arquivo": "assets/icons/stetson.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Stetson do Buck: O de sempre. Veio de Nashville.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Stetson do Buck: O de sempre. Veio de Nashville."
+    },
+    {
+     "arquivo": "assets/icons/couro.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Chapéu de couro: Chapéu de tropeiro e de vaqueiro.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Chapéu de couro: Chapéu de tropeiro e de vaqueiro."
+    },
+    {
+     "arquivo": "assets/icons/palha.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Chapéu de palha: Da roça, da festa junina, do sol forte.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Chapéu de palha: Da roça, da festa junina, do sol forte."
+    },
+    {
+     "arquivo": "assets/icons/tricornio.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Tricórnio: Moda do século XVIII. Até o Cobrador usa.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Tricórnio: Moda do século XVIII. Até o Cobrador usa."
+    },
+    {
+     "arquivo": "assets/icons/barrete.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Barrete: O chapeuzinho redondo dos padres e estudantes.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Barrete: O chapeuzinho redondo dos padres e estudantes."
+    },
+    {
+     "arquivo": "assets/icons/santo.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Santo do Pau Oco: Esconde o ouro do Cobrador uma vez: o próximo Quinto não é cobrado. Lenda virando mecânica.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Santo do Pau Oco: Esconde o ouro do Cobrador uma vez: o próximo Quinto não é cobrado. Lenda virando mecânica."
+    },
+    {
+     "arquivo": "assets/icons/turmalina.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "A “esmeralda” de Fernão Dias: Examine de perto: é turmalina.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. A “esmeralda” de Fernão Dias: Examine de perto: é turmalina."
+    },
+    {
+     "arquivo": "assets/icons/livro-antonil.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Cultura e Opulência do Brasil: O livro de Antonil que a Coroa recolheu em 1711. Leia escondido.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Cultura e Opulência do Brasil: O livro de Antonil que a Coroa recolheu em 1711. Leia escondido."
+    },
+    {
+     "arquivo": "assets/icons/carta-tj.webp",
+     "tipo": "icone",
+     "tamanho": "128x128",
+     "desc": "Carta assinada “T.J.”: Cordial, educada e sem nenhuma promessa. Jefferson ghosted Brazil.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single game item icon, centered, slight 3/4 view, thick soft outline, plain white background, fills 80% of the square. Carta assinada “T.J.”: Cordial, educada e sem nenhuma promessa. Jefferson ghosted Brazil."
+    }
+   ]
+  },
+  {
+   "id": "L3",
+   "nome": "Tiradentes, a cidade do tour",
+   "pasta": "assets/maps",
+   "itens": [
+    {
+     "arquivo": "assets/maps/tiradentes.webp",
+     "tipo": "mapa",
+     "tamanho": "2400x1800",
+     "desc": "Tiradentes (Minas Gerais) today, the 16 tour stops of docs/guias/tiradentes.json: Matriz de Santo Antônio up the hill, stone bridge over the stream, Largo das Forras with trees, Chafariz de São José, Museu Padre Toledo, Igreja de São João Evangelista, Rua Direita, cobblestone streets, white colonial houses with colorful windows, the Serra de São José on the horizon. Use real photos of Tiradentes as reference.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Top-down 3/4 game map painted OVER the attached layout image (docs/guias/<id>_anotado.webp and <id>_rascunho.webp): keep every road, river, bridge, square and building footprint exactly where it is in the layout. Same framing and aspect ratio. No labels. Tiradentes (Minas Gerais) today, the 16 tour stops of docs/guias/tiradentes.json: Matriz de Santo Antônio up the hill, stone bridge over the stream, Largo das Forras with trees, Chafariz de São José, Museu Padre Toledo, Igreja de São João Evangelista, Rua Direita, cobblestone streets, white colonial houses with colorful windows, the Serra de São José on the horizon. Use real photos of Tiradentes as reference.",
+     "guia": "docs/guias/tiradentes_anotado.webp"
+    },
+    {
+     "arquivo": "assets/maps/tiradentes_colisao.png",
+     "tipo": "colisao",
+     "tamanho": "2400x1800",
+     "desc": "Collision mask of the painted Tiradentes map.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Black-and-white mask of the painted map, same framing: WHITE where the character cannot walk (buildings, walls, water, dense trees, cliffs), BLACK where it can (streets, squares, grass, bridges). No grey. Collision mask of the painted Tiradentes map.",
+     "guia": "assets/maps/tiradentes.webp"
+    },
+    {
+     "arquivo": "assets/maps/tiradentes_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x1800",
+     "desc": "OPTIONAL: only the roofs and tree canopies of the painted map, everything else transparent, so the character walks behind them.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  OPTIONAL: only the roofs and tree canopies of the painted map, everything else transparent, so the character walks behind them.",
+     "opcional": true
+    }
+   ]
+  },
+  {
+   "id": "L4",
+   "nome": "Personagens de Tiradentes e do mapa do Brasil",
+   "pasta": "assets/sprites",
+   "itens": [
+    {
+     "arquivo": "assets/sprites/buck.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "Buck Calhoun, a friendly American cowboy guide: brown stetson hat, red plaid shirt, brown vest, blue bandana, jeans, canteen",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. Buck Calhoun, a friendly American cowboy guide: brown stetson hat, red plaid shirt, brown vest, blue bandana, jeans, canteen"
+    },
+    {
+     "arquivo": "assets/sprites/sineiro.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "the old bell-ringer of Tiradentes: dark skin, white hair and beard, simple white shirt, barefoot",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. the old bell-ringer of Tiradentes: dark skin, white hair and beard, simple white shirt, barefoot"
+    },
+    {
+     "arquivo": "assets/sprites/tropeiro.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "a muleteer shopkeeper: leather hat, red-brown shirt with yellow plaid, brown trousers, boots",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. a muleteer shopkeeper: leather hat, red-brown shirt with yellow plaid, brown trousers, boots"
+    },
+    {
+     "arquivo": "assets/sprites/cobrador.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "the Royal tax collector (villain, comic): pale, white powdered hair, navy coat with gold buttons, black tricorne hat, ledger book",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. the Royal tax collector (villain, comic): pale, white powdered hair, navy coat with gold buttons, black tricorne hat, ledger book"
+    },
+    {
+     "arquivo": "assets/sprites/louie.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "Louie, an English-speaking tour guide: glasses, white shirt, beige trousers",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. Louie, an English-speaking tour guide: glasses, white shirt, beige trousers"
+    },
+    {
+     "arquivo": "assets/sprites/turista.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "a tourist: straw-blond hair, light-blue shirt, beige shorts, white sneakers, camera",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. a tourist: straw-blond hair, light-blue shirt, beige shorts, white sneakers, camera"
+    },
+    {
+     "arquivo": "assets/sprites/curadora.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "museum curator: Black woman, glasses, burgundy blazer",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. museum curator: Black woman, glasses, burgundy blazer"
+    },
+    {
+     "arquivo": "assets/sprites/zelador.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "church caretaker: old man, white hair, simple brown cassock",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. church caretaker: old man, white hair, simple brown cassock"
+    },
+    {
+     "arquivo": "assets/sprites/antiquario.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "antique dealer: old man, white moustache, glasses, plaid waistcoat",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. antique dealer: old man, white moustache, glasses, plaid waistcoat"
+    },
+    {
+     "arquivo": "assets/sprites/chapeleiro.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "hat maker: red tricorne hat, tape measure around the neck",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. hat maker: red tricorne hat, tape measure around the neck"
+    },
+    {
+     "arquivo": "assets/sprites/queijeira.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "cheese-bread seller: woman with white apron and a tray of pão de queijo",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. cheese-bread seller: woman with white apron and a tray of pão de queijo"
+    },
+    {
+     "arquivo": "assets/sprites/guia.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "local tour guide: leather hat, green shirt, name badge",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. local tour guide: leather hat, green shirt, name badge"
+    },
+    {
+     "arquivo": "assets/sprites/arrieiro.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "old head muleteer: grey beard, leather hat, scarf",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. old head muleteer: grey beard, leather hat, scarf"
+    },
+    {
+     "arquivo": "assets/sprites/moncoeiro.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "river canoeist: straw hat, light shirt, paddle on the shoulder",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. river canoeist: straw hat, light shirt, paddle on the shoulder"
+    },
+    {
+     "arquivo": "assets/sprites/carioca.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "Dona Carmem from Rio: middle-aged Black woman, pink blouse",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. Dona Carmem from Rio: middle-aged Black woman, pink blouse"
+    },
+    {
+     "arquivo": "assets/sprites/pescador.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "old fisherman from Bahia: straw hat, sun-tanned skin",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. old fisherman from Bahia: straw hat, sun-tanned skin"
+    },
+    {
+     "arquivo": "assets/sprites/frevo.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "young frevo dancer from Recife: yellow and red shirt, small colorful umbrella",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. young frevo dancer from Recife: yellow and red shirt, small colorful umbrella"
+    },
+    {
+     "arquivo": "assets/sprites/ribeirinha.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "Amazon river woman: long black hair, green blouse",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. Amazon river woman: long black hair, green blouse"
+    },
+    {
+     "arquivo": "assets/sprites/guardia.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "elder guardian of Serra da Barriga: Black woman, white turban and white clothes, serene and dignified",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. elder guardian of Serra da Barriga: Black woman, white turban and white clothes, serene and dignified"
+    },
+    {
+     "arquivo": "assets/sprites/ouropreto.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "old man from Ouro Preto: glasses, grey hair, purple shirt",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. old man from Ouro Preto: glasses, grey hair, purple shirt"
+    },
+    {
+     "arquivo": "assets/sprites/maquinista.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "steam-train driver: dark-blue cap and uniform, moustache",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. steam-train driver: dark-blue cap and uniform, moustache"
+    },
+    {
+     "arquivo": "assets/sprites/vaqueiro.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "northeastern cowboy: leather hat and leather jacket (gibão)",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. northeastern cowboy: leather hat and leather jacket (gibão)"
+    },
+    {
+     "arquivo": "assets/sprites/amado.webp",
+     "tipo": "sprite",
+     "tamanho": "384x768",
+     "desc": "Amado, ice-cream shop owner (REAL PERSON: only after written authorization, from his own photo): pink apron",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Character sprite sheet on a plain white background, evenly spaced grid of 3 columns x 4 rows. Rows from top: walking toward the camera, walking left, walking right, walking away. Columns: standing, left foot forward, right foot forward. The SAME character in every frame, full body, cute proportions (head about 1/3 of the height), top-down 3/4 view. Amado, ice-cream shop owner (REAL PERSON: only after written authorization, from his own photo): pink apron",
+     "parceiro": true
+    },
+    {
+     "arquivo": "assets/sprites/mula.webp",
+     "tipo": "mula",
+     "tamanho": "576x192",
+     "desc": "Dona Mula, the headless mule of Brazilian folklore, friendly: brown mule body, saddle, and a blue flame where the head should be.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Sprite strip on a plain white background, 3 frames side by side, the SAME animal in each: standing, left legs forward, right legs forward, facing right, top-down 3/4 view. Dona Mula, the headless mule of Brazilian folklore, friendly: brown mule body, saddle, and a blue flame where the head should be."
+    },
+    {
+     "arquivo": "assets/sprites/boto.webp",
+     "tipo": "folk",
+     "tamanho": "256x256",
+     "desc": "pink river dolphin jumping out of the water",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single creature, full body, centered, top-down 3/4 view, plain white background. pink river dolphin jumping out of the water"
+    },
+    {
+     "arquivo": "assets/sprites/mapinguari.webp",
+     "tipo": "folk",
+     "tamanho": "256x256",
+     "desc": "giant hairy brown Amazon creature with one eye and a mouth on its belly (not scary, a bit funny)",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single creature, full body, centered, top-down 3/4 view, plain white background. giant hairy brown Amazon creature with one eye and a mouth on its belly (not scary, a bit funny)"
+    },
+    {
+     "arquivo": "assets/sprites/boitata.webp",
+     "tipo": "folk",
+     "tamanho": "256x256",
+     "desc": "snake made of blue and orange fire, glowing",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single creature, full body, centered, top-down 3/4 view, plain white background. snake made of blue and orange fire, glowing"
+    },
+    {
+     "arquivo": "assets/sprites/lobisomem.webp",
+     "tipo": "folk",
+     "tamanho": "256x256",
+     "desc": "grey werewolf standing, yellow eyes (not gory)",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single creature, full body, centered, top-down 3/4 view, plain white background. grey werewolf standing, yellow eyes (not gory)"
+    }
+   ]
+  },
+  {
+   "id": "L5",
+   "nome": "O \"lobby\": mapa do Brasil antes dos portais",
+   "pasta": "assets/maps + assets/props",
+   "itens": [
+    {
+     "arquivo": "assets/maps/hoje.webp",
+     "tipo": "mapa",
+     "tamanho": "2400x2000",
+     "desc": "Brazil as a game board seen from above: coastline, Amazon river and forest, São Francisco river, Minas Gerais mountains, roads between the cities (Tiradentes, São João del-Rei, Vila Rica, Rio, Porto Seguro, Recife, Serra da Barriga) as small illustrated towns, ocean with gentle waves. Keep the coastline, rivers, mountains and roads exactly as in the layout.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Top-down 3/4 game map painted OVER the attached layout image (docs/guias/<id>_anotado.webp and <id>_rascunho.webp): keep every road, river, bridge, square and building footprint exactly where it is in the layout. Same framing and aspect ratio. No labels. Brazil as a game board seen from above: coastline, Amazon river and forest, São Francisco river, Minas Gerais mountains, roads between the cities (Tiradentes, São João del-Rei, Vila Rica, Rio, Porto Seguro, Recife, Serra da Barriga) as small illustrated towns, ocean with gentle waves. Keep the coastline, rivers, mountains and roads exactly as in the layout.",
+     "guia": "docs/guias/hoje_anotado.webp"
+    },
+    {
+     "arquivo": "assets/maps/hoje_top.webp",
+     "tipo": "topo",
+     "tamanho": "2400x2000",
+     "desc": "OPTIONAL: tall elements only (tree canopies, church towers), everything else transparent.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos.  OPTIONAL: tall elements only (tree canopies, church towers), everything else transparent.",
+     "opcional": true
+    },
+    {
+     "arquivo": "assets/props/portal_aberto.webp",
+     "tipo": "prop",
+     "tamanho": "256x256",
+     "desc": "A round hole in the ground glowing blue, a time portal, stone rim.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single map object, centered, top-down 3/4 view, plain white background. A round hole in the ground glowing blue, a time portal, stone rim."
+    },
+    {
+     "arquivo": "assets/props/portal_fechado.webp",
+     "tipo": "prop",
+     "tamanho": "256x256",
+     "desc": "The same stone rim but closed with a cracked stone slab.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single map object, centered, top-down 3/4 view, plain white background. The same stone rim but closed with a cracked stone slab."
+    },
+    {
+     "arquivo": "assets/props/portal_concluido.webp",
+     "tipo": "prop",
+     "tamanho": "256x256",
+     "desc": "The same portal glowing warm gold (era completed).",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single map object, centered, top-down 3/4 view, plain white background. The same portal glowing warm gold (era completed)."
+    },
+    {
+     "arquivo": "assets/props/portal_era.webp",
+     "tipo": "prop",
+     "tamanho": "256x256",
+     "desc": "A vertical beam of soft light rising from a small stone ring (exit portal inside an era).",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single map object, centered, top-down 3/4 view, plain white background. A vertical beam of soft light rising from a small stone ring (exit portal inside an era)."
+    },
+    {
+     "arquivo": "assets/props/pouso.webp",
+     "tipo": "prop",
+     "tamanho": "256x256",
+     "desc": "A small wooden muleteer rest stop: thatched roof, hitching post, a tied mule.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single map object, centered, top-down 3/4 view, plain white background. A small wooden muleteer rest stop: thatched roof, hitching post, a tied mule."
+    },
+    {
+     "arquivo": "assets/props/relatorio.webp",
+     "tipo": "prop",
+     "tamanho": "256x256",
+     "desc": "A rolled parchment report lying on the ground, glowing softly.",
+     "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Single map object, centered, top-down 3/4 view, plain white background. A rolled parchment report lying on the ground, glowing softly."
+    }
+   ]
+  }
+ ]
+}

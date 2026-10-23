@@ -475,7 +475,9 @@ window.WORLD = (() => {
   W.luaCheia = (dt) => { const age = (((dt.getTime() - Date.UTC(2000, 0, 6, 18, 14)) / 864e5) % 29.530588 + 29.530588) % 29.530588; return age > 13.5 && age < 16; };
 
   // ---------- desenhos do folclore (pixel art em retângulos, como os bonecos) ----------
-  W.drawFolk = (g, id, x, y, t) => {
+  W.drawFolk = (g, id, x, y, t, u = 2) => { // u: escala (2 = tamanho de referência, acompanha o zoom)
+    const im = W.sprite && W.sprite(id); if (im) { const h = 30 * u, w = h * im.width / im.height; g.drawImage(im, x - w / 2, y - h, w, h); return; }
+    g.save(); g.translate(x, y); g.scale(u / 2, u / 2); g.translate(-x, -y);
     const R = (dx, dy, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x + dx * 2), Math.round(y + dy * 2), Math.ceil(w * 2), Math.ceil(h * 2)); };
     g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(x, y, 12, 4, 0, 0, 7); g.fill();
     const b = Math.sin(t * 4);
@@ -487,6 +489,7 @@ window.WORLD = (() => {
     else if (id === 'boto') { const h = Math.max(0, b) * 8; R(-8, -4 - h, 14, 6, '#f0a0b8'); R(5, -3 - h, 5, 2, '#f0a0b8'); R(-10, -6 - h, 3, 3, '#e08098'); R(-2, -7 - h, 3, 3, '#e08098'); R(-10, 0, 20, 2, '#4a94d8'); }
     else if (id === 'mapinguari') { R(-5, -4, 4, 4, '#3a2a1a'); R(1, -4, 4, 4, '#3a2a1a'); R(-8, -26, 16, 22, '#5a3a20'); R(-2, -24, 4, 4, '#ff4a2a'); R(-4, -14, 8, 4, '#2a0a0a'); R(-11, -22, 3, 12, '#5a3a20'); R(8, -22, 3, 12, '#5a3a20'); }
     else if (id === 'maedoouro') { const r = 10 + b * 2; g.fillStyle = 'rgba(255,200,60,.35)'; g.beginPath(); g.arc(x, y - 24, r + 8, 0, 7); g.fill(); g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(x, y - 24, r, 0, 7); g.fill(); g.fillStyle = '#fff6c0'; g.beginPath(); g.arc(x - 3, y - 27, r * 0.4, 0, 7); g.fill(); }
+    g.restore();
   };
   return W;
 })();

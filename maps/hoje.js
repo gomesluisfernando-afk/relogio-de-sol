@@ -5,6 +5,7 @@ window.MAPS = window.MAPS || {};
 window.MAPS.hoje = {
   id: 'hoje', era: 'prologo', title: 'Brasil · Hoje', music: 'hoje',
   w: 2400, h: 2000, cell: 8,
+  image: 'assets/maps/hoje.webp', imageTop: 'assets/maps/hoje_top.webp', maskImage: 'assets/maps/hoje_colisao.png', // mapa do Brasil pintado (lote 5); sem ele, vale o rascunho
   start: 'chafariz',
   // portão para a cidade de Tiradentes (mapa com as 16 paradas do tour)
   draft: {

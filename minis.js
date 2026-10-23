@@ -8,17 +8,18 @@ window.MINIS = (() => {
   const inR = (x, y, r) => r && x >= r[0] && y >= r[1] && x <= r[0] + r[2] && y <= r[1] + r[3];
   // botão simples desenhado no canvas; devolve o retângulo para teste de toque
   function btn(A, r, label, col = '#ffd84a', fg = '#1a1030', size = 12) {
+    if (A.pill) return A.pill(r, col, label, fg, size); // botão em pílula da interface nova
     const { g, plain } = A;
     g.fillStyle = col; g.fillRect(...r); g.strokeStyle = '#000'; g.lineWidth = 3; g.strokeRect(...r);
-    plain(label, r[0] + r[2] / 2, r[1] + r[3] / 2 - size / 2, size, fg, 'center'); // sem sombra: letra escura em botão claro
+    plain(label, r[0] + r[2] / 2, r[1] + r[3] / 2 - size / 2, size, fg, 'center');
     return r;
   }
   function head(A, title, sub, timeLeft, total) {
     const { g, W, txt, box } = A;
     box(10, 8, W - 20, 54, 0.88);
-    txt(title, 28, 22, 13, '#ffd84a');
+    (A.ttl || txt)(title, 28, 18, 13, '#ffd84a');
     if (sub) txt(sub, 28, 42, 9, '#fff');
-    if (timeLeft != null) { const w = 220; g.fillStyle = '#0a1040'; g.fillRect(W - w - 30, 26, w, 14); g.fillStyle = timeLeft / total > 0.25 ? '#9be36a' : '#ff5a5a'; g.fillRect(W - w - 30, 26, w * Math.max(0, timeLeft / total), 14); g.strokeStyle = '#fff'; g.lineWidth = 2; g.strokeRect(W - w - 30, 26, w, 14); txt(`${Math.ceil(timeLeft)}s`, W - w - 40, 26, 10, '#fff', 'right'); }
+    if (timeLeft != null) { const w = 220, rr = A.rr || ((x, y, ww, hh) => { g.beginPath(); g.rect(x, y, ww, hh); }); g.fillStyle = '#0a1040'; rr(W - w - 30, 26, w, 14, 7); g.fill(); g.fillStyle = timeLeft / total > 0.25 ? '#9be36a' : '#ff5a5a'; rr(W - w - 30, 26, Math.max(14, w * Math.max(0, timeLeft / total)), 14, 7); g.fill(); g.strokeStyle = 'rgba(255,255,255,.8)'; g.lineWidth = 2; rr(W - w - 30, 26, w, 14, 7); g.stroke(); txt(`${Math.ceil(timeLeft)}s`, W - w - 40, 26, 10, '#fff', 'right'); }
   }
   const QUIT = (A) => [A.W - 110, 72, 96, 30];
   const quitBtn = (A) => btn(A, QUIT(A), 'SAIR', '#8a9ad8', '#0a1040', 10);
@@ -29,7 +30,7 @@ window.MINIS = (() => {
     const bot = Math.max(372, end + 6), top = Math.max(70, Math.min(110, H - 40 - (bot - 110 + 38)));
     const dy = top - 110;
     box(120, top, W - 240, bot - 110 + 38, 0.95);
-    txt(title, W / 2, 140 + dy, 16, '#ffd84a', 'center');
+    (A.ttl || txt)(title, W / 2, 136 + dy, 16, '#ffd84a', 'center');
     let y = 186 + dy;
     for (const l of ls) { for (const s of l) { txt(s, W / 2, y, 11, '#fff', 'center'); y += 20; } y += 8; }
     txt('botão A (ou Espaço) para começar', W / 2, bot + dy, 11, '#9be36a', 'center');

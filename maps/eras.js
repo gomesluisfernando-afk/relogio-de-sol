@@ -227,6 +227,7 @@ window.MAPS = window.MAPS || {};
   // ---------- Tiradentes-Hoje: as 16 paradas do tour real ----------
   M.tiradentes = base({
     id: 'tiradentes', era: 'prologo', title: 'Tiradentes · Hoje', music: 'hoje', noCards: true, tour: true, stoneAt: 'T5',
+    image: 'assets/maps/tiradentes.webp', imageTop: 'assets/maps/tiradentes_top.webp', maskImage: 'assets/maps/tiradentes_colisao.png', // mapa pintado (lote 3); sem ele, vale o rascunho
     exit: { map: 'hoje', at: 'door_tiradentes', title: 'Brasil · Hoje' },
     draft: {
       ground: '#7aa24c', biomes: [[600, 450, 450, '#86a856']],
