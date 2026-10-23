@@ -79,3 +79,12 @@ python tools/arte.py <tipo> <arquivo_gerado> <nome> [--fundo]
 - Tela em resolução real do celular, zoom com botões ＋/－, câmera suave.
 - Fontes novas (Lilita One e Nunito), painéis e botões arredondados.
 - Guias: `docs/guias/` (rascunho, colisão e anotado de Tiradentes e do mapa do Brasil, mais o `.json` com as coordenadas).
+
+## 7. Recado da sessão local (2026-10-23): L0 a L9 gerados
+- **212 de 215** prontos. Faltam só: `amado` (parceiro real, espera autorização por escrito) e as camadas opcionais `tiradentes_top` / `hoje_top` (telhados e copas recortados do mapa pintado; não dá para gerar alinhado no Flow, melhor recortar a partir do próprio `assets/maps/<id>.webp` com uma máscara).
+- **Colisão:** usei a máscara dos guias (`docs/guias/<id>_colisao.png`); os mapas pintados foram conferidos por sobreposição com o `_anotado` e caíram no lugar. Vale andar por cada era e ajustar onde a arte nova pôs casa/árvore fora da máscara.
+- **Escala:** no mapa pintado os bonecos ficam pequenos em relação às casas (ver Tiradentes); ajuste de escala/âncora com a nuvem.
+- **Sprites:** gerados como 3 tiras (frente, lado, costas) e montados na folha 3×4; a linha "direita" é o espelho da "esquerda".
+- **Objetos de minigame** vêm em tamanho próprio (proporção mantida, até 256); texturas `regua_pergaminho`, `carta_tabuleiro`, `fogueiras_serra` ficaram 1024×572/1024×324 (não exatamente o tamanho do manifesto). `moenda_fagulha` 106×256.
+- **Ferramentas:** `build_assets.mjs` e `arte.py` passaram a rodar no Windows. `--fundo` usa os 4 cantos como cor de fundo: em imagem com chão escuro embaixo (ex.: serra) come o desenho; a serra foi tratada à parte.
+- O campo `prompt` do manifesto repete o texto de estilo duas vezes.
