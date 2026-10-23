@@ -1,6 +1,6 @@
 """Trata as imagens geradas no Nano Banana / Flow e coloca cada uma no lugar e no tamanho certos.
 Uso:  python tools/arte.py <tipo> <arquivo_gerado> <nome> [--fundo]
-  tipo:   ui | icone | sprite | mula | folk | prop | mapa | topo | colisao | minifundo | miniobj
+  tipo:   ui | icone | sprite | mula | folk | prop | mapa | topo | colisao | minifundo | miniobj | minitextura | retrato
   nome:   o nome do arquivo final, sem extensão (ex.: panel, rapadura, buck, pouso, tiradentes)
   --fundo tira o fundo liso (branco ou de cor única) a partir das bordas, deixando transparente
 Depois de tratar tudo: node tools/build_assets.mjs  e  node tools/check.mjs
@@ -21,6 +21,8 @@ SPEC = {  # tipo: (pasta, tamanho final ou None, formato)
     'colisao': ('assets/maps', 'guia', 'png'),
     'minifundo': ('assets/minis', (1920, 1080), 'webp'),  # nome: <mini>_fundo (ex.: escambo_fundo)
     'miniobj': ('assets/minis', 256, 'webp'),             # nome: <mini>_<objeto> (ex.: ponte_prancha_longa); mantém a proporção
+    'minitextura': ('assets/minis', 1024, 'webp'),        # texturas e faixas (pergaminho, tabuleiro, bagaço, serra); mantém a proporção, até 1024
+    'retrato': ('assets/sprites', (256, 256), 'webp'),    # rosto das testemunhas genéricas (nome: gen_<tipo>_retrato)
 }
 
 def tira_fundo(im, tol=38):
@@ -53,6 +55,10 @@ def main():
         im = im.convert('L' if tipo == 'colisao' else 'RGBA').resize(size, Image.LANCZOS)
         if tipo == 'colisao': im = im.point(lambda v: 255 if v > 128 else 0)
         if tipo == 'mapa': im = im.convert('RGB')
+    elif tipo == 'minitextura':
+        im = im.convert('RGBA'); k = size / max(im.size); im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+    elif tipo == 'retrato':
+        im = im.convert('RGB'); sd = min(im.size); im = im.crop(((im.width - sd) // 2, (im.height - sd) // 2, (im.width + sd) // 2, (im.height + sd) // 2)).resize(size, Image.LANCZOS)
     elif tipo == 'miniobj':
         im = im.convert('RGBA'); im = im.crop(im.getbbox() or (0, 0, im.width, im.height)); k = size / max(im.size); im = im.resize((max(1, round(im.width * k)), max(1, round(im.height * k))), Image.LANCZOS)
     elif tipo == 'minifundo':

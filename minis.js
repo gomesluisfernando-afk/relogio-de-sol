@@ -49,9 +49,10 @@ window.MINIS = (() => {
     let x = 700, stage = 'intro', t = 0, reveal = 0;
     const poly = (pts, col, a = 1) => { g.globalAlpha = a; g.fillStyle = col; g.beginPath(); pts.forEach(([lo, la], k) => (k ? g.lineTo(px(lo), py(la)) : g.moveTo(px(lo), py(la)))); g.closePath(); g.fill(); g.globalAlpha = 1; };
     function world() {
-      g.fillStyle = '#e8d8a8'; g.fillRect(X0, 90, X1 - X0, 360);
+      const perg = A.arte?.('pergaminho'); // textura de pergaminho (arte nova); os continentes continuam desenhados por cima, nas coordenadas certas
+      if (perg) g.drawImage(perg, X0, 90, X1 - X0, 360); else { g.fillStyle = '#e8d8a8'; g.fillRect(X0, 90, X1 - X0, 360); }
       g.save(); g.beginPath(); g.rect(X0, 90, X1 - X0, 360); g.clip();
-      poly(AF, '#c8a868'); poly(IB, '#c8a868'); poly(PT, '#b08a4a');
+      poly(AF, '#c8a868', perg ? 0.75 : 1); poly(IB, '#c8a868', perg ? 0.75 : 1); poly(PT, '#b08a4a', perg ? 0.8 : 1);
       poly(BR, '#4a7a2a', 0.22 + reveal * 0.6); // sombra suave do Brasil (didática: em 1494 ninguém sabia que ele estava ali)
       g.restore();
       g.strokeStyle = '#7a5a2a'; g.lineWidth = 4; g.strokeRect(X0, 90, X1 - X0, 360);
@@ -174,7 +175,7 @@ window.MINIS = (() => {
         const by = ry(P.r) + CELL - 4 - (P.hop > 0 ? 8 : 0);
         if (!(dead > 0 && Math.floor(t * 12) % 2)) {
           A.dude(P.x, by, A.PAL.buck, t * 10, P.face, 2.4, P.hop > 0);
-          for (let i = 0; i < carry; i++) { g.fillStyle = '#9a3a22'; g.fillRect(P.x - 16, by - 50 - i * 6, 32, 5); }
+          for (let i = 0; i < carry; i++) { if (A.spr?.('tora', P.x, by - 48 - i * 7, 38, 9)) continue; g.fillStyle = '#9a3a22'; g.fillRect(P.x - 16, by - 50 - i * 6, 32, 5); }
         }
         head(A, 'Escambo · 1502', `Vidas: ${lives} · Toras: ${logs}/${META} · Utilidade: ${avg()}% (meta 70%)`, stage === 'intro' ? null : left, TEMPO);
         if (msgT > 0) { A.box(20, 68, W - 260, 28, 0.85); txt(msg, 20 + (W - 260) / 2, 76, 9, '#fff', 'center'); } // à esquerda dos botões do canto
@@ -238,7 +239,7 @@ window.MINIS = (() => {
       },
       draw() {
         A.bg('assets/img/scenes/porto_seguro.webp', 3, 0.15, '#5a8a3a');
-        g.fillStyle = 'rgba(232,216,160,.88)'; g.fillRect(X0, Y0, COLS * C, ROWS * C); g.strokeStyle = '#7a5a2a'; g.lineWidth = 3; g.strokeRect(X0, Y0, COLS * C, ROWS * C);
+        const tab = A.arte?.('tabuleiro'); if (tab) { g.globalAlpha = 0.95; g.drawImage(tab, X0, Y0, COLS * C, ROWS * C); g.globalAlpha = 1; } else { g.fillStyle = 'rgba(232,216,160,.88)'; g.fillRect(X0, Y0, COLS * C, ROWS * C); } g.strokeStyle = '#7a5a2a'; g.lineWidth = 3; g.strokeRect(X0, Y0, COLS * C, ROWS * C);
         for (const b of bits) { const x = X0 + b.c * C, y = Y0 + b.r * C; if (A.spr?.('pedaco', x + C * 1.5, y + C / 2, C * 3, C)) { txt(SEQ[b.i][0], x + C * 1.5, y + 7, 8, '#3a2a10', 'center'); continue; } g.fillStyle = '#f8f0d0'; g.fillRect(x, y + 2, C * 3, C - 4); g.strokeStyle = '#8a6a3a'; g.lineWidth = 2; g.strokeRect(x, y + 2, C * 3, C - 4); txt(SEQ[b.i][0], x + C * 1.5, y + 7, 8, '#3a2a10', 'center'); }
         snake.forEach(([c, r], k) => { if (A.spr?.(k ? 'cobra_corpo' : 'cobra_cabeca', X0 + c * C + C / 2, Y0 + r * C + C / 2, C, C)) return; g.fillStyle = k ? (k % 2 ? '#e8dcb0' : '#d8c890') : '#ffd84a'; g.fillRect(X0 + c * C + 2, Y0 + r * C + 2, C - 4, C - 4); g.strokeStyle = '#6a4a2a'; g.lineWidth = 1; g.strokeRect(X0 + c * C + 2, Y0 + r * C + 2, C - 4, C - 4); });
         head(A, 'A Carta em Pedaços · 1500', stage === 'play' && next < SEQ.length ? `Próximo: "${SEQ[next][1]}"  (${next}/6)` : `Tentativa ${A.tries}/3`, stage === 'play' ? left : null, TEMPO);
@@ -353,9 +354,9 @@ window.MINIS = (() => {
         g.fillStyle = 'rgba(255,120,40,.18)'; g.fillRect(0, 62, W, 10); // brilho da fornalha
         g.fillStyle = 'rgba(255,216,74,.35)'; g.fillRect(0, LINHA, W, 2); // linha da moenda
         if (carro && A.spr?.('carro', carro.x, 96, 84, 40, carro.v < 0)) { /* arte nova */ } else if (carro) { const x = carro.x, y = 98; g.fillStyle = '#7a5a3a'; g.fillRect(x - 26, y - 8, 40, 12); g.fillStyle = '#c8d070'; g.fillRect(x - 24, y - 16, 36, 8); g.fillStyle = '#3a2410'; g.beginPath(); g.arc(x - 16, y + 6, 6, 0, 7); g.arc(x + 6, y + 6, 6, 0, 7); g.fill(); g.fillStyle = '#8a6a4a'; g.fillRect(x + (carro.v > 0 ? 16 : -46), y - 10, 26, 14); }
-        for (const b of bunkers) { g.fillStyle = '#c8b070'; for (const [x, y] of b) g.fillRect(x, y, 10, 10); g.fillStyle = 'rgba(120,90,40,.5)'; for (const [x, y] of b) g.fillRect(x, y + 7, 10, 3); }
+        const bag = A.arte?.('bagaco'); for (const b of bunkers) { if (bag) { for (const [x, y] of b) g.drawImage(bag, (x * 3) % Math.max(1, bag.width - 30), (y * 3) % Math.max(1, bag.height - 30), 30, 30, x, y, 10.5, 10.5); continue; } g.fillStyle = '#c8b070'; for (const [x, y] of b) g.fillRect(x, y, 10, 10); g.fillStyle = 'rgba(120,90,40,.5)'; for (const [x, y] of b) g.fillRect(x, y + 7, 10, 3); } // cada pedacinho mostra um trecho da textura
         for (const e of live()) { const [x, y] = pos(e); if (e.acucar) pao(x, y, frame); else cana(x, y, frame); }
-        for (const f of sparks) { const wob = Math.sin(f.ph) * 4; g.fillStyle = '#ffb040'; g.fillRect(f.x - 3 + wob, f.y - 6, 6, 6); g.fillStyle = '#ff5a20'; g.fillRect(f.x - 2 - wob, f.y, 4, 4); }
+        for (const f of sparks) { const wob = Math.sin(f.ph) * 4; if (A.spr?.('fagulha', f.x + wob, f.y - 2, 16, 20)) continue; g.fillStyle = '#ffb040'; g.fillRect(f.x - 3 + wob, f.y - 6, 6, 6); g.fillStyle = '#ff5a20'; g.fillRect(f.x - 2 - wob, f.y, 4, 4); }
         if (shot) { g.fillStyle = '#e8d8a0'; g.fillRect(shot.x - 2, shot.y, 4, 16); g.fillRect(shot.x - 2, shot.y, 8, 4); }
         if (!(hurt > 0 && Math.floor(t * 10) % 2)) moendaSprite(P.x, PY);
         head(A, `A Moenda · 1570 · ${onda + 1}ª leva de ${ONDAS}`, `Moídos: ${moidos} · Fôlego: ${Math.max(0, folego)}/${FOLEGO} · Tentativa ${A.tries}/3`, stage === 'play' ? left : null, TEMPO);
@@ -478,7 +479,9 @@ window.MINIS = (() => {
       draw() {
         // céu do fim de tarde e a serra ao fundo (sobe devagar com a câmera)
         if (!A.fundo?.(0.15)) { const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#1a2a4a'); sky.addColorStop(1, '#6a5a4a'); g.fillStyle = sky; g.fillRect(0, 0, W, H); }
-        g.fillStyle = '#2a3a2a'; g.beginPath(); g.moveTo(0, H); for (let x = 0; x <= W; x += 60) g.lineTo(x, H - 160 - Math.sin(x / 90 + cam / 400) * 40 + cam * 0.05 % 60); g.lineTo(W, H); g.fill();
+        const serra = A.arte?.('serra');
+        if (serra) g.drawImage(serra, 0, H - 280 + (cam * 0.05) % 60, W, 280);
+        else { g.fillStyle = '#2a3a2a'; g.beginPath(); g.moveTo(0, H); for (let x = 0; x <= W; x += 60) g.lineTo(x, H - 160 - Math.sin(x / 90 + cam / 400) * 40 + cam * 0.05 % 60); g.lineTo(W, H); g.fill(); }
         for (const p of plats) {
           const y = sy(p.y); if (y < -40 || y > H + 40) continue;
           if (p.kind === 'chao') { g.fillStyle = '#3a5a2a'; g.fillRect(0, y, W, 40); continue; }

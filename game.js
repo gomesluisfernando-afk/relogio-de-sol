@@ -265,6 +265,11 @@
   for (const k of Object.keys(PAL)) PAL[k].sprite ||= k; // nome da folha de sprite de cada um (assets/sprites/<id>.webp)
   WD.sprite = (id) => ART(`assets/sprites/${id}.webp`);
   const FOLK = new Set(WD.folk.map((f) => f.id));
+  // testemunhas sem ficha ("Um marinheiro de Palos"…): um de 4 tipos genéricos, cada um com sprite e retrato próprios quando existirem
+  const GENERICO = [[/marinh|maruj|barqueir/i, 'gen_marinheiro', { shirt: '#f2efe6', plaid: '#2a4a8a', pants: '#2a4a8a', boots: null }], [/soldad|drag[aã]o|carcereir|vigia/i, 'gen_soldado', { shirt: '#2a3a7a', buttons: '#e8c04a', pants: '#e8e0c8', boots: '#111', hat: 'tricorne', hatc: '#111' }],
+    [/sert[aã]o|paulista|guia/i, 'gen_sertanejo', { shirt: '#9a6a3a', pants: '#6a5a3a', boots: '#3a2212', hat: 'leather', hatc: '#6a4a2a' }], [/./, 'gen_cidadao', { shirt: '#5a3a5a', buttons: '#ddd', pants: '#2a2a2a', boots: '#111' }]];
+  const genOf = (id) => GENERICO.find(([re]) => re.test(id)) || GENERICO[3];
+  const palOf = (id) => PAL[id] || (id && id.includes(' ') ? { ...PAL.turista, ...genOf(id)[2], sprite: genOf(id)[1] } : PAL.turista);
   const buckPal = () => { const h = ITEM(G.chapeu || 'stetson'), sprite = ASSET.has(`assets/sprites/buck_${G.chapeu}.webp`) ? `buck_${G.chapeu}` : 'buck'; return h.hat ? { ...PAL.buck, hat: h.hat, hatc: h.hatc, sprite } : PAL.buck; };
   function dude(x, y, P, ph, face, u = 2, moving = true, extra = {}) {
     const sp = !extra.flame && ART(P.sprite && `assets/sprites/${P.sprite}.webp`);
@@ -411,9 +416,9 @@
     if (isLum) lumBox(60, y0 + 20, W - 120, 150); else box(16, y0, W - 32, 180);
     const nm = isLum ? '' : nameOf(p.who);
     if (nm) {
-      const im = img(`img/p_${p.who}.png`);
+      const im = p.who?.includes(' ') ? ART(`assets/sprites/${genOf(p.who)[1]}_retrato.webp`) : img(`img/p_${p.who}.png`);
       g.save(); rr(30, y0 + 22, 136, 136, 16); g.clip(); g.fillStyle = '#0a1040'; g.fillRect(30, y0 + 22, 136, 136);
-      if (im) { g.imageSmoothingEnabled = true; g.drawImage(im, 30, y0 + 22, 136, 136); } else if (FOLK.has(p.who)) { g.save(); g.translate(98, y0 + 140); g.scale(2.2, 2.2); WD.drawFolk(g, p.who, 0, 0, T); g.restore(); } else dude(98, y0 + 150, PAL[p.who] || PAL.turista, 0, 0, 5, false);
+      if (im) { g.imageSmoothingEnabled = true; g.drawImage(im, 30, y0 + 22, 136, 136); } else if (FOLK.has(p.who)) { g.save(); g.translate(98, y0 + 140); g.scale(2.2, 2.2); WD.drawFolk(g, p.who, 0, 0, T); g.restore(); } else dude(98, y0 + 150, palOf(p.who), 0, 0, 5, false);
       g.restore(); g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 3; rr(30, y0 + 22, 136, 136, 16); g.stroke();
       tx = 190;
       const name = nm.length > 24 ? nm.split(' ').slice(0, 3).join(' ') : nm;
@@ -1318,6 +1323,12 @@
       }
       return L.map((o) => { const k = `${o.q}:${o.i}`; const [x, y] = PICKC[k] ||= free(o.p); return { ...o, x, y }; });
     }
+    function missaoIcon(o) { // nome do ícone do objeto de missão (assets/icons/missao_<nome>.webp)
+      const nm = (o.p[2] || o.step.label || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      if (o.step.words) return 'missao_palavra';
+      if (o.step.kind === 'route') return nm === 'gelo' ? 'missao_gelo' : o.q === 'SQ-quitanda' ? 'missao_quitanda' : 'missao_destino';
+      return `missao_${nm.split(' ')[0]}`;
+    }
     function pick(o) {
       const d = SQ(o.q), st = G.side[o.q], step = o.step, total = step.pts.length;
       st.got.push(o.i); sfx('coin');
@@ -1634,7 +1645,7 @@
           if (!onS(o.x, o.y)) continue;
           const x = sx(o.x), y = sy(o.y) - 6 + Math.sin(tt * 4 + o.i) * 3;
           g.fillStyle = 'rgba(155,227,106,.35)'; g.beginPath(); g.arc(x, y, 14 + Math.sin(tt * 3) * 2, 0, 7); g.fill();
-          txt(o.step.icon || (o.step.kind === 'route' ? '📍' : '✳'), x, y - 9, 14, '#fff', 'center');
+          icon(missaoIcon(o), o.step.icon || (o.step.kind === 'route' ? '📍' : '✳'), x, y, 26);
         }
         for (const mi of M.minis || []) {
           if (!mi.at) continue;
@@ -1662,7 +1673,7 @@
             if (mk) txt(mk, sx(n.x), sy(n.y) - 33 * Z - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#ffd84a', 'center');
           } })),
           ...folkHere().filter((f) => onS(f.x, f.y)).map((f) => ({ y: f.y, d: () => { WD.drawFolk(g, f.id, sx(f.x), sy(f.y), tt, Z); if (!G.bestiario.includes(f.id)) txt('?', sx(f.x), sy(f.y) - 35 * Z - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#c070ff', 'center'); } })),
-          ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), PAL[w.id] || PAL.turista, 0, 0, Z, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 35 * Z - 16, 12, '#fff', 'center'); } })),
+          ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), palOf(w.id), 0, 0, Z, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 35 * Z - 16, 12, '#fff', 'center'); } })),
         ];
         if (COB) ents.push({ y: COB.y, d: () => {
           dude(sx(COB.x), sy(COB.y), PAL.cobrador, COB.ph, COB.face, Z, true);
@@ -1785,6 +1796,7 @@
     const MA = (n) => ART(`assets/minis/${mid}_${n}.webp`);
     api.spr = (n, cx, cy, w, h, flip) => { const im = MA(n); if (!im) return false; const k = Math.min(w / im.width, h / im.height), dw = im.width * k, dh = im.height * k; g.save(); g.translate(cx, cy); if (flip) g.scale(-1, 1); g.imageSmoothingEnabled = true; g.drawImage(im, -dw / 2, -dh / 2, dw, dh); g.restore(); return true; }; // cabe na caixa sem deformar
     api.has = (n) => !!MA(n);
+    api.arte = (n) => MA(n); // a imagem crua (texturas: pergaminho, bagaço, serra…)
     api.fundo = (dark = 0) => { const im = MA('fundo'); if (!im) return false; pixelImage(im, 3, dark); return true; };
     api.bg = (src, k, dark, col) => { if (!api.fundo(dark)) bg(src, k, dark, col); };
     go(() => Object.assign(f(api), { ctl: true, esc: back }), null);
