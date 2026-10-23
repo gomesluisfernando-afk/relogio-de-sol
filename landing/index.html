@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Visit Minas · Brazil's Gem — o jogo</title>
+<meta name="description" content="Um jogo de aventura sobre a história do Brasil, do pau-brasil ao ouro de Minas Gerais. Explore Tiradentes, aprenda jogando e prepare a sua viagem. Grátis, no celular. Em português, inglês e espanhol.">
+<meta name="theme-color" content="#120a2a">
+<link rel="canonical" href="https://visitminas.com/">
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Visit Minas">
+<meta property="og:url" content="https://visitminas.com/">
+<meta property="og:title" content="Visit Minas · Brazil's Gem — a aventura do ouro de Minas">
+<meta property="og:description" content="Aperte START: 300 anos de história do Brasil num jogo de fliperama. Explore Tiradentes, enfrente o Cobrador do Quinto e prepare a sua viagem a Minas Gerais. Grátis, no celular.">
+<meta property="og:image" content="https://visitminas.com/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Buck, o caubói, apresenta Minas Gerais aberta num livro: igrejas barrocas, trem a vapor, cachoeira e ouro.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Visit Minas · Brazil's Gem">
+<meta name="twitter:description" content="300 anos de história do Brasil num jogo de fliperama. Grátis, no celular.">
+<meta name="twitter:image" content="https://visitminas.com/og.jpg">
+<!-- ícones: uma esmeralda -->
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/pressstart2p-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'PS2P'; src: url(fonts/pressstart2p-latin.woff2) format('woff2'); font-display: swap; }
+@font-face { font-family: 'Lilita'; src: url(fonts/lilita-one.woff2) format('woff2'); font-display: swap; }
+@font-face { font-family: 'Nunito'; src: url(fonts/nunito-800.woff2) format('woff2'); font-weight: 800; font-display: swap; }
+:root {
+  --bg: #120a2a; --bg2: #1d1046; --ink: #fff7e0; --dim: #b9b0d8;
+  --gold: #ffd84a; --gold2: #f5a800; --emerald: #2fd67a; --ruby: #ff4a6a; --sky: #4ad8ff;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 800 17px/1.55 Nunito, system-ui, sans-serif; overflow-x: hidden; }
+/* tela de fliperama: linhas de varredura e céu estrelado */
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.18) 0 1px, transparent 1px 3px); mix-blend-mode: multiply; }
+.stars { position: fixed; inset: 0; z-index: -1; background:
+  radial-gradient(1px 1px at 10% 20%, #fff 50%, transparent), radial-gradient(1px 1px at 80% 10%, #fff 50%, transparent),
+  radial-gradient(2px 2px at 60% 70%, var(--gold) 50%, transparent), radial-gradient(1px 1px at 30% 80%, #fff 50%, transparent),
+  radial-gradient(1px 1px at 90% 50%, #fff 50%, transparent), radial-gradient(2px 2px at 15% 55%, var(--emerald) 50%, transparent),
+  radial-gradient(1px 1px at 45% 35%, #fff 50%, transparent), radial-gradient(1px 1px at 70% 90%, #fff 50%, transparent),
+  linear-gradient(var(--bg), var(--bg2)); animation: twinkle 4s steps(2) infinite; }
+@keyframes twinkle { 50% { opacity: .75; } }
+.px { font-family: PS2P, monospace; letter-spacing: .02em; }
+a { color: inherit; }
+
+/* barra de placar no topo */
+.hud { position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 10px max(16px, env(safe-area-inset-left)); background: rgba(10,6,28,.92); border-bottom: 3px solid var(--gold2);
+  font-size: 10px; text-transform: uppercase; }
+.hud b { color: var(--gold); font-weight: normal; }
+.hud .score { display: flex; gap: 18px; flex-wrap: wrap; }
+.langs { display: flex; gap: 6px; }
+.langs button { font: inherit; font-size: 10px; color: var(--dim); background: none; border: 2px solid #3b2d70; padding: 6px 8px; cursor: pointer; }
+.langs button[aria-pressed="true"] { color: var(--bg); background: var(--gold); border-color: var(--gold); }
+
+section { min-height: 100svh; padding: 64px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+.wrap { width: 100%; max-width: 1080px; }
+h1, h2 { font-family: PS2P, monospace; font-weight: normal; line-height: 1.5; margin: 0 0 18px; text-align: center; }
+h2 { font-size: clamp(16px, 3.6vw, 26px); color: var(--gold); text-shadow: 3px 3px 0 #7a3a00; }
+.stage { font-size: 11px; color: var(--sky); text-align: center; margin-bottom: 14px; }
+
+/* 1 · tela de abertura */
+.screen { border: 6px solid #2a1c5c; outline: 3px solid var(--gold2); border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 9px #0a0618, 0 20px 60px rgba(0,0,0,.6), 0 0 80px rgba(255,216,74,.18); background: #000; }
+.screen img { display: block; width: 100%; height: auto; }
+.tag { font-size: clamp(11px, 2.4vw, 15px); text-align: center; color: var(--ink); margin: 26px auto 8px; max-width: 760px; line-height: 1.8; }
+.cta { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 18px; }
+.start { display: inline-block; font-family: PS2P, monospace; font-size: clamp(14px, 3vw, 20px); text-decoration: none; color: #2a1a08;
+  background: linear-gradient(var(--gold), var(--gold2)); padding: 18px 30px; border-radius: 10px; border: 0; box-shadow: 0 6px 0 #8a4a00, 0 0 30px rgba(255,216,74,.5);
+  cursor: pointer; transition: transform .08s; }
+.start:hover { transform: translateY(-2px); }
+.start:active { transform: translateY(4px); box-shadow: 0 2px 0 #8a4a00; }
+.blink { animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.coin { font-size: 10px; color: var(--dim); text-align: center; }
+.down { display: block; margin-top: 30px; font-size: 10px; color: var(--dim); text-decoration: none; text-align: center; }
+
+/* 2 · seleção de missões */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 10px; }
+.card { background: rgba(29,16,70,.85); border: 3px solid #3b2d70; border-radius: 12px; padding: 18px 18px 16px; position: relative; }
+.card:hover { border-color: var(--gold); }
+.card img { width: 64px; height: 64px; object-fit: contain; image-rendering: auto; filter: drop-shadow(0 4px 0 rgba(0,0,0,.4)); }
+.card h3 { font-family: PS2P, monospace; font-weight: normal; font-size: 12px; line-height: 1.6; color: var(--emerald); margin: 10px 0 8px; }
+.card p { margin: 0; color: var(--ink); font-size: 15px; }
+.soon { position: absolute; top: 12px; right: 12px; font-family: PS2P, monospace; font-size: 8px; color: var(--bg); background: var(--ruby); padding: 5px 6px; transform: rotate(4deg); }
+.minas { margin-top: 26px; text-align: center; border: 3px dashed var(--gold2); border-radius: 12px; padding: 20px; background: rgba(245,168,0,.08); }
+.minas p { margin: 0 auto; max-width: 760px; font-size: clamp(15px, 2.2vw, 19px); }
+.minas img { width: 48px; height: 48px; vertical-align: middle; }
+
+/* 3 · a aventura */
+.story { display: grid; grid-template-columns: 220px 1fr; gap: 26px; align-items: center; background: rgba(10,6,28,.7); border: 3px solid #3b2d70; border-radius: 14px; padding: 24px; }
+.cast { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; justify-items: center; }
+.cast figure { margin: 0; text-align: center; font-size: 9px; color: var(--dim); }
+.cast img { width: 92px; height: 110px; object-fit: contain; }
+.story p { margin: 0 0 14px; }
+.story p:last-child { margin-bottom: 0; }
+.story em { color: var(--gold); font-style: normal; }
+.cont { font-family: PS2P, monospace; font-size: 12px; color: var(--ruby); margin-top: 26px; text-align: center; }
+footer { text-align: center; color: var(--dim); font-size: 12px; padding: 22px 16px calc(22px + env(safe-area-inset-bottom)); border-top: 3px solid #2a1c5c; }
+footer .px { font-size: 9px; }
+
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .screen { max-width: 420px; margin: 0 auto; }
+  body { font-size: 16px; }
+  .hud { font-size: 8px; }
+  .hud .score span:nth-child(3) { display: none; }
+  .story { grid-template-columns: 1fr; }
+  .cast { grid-template-columns: repeat(4, 1fr); }
+  .cast img { width: 64px; height: 80px; }
+  section { padding: 44px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .blink, .stars { animation: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="stars" aria-hidden="true"></div>
+
+<header class="hud px">
+  <div class="score"><span>1UP <b id="score">000000</b></span><span>HI-SCORE <b>001789</b></span><span data-t="credit">CRÉDITO 01</span></div>
+  <div class="langs" role="group" aria-label="Língua · Language · Idioma">
+    <button data-l="pt">PT</button><button data-l="en">EN</button><button data-l="es">ES</button>
+  </div>
+</header>
+
+<main>
+  <!-- 1 · PRESS START -->
+  <section id="start">
+    <div class="wrap">
+      <p class="stage px" data-t="stage1">— STAGE 1 · TELA DE ABERTURA —</p>
+      <div class="screen"><picture><source media="(max-width: 640px) and (orientation: portrait)" srcset="capa-vertical.jpg"><img src="capa.jpg" srcset="capa-800.jpg 800w, capa.jpg 1376w" sizes="(max-width: 1080px) 100vw, 1080px" width="1376" height="768" alt="Buck, o caubói, apresenta Minas Gerais aberta num livro: igrejas barrocas, trem a vapor, cachoeira, uma mina de ouro e o Saci."></picture></div>
+      <p class="tag px" data-t="tag">300 ANOS DE HISTÓRIA DO BRASIL. UM CAUBÓI PERDIDO NO TEMPO. E O OURO DE MINAS GERAIS.</p>
+      <div class="cta">
+        <a class="start play blink" href="jogo/" data-t="play">▶ PRESS START</a>
+        <p class="coin px" data-t="coin">INSERT COIN... NÃO PRECISA. É GRÁTIS.</p>
+      </div>
+      <a class="down px" href="#missoes" data-t="down">▼ ROLE PARA ESCOLHER A MISSÃO ▼</a>
+    </div>
+  </section>
+
+  <!-- 2 · SELECT YOUR MISSION -->
+  <section id="missoes">
+    <div class="wrap">
+      <p class="stage px" data-t="stage2">— STAGE 2 —</p>
+      <h2 data-t="h2">SELECT YOUR MISSION</h2>
+      <div class="grid">
+        <article class="card"><img src="img/portal_aberto.webp" alt=""><h3 data-t="c1h">EXPLORE</h3><p data-t="c1">11 portais no tempo: do pau-brasil de 1500 à Tiradentes de hoje, passando por engenhos, Palmares, o ouro e a Inconfidência.</p></article>
+        <article class="card"><img src="img/relatorio.webp" alt=""><h3 data-t="c2h">APRENDA</h3><p data-t="c2">78 relatórios com fatos de verdade, perguntas que valem ouro e o "isso viria a ser": o que cada história virou no Brasil de hoje.</p></article>
+        <article class="card"><img src="img/saci.webp" alt=""><h3 data-t="c3h">JOGUE</h3><p data-t="c3">11 desafios de fliperama: o Frogger do pau-brasil, o Space Invaders do engenho, o Pac-Man do garimpo... e o Saci aprontando no caminho.</p></article>
+        <article class="card"><img src="img/luneta.webp" alt=""><span class="soon" data-t="soon">EM BREVE</span><h3 data-t="c4h">SALVE A VIAGEM</h3><p data-t="c4">Achou um lugar que vale a visita? Anote no caderno de viagem e leve para a viagem de verdade: endereço, dica do guia e rota.</p></article>
+        <article class="card"><img src="img/pouso.webp" alt=""><span class="soon" data-t="soon">EM BREVE</span><h3 data-t="c5h">CONTRATE</h3><p data-t="c5">City tour com guia, pousadas, restaurantes e passeios, direto de dentro do jogo. O mesmo mapa, agora com reserva.</p></article>
+        <article class="card"><img src="img/botas.webp" alt=""><h3 data-t="c6h">EVOLUA</h3><p data-t="c6">Junte ouro e brilho, compre as botas de tropeiro, monte coleções e complete o bestiário do folclore. Brilho não se compra: se conquista.</p></article>
+      </div>
+      <div class="minas">
+        <p><img src="img/paodequeijo.webp" alt=""> <span data-t="minas">Minas Gerais: um dos estados mais seguros, encantadores e gostosos do Brasil. Em todos os sentidos. Pão de queijo incluso.</span> <img src="img/hud_ouro.webp" alt=""></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · A AVENTURA -->
+  <section id="aventura">
+    <div class="wrap">
+      <p class="stage px" data-t="stage3">— STAGE 3 · FINAL —</p>
+      <h2 data-t="h3">ESTA É A AVENTURA DE BUCK CALHOUN</h2>
+      <div class="story">
+        <div class="cast">
+          <figure><img src="img/buck.webp" alt=""><figcaption>BUCK</figcaption></figure>
+          <figure><img src="img/mula.webp" alt=""><figcaption data-t="mula">DONA MULA</figcaption></figure>
+          <figure><img src="img/cobrador.webp" alt=""><figcaption data-t="cob">O COBRADOR</figcaption></figure>
+          <figure><img src="img/curupira.webp" alt=""><figcaption>CURUPIRA</figcaption></figure>
+        </div>
+        <div>
+          <p data-t="s1">Nashville, 1876. <em>Buck Calhoun</em>, vaqueiro do Tennessee, chega a Tiradentes com sede. Bebe água do Chafariz de São José. O céu gira. O cantil gela. E Buck fica <em>preso no tempo</em>.</p>
+          <p data-t="s2">Ao lado dele, a <em>Dona Mula</em> (sem cabeça, com muita opinião) e uma missão estranha: atravessar 300 anos de Brasil, juntar relatórios e descobrir por que o ouro brilha tanto, e para quem.</p>
+          <p data-t="s3">No caminho: caravelas, quilombos, bandeirantes, inconfidentes e o temido <em>Cobrador do Quinto</em>, que quer 20% de tudo que você achar. Até hoje.</p>
+          <p data-t="s4">No fim, Minas Gerais de verdade espera por você. Com mapa, com história e com pão de queijo.</p>
+        </div>
+      </div>
+      <div class="cta">
+        <a class="start play" href="jogo/" data-t="play2">▶ JOGAR AGORA</a>
+        <p class="cont" data-t="cont">CONTINUE? <span id="count">9</span></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="px">VISIT MINAS · BRAZIL'S GEM · BETA</p>
+  <p data-t="foot">Feito em Tiradentes, Minas Gerais, por um guia de turismo. Funciona no celular e no computador. Português · English · Español.</p>
+</footer>
+
+<script>
+// Textos nas três línguas do jogo. A escolha vai junto para o jogo (jogo/?lang=xx), que já abre na mesma língua.
+const T = {
+  pt: {}, // o HTML já está em português
+  en: {
+    credit: 'CREDIT 01', stage1: '— STAGE 1 · TITLE SCREEN —',
+    tag: '300 YEARS OF BRAZILIAN HISTORY. ONE COWBOY LOST IN TIME. AND THE GOLD OF MINAS GERAIS.',
+    play: '▶ PRESS START', coin: 'INSERT COIN... NO NEED. IT\'S FREE.', down: '▼ SCROLL TO PICK YOUR MISSION ▼',
+    stage2: '— STAGE 2 —', h2: 'SELECT YOUR MISSION', soon: 'COMING SOON',
+    c1h: 'EXPLORE', c1: '11 time portals: from the brazilwood of 1500 to today\'s Tiradentes, through sugar mills, Palmares, the gold rush and the Minas Conspiracy.',
+    c2h: 'LEARN', c2: '78 reports with real facts, questions that pay in gold and the "this would become": what each story turned into in today\'s Brazil.',
+    c3h: 'PLAY', c3: '11 arcade challenges: the brazilwood Frogger, the sugar mill Space Invaders, the gold-panning Pac-Man... and the Saci causing trouble along the way.',
+    c4h: 'SAVE YOUR TRIP', c4: 'Found a place worth visiting? Write it in your travel notebook and take it on the real trip: address, guide\'s tip and route.',
+    c5h: 'BOOK IT', c5: 'City tour with a guide, inns, restaurants and day trips, right from inside the game. Same map, now with booking.',
+    c6h: 'LEVEL UP', c6: 'Collect gold and shine, buy the muleteer\'s boots, build collections and complete the folklore bestiary. Shine can\'t be bought: it\'s earned.',
+    minas: 'Minas Gerais: one of the safest, most charming and most delicious states in Brazil. In every sense. Cheese bread included.',
+    stage3: '— STAGE 3 · FINAL —', h3: 'THIS IS THE ADVENTURE OF BUCK CALHOUN', mula: 'DONA MULA', cob: 'THE COLLECTOR',
+    s1: 'Nashville, 1876. <em>Buck Calhoun</em>, a Tennessee cowboy, rides into Tiradentes thirsty. He drinks from the São José fountain. The sky spins. His canteen turns ice-cold. And Buck is <em>stuck in time</em>.',
+    s2: 'By his side, <em>Dona Mula</em>, the Headless Mule (no head, plenty of opinions), and a strange mission: cross 300 years of Brazil, gather reports and find out why gold shines so bright, and for whom.',
+    s3: 'Along the way: caravels, quilombos, bandeirantes, conspirators and the dreaded <em>Fifth Collector</em>, who wants 20% of everything you find. To this day.',
+    s4: 'In the end, the real Minas Gerais is waiting for you. With a map, with history and with cheese bread.',
+    play2: '▶ PLAY NOW', cont: 'CONTINUE?', foot: 'Made in Tiradentes, Minas Gerais, by a tour guide. Works on phone and computer. Português · English · Español.',
+    _title: 'Visit Minas · Brazil\'s Gem — the game',
+  },
+  es: {
+    credit: 'CRÉDITO 01', stage1: '— STAGE 1 · PANTALLA DE INICIO —',
+    tag: '300 AÑOS DE HISTORIA DE BRASIL. UN VAQUERO PERDIDO EN EL TIEMPO. Y EL ORO DE MINAS GERAIS.',
+    play: '▶ PRESS START', coin: 'INSERT COIN... NO HACE FALTA. ES GRATIS.', down: '▼ BAJA PARA ELEGIR TU MISIÓN ▼',
+    stage2: '— STAGE 2 —', h2: 'SELECT YOUR MISSION', soon: 'MUY PRONTO',
+    c1h: 'EXPLORA', c1: '11 portales en el tiempo: del palo brasil de 1500 a la Tiradentes de hoy, pasando por ingenios, Palmares, el oro y la Conjuración Minera.',
+    c2h: 'APRENDE', c2: '78 informes con hechos reales, preguntas que valen oro y el "esto llegaría a ser": en qué se convirtió cada historia en el Brasil de hoy.',
+    c3h: 'JUEGA', c3: '11 desafíos de arcade: el Frogger del palo brasil, el Space Invaders del ingenio, el Pac-Man del garimpo... y el Saci haciendo de las suyas.',
+    c4h: 'GUARDA TU VIAJE', c4: '¿Encontraste un lugar que vale la pena? Anótalo en el cuaderno de viaje y llévalo al viaje de verdad: dirección, consejo del guía y ruta.',
+    c5h: 'RESERVA', c5: 'City tour con guía, posadas, restaurantes y paseos, desde dentro del juego. El mismo mapa, ahora con reservas.',
+    c6h: 'SUBE DE NIVEL', c6: 'Junta oro y brillo, compra las botas de arriero, arma colecciones y completa el bestiario del folclore. El brillo no se compra: se gana.',
+    minas: 'Minas Gerais: uno de los estados más seguros, encantadores y sabrosos de Brasil. En todos los sentidos. Pan de queso incluido.',
+    stage3: '— STAGE 3 · FINAL —', h3: 'ESTA ES LA AVENTURA DE BUCK CALHOUN', mula: 'DONA MULA', cob: 'EL COBRADOR',
+    s1: 'Nashville, 1876. <em>Buck Calhoun</em>, vaquero de Tennessee, llega a Tiradentes con sed. Bebe de la Fuente de São José. El cielo gira. La cantimplora se congela. Y Buck queda <em>atrapado en el tiempo</em>.',
+    s2: 'A su lado, la <em>Dona Mula</em>, la Mula Sin Cabeza (sin cabeza, con muchas opiniones), y una misión extraña: atravesar 300 años de Brasil, juntar informes y descubrir por qué el oro brilla tanto, y para quién.',
+    s3: 'En el camino: carabelas, quilombos, bandeirantes, conjurados y el temido <em>Cobrador del Quinto</em>, que quiere el 20% de todo lo que encuentres. Hasta hoy.',
+    s4: 'Al final, la Minas Gerais de verdad te espera. Con mapa, con historia y con pan de queso.',
+    play2: '▶ JUGAR AHORA', cont: 'CONTINUE?', foot: 'Hecho en Tiradentes, Minas Gerais, por un guía de turismo. Funciona en el móvil y en el ordenador. Português · English · Español.',
+    _title: 'Visit Minas · Brazil\'s Gem — el juego',
+  },
+};
+const PT = {}; document.querySelectorAll('[data-t]').forEach((el) => { PT[el.dataset.t] = el.innerHTML; }); PT._title = document.title; PT.cont = 'CONTINUE?';
+function setLang(l) {
+  const d = l === 'pt' ? PT : { ...PT, ...T[l] };
+  document.querySelectorAll('[data-t]').forEach((el) => { const k = el.dataset.t; if (k === 'cont') { el.firstChild.textContent = d.cont + ' '; return; } el.innerHTML = d[k]; });
+  // a fonte de fliperama não tem acento (como nos anos 80): tira os acentos só do que usa ela
+  document.querySelectorAll('.px, h2, .card h3, .start, .soon, .cont, [data-t="credit"]').forEach((el) => el.querySelectorAll('*').length || (el.textContent = el.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '')));
+  document.title = d._title; document.documentElement.lang = { pt: 'pt-BR', en: 'en', es: 'es' }[l];
+  document.querySelectorAll('.play').forEach((a) => { a.href = 'jogo/?lang=' + l; });
+  document.querySelectorAll('.langs button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
+  try { localStorage.setItem('vm-lang', l); } catch (e) {}
+}
+let lang = 'pt';
+try { lang = localStorage.getItem('vm-lang') || ''; } catch (e) {}
+if (!T[lang]) lang = (navigator.language || 'pt').slice(0, 2).toLowerCase();
+if (!T[lang]) lang = 'en';
+document.querySelectorAll('.langs button').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.l)));
+setLang(lang);
+
+// placar: soma pontos conforme a página desce; contagem do CONTINUE? em laço
+const score = document.getElementById('score');
+addEventListener('scroll', () => { const p = Math.round(scrollY / Math.max(1, document.body.scrollHeight - innerHeight) * 1789) * 10; score.textContent = String(p).padStart(6, '0'); }, { passive: true });
+const cnt = document.getElementById('count'); let n = 9; setInterval(() => { n = n > 0 ? n - 1 : 9; cnt.textContent = n; }, 1000);
+</script>
+</body>
+</html>

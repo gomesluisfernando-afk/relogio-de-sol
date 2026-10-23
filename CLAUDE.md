@@ -13,6 +13,11 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 - A cada mudança publicada, subir a versão do cache em `sw.js` (`relogio-v2-N`), senão o celular fica com a versão velha.
 - Testar no navegador: `python -m http.server 8090` e abrir `/?test=1` (laço por timer). Extras: `&era=<id>`, `&mini=<id>`, `&touch=1` (força controles de celular), `&intro=1` (revê a intro).
 
+## Landing (visitminas.com)
+- `landing/` = página de entrada (3 telas, estilo fliperama, PT/EN/ES, Open Graph em `og.jpg`, favicon de esmeralda).
+- `python tools/landing_zip.py saida.zip` monta o pacote do servidor: landing na raiz e o jogo em `jogo/`. O JOGAR abre `jogo/?lang=xx`
+  (com `?lang=` o jogo pula as bandeiras). As tags `og:url`/`og:image` apontam para https://visitminas.com/: trocar se o domínio mudar.
+
 ## Línguas (português, inglês e espanhol)
 - O jogo abre nas bandeiras (Brasil, EUA, Espanha); a escolha fica guardada. `?test=1` pula (`&flags=1` mostra), `&lang=en` força.
 - Estilo gettext (.po), em JSON: o texto original é a chave. `i18n/en.json`, `i18n/es.json` e `i18n/pt.json` trazem
