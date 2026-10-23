@@ -1071,12 +1071,31 @@
     },
   });
 
+  // Capa animada (VISIT MINAS · BRAZIL'S GEM) em laço atrás do canvas: vertical com o celular em pé, horizontal no PC.
+  // O #app gira 90° com o celular em pé; o vídeo vertical gira de volta para ficar de pé. Sem vídeo, vale a capa antiga.
+  const CAPA = { v: 'video/capa_v.mp4', h: 'video/capa_h.mp4' };
+  const capaOff = () => { vid.pause(); vid.loop = false; vid.style.cssText = 'display:none'; vid.removeAttribute('src'); vid.load(); };
   const Title = () => ({
     isTitle: true,
-    t: 0,
+    t: 0, rot: null, ok: false,
     enter() { music('title'); },
-    update(dt) { this.t += dt; },
+    capa() {
+      this.rot = ROT; this.ok = true;
+      vid.onended = null; vid.onerror = () => { this.ok = false; capaOff(); };
+      vid.loop = true; vid.muted = true; vid.src = ROT ? CAPA.v : CAPA.h;
+      vid.style.cssText = ROT ? 'display:block;width:540px;height:960px;left:210px;top:-210px;transform:rotate(-90deg)' : 'display:block';
+      vid.play().catch(() => {});
+    },
+    update(dt) { this.t += dt; if (this.rot !== ROT) this.capa(); },
     draw() {
+      if (this.ok) {
+        g.clearRect(0, 0, W, H);
+        const a = 0.6 + 0.4 * Math.sin(this.t * 3), lb = G.flags.intro ? 'TOQUE PARA CONTINUAR' : 'TOQUE PARA COMEÇAR';
+        g.save(); g.globalAlpha = a;
+        if (ROT) { g.translate(W * 0.75, H / 2); g.rotate(-Math.PI / 2); pill([-150, -23, 300, 46], '#ffd84a', lb, '#2a1a08', 13); } // em pé: na base do livro, acima do logo
+        else pill([W - 360, H - 80, 320, 52], '#ffd84a', lb, '#2a1a08', 14);
+        g.restore(); return;
+      }
       bg('assets/img/scenes/mirante.webp', 3, 0.15, '#1a1030');
       if (G.flags.lumStay) lum(W - 80, 80, 26, this.t, 0.8);
       g.fillStyle = 'rgba(10,16,70,.55)'; g.fillRect(0, 40, W, 170);
@@ -1086,7 +1105,7 @@
       { const a = 0.6 + 0.4 * Math.sin(this.t * 3); g.globalAlpha = a; pill([W / 2 - 170, H - 100, 340, 54], '#ffd84a', G.flags.intro ? 'TOQUE PARA CONTINUAR' : 'TOQUE PARA COMEÇAR', '#2a1a08', 14); g.globalAlpha = 1; }
     },
     tap() {
-      audio(); sfx('ok');
+      audio(); sfx('ok'); capaOff();
       if (!G.flags.intro || /[?&]intro=1/.test(location.search)) { go(Intro); return; } // ?intro=1 revê a intro sem perder o progresso
       const m = window.MAPS[G.era] ? G.era : 'hoje';
       go(() => OW(m), m === 'hoje' ? 'Brasil · Hoje' : window.MAPS[m].title);

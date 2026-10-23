@@ -1,6 +1,6 @@
 // Offline: guarda tudo na primeira visita. Responde do cache e atualiza em segundo
 // plano, então uma correção de conteúdo chega ao celular na abertura seguinte.
-const CACHE = 'relogio-v2-39';
+const CACHE = 'relogio-v2-40';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest', 'game.js', 'cutscenes.js', 'minis.js', 'content.data.js', 'assets.data.js', 'lang.data.js', 'i18n.js', 'maps/hoje.js', 'maps/eras.js', 'world.js',
   'assets/fonts/lilita-one.woff2', 'assets/fonts/nunito-800.woff2', 'assets/fonts/nunito-900.woff2', 'assets/img/ui/icon-192.png', 'assets/img/ui/icon-512.png',
@@ -10,7 +10,7 @@ const FILES = [
 ];
 // Retratos e fundos novos que podem não existir ainda: entram se existirem, sem travar a instalação.
 const OPTIONAL = ['img/p_nassau.png', 'img/p_fernao.png', 'img/p_vigia.png', 'img/p_zumbi.png', 'img/p_yves.png', 'img/p_louie.png', 'img/p_aprendiz.png', 'img/p_fundidor.png', 'img/p_caminha.png', 'img/p_colombo.png', 'img/p_cortesao.png',
-  'img/lum.png', 'img/bg_tordesilhas.jpg', 'img/bg_moenda.jpg', 'img/bg_capibaribe.jpg', 'img/bg_congonhas.jpg', 'img/bg_torre.jpg',
+  'video/capa_v.mp4', 'video/capa_h.mp4', 'img/lum.png','img/bg_tordesilhas.jpg', 'img/bg_moenda.jpg', 'img/bg_capibaribe.jpg', 'img/bg_congonhas.jpg', 'img/bg_torre.jpg',
   ...['musica', 'sino', 'sinoP', 'sinos', 'portal', 'fall', 'card', 'coin', 'garimpo', 'apito', 'ondas', 'flash', 'moenda', 'cascos'].map((n) => `audio/${n}.mp3`)];
 const artList = async () => { try { const t = await (await fetch('assets.data.js', { cache: 'reload' })).text(); return JSON.parse(t.slice(t.indexOf('['), t.lastIndexOf(']') + 1)); } catch { return []; } };
 const imagesFrom = async (file) => (await (await fetch(file, { cache: 'reload' })).json())
