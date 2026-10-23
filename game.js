@@ -1725,7 +1725,7 @@
         hud.book = [W - 76, 178, 62, 54]; box(...hud.book, 0.85); icon('hud_mochila', '🎒', hud.book[0] + 31, hud.book[1] + 27, 30);
         hud.zin = [W - 76, 240, 62, 40]; hud.zout = [W - 76, 286, 62, 40]; // zoom do mapa
         for (const [r, t, on] of [[hud.zin, '＋', zoomI() < ZOOMS.length - 1], [hud.zout, '－', zoomI() > zoomMin()]]) { box(...r, 0.85); txt(t, r[0] + 31, r[1] + 10, 16, on ? '#fff' : '#5a6aa0', 'center'); }
-        if (items) { box(10, H - 134, 150, 38, 0.85); txt(items, 24, H - 122, 14, '#fff'); }
+        if (items) { const us = G.items.filter((i) => ITEM(i).kind === 'util').slice(0, 6); box(10, H - 134, 150, 38, 0.85); us.forEach((i, k) => icon(i, ITEM(i).icon, 30 + k * 23, H - 115, 22)); }
         hud.timeline = drawTimeline(M.era, tt);
       },
       ctl: true,
