@@ -1,0 +1,89 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   100,
+   852
+  ],
+  "portal": [
+   52,
+   876
+  ],
+  "casa": [
+   300,
+   524
+  ],
+  "conspiracao": [
+   740,
+   540
+  ],
+  "forca": [
+   604,
+   140
+  ],
+  "igreja": [
+   956,
+   324
+  ],
+  "largo": [
+   604,
+   644
+  ]
+ },
+ "rotulos": [
+  [
+   300,
+   400,
+   "Casa do dentista"
+  ],
+  [
+   740,
+   425,
+   "Casa da conspiração"
+  ],
+  [
+   600,
+   60,
+   "Morro da forca"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "tiradentes",
+   "at": "casa"
+  },
+  {
+   "id": "silverio",
+   "at": "largo"
+  },
+  {
+   "id": "quitandeira",
+   "at": "conspiracao"
+  },
+  {
+   "id": "aprendiz",
+   "at": "igreja"
+  },
+  {
+   "id": "poeta",
+   "xy": [
+    820,
+    700
+   ]
+  },
+  {
+   "id": "conspirador",
+   "xy": [
+    450,
+    560
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

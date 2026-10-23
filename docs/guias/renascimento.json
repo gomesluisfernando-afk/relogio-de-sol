@@ -1,0 +1,60 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   148,
+   852
+  ],
+  "portal": [
+   92,
+   876
+  ],
+  "praca": [
+   604,
+   540
+  ],
+  "igreja": [
+   604,
+   268
+  ]
+ },
+ "rotulos": [
+  [
+   605,
+   125,
+   "Matriz (em obra)"
+  ],
+  [
+   600,
+   425,
+   "Praça"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "yves",
+   "at": "praca"
+  },
+  {
+   "id": "restauradora",
+   "xy": [
+    300,
+    600
+   ]
+  },
+  {
+   "id": "cineasta",
+   "xy": [
+    800,
+    600
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

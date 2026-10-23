@@ -207,7 +207,7 @@
   }
   function pill(r, col = '#ffd84a', label, fg = '#2a1a08', size = 13) { // botão com relevo
     const [x, y, w, h] = r, rad = Math.min(14, h / 2), im = ART(`assets/ui/btn_${col === '#ffd84a' ? 'ouro' : 'azul'}.webp`);
-    if (im) nine(im, x, y, w, h, Math.min(18, h / 2));
+    if (im) { const sc = im.height / 2, dc = Math.min(h / 2, w / 2); g.drawImage(im, 0, 0, sc, im.height, x, y, dc, h); g.drawImage(im, sc, 0, im.width - 2 * sc, im.height, x + dc, y, w - 2 * dc, h); g.drawImage(im, im.width - sc, 0, sc, im.height, x + w - dc, y, dc, h); } // botão: ponta, meio esticado, ponta
     else {
       g.fillStyle = shade(col, 0.62); rr(x, y + 3, w, h, rad); g.fill();
       const gr = g.createLinearGradient(0, y, 0, y + h); gr.addColorStop(0, shade(col, 1.12)); gr.addColorStop(1, shade(col, 0.88));
@@ -265,6 +265,11 @@
   for (const k of Object.keys(PAL)) PAL[k].sprite ||= k; // nome da folha de sprite de cada um (assets/sprites/<id>.webp)
   WD.sprite = (id) => ART(`assets/sprites/${id}.webp`);
   const FOLK = new Set(WD.folk.map((f) => f.id));
+  // testemunhas sem ficha ("Um marinheiro de Palos"…): um de 4 tipos genéricos, cada um com sprite e retrato próprios quando existirem
+  const GENERICO = [[/marinh|maruj|barqueir/i, 'gen_marinheiro', { shirt: '#f2efe6', plaid: '#2a4a8a', pants: '#2a4a8a', boots: null }], [/soldad|drag[aã]o|carcereir|vigia/i, 'gen_soldado', { shirt: '#2a3a7a', buttons: '#e8c04a', pants: '#e8e0c8', boots: '#111', hat: 'tricorne', hatc: '#111' }],
+    [/sert[aã]o|paulista|guia/i, 'gen_sertanejo', { shirt: '#9a6a3a', pants: '#6a5a3a', boots: '#3a2212', hat: 'leather', hatc: '#6a4a2a' }], [/./, 'gen_cidadao', { shirt: '#5a3a5a', buttons: '#ddd', pants: '#2a2a2a', boots: '#111' }]];
+  const genOf = (id) => GENERICO.find(([re]) => re.test(id)) || GENERICO[3];
+  const palOf = (id) => PAL[id] || (id && id.includes(' ') ? { ...PAL.turista, ...genOf(id)[2], sprite: genOf(id)[1] } : PAL.turista);
   const buckPal = () => { const h = ITEM(G.chapeu || 'stetson'), sprite = ASSET.has(`assets/sprites/buck_${G.chapeu}.webp`) ? `buck_${G.chapeu}` : 'buck'; return h.hat ? { ...PAL.buck, hat: h.hat, hatc: h.hatc, sprite } : PAL.buck; };
   function dude(x, y, P, ph, face, u = 2, moving = true, extra = {}) {
     const sp = !extra.flame && ART(P.sprite && `assets/sprites/${P.sprite}.webp`);
@@ -357,6 +362,21 @@
   }
   function firework(x, y) { for (let i = 0; i < 50; i++) { const a = Math.random() * 7, v = 80 + Math.random() * 160; PARTS.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, c: ['#ffd84a', '#fff', '#ff9a4a', '#9ad8ff'][i % 4], life: 1.2 + Math.random(), sz: 4, light: 1 }); } }
   function floatTxt(s, col = '#ffd84a') { FLOAT.push({ s, col, t: 2 }); }
+  // moedas e brilhos que voam até o contador do HUD (só no mapa, onde o HUD existe)
+  let FLY = [];
+  function fly(kind, n) {
+    if (!scene?.S) return;
+    const to = kind === 'ouro' ? [31, H - 57] : [31, H - 39];
+    for (let i = 0; i < Math.min(8, Math.max(1, Math.round(n / 5))); i++) FLY.push({ kind, x: W / 2 + (Math.random() - 0.5) * 80, y: H / 2 + (Math.random() - 0.5) * 50, to, t: -i * 0.07 });
+  }
+  function drawFly(dt) {
+    FLY = FLY.filter((f) => (f.t += dt) < 0.75);
+    for (const f of FLY) {
+      if (f.t < 0) continue;
+      const k = f.t / 0.75, e = k * k * (3 - 2 * k), x = f.x + (f.to[0] - f.x) * e, y = f.y + (f.to[1] - f.y) * e - Math.sin(k * Math.PI) * 60, sz = 22 - 8 * k;
+      icon(f.kind === 'ouro' ? 'hud_ouro' : 'hud_brilho', f.kind === 'ouro' ? '🪙' : '✨', x, y, sz);
+    }
+  }
   function drawParts(dt) {
     PARTS = PARTS.filter((p) => (p.life -= dt) > 0);
     for (const p of PARTS) { p.vy += (p.light ? 120 : 600) * dt; p.x += p.vx * dt; p.y += p.vy * dt; g.fillStyle = p.c; g.fillRect(p.x, p.y, p.sz, p.sz); }
@@ -396,9 +416,9 @@
     if (isLum) lumBox(60, y0 + 20, W - 120, 150); else box(16, y0, W - 32, 180);
     const nm = isLum ? '' : nameOf(p.who);
     if (nm) {
-      const im = img(`img/p_${p.who}.png`);
+      const im = p.who?.includes(' ') ? ART(`assets/sprites/${genOf(p.who)[1]}_retrato.webp`) : img(`img/p_${p.who}.png`);
       g.save(); rr(30, y0 + 22, 136, 136, 16); g.clip(); g.fillStyle = '#0a1040'; g.fillRect(30, y0 + 22, 136, 136);
-      if (im) { g.imageSmoothingEnabled = true; g.drawImage(im, 30, y0 + 22, 136, 136); } else if (FOLK.has(p.who)) { g.save(); g.translate(98, y0 + 140); g.scale(2.2, 2.2); WD.drawFolk(g, p.who, 0, 0, T); g.restore(); } else dude(98, y0 + 150, PAL[p.who] || PAL.turista, 0, 0, 5, false);
+      if (im) { g.imageSmoothingEnabled = true; g.drawImage(im, 30, y0 + 22, 136, 136); } else if (FOLK.has(p.who)) { g.save(); g.translate(98, y0 + 140); g.scale(2.2, 2.2); WD.drawFolk(g, p.who, 0, 0, T); g.restore(); } else dude(98, y0 + 150, palOf(p.who), 0, 0, 5, false);
       g.restore(); g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 3; rr(30, y0 + 22, 136, 136, 16); g.stroke();
       tx = 190;
       const name = nm.length > 24 ? nm.split(' ').slice(0, 3).join(' ') : nm;
@@ -689,11 +709,11 @@
       else done?.();
     });
   }
-  const giveGold = (n) => { G.gold = Math.max(0, G.gold + n); save(); if (n > 0) sfx('coin'); };
+  const giveGold = (n) => { G.gold = Math.max(0, G.gold + n); save(); if (n > 0) { sfx('coin'); fly('ouro', n); } };
   // ================= mundo aberto: brilho, itens, comidas, títulos =================
   // Duas moedas: ouro compra coisas; brilho (✦) vem de olhar, aprender, ajudar e doar, e ouro nenhum compra.
   const BRILHO_FINAL = 150; // brilho para o final verdadeiro
-  function giveBrilho(n, why) { if (!n) return; if (WD.event(new Date())?.brilho2) n *= 2; G.brilho = (G.brilho || 0) + n; save(); FLAMEPULSE = 1.2; floatTxt(`✦ +${n}${why ? ` ${why}` : ''}`, '#ffb030'); }
+  function giveBrilho(n, why) { if (!n) return; if (WD.event(new Date())?.brilho2) n *= 2; G.brilho = (G.brilho || 0) + n; save(); FLAMEPULSE = 1.2; fly('brilho', n * 5); floatTxt(`✦ +${n}${why ? ` ${why}` : ''}`, '#ffb030'); }
   const RAWRAR = { santo: 'reliquia', turmalina: 'reliquia', 'livro-antonil': 'documento', 'carta-tj': 'documento' };
   const ITEM = (id) => WD.items[id] || (() => { const r = RAW.items.find((x) => x.id === id); return r ? { name: r.name, icon: r.icon, kind: 'colecao', rarity: RAWRAR[id] || 'documento', desc: r.desc } : { name: id, icon: '•', kind: 'colecao', rarity: 'comum', desc: '' }; })();
   const priceOf = (id) => (id === 'botas' ? PRECO_BOTAS : ITEM(id).price || 0);
@@ -1303,6 +1323,12 @@
       }
       return L.map((o) => { const k = `${o.q}:${o.i}`; const [x, y] = PICKC[k] ||= free(o.p); return { ...o, x, y }; });
     }
+    function missaoIcon(o) { // nome do ícone do objeto de missão (assets/icons/missao_<nome>.webp)
+      const nm = (o.p[2] || o.step.label || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      if (o.step.words) return 'missao_palavra';
+      if (o.step.kind === 'route') return nm === 'gelo' ? 'missao_gelo' : o.q === 'SQ-quitanda' ? 'missao_quitanda' : 'missao_destino';
+      return `missao_${nm.split(' ')[0]}`;
+    }
     function pick(o) {
       const d = SQ(o.q), st = G.side[o.q], step = o.step, total = step.pts.length;
       st.got.push(o.i); sfx('coin');
@@ -1619,7 +1645,7 @@
           if (!onS(o.x, o.y)) continue;
           const x = sx(o.x), y = sy(o.y) - 6 + Math.sin(tt * 4 + o.i) * 3;
           g.fillStyle = 'rgba(155,227,106,.35)'; g.beginPath(); g.arc(x, y, 14 + Math.sin(tt * 3) * 2, 0, 7); g.fill();
-          txt(o.step.icon || (o.step.kind === 'route' ? '📍' : '✳'), x, y - 9, 14, '#fff', 'center');
+          icon(missaoIcon(o), o.step.icon || (o.step.kind === 'route' ? '📍' : '✳'), x, y, 26);
         }
         for (const mi of M.minis || []) {
           if (!mi.at) continue;
@@ -1647,7 +1673,7 @@
             if (mk) txt(mk, sx(n.x), sy(n.y) - 33 * Z - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#ffd84a', 'center');
           } })),
           ...folkHere().filter((f) => onS(f.x, f.y)).map((f) => ({ y: f.y, d: () => { WD.drawFolk(g, f.id, sx(f.x), sy(f.y), tt, Z); if (!G.bestiario.includes(f.id)) txt('?', sx(f.x), sy(f.y) - 35 * Z - 14 - Math.abs(Math.sin(tt * 3)) * 4, 12, '#c070ff', 'center'); } })),
-          ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), PAL[w.id] || PAL.turista, 0, 0, Z, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 35 * Z - 16, 12, '#fff', 'center'); } })),
+          ...witnesses.filter((w) => !w.mule && G.quests[w.quest] && !G.quests[w.quest].done && onS(w.x, w.y)).map((w) => ({ y: w.y, d: () => { dude(sx(w.x), sy(w.y), palOf(w.id), 0, 0, Z, false); if (!G.quests[w.quest].heard.includes(w.wi)) txt('💬', sx(w.x), sy(w.y) - 35 * Z - 16, 12, '#fff', 'center'); } })),
         ];
         if (COB) ents.push({ y: COB.y, d: () => {
           dude(sx(COB.x), sy(COB.y), PAL.cobrador, COB.ph, COB.face, Z, true);
@@ -1710,7 +1736,7 @@
         hud.book = [W - 76, 178, 62, 54]; box(...hud.book, 0.85); icon('hud_mochila', '🎒', hud.book[0] + 31, hud.book[1] + 27, 30);
         hud.zin = [W - 76, 240, 62, 40]; hud.zout = [W - 76, 286, 62, 40]; // zoom do mapa
         for (const [r, t, on] of [[hud.zin, '＋', zoomI() < ZOOMS.length - 1], [hud.zout, '－', zoomI() > zoomMin()]]) { box(...r, 0.85); txt(t, r[0] + 31, r[1] + 10, 16, on ? '#fff' : '#5a6aa0', 'center'); }
-        if (items) { box(10, H - 134, 150, 38, 0.85); txt(items, 24, H - 122, 14, '#fff'); }
+        if (items) { const us = G.items.filter((i) => ITEM(i).kind === 'util').slice(0, 6); box(10, H - 134, 150, 38, 0.85); us.forEach((i, k) => icon(i, ITEM(i).icon, 30 + k * 23, H - 115, 22)); }
         hud.timeline = drawTimeline(M.era, tt);
       },
       ctl: true,
@@ -1766,6 +1792,13 @@
         say([['narr', 'Você não conseguiu desta vez.'], ['narr', msg], ['mula', 'Volte ao desafio quando quiser e tente de novo.']], back);
       },
     };
+    // arte do minigame (assets/minis/<mini>_<nome>.webp): spr desenha um objeto centrado; fundo troca o fundo. Sem arquivo, devolve false.
+    const MA = (n) => ART(`assets/minis/${mid}_${n}.webp`);
+    api.spr = (n, cx, cy, w, h, flip) => { const im = MA(n); if (!im) return false; const k = Math.min(w / im.width, h / im.height), dw = im.width * k, dh = im.height * k; g.save(); g.translate(cx, cy); if (flip) g.scale(-1, 1); g.imageSmoothingEnabled = true; g.drawImage(im, -dw / 2, -dh / 2, dw, dh); g.restore(); return true; }; // cabe na caixa sem deformar
+    api.has = (n) => !!MA(n);
+    api.arte = (n) => MA(n); // a imagem crua (texturas: pergaminho, bagaço, serra…)
+    api.fundo = (dark = 0) => { const im = MA('fundo'); if (!im) return false; pixelImage(im, 3, dark); return true; };
+    api.bg = (src, k, dark, col) => { if (!api.fundo(dark)) bg(src, k, dark, col); };
     go(() => Object.assign(f(api), { ctl: true, esc: back }), null);
   }
 
@@ -2039,6 +2072,7 @@
       scene.update?.(dt);
       scene.draw(dt);
       drawParts(dt);
+      drawFly(dt);
       drawFlash(dt);
       if (PANEL) drawPanel();
       if (ASK) drawAsk();

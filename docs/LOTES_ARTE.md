@@ -6,7 +6,8 @@ A lista oficial de cada imagem, com arquivo, tamanho, descrição e **prompt pro
 ## 0. Antes de começar (sempre)
 1. `git pull origin main`.
 2. `node tools/check.mjs`. A linha "arte nova: X de 85 imagens do manifesto prontas" mostra onde paramos.
-3. Abra `assets/manifest.json` e escolha o próximo lote, na ordem **L0 → L1 → L2 → L3 → L4 → L5**.
+3. Abra `assets/manifest.json` e escolha o próximo lote, na ordem **L0 → L1 → L2 → L3 → L4 → L5 → L6 → L7 → L8 → L9**.
+   **O Luis já aprovou o estilo (L0 e L1 prontos): pode seguir os lotes sem parar para aprovação**, mostrando só o resultado de cada lote.
 
 ## 1. O estilo (vale para tudo)
 - **Alvo:** jogo de celular moderno (Clash of Clans, Royal Match): pintado, cores quentes e vivas, contorno marrom-escuro (nunca preto puro), luz de cima à esquerda, vista de cima em 3/4. Tema: Brasil colonial / Minas barroca.
@@ -23,6 +24,10 @@ A lista oficial de cada imagem, com arquivo, tamanho, descrição e **prompt pro
 | **L3** | **Tiradentes** | 2 (+1 opcional) | mapa pintado sobre o guia + máscara de colisão (+ camada de telhados, opcional) |
 | **L4** | Personagens | 28 | folhas de sprite 3×4 do Buck e dos NPCs de Tiradentes e do mapa do Brasil, a Dona Mula, 4 criaturas do folclore. **`amado` só com autorização por escrito.** |
 | **L5** | O "lobby" (mapa do Brasil) | 7 (+1 opcional) | mapa pintado sobre o guia + portais, pouso e relatório |
+| **L6** | Mapas das 10 eras | 20 | mapa pintado + colisão de cada era, a partir de `docs/guias/<era>_*`. **Açúcar e Palmares: tom sério e digno.** |
+| **L7** | Personagens das eras + folclore restante | 41 | folhas 3×4 de cada personagem histórico; Curupira, Saci, Iara e Mãe-do-Ouro. Tiradentes como alferes de 1789 (não a imagem de mártir de cabelo longo). |
+| **L8** | Os 11 minigames | 42 | fundo 16:9 e objetos de cada minigame (`assets/minis/<mini>_<nome>.webp`); fundos marcados como opcionais já existem em `img/` |
+| **L9** | Acabamento | 27 | Buck com os outros 4 chapéus (mesma grade do `buck`), 4 testemunhas genéricas (sprite + retrato), 10 ícones dos objetos das missões (`missao_*`), pergaminho da Régua, tabuleiro da Carta, bagaço e fagulha da Moenda, serra das Fogueiras (céu transparente). Fechado o L9, não sobra nada do visual antigo. |
 
 ## 3. Como gerar cada tipo
 - **ui / icone / prop / folk:** um objeto por imagem, **fundo branco liso**.
@@ -52,6 +57,10 @@ python tools/arte.py <tipo> <arquivo_gerado> <nome> [--fundo]
 | mapa | `python tools/arte.py mapa tira.png tiradentes` | `assets/maps/tiradentes.webp` (2400×1800) |
 | colisao | `python tools/arte.py colisao mascara.png tiradentes` | `assets/maps/tiradentes_colisao.png` |
 | topo | `python tools/arte.py topo telhados.png tiradentes` | `assets/maps/tiradentes_top.webp` |
+| minifundo | `python tools/arte.py minifundo fundo.png escambo_fundo` | `assets/minis/escambo_fundo.webp` (1920×1080) |
+| miniobj | `python tools/arte.py miniobj onca.png escambo_onca --fundo` | `assets/minis/escambo_onca.webp` (até 256, mantém a proporção) |
+| minitextura | `python tools/arte.py minitextura serra.png fogueiras_serra --fundo` | `assets/minis/fogueiras_serra.webp` (até 1024, mantém a proporção) |
+| retrato | `python tools/arte.py retrato rosto.png gen_marinheiro_retrato` | `assets/sprites/gen_marinheiro_retrato.webp` (256×256) |
 
 - `--fundo` tira o fundo liso a partir das bordas. Confira se não comeu pedaço do desenho.
 - O nome final tem que ser **exatamente** o do manifesto.

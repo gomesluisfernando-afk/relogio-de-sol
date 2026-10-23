@@ -1,0 +1,78 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   700,
+   844
+  ],
+  "portal": [
+   644,
+   868
+  ],
+  "feitoria": [
+   644,
+   564
+  ],
+  "cruz": [
+   764,
+   756
+  ],
+  "aldeia": [
+   276,
+   300
+  ],
+  "roda": [
+   204,
+   332
+  ],
+  "praia": [
+   788,
+   820
+  ]
+ },
+ "rotulos": [
+  [
+   640,
+   425,
+   "Feitoria"
+  ],
+  [
+   270,
+   85,
+   "Aldeia tupi"
+  ],
+  [
+   1000,
+   560,
+   "Caravela"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "caramuru",
+   "at": "aldeia"
+  },
+  {
+   "id": "paraguacu",
+   "at": "roda"
+  },
+  {
+   "id": "feitor",
+   "at": "praia"
+  },
+  {
+   "id": "tintureiro",
+   "xy": [
+    480,
+    700
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

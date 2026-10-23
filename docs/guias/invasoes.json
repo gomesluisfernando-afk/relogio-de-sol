@@ -1,0 +1,84 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   300,
+   860
+  ],
+  "portal": [
+   244,
+   884
+  ],
+  "capibaribe": [
+   524,
+   540
+  ],
+  "forte": [
+   700,
+   260
+  ],
+  "armazem": [
+   540,
+   332
+  ]
+ },
+ "rotulos": [
+  [
+   765,
+   75,
+   "Forte"
+  ],
+  [
+   520,
+   500,
+   "Capibaribe"
+  ],
+  [
+   430,
+   800,
+   "Recife"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "nassau",
+   "at": "capibaribe"
+  },
+  {
+   "id": "frans",
+   "at": "armazem"
+  },
+  {
+   "id": "capitao",
+   "at": "forte"
+  },
+  {
+   "id": "marcgrave",
+   "xy": [
+    300,
+    300
+   ]
+  },
+  {
+   "id": "rabino",
+   "xy": [
+    440,
+    690
+   ]
+  },
+  {
+   "id": "jardineiro",
+   "xy": [
+    820,
+    620
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

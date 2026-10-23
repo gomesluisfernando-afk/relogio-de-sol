@@ -4,7 +4,8 @@
 window.MAPS = window.MAPS || {};
 (() => {
   const M = window.MAPS;
-  const base = (o) => ({ w: 1200, h: 900, cell: 8, start: 'start', need: 3, ...o });
+  // cada mapa aceita arte pintada (assets/maps/<id>.webp), camada de cima (_top) e colisão pintada (_colisao.png); sem elas, vale o rascunho
+  const base = (o) => ({ w: 1200, h: 900, cell: 8, start: 'start', need: 3, image: `assets/maps/${o.id}.webp`, imageTop: `assets/maps/${o.id}_top.webp`, maskImage: `assets/maps/${o.id}_colisao.png`, ...o });
 
   // ---------- ATO I ----------
   M.mundo = base({
@@ -56,7 +57,7 @@ window.MAPS = window.MAPS || {};
         ['paraguacu', 'Mas nem tudo foi troca bonita. As doenças que vieram nos navios mataram mais gente do que as guerras. Lembre disso quando ouvir a palavra "descobrimento".', 'triangle:A aldeia vazia'],
         ['paraguacu', 'E hoje? Segundo o Censo de 2022, cerca de 1,7 milhão de indígenas vivem no Brasil, e ainda se falam mais de 270 línguas. Nós continuamos aqui.', 'circle:Os povos indígenas hoje'],
       ] },
-      { id: 'feitor', pal: 'cortesao', at: 'praia', quest: 'QST-02', lines: ['Feitor da Coroa. Alguém anda sumindo com o pau-brasil.'] },
+      { id: 'feitor', at: 'praia', quest: 'QST-02', lines: ['Feitor da Coroa. Alguém anda sumindo com o pau-brasil.'] },
     ],
     minis: [
       { id: 'escambo', at: 'feitoria', label: 'Escambo na feitoria', lines: [['caramuru', 'Toras de pau-brasil por objetos. Mas escolha bem o que aceita: espelho não derruba árvore.']] },
@@ -97,8 +98,8 @@ window.MAPS = window.MAPS || {};
     labels: [[765, 75, 'Forte'], [520, 500, 'Capibaribe'], [430, 800, 'Recife']],
     npcs: [
       { id: 'nassau', at: 'capibaribe', mini: 'ponte', lines: ['Maurício de Nassau. Vim governar e fiquei construindo. Esta cidade precisa de uma ponte.'] },
-      { id: 'frans', pal: 'yves', at: 'armazem', quest: 'QST-03', lines: ['Sou pintor. Pinto o que vejo, e vejo gente indo embora.'] },
-      { id: 'capitao', pal: 'nassau', at: 'forte', quiz: true, lines: ['Capitão da Companhia das Índias. Aqui se fala de açúcar, guerra e lucro. Nessa ordem? Depende do dia.'] },
+      { id: 'frans', at: 'armazem', quest: 'QST-03', lines: ['Sou pintor. Pinto o que vejo, e vejo gente indo embora.'] },
+      { id: 'capitao', at: 'forte', quiz: true, lines: ['Capitão da Companhia das Índias. Aqui se fala de açúcar, guerra e lucro. Nessa ordem? Depende do dia.'] },
     ],
     minis: [{ id: 'ponte', label: 'A Ponte de Nassau' }],
     arrive: [['mula', 'Recife holandesa. Canais, pontes, pintores e um forte.'], ['buck', 'Wait, the invaders built stuff? Nobody told me that in school.']],
@@ -203,7 +204,7 @@ window.MAPS = window.MAPS || {};
     labels: [[705, 100, 'Bom Jesus'], [300, 625, 'Estação']],
     npcs: [
       { id: 'aprendiz', at: 'adro', mini: 'profetas', lines: ['O mestre esculpe à noite. Eu falo por ele. Doze profetas, doze pedestais.'] },
-      { id: 'velho', pal: 'sineiro', at: 'praca', quiz: true, lines: ['O ouro foi embora. Ficaram as igrejas, a música e a gente. E muito tempo livre.'] },
+      { id: 'velho', at: 'praca', quiz: true, lines: ['O ouro foi embora. Ficaram as igrejas, a música e a gente. E muito tempo livre.'] },
     ],
     minis: [{ id: 'profetas', label: 'Os Doze Profetas' }],
     arrive: [['narr', '1850. O ouro acabou. A cidade parou. Nada acontece.'], ['mula', 'É exatamente esse o ponto.']],

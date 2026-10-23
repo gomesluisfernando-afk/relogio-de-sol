@@ -1,0 +1,62 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   604,
+   860
+  ],
+  "portal": [
+   540,
+   884
+  ],
+  "moenda": [
+   900,
+   452
+  ],
+  "capela": [
+   548,
+   204
+  ],
+  "senzala": [
+   300,
+   732
+  ]
+ },
+ "rotulos": [
+  [
+   335,
+   95,
+   "Casa-grande"
+  ],
+  [
+   920,
+   315,
+   "Moenda"
+  ],
+  [
+   290,
+   845,
+   "Senzala"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "quitandeira",
+   "at": "senzala"
+  },
+  {
+   "id": "engenho",
+   "xy": [
+    700,
+    690
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

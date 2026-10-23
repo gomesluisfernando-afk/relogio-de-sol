@@ -1,11 +1,11 @@
 // Gera assets.data.js: a lista das imagens de arte que existem de verdade (kit de UI, ícones, sprites, props, mapas).
 // O jogo só pede ao servidor o que está nesta lista: nada de erro 404 nem de dado gasto à toa no celular.
-// Rodar depois de colocar imagens novas em assets/{ui,icons,sprites,props,maps}/:  node tools/build_assets.mjs
+// Rodar depois de colocar imagens novas em assets/{ui,icons,sprites,props,maps,minis}/:  node tools/build_assets.mjs
 import { readdirSync, writeFileSync, existsSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 const root = new URL('../', import.meta.url);
-export const DIRS = ['ui', 'icons', 'sprites', 'props', 'maps'];
+export const DIRS = ['ui', 'icons', 'sprites', 'props', 'maps', 'minis'];
 export function listArt() {
   const out = [];
   for (const d of DIRS) {

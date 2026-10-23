@@ -1,0 +1,52 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   604,
+   860
+  ],
+  "portal": [
+   540,
+   884
+  ],
+  "portao": [
+   604,
+   652
+  ],
+  "centro": [
+   604,
+   444
+  ]
+ },
+ "rotulos": [
+  [
+   600,
+   285,
+   "Palmares"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "vigia",
+   "at": "portao"
+  },
+  {
+   "id": "zumbi",
+   "at": "centro"
+  },
+  {
+   "id": "anciao",
+   "xy": [
+    720,
+    520
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

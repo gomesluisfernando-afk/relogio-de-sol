@@ -1,0 +1,68 @@
+{
+ "escala": 2,
+ "mundo": [
+  1200,
+  900
+ ],
+ "pois": {
+  "start": [
+   148,
+   852
+  ],
+  "portal": [
+   92,
+   876
+  ],
+  "adro": [
+   700,
+   332
+  ],
+  "estacao": [
+   300,
+   708
+  ],
+  "praca": [
+   700,
+   564
+  ]
+ },
+ "rotulos": [
+  [
+   705,
+   100,
+   "Bom Jesus"
+  ],
+  [
+   300,
+   625,
+   "Estação"
+  ]
+ ],
+ "portais": {},
+ "npcs": [
+  {
+   "id": "aprendiz",
+   "at": "adro"
+  },
+  {
+   "id": "velho",
+   "at": "praca"
+  },
+  {
+   "id": "cafeeiro",
+   "xy": [
+    500,
+    600
+   ]
+  },
+  {
+   "id": "engenheiro",
+   "xy": [
+    380,
+    700
+   ]
+  }
+ ],
+ "paradas": [],
+ "pousos": []
+}

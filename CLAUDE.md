@@ -53,12 +53,16 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 - Teclado: setas/WASD + Espaço/Enter/E. Toque só em botões de interface (SAIR, opções, som, tela cheia, mochila).
 
 ## Arte nova (estratégia em `docs/ESTRATEGIA_GRAFICA.md`, lotes em `docs/LOTES_ARTE.md`)
-- Nuvem = código e encaixe; local = gerar no Nano Banana / Flow. Lista oficial: `assets/manifest.json` (85 imagens, lotes L0–L5).
+- Nuvem = código e encaixe; local = gerar no Nano Banana / Flow. Lista oficial: `assets/manifest.json` (215 imagens, lotes L0–L9).
 - Pastas: `assets/ui` (painel 9 fatias, botões), `assets/icons` (itens e HUD), `assets/sprites` (folhas 3×4 dos
   personagens, Dona Mula, folclore), `assets/props` (portais, pouso, relatório), `assets/maps` (mapa pintado,
   `_top` e `_colisao`). O jogo só carrega o que está em `assets.data.js` (`node tools/build_assets.mjs`); sem arquivo,
   vale o desenho antigo. Tratar imagens com `python tools/arte.py <tipo> <arquivo> <nome> [--fundo]`.
 - Mapas pintados partem dos guias em `docs/guias/` (planta, colisão e anotado), para o caminho bater com a colisão.
+- Minigames: `A.spr(nome, cx, cy, w, h, flip)` e `A.fundo()` usam `assets/minis/<mini>_<nome>.webp` quando existe;
+  senão desenham como antes; `A.arte(nome)` dá a textura crua. Lotes: L0–L2 prontos e aprovados; L3–L9 com a sessão local.
+- Testemunhas sem ficha usam 4 tipos genéricos (`gen_marinheiro`, `gen_soldado`, `gen_sertanejo`, `gen_cidadao`), com sprite e retrato.
+  Objetos das missões extras usam `assets/icons/missao_<nome>.webp`; o Buck usa `buck_<chapéu>` quando existe.
 
 ## Diretriz dos minigames (`minis.js`)
 - Cada um é a releitura de um clássico de fliperama/Atari (referência: games.wotai.co), com o tema da era:
