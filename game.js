@@ -16,6 +16,13 @@
   const DEBUG = /[?&]debug=1/.test(location.search);
   const TEST = /[?&]test=1/.test(location.search); // testes automáticos: laço por timer (painel em segundo plano não pinta)
 
+  // ================= línguas (i18n.js) =================
+  // Todo texto passa por tr() na hora de desenhar (draw/wrap); trf('Modelo {0}', x) para texto montado no código.
+  const I18 = window.I18N || { L: (s) => s, T: (s, ...a) => s.replace(/\{(\d)\}/g, (_, n) => a[n]), set() {}, chosen: () => true, LANGS: [], lang: 'pt' };
+  const tr = I18.L, trf = I18.T;
+  if (/[?&]test=1/.test(location.search)) window.I18N_MISS = new Set(); // o que apareceu na tela sem tradução
+  { const q = /[?&]lang=(pt|en|es)/.exec(location.search); if (q) I18.set(q[1]); }
+
   // ================= conteúdo =================
   const RAW = window.CONTENT_RAW;
   const CARD = Object.fromEntries(RAW.cards.map((c) => [c.id, c]));
@@ -65,7 +72,7 @@
   const eraDone = (era) => !!G.eras[era]?.done;
   const eraOpen = (era) => era === 'prologo' || SEQ.indexOf(era) <= 0 || eraDone(SEQ[SEQ.indexOf(era) - 1]);
   const nextEra = () => SEQ.find((e) => !eraDone(e));
-  const eraTitle = (era) => `${YEAR[era]} - ${ERA[era].name}`;
+  const eraTitle = (era) => `${YEAR[era]} - ${tr(ERA[era].name)}`;
   // Concluir uma era: todos os relatórios do chão -> todas as perguntas -> o minigame.
   const groundOf = (era) => eraCards(era).filter((c) => !REWARD.has(c.id)).map((c) => c.id);
   const quizOf = (era) => RAW.quizzes.filter((q) => CARD[q.cardId]?.era === era).map((q) => q.id);
@@ -171,12 +178,12 @@
   const FONT_T = '"Lilita One", "Nunito", sans-serif', FONT_B = '"Nunito", sans-serif', FK = 1.4;
   const fsz = (size) => Math.round(size * FK * (TOUCH && !FS_OFF ? 1.15 : 1));
   const fnt = (size, title) => (title ? `${fsz(size)}px ${FONT_T}` : `800 ${fsz(size)}px ${FONT_B}`);
-  function draw(s, x, y, size, col, align, title) { g.font = fnt(size, title); g.textAlign = align; g.textBaseline = 'alphabetic'; g.fillStyle = col; g.fillText(s, x, y + fsz(size) * 0.76); }
+  function draw(s, x, y, size, col, align, title) { s = tr(s); g.font = fnt(size, title); g.textAlign = align; g.textBaseline = 'alphabetic'; g.fillStyle = col; g.fillText(s, x, y + fsz(size) * 0.76); }
   const txt = (s, x, y, size = 16, col = '#fff', align = 'left') => draw(s, x, y, size, col, align, false);
   const ttl = (s, x, y, size = 16, col = '#fff', align = 'left') => draw(s, x, y, size, col, align, true);
   const plain = (s, x, y, size = 16, col = '#fff', align = 'left') => draw(s, x, y, size, col, align, true); // rótulo de botão
   function wrap(s, maxW, size, title) {
-    g.font = fnt(size, title);
+    s = tr(s); g.font = fnt(size, title);
     const out = [];
     for (const para of String(s).split('\n')) {
       let line = '';
@@ -186,6 +193,7 @@
       }
       out.push(line);
     }
+    out.forEach(I18.keep || (() => {}));
     return out;
   }
   // formas: retângulo arredondado, tom de cor, botão em pílula e painel (imagem em 9 fatias quando o kit de UI existir)
@@ -381,7 +389,7 @@
     PARTS = PARTS.filter((p) => (p.life -= dt) > 0);
     for (const p of PARTS) { p.vy += (p.light ? 120 : 600) * dt; p.x += p.vx * dt; p.y += p.vy * dt; g.fillStyle = p.c; g.fillRect(p.x, p.y, p.sz, p.sz); }
     FLOAT = FLOAT.filter((f) => (f.t -= dt) > 0);
-    FLOAT.forEach((f, i) => { const y = 140 - (2 - f.t) * 30 + i * 30; g.globalAlpha = Math.min(1, f.t); g.font = fnt(12, true); const w = g.measureText(f.s).width + 28; g.fillStyle = 'rgba(10,14,40,.72)'; rr(W / 2 - w / 2, y - 6, w, fsz(12) + 12, 14); g.fill(); ttl(f.s, W / 2, y, 12, f.col, 'center'); g.globalAlpha = 1; });
+    FLOAT.forEach((f, i) => { const y = 140 - (2 - f.t) * 30 + i * 30; g.globalAlpha = Math.min(1, f.t); g.font = fnt(12, true); const w = g.measureText(tr(f.s)).width + 28; g.fillStyle = 'rgba(10,14,40,.72)'; rr(W / 2 - w / 2, y - 6, w, fsz(12) + 12, 14); g.fill(); ttl(f.s, W / 2, y, 12, f.col, 'center'); g.globalAlpha = 1; });
   }
 
   // ================= diálogo, escolha, faixa, transição, painéis =================
@@ -422,7 +430,7 @@
       g.restore(); g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 3; rr(30, y0 + 22, 136, 136, 16); g.stroke();
       tx = 190;
       const name = nm.length > 24 ? nm.split(' ').slice(0, 3).join(' ') : nm;
-      g.font = fnt(12, true); const nw = g.measureText(name).width + 28;
+      g.font = fnt(12, true); const nw = g.measureText(tr(name)).width + 28;
       pill([tx - 6, y0 - 16, nw, 30], '#ffd84a', name, '#2a1a08', 12);
     }
     if (isLum) tx = 90;
@@ -464,7 +472,7 @@
       const bw = two ? (W - 112) / 2 : W - 96;
       const r = [48 + col * (bw + 16), y0 + 30 + qs.length * 24 + row * 50, bw, 42];
       const on = i === ASK.sel; g.fillStyle = on ? 'rgba(255,216,74,.28)' : 'rgba(255,255,255,.10)'; rr(...r, 12); g.fill(); g.strokeStyle = on ? '#ffd84a' : 'rgba(170,190,255,.45)'; g.lineWidth = on ? 3 : 1.5; rr(...r, 12); g.stroke();
-      const ls = wrap(`${'ABCDEFGH'[i]}) ${o}`, bw - 24, 11);
+      const ls = wrap(`${'ABCDEFGH'[i]}) ${tr(o)}`, bw - 24, 11);
       ls.slice(0, 2).forEach((l, k) => txt(l, r[0] + 12, r[1] + (ls.length > 1 ? 8 : 15) + k * 15, 11, '#fff'));
       return r;
     });
@@ -476,7 +484,7 @@
     if (BANNER.t <= 0) { BANNER = null; return; }
     const a = Math.min(1, BANNER.t, 3 - BANNER.t + 0.3);
     g.globalAlpha = Math.max(0, a);
-    g.font = fnt(18, true); const w = g.measureText(BANNER.title).width + 60;
+    g.font = fnt(18, true); const w = g.measureText(tr(BANNER.title)).width + 60;
     box(W / 2 - w / 2, 70, w, 56, 0.9); ttl(BANNER.title, W / 2, 86, 18, '#ffd84a', 'center');
     g.globalAlpha = 1;
   }
@@ -506,12 +514,12 @@
     g.fillStyle = '#000'; g.fillRect(52, 52, 420, 236);
     if (im) { g.imageSmoothingEnabled = true; const s = Math.max(420 / im.width, 236 / im.height); g.save(); g.beginPath(); g.rect(52, 52, 420, 236); g.clip(); if (serio) g.filter = 'grayscale(.7)'; g.drawImage(im, 52 + (420 - im.width * s) / 2, 52 + (236 - im.height * s) / 2, im.width * s, im.height * s); g.restore(); g.filter = 'none'; }
     g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 3; rr(52, 52, 420, 236, 14); g.stroke();
-    txt(`${c.yearLabel} · ${ERA[c.era]?.name || ''}`, 52, 300, 10, '#8a9ad8');
+    txt(`${tr(c.yearLabel)} · ${tr(ERA[c.era]?.name || '')}`, 52, 300, 10, '#8a9ad8');
     wrap(c.title, 420, 14, true).slice(0, 3).forEach((l, i) => ttl(l, 52, 320 + i * 22, 14, '#ffd84a'));
-    wrap(`“${c.hook}”`, 420, 10).slice(0, 6).forEach((l, i) => txt(l, 52, 392 + i * 16, 10, '#cfe0ff'));
+    wrap(`“${tr(c.hook)}”`, 420, 10).slice(0, 6).forEach((l, i) => txt(l, 52, 392 + i * 16, 10, '#cfe0ff'));
     let y = 56;
     ttl('RELATÓRIO', 500, y, 12, '#ffd84a'); y += 26;
-    for (const f of (c.facts || []).slice(0, 3)) { const ls = wrap('• ' + f, W - 560, 10).slice(0, 5); ls.forEach((l, i) => txt(l, 500, y + i * 16, 10, '#fff')); y += ls.length * 16 + 10; }
+    for (const f of (c.facts || []).slice(0, 3)) { const ls = wrap('• ' + tr(f), W - 560, 10).slice(0, 5); ls.forEach((l, i) => txt(l, 500, y + i * 16, 10, '#fff')); y += ls.length * 16 + 10; }
     if (c.imagine) { const ls = wrap(c.imagine, W - 580, 9).slice(0, 6); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(255,216,74,.12)'; g.fillRect(500, y, W - 560, hgt); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; g.strokeRect(500, y, W - 560, hgt); txt('Imagine…', 510, y + 8, 9, '#ffd84a'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#fff')); y += hgt + 10; }
     if (c.joke && !serio && y < H - 230) { const ls = wrap(c.joke, W - 580, 9).slice(0, 5); const hgt = ls.length * 15 + 34; g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(500, y, W - 560, hgt); txt('Dona Mula:', 510, y + 8, 9, '#4aa8ff'); ls.forEach((l, i) => txt(l, 510, y + 24 + i * 15, 9, '#ddd')); }
   }
@@ -535,17 +543,17 @@
     const L = [];
     if (tab === 0) {
       for (const id of G.items) { const it = ITEM(id); if (it.kind === 'util') L.push({ id, ...it, use: id === 'rede' ? 'rede' : null }); }
-      for (const [id, n] of Object.entries(G.inv)) if (n > 0) { const it = ITEM(id); L.push({ id, ...it, name: `${it.name} ×${n}`, use: 'eat' }); }
+      for (const [id, n] of Object.entries(G.inv)) if (n > 0) { const it = ITEM(id); L.push({ id, ...it, name: `${tr(it.name)} ×${n}`, use: 'eat' }); }
       L.push({ icon: '📖', name: 'Caderno de relatórios', rarity: 'documento', desc: `${G.cards.length} de ${RAW.cards.length} relatórios.`, use: 'book' });
     } else if (tab === 1) {
       for (const id of G.items) { const it = ITEM(id); if (it.kind !== 'util') L.push({ id, ...it }); }
-      for (const id of G.chapeus) { const it = ITEM(id); L.push({ id, ...it, name: `${it.name}${G.chapeu === id ? ' (usando)' : ''}`, use: 'hat' }); }
+      for (const id of G.chapeus) { const it = ITEM(id); L.push({ id, ...it, name: G.chapeu === id ? trf('{0} (usando)', it.name) : it.name, use: 'hat' }); }
     } else {
       L.push({ icon: '✦', name: `Brilho: ${G.brilho}`, rarity: 'brilho', desc: 'Vem de olhar, aprender, ajudar e doar. Ouro não compra.' });
       if (G.titulos.length) L.push({ icon: '🏅', name: `Títulos: ${G.titulos.length}`, rarity: 'reliquia', desc: G.titulos.join(' · ') });
       L.push({ icon: '🗣️', name: `Palavras tupis ${G.tupi.length}/6`, rarity: 'achado', desc: G.tupi.join(', ') || 'Paraguaçu ensina, em Porto Seguro.' });
       L.push({ icon: '👹', name: `Bestiário ${G.bestiario.length}/9`, rarity: 'documento', desc: G.bestiario.map((b) => WD.names[b] || 'Dona Mula').join(', ') });
-      for (const st of WD.sets) if (st.id !== 'tupi' && st.id !== 'bestiario') L.push({ icon: G.sets[st.id] ? '🏆' : '▫', name: `${st.name} ${Math.min(setProg(st), setNeed(st))}/${setNeed(st)}`, rarity: G.sets[st.id] ? 'reliquia' : 'comum', desc: G.sets[st.id] ? 'Exposta no Museu Padre Toledo.' : 'Complete e leve ao Museu Padre Toledo, em Tiradentes.' });
+      for (const st of WD.sets) if (st.id !== 'tupi' && st.id !== 'bestiario') L.push({ icon: G.sets[st.id] ? '🏆' : '▫', name: `${tr(st.name)} ${Math.min(setProg(st), setNeed(st))}/${setNeed(st)}`, rarity: G.sets[st.id] ? 'reliquia' : 'comum', desc: G.sets[st.id] ? 'Exposta no Museu Padre Toledo.' : 'Complete e leve ao Museu Padre Toledo, em Tiradentes.' });
     }
     return L;
   }
@@ -590,7 +598,7 @@
     box(30, 24, W - 60, H - 48, 0.97);
     const e = ORDER[PANEL.i], list = eraCards(e.id);
     ttl('CADERNO DO BUCK', W / 2, 40, 14, '#ffd84a', 'center');
-    txt(`◀   ${YEAR[e.id]} · ${e.name}   ▶`, W / 2, 72, 11, '#fff', 'center');
+    txt(`◀   ${YEAR[e.id]} · ${tr(e.name)}   ▶`, W / 2, 72, 11, '#fff', 'center');
     txt(`${gotIn([e.id])}/${list.length} relatórios`, W / 2, 94, 10, '#8a9ad8', 'center');
     PANEL.rects = [];
     list.forEach((c, k) => {
@@ -650,8 +658,8 @@
     if (e) {
       const im = img('assets/img/' + e.iconImg);
       if (im) g.drawImage(im, 70, 300, 96, 96);
-      txt(`${YEAR[e.id]} · ${e.name}`, 186, 306, 13, '#ffd84a');
-      wrap(`“${e.intro}”`, W - 280, 10).slice(0, 3).forEach((l, i) => txt(l, 186, 336 + i * 18, 10, '#cfe0ff'));
+      txt(`${YEAR[e.id]} · ${tr(e.name)}`, 186, 306, 13, '#ffd84a');
+      wrap(`“${tr(e.intro)}”`, W - 280, 10).slice(0, 3).forEach((l, i) => txt(l, 186, 336 + i * 18, 10, '#cfe0ff'));
       txt(`relatórios ${gotIn([e.id])}/${eraCards(e.id).length}${eraOpen(e.id) ? '' : ' · portal fechado'}`, 186, 396, 10, '#fff');
       if (G.eras[e.id]?.visited && e.id !== 'prologo' && G.era === 'hoje') txt('toque de novo: viagem rápida até o buraco', 186, 418, 9, '#9be36a');
     } else txt('Toque numa era para ver o relatório.', W / 2, 330, 10, '#8a9ad8', 'center');
@@ -731,7 +739,7 @@
     const it = ITEM(id); if (!(G.inv[id] > 0) || !it.buff) return;
     G.inv[id]--; if (!G.provou.includes(id)) G.provou.push(id);
     BUFF = { id, until: T + it.buff.secs, ...it.buff }; save(); sfx('coin');
-    floatTxt(`${it.icon} ${it.desc.split('.')[0]}`, '#ffb060');
+    floatTxt(`${it.icon} ${tr(it.desc).split('.')[0]}`, '#ffb060');
   }
   function addTitle(t) { if (G.titulos.includes(t)) return; G.titulos.push(t); G.titulo = t; save(); banner(`Título: Buck, ${t}`); }
   function secret(id, lines, done) {
@@ -1001,6 +1009,52 @@
   let scene = null;
   function setScene(s) { scene = s; s.enter?.(); }
 
+  // Primeira tela (provisória): escolher a língua pelas bandeiras. Brasil, Estados Unidos e Espanha, desenhadas aqui.
+  function flag(id, x, y, w, h) {
+    g.save(); rr(x, y, w, h, 10); g.clip();
+    if (id === 'pt') {
+      g.fillStyle = '#1a9a48'; g.fillRect(x, y, w, h);
+      g.fillStyle = '#ffd400'; g.beginPath(); g.moveTo(x + w / 2, y + h * 0.1); g.lineTo(x + w * 0.92, y + h / 2); g.lineTo(x + w / 2, y + h * 0.9); g.lineTo(x + w * 0.08, y + h / 2); g.closePath(); g.fill();
+      const r = h * 0.26; g.fillStyle = '#1d2f8c'; g.beginPath(); g.arc(x + w / 2, y + h / 2, r, 0, 7); g.fill();
+      g.save(); g.beginPath(); g.arc(x + w / 2, y + h / 2, r, 0, 7); g.clip(); g.strokeStyle = '#fff'; g.lineWidth = h * 0.045; g.beginPath(); g.arc(x + w / 2 - r * 0.2, y + h / 2 + r * 1.9, r * 2.1, -Math.PI * 0.68, -Math.PI * 0.3); g.stroke(); g.restore();
+      g.fillStyle = '#fff'; for (const [a, b] of [[-0.35, 0.35], [0.1, 0.5], [0.4, 0.25], [-0.1, 0.62], [0.25, 0.7]]) { g.beginPath(); g.arc(x + w / 2 + a * r, y + h / 2 + b * r, 1.6, 0, 7); g.fill(); }
+    } else if (id === 'en') {
+      for (let i = 0; i < 13; i++) { g.fillStyle = i % 2 ? '#fff' : '#c8102e'; g.fillRect(x, y + (h * i) / 13, w, h / 13 + 1); }
+      const cw = w * 0.42, ch = (h * 7) / 13; g.fillStyle = '#0a3161'; g.fillRect(x, y, cw, ch);
+      g.fillStyle = '#fff'; for (let r = 0; r < 9; r++) for (let c = 0; c < (r % 2 ? 5 : 6); c++) { g.beginPath(); g.arc(x + cw * ((c + (r % 2 ? 1 : 0.5)) / 6), y + ch * ((r + 0.7) / 9.4), Math.max(1.2, h * 0.012), 0, 7); g.fill(); }
+    } else {
+      g.fillStyle = '#c60b1e'; g.fillRect(x, y, w, h); g.fillStyle = '#ffc400'; g.fillRect(x, y + h / 4, w, h / 2);
+    }
+    g.restore(); g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 3; rr(x, y, w, h, 10); g.stroke();
+  }
+  const Lang = () => ({
+    isTitle: true,
+    t: 0, sel: Math.max(0, I18.LANGS.findIndex((l) => l.id === I18.lang)), rects: [],
+    update(dt) { this.t += dt; },
+    draw() {
+      bg('assets/img/scenes/mirante.webp', 3, 0.15, '#1a1030');
+      g.fillStyle = 'rgba(10,16,70,.6)'; g.fillRect(0, 0, W, H);
+      ttl('Relógio de Sol', W / 2, 46, 34, '#ffd84a', 'center');
+      I18.keep('Escolha a língua · Choose your language · Elige tu idioma');
+      txt('Escolha a língua · Choose your language · Elige tu idioma', W / 2, 112, 11, '#fff', 'center');
+      const fw = 220, fh = 146, gap = 40, x0 = W / 2 - (fw * 3 + gap * 2) / 2, y = 180;
+      this.rects = I18.LANGS.map((l, i) => {
+        const x = x0 + i * (fw + gap), on = i === this.sel, lift = on ? 4 * Math.sin(this.t * 4) : 0;
+        if (on) { g.fillStyle = 'rgba(255,216,74,.25)'; rr(x - 12, y - 12 + lift, fw + 24, fh + 84, 20); g.fill(); g.strokeStyle = '#ffd84a'; g.lineWidth = 3; rr(x - 12, y - 12 + lift, fw + 24, fh + 84, 20); g.stroke(); }
+        flag(l.id, x, y + lift, fw, fh);
+        I18.keep(l.name); ttl(l.name, x + fw / 2, y + fh + 22 + lift, 16, on ? '#ffd84a' : '#fff', 'center');
+        return [x - 12, y - 12, fw + 24, fh + 84];
+      });
+    },
+    pick(i) { const l = I18.LANGS[i]; if (!l) return; audio(); sfx('ok'); I18.set(l.id); go(Title); },
+    tap(x, y) { const i = this.rects.findIndex((r) => inR(x, y, r)); if (i >= 0) this.pick(i); },
+    key(k) {
+      if (k === 'ArrowLeft' || k === 'a') this.sel = (this.sel + 2) % 3;
+      else if (k === 'ArrowRight' || k === 'd') this.sel = (this.sel + 1) % 3;
+      else if (k === 'Enter' || k === ' ') this.pick(this.sel);
+    },
+  });
+
   const Title = () => ({
     isTitle: true,
     t: 0,
@@ -1198,7 +1252,7 @@
       }
       const done = G.minis[mi.id];
       const intro = asLines(n || { id: 'mula' }, n?.lines || mi.lines);
-      say(intro.length ? intro : [['mula', mi.label]], () => ask(`${mi.label}${done ? ' (já vencido)' : ''}`, ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }));
+      say(intro.length ? intro : [['mula', mi.label]], () => ask((done ? trf('{0} (já vencido)', mi.label) : mi.label), ['Bora!', 'Agora não'], (k) => { if (k === 0) { G.pos[id] = [Math.round(P.x), Math.round(P.y)]; save(); startMini(mi.id, id); } }));
     }
     // ---- vendedores, curiosidades, doação, museu, antiquário, chapeleiro (world.js) ----
     const vendorOpen = (n) => n.vendor && (!n.vendorAfter || G.side[n.vendorAfter]?.done);
@@ -1216,7 +1270,7 @@
       const list = (n.vendor || []).filter((it) => ITEM(it).kind === 'comida' || !has(it));
       const story = !isShop && (n.talk || n.lesson);
       const greet = isShop ? (G.flags.guia ? 'Guia agora, é? Pra guia eu faço preço.' : 'Venda do Tropeiro. Tem de tudo que cabe numa mula.') : 'O que vai ser?';
-      say([[n.id, greet]], () => ask(`Seu ouro: $${G.gold}`, [...list.map((it) => `${ITEM(it).icon} ${ITEM(it).name} · $${priceOf(it)}`), ...(story ? ['Ouvir a história de novo'] : []), 'Nada, obrigado'], (k) => {
+      say([[n.id, greet]], () => ask(`Seu ouro: $${G.gold}`, [...list.map((it) => `${ITEM(it).icon} ${tr(ITEM(it).name)} · $${priceOf(it)}`), ...(story ? ['Ouvir a história de novo'] : []), 'Nada, obrigado'], (k) => {
         if (k < list.length) return buy(n, list[k]);
         if (story && k === list.length) say(n.talk || n.lesson);
       }));
@@ -1254,12 +1308,12 @@
         if (k === 0) {
           const list = ANTIQ.filter((i) => !G.items.includes(i));
           if (!list.length) return say([[n.id, 'Você já tem tudo o que eu tenho. Volte mês que vem.']]);
-          ask(`Seu ouro: $${G.gold}`, [...list.map((i) => `${ITEM(i).icon} ${ITEM(i).name} · $${priceOf(i)}`), 'Nada'], (j) => { if (j < list.length && G.gold >= priceOf(list[j])) { buy(n, list[j]); say([[n.id, ITEM(list[j]).desc]]); } else if (j < list.length) buy(n, list[j]); });
+          ask(`Seu ouro: $${G.gold}`, [...list.map((i) => `${ITEM(i).icon} ${tr(ITEM(i).name)} · $${priceOf(i)}`), 'Nada'], (j) => { if (j < list.length && G.gold >= priceOf(list[j])) { buy(n, list[j]); say([[n.id, ITEM(list[j]).desc]]); } else if (j < list.length) buy(n, list[j]); });
         }
         if (k === 1) {
           const list = G.items.filter((i) => ITEM(i).kind === 'antiguidade');
           if (!list.length) return say([[n.id, 'Você não tem nada que eu queira. Ainda.']]);
-          ask('Vender pela metade do preço:', [...list.map((i) => `${ITEM(i).name} · $${Math.floor(priceOf(i) / 2)}`), 'Nada'], (j) => {
+          ask('Vender pela metade do preço:', [...list.map((i) => `${tr(ITEM(i).name)} · $${Math.floor(priceOf(i) / 2)}`), 'Nada'], (j) => {
             if (j >= list.length) return;
             const i = list[j]; G.items = G.items.filter((x) => x !== i); giveGold(Math.floor(priceOf(i) / 2)); G.flags.vendas = (G.flags.vendas || 0) + 1; save();
             if (G.flags.vendas >= 3 && !G.items.includes('pirita')) { addItem('pirita'); say([[n.id, 'Compra, vende, compra, vende... Toma, um presente da casa.'], ['narr', 'Você ganhou Pirita: o ouro de tolo. Brilha, mas não vale nada.'], ['lum', 'Observador. Brilho detectado: falso.']]); }
@@ -1288,7 +1342,7 @@
       if (!st) { G.side[q] = st = { s: 0, got: [] }; save(); sfx('ok'); return say(d.start, () => { floatTxt(`Missão extra: ${d.title}`, '#9be36a'); beginStep(q, n); }); }
       const step = d.steps[st.s];
       if (!step) return finishSide(q, n);
-      if (step.kind === 'count') { if (sqCount(step) >= step.need) { st.s++; save(); return finishSide(q, n); } return say([[n.id, `${step.text}: ${sqCount(step)}/${step.need}.`]]); }
+      if (step.kind === 'count') { if (sqCount(step) >= step.need) { st.s++; save(); return finishSide(q, n); } return say([[n.id, `${tr(step.text)}: ${sqCount(step)}/${step.need}.`]]); }
       if (step.kind === 'ask') return beginStep(q, n);
       if (step.kind === 'route' && step.secs && !(DL[q] > T)) { st.got = []; save(); return say([[n.id, 'Vamos de novo? O tempo começa agora.']], () => beginStep(q, n)); }
       say([[n.id, `${step.text}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : ''}.`]]);
@@ -1308,8 +1362,8 @@
         for (const [it, k] of Object.entries(r.items || {})) addItem(it, k);
         if (r.brilho) giveBrilho(r.brilho, d.title);
         if (r.title) addTitle(r.title);
-        const its = Object.entries(r.items || {}).map(([it, k]) => `${ITEM(it).icon} ${ITEM(it).name}${k > 1 ? ` ×${k}` : ''}`);
-        say([['narr', `Missão cumprida: ${d.title}. ${[r.gold && `+$${r.gold}`, ...its, r.brilho && `✦ ${r.brilho}`].filter(Boolean).join(' · ')}`]]);
+        const its = Object.entries(r.items || {}).map(([it, k]) => `${ITEM(it).icon} ${tr(ITEM(it).name)}${k > 1 ? ` ×${k}` : ''}`);
+        say([['narr', `${trf('Missão cumprida: {0}.', d.title)} ${[r.gold && `+$${r.gold}`, ...its, r.brilho && `✦ ${r.brilho}`].filter(Boolean).join(' · ')}`]]);
       });
     }
     const PICKC = {};
@@ -1334,7 +1388,7 @@
       st.got.push(o.i); sfx('coin');
       if (step.words) { if (!G.tupi.includes(o.p[2])) G.tupi.push(o.p[2]); say([['paraguacu', o.p[3]]]); }
       if (st.got.length >= total) { st.s++; st.got = []; delete DL[o.q]; floatTxt(`Pronto! Volte a ${nameOf(d.giver) || 'quem pediu'}`, '#9be36a'); }
-      else floatTxt(`${o.p[2] || step.label || ''} ${st.got.length}/${total}`.trim(), '#9be36a');
+      else floatTxt(`${tr(o.p[2] || step.label || '')} ${st.got.length}/${total}`.trim(), '#9be36a');
       save();
     }
     function sideTrack() { // a missão extra deste mapa, para o quadro MISSÃO
@@ -1342,7 +1396,7 @@
         const d = SQ(q); if (!d || st.done || d.map !== id) continue;
         const step = d.steps[st.s];
         if (!step) return `Volte a ${nameOf(d.giver)}`;
-        if (step.kind === 'route' && step.secs) return DL[q] > T ? `${step.text} · ${Math.ceil(DL[q] - T)} s` : `Fale com ${nameOf(d.giver)} para tentar de novo`;
+        if (step.kind === 'route' && step.secs) return DL[q] > T ? `${tr(step.text)} · ${Math.ceil(DL[q] - T)} s` : `Fale com ${nameOf(d.giver)} para tentar de novo`;
         return `${step.text}${step.kind === 'fetch' ? ` (${st.got.length}/${step.pts.length})` : step.kind === 'count' ? ` (${sqCount(step)}/${step.need})` : ''}`;
       }
       return '';
@@ -1513,7 +1567,7 @@
             if (G.flags.migratedN) say([['mula', `Ah: você trouxe ${G.flags.migratedN} relatórios de um caderno antigo. Já mandei.`]]);
           }), 600);
         } else if (isHoje && G.flags.tut1) setTimeout(daily, 900);
-        else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${ERA[M.era]?.name || M.title}.`]]), ['mula', `Para o portal abrir: ${k.cards} relatórios, ${k.quiz} pergunta${k.quiz === 1 ? '' : 's'} certa${k.quiz === 1 ? '' : 's'}${k.mini ? ' e vencer o desafio da era' : ''}.`]]); }, 700);
+        else if (!isHoje && first) setTimeout(() => { const k = needOf(M.era); say([...(M.arrive || [['mula', `${tr(ERA[M.era]?.name || M.title)}.`]]), ['mula', `Para o portal abrir: ${k.cards} relatórios, ${k.quiz} pergunta${k.quiz === 1 ? '' : 's'} certa${k.quiz === 1 ? '' : 's'}${k.mini ? ' e vencer o desafio da era' : ''}.`]]); }, 700);
       },
       update(dt) {
         tt += dt; G.played += dt;
@@ -1595,7 +1649,7 @@
         }
         for (const [lx, ly, s] of M.labels || []) {
           if (!onS(lx, ly, 120)) continue;
-          g.font = fnt(10); const w = g.measureText(s).width + 14;
+          g.font = fnt(10); const w = g.measureText(tr(s)).width + 14;
           g.fillStyle = 'rgba(14,18,48,.72)'; rr(sx(lx) - w / 2, sy(ly) - 11, w, 22, 11); g.fill(); txt(s, sx(lx), sy(ly) - 7, 10, '#fff', 'center');
         }
         if (isHoje) for (const [era, [hx, hy]] of Object.entries(M.holes)) {
@@ -1621,7 +1675,7 @@
           g.beginPath(); g.ellipse(x, y - 16, ok ? 10 + p * 3 : 6, 22, 0, 0, 7); g.fill();
           g.fillStyle = ok ? '#fff' : 'rgba(255,255,255,.4)'; g.fillRect(x - 2, y - 36, 4, 40); g.restore(); }
           const by = y - 62 * zk - Math.abs(Math.sin(tt * 3)) * 6;
-          g.font = fnt(10); const w = g.measureText('PORTAL').width + 14;
+          g.font = fnt(10); const w = g.measureText(tr('PORTAL')).width + 14;
           g.fillStyle = ok ? 'rgba(120,60,10,.9)' : 'rgba(20,20,40,.8)'; g.fillRect(x - w / 2, by - 22, w, 18);
           txt('PORTAL', x, by - 18, 10, ok ? '#ffd84a' : '#bfe3ff', 'center');
           g.fillStyle = ok ? '#ffd84a' : '#bfe3ff'; g.beginPath(); g.moveTo(x - 7, by); g.lineTo(x + 7, by); g.lineTo(x, by + 8); g.fill();
@@ -1631,7 +1685,7 @@
           if (k.startsWith('bateia') && !(dustAt[k] > tt)) { g.fillStyle = '#ffd84a'; for (let i = 0; i < 4; i++) g.fillRect(sx(p[0]) - 8 + i * 5, sy(p[1]) - 3 + Math.sin(tt * 6 + i) * 2, 3, 3); }
           if (k.startsWith('door_')) { g.fillStyle = `rgba(255,216,74,${0.4 + 0.3 * Math.sin(tt * 4)})`; g.fillRect(sx(p[0]) - 10, sy(p[1]) - 4, 20, 8); }
         }
-        if (M.tour) for (const st of RAW.tour.stops) { const p = K.pois[st.id]; if (!p || !onS(p[0], p[1]) || (TGT?.label === st.name && !busy())) continue; const ok = G.flags.tour?.[st.id]; if (d2([P.x, P.y], p) > 330) continue; g.font = fnt(8); const w = g.measureText(st.name).width + 16; g.fillStyle = ok ? 'rgba(40,120,60,.9)' : 'rgba(40,58,150,.9)'; rr(sx(p[0]) - w / 2, sy(p[1]) - 40 * zk - 2, w, 20, 10); g.fill(); txt(st.name, sx(p[0]), sy(p[1]) - 40 * zk + 2, 8, '#fff', 'center'); } // só as placas perto do Buck, para o mapa respirar
+        if (M.tour) for (const st of RAW.tour.stops) { const p = K.pois[st.id]; if (!p || !onS(p[0], p[1]) || (TGT?.label === st.name && !busy())) continue; const ok = G.flags.tour?.[st.id]; if (d2([P.x, P.y], p) > 330) continue; g.font = fnt(8); const w = g.measureText(tr(st.name)).width + 16; g.fillStyle = ok ? 'rgba(40,120,60,.9)' : 'rgba(40,58,150,.9)'; rr(sx(p[0]) - w / 2, sy(p[1]) - 40 * zk - 2, w, 20, 10); g.fill(); txt(st.name, sx(p[0]), sy(p[1]) - 40 * zk + 2, 8, '#fff', 'center'); } // só as placas perto do Buck, para o mapa respirar
         if (isHoje) for (const p of WD.pousos) {
           const [px, py] = pousoXY[p.id]; if (!onS(px, py)) continue;
           const x = sx(px), y = sy(py), ok = G.pousos.includes(p.id);
@@ -1687,7 +1741,7 @@
         for (const sc of SECRETS) if ((sc.map === id || sc.map === '*') && sc.draw) sc.draw(S, sx, sy, tt);
         if (TGT && !busy()) {
           const lb = TGT.label, bx = sx(TGT.x), by = sy(TGT.y) - 29 * Z - 12;
-          g.font = fnt(9); const w = g.measureText(lb).width + 40;
+          g.font = fnt(9); const w = g.measureText(tr(lb)).width + 40;
           g.fillStyle = 'rgba(14,20,64,.92)'; rr(bx - w / 2, by - 14, w, 28, 14); g.fill(); g.strokeStyle = '#ffd84a'; g.lineWidth = 2; rr(bx - w / 2, by - 14, w, 28, 14); g.stroke();
           g.fillStyle = '#ffd84a'; g.beginPath(); g.arc(bx - w / 2 + 14, by, 9, 0, 7); g.fill(); plain(TOUCH ? 'A' : '␣', bx - w / 2 + 14, by - 6, 8, '#4a2a00', 'center');
           txt(lb, bx - w / 2 + 28, by - 7, 9, '#fff');
@@ -1769,7 +1823,7 @@
     if (!f) { say([['mula', 'Esse desafio ainda está sendo construído.']]); return; }
     const back = () => go(() => OW(fromMap), null);
     const api = {
-      W, H, g, txt, ttl, plain, pill, rr, box, wrap, say, ask, sfx, music, confetti, firework, img, bg, pixelImage, dude, mula, PAL, lum, lumBox, CARD, RAW, G, save, floatTxt, inR,
+      W, H, g, txt, ttl, plain, pill, rr, box, wrap, tr, trf, say, ask, sfx, music, confetti, firework, img, bg, pixelImage, dude, mula, PAL, lum, lumBox, CARD, RAW, G, save, floatTxt, inR,
       won: !!G.minis[mid], keys: KEYS,
       shake: (s) => { SHAKE = s; },
       win(reward = {}) {
@@ -1873,7 +1927,7 @@
       const p = S.K.pois.T5; if (!p || G.secrets.includes('moleque') || DLG) return;
       if (Math.hypot(S.P.x - p[0], S.P.y - p[1]) < 90 && S.P.steps >= 30) {
         S.P.steps = 0; SHAKE = 0.3; const e = RAW.expressions.find((x) => x.id === 'EXP-pe-moleque-calcada');
-        secret('moleque', [['narr', `${e?.phrase}: ${e?.legend}`], ['narr', `Realidade: ${e?.reality}`], ['buck', 'Whoa— these rocks got opinions.']]);
+        secret('moleque', [['narr', `${tr(e?.phrase)}: ${tr(e?.legend)}`], ['narr', `Realidade: ${e?.reality}`], ['buck', 'Whoa— these rocks got opinions.']]);
       }
     } },
   ];
@@ -2057,7 +2111,7 @@
       g.fillStyle = gr; g.beginPath(); g.arc(BTN.x, BTN.y, R0, 0, 7); g.fill(); g.fillStyle = 'rgba(255,255,255,.3)'; g.beginPath(); g.ellipse(BTN.x, BTN.y - R0 * 0.45, R0 * 0.62, R0 * 0.3, 0, 0, 7); g.fill(); }
     plain('A', BTN.x, BTN.y - 22, 24, '#4a2a00', 'center');
     const lb = scene.actLabel?.() || '';
-    if (lb) plain(lb.length > 16 ? lb.slice(0, 15) + '…' : lb, BTN.x, BTN.y + 12, 8, '#4a2a00', 'center');
+    if (lb) { const lt = tr(lb); plain(lt.length > 16 ? lt.slice(0, 15) + '…' : lt, BTN.x, BTN.y + 12, 8, '#4a2a00', 'center'); }
     g.globalAlpha = 1;
   }
 
@@ -2096,7 +2150,7 @@
     const q = /[?&]era=(\w+)/.exec(location.search), mq = /[?&]mini=(\w+)/.exec(location.search);
     if (q || mq) { G.flags.intro = 1; G.flags.tut0 = 1; G.flags.tut1 = 1; }
     if (mq) { setScene(OW(q?.[1] || 'hoje')); setTimeout(() => startMini(mq[1], q?.[1] || 'hoje'), 200); }
-    else setScene(q && window.MAPS[q[1]] ? OW(q[1]) : Title());
+    else setScene(q && window.MAPS[q[1]] ? OW(q[1]) : (TEST && !/[?&]flags=1/.test(location.search)) ? Title() : Lang()); // as bandeiras abrem o jogo (?test=1 pula, &flags=1 mostra)
     if (TEST) setInterval(() => frame(performance.now()), 16); else requestAnimationFrame(frame);
   });
 })();

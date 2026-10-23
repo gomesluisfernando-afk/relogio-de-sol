@@ -418,7 +418,7 @@ window.MINIS = (() => {
           if (cur === 'quebrada' && !A.has?.('prancha_quebrada')) { g.strokeStyle = '#000'; g.lineWidth = 2; g.beginPath(); g.moveTo(x + pw / 2 - 6, y); g.lineTo(x + pw / 2 + 4, y + 20); g.stroke(); }
           txt(cur, x + pw / 2, y - 14, 8, '#fff', 'center');
         }
-        facts.forEach((f, i) => txt('★ ' + f, 30, 90 + i * 16, 8, '#ffd84a'));
+        facts.forEach((f, i) => txt('★ ' + A.tr(f), 30, 90 + i * 16, 8, '#ffd84a'));
         head(A, 'A Ponte de Nassau · 1643', `Pranchas: ${slots.filter(Boolean).length}/12 · joystick move · A derruba · Tentativa ${A.tries}/3`, stage === 'play' ? t : null, TEMPO);
         if (msgT > 0) { A.box(W / 2 - 230, 400, 460, 28, 0.85); txt(msg, W / 2, 408, 9, '#fff', 'center'); }
         if (stage === 'intro') intro(A, 'A Ponte de Nassau', ['Construa a primeira ponte do Recife: 12 pranchas antes da maré subir.', 'Mova a prancha que cai com o joystick e solte no vão do tamanho certo (C curta, L longa). O botão A derruba de vez.', 'Prancha podre (rachada) vai para o RIO, nas beiradas. 3 tentativas.']);

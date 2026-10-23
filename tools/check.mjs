@@ -4,6 +4,7 @@ import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
 import { listArt } from './build_assets.mjs';
+import { collect, loadLang, LANGS } from './i18n.mjs';
 
 const root = new URL('../', import.meta.url);
 const rd = (f) => readFileSync(new URL(f, root), 'utf8');
@@ -12,7 +13,7 @@ const errors = [], warns = [];
 const err = (m) => errors.push(m), warn = (m) => warns.push(m);
 
 // 1. sintaxe de todo o JS do jogo
-for (const f of ['game.js', 'minis.js', 'world.js', 'sw.js', 'content.data.js', 'assets.data.js', ...readdirSync(new URL('maps/', root)).map((m) => 'maps/' + m)]) {
+for (const f of ['game.js', 'minis.js', 'world.js', 'sw.js', 'i18n.js', 'lang.data.js', 'content.data.js', 'assets.data.js', ...readdirSync(new URL('maps/', root)).map((m) => 'maps/' + m)]) {
   try { execFileSync(process.execPath, ['--check', new URL(f, root).pathname.replace(/^\/([A-Z]:)/, '$1')], { stdio: 'pipe' }); } catch (e) { err(`${f}: erro de sintaxe\n${e.stderr}`); }
 }
 
@@ -60,7 +61,7 @@ for (const m of rd('minis.js').matchAll(/'(img\/bg_[^']+)'/g)) if (!has(m[1])) w
 
 // 5. cache offline cobre o essencial
 const sw = rd('sw.js');
-for (const f of ['index.html', 'game.js', 'minis.js', 'world.js', 'content.data.js', 'assets.data.js', 'maps/hoje.js', 'maps/eras.js']) if (!sw.includes(`'${f}'`)) err(`sw.js não guarda ${f}`);
+for (const f of ['index.html', 'game.js', 'minis.js', 'world.js', 'i18n.js', 'lang.data.js', 'content.data.js', 'assets.data.js', 'maps/hoje.js', 'maps/eras.js']) if (!sw.includes(`'${f}'`)) err(`sw.js não guarda ${f}`);
 
 // 6. critérios do motor: tempo real, conteúdo histórico nos dados
 const code = rd('game.js') + rd('minis.js');
@@ -114,6 +115,22 @@ if (has('assets/manifest.json')) {
   console.log(`arte nova: ${ok} de ${all.length} imagens do manifesto prontas`);
   for (const l of man.lotes) { const n = l.itens.filter((i) => has(i.arquivo)).length; if (n && n < l.itens.length) warn(`arte: lote ${l.id} pela metade (${n}/${l.itens.length})`); }
   for (const f of listArt()) if (!all.some((i) => i.arquivo === f)) warn(`arte: ${f} não está no manifesto`);
+}
+// 9. línguas: os arquivos de tradução acompanham os textos do jogo, e os {n} batem com o original
+{
+  const keys = collect(), lc = { window: {} }; vm.createContext(lc); vm.runInContext(rd('lang.data.js'), lc);
+  for (const l of LANGS) {
+    const d = loadLang(l), miss = [...keys.keys()].filter((k) => !(k in d));
+    if (miss.length) err(`i18n/${l}.json sem ${miss.length} textos novos: rode node tools/i18n.mjs`);
+    for (const [k, v] of Object.entries(d)) {
+      if (!v) continue;
+      const ph = (x) => (x.match(/\{\d\}/g) || []).sort().join();
+      if (ph(k) !== ph(v)) err(`i18n/${l}.json: "${k.slice(0, 50)}" com {n} diferentes na tradução`);
+      if (lc.window.LANG_DATA?.[l]?.[k.replace(/^\+/, '')] !== v) { err('lang.data.js desatualizado: rode node tools/i18n.mjs'); break; }
+    }
+    const feitos = Object.values(d).filter(Boolean).length;
+    if (l !== 'pt') console.log(`língua ${l}: ${feitos} de ${Object.keys(d).length} textos traduzidos`);
+  }
 }
 console.log(`${RAW.cards.length} cards · ${Object.keys(MAPS).length} mapas · ${miniKeys.length} minigames · ${RAW.quests.length} quests`);
 for (const w of warns) console.log('aviso:', w);

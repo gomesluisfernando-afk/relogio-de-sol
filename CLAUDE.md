@@ -4,7 +4,7 @@ Jogo educativo em pixel art sobre a história do Brasil (do pau-brasil à Inconf
 para um guia de turismo de Tiradentes (MG) aprender e usar a história no celular. Responder sempre em português.
 
 ## Como o projeto funciona
-- Sem build: `index.html` carrega `content.data.js`, `assets.data.js`, `maps/hoje.js`, `maps/eras.js`, `cutscenes.js`, `world.js`, `game.js`, `minis.js`.
+- Sem build: `index.html` carrega `lang.data.js`, `i18n.js`, `content.data.js`, `assets.data.js`, `maps/hoje.js`, `maps/eras.js`, `cutscenes.js`, `world.js`, `game.js`, `minis.js`.
 - `world.js` = conteúdo do mundo aberto (só dados e desenhos): NPCs de curiosidade, folclore, itens, comidas, pousos,
   missões paralelas, coleções e eventos. O verificador confere tudo e lista os `conferir` dele.
 - Conteúdo histórico fica em `data/*.json` (cards = "relatórios", quizzes, eras, quests). Depois de editar: `node tools/build_content.mjs`.
@@ -12,6 +12,17 @@ para um guia de turismo de Tiradentes (MG) aprender e usar a história no celula
 - Publicação: push no `main` → GitHub Pages (https://gomesluisfernando-afk.github.io/relogio-de-sol/). O branch `v2-arthur` anda junto com o `main`.
 - A cada mudança publicada, subir a versão do cache em `sw.js` (`relogio-v2-N`), senão o celular fica com a versão velha.
 - Testar no navegador: `python -m http.server 8090` e abrir `/?test=1` (laço por timer). Extras: `&era=<id>`, `&mini=<id>`, `&touch=1` (força controles de celular), `&intro=1` (revê a intro).
+
+## Línguas (português, inglês e espanhol)
+- O jogo abre nas bandeiras (Brasil, EUA, Espanha); a escolha fica guardada. `?test=1` pula (`&flags=1` mostra), `&lang=en` força.
+- Estilo gettext (.po), em JSON: o texto original é a chave. `i18n/en.json`, `i18n/es.json` e `i18n/pt.json` trazem
+  `{ "original": "tradução" }`. Vazio = sem tradução (aparece o original). Em `pt.json` só se traduz o que nasceu em inglês.
+- A tradução é feita na hora de desenhar: `draw()` e `wrap()` passam tudo por `tr()`. Escreva o texto normal no código/JSON.
+  Texto montado com variável: modelo `` `Missão extra: ${x}` `` funciona sozinho (vira "Missão extra: {0}"); quando a frase é só
+  pontuação em volta de dado (`` `“${c.hook}”` ``, `'• ' + f`), traduza o pedaço: `tr(c.hook)`. Para modelo explícito: `trf('… {0}', x)`.
+- Depois de mudar qualquer texto: `node tools/i18n.mjs` (acrescenta os novos, tira os sumidos, gera `lang.data.js`);
+  `--falta en` lista o que falta. Entradas à mão para textos que só existem em tempo de jogo: chave com `+` na frente.
+- Áudios e vídeos ainda só em português; as legendas (desenhadas no canvas) já passam pelo tradutor.
 
 ## Regras de jogo já decididas
 - Eras em ordem cronológica: um portal só abre quando o anterior foi concluído. Dá para sair de uma era incompleta.
