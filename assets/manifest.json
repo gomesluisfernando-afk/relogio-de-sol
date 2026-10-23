@@ -652,7 +652,7 @@
     {
      "arquivo": "assets/maps/hoje_colisao.png",
      "tipo": "colisao",
-     "tamanho": "2400x1800",
+     "tamanho": "2400x2000",
      "desc": "Máscara de colisão do mapa do Brasil (Hoje): branco = não se anda (mar, serras, rios), preto = chão e estradas.",
      "prompt": "Mobile game art in a modern casual style (like Clash of Clans or Royal Match), soft painted shading, warm vibrant colors, clean dark-brown outlines (never pure black), light from the top-left, colonial Brazil theme (Minas Gerais, 18th-century baroque). No text, no letters, no logos. Black-and-white mask of the painted map, same framing: WHITE where the character cannot walk (buildings, walls, water, dense trees, cliffs), BLACK where it can (streets, squares, grass, bridges). No grey. Collision mask of the painted Brasil (Hoje) map.",
      "guia": "assets/maps/hoje.webp"
